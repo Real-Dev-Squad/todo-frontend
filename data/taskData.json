@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Todo Listing",
+    "assignee": "Vaibhav Singh",
+    "dueDate": "2023-12-15",
+    "status": "todo",
+    "profile": "/assets/user.png"
+  },
+  {
+    "id": 2,
+    "title": "Prepare Design Doc",
+    "assignee": "Random 1",
+    "dueDate": "2023-12-10",
+    "status": "todo",
+    "profile": "/assets/user.png"
+  },
+  {
+    "id": 3,
+    "title": "Code Todo Frontend",
+    "assignee": "Random 2",
+    "dueDate": "2023-12-10",
+    "status": "in-progress",
+    "profile": "/assets/user.png"
+  },
+  {
+    "id": 4,
+    "title": "Code Todo Backend",
+    "assignee": "Random 3",
+    "dueDate": "2023-12-10",
+    "status": "in-progress",
+    "profile": "/assets/user.png"
+  }
+]
