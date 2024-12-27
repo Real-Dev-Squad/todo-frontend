@@ -1,0 +1,30 @@
+import { Task } from "@/app/types/tasks";
+import { TaskCard } from "./TaskCard";
+
+interface TaskListProps {
+  tasks: Task[];
+}
+
+export const TaskList = ({ tasks }: TaskListProps) => {
+  if (tasks.length === 0) {
+    return (
+      <div
+        className="text-gray-500 text-center py-8"
+        data-testid="empty-task-list"
+      >
+        No tasks available in this section
+      </div>
+    );
+  }
+  return (
+    <div data-testid={`task-list`}>
+      {tasks.map((task) => (
+        <TaskCard
+          key={task.id}
+          task={task}
+          className="transition-transform hover:scale-[1.01]"
+        />
+      ))}
+    </div>
+  );
+};

@@ -11,7 +11,9 @@
     "id": 2,
     "title": "Prepare Design Doc",
     "assignee": "Random 1",
-    "dueDate": "2023-12-9",
+
+    "dueDate": "2023-12-10",
+
     "status": "todo",
     "profile": "/assets/user.png"
   },
