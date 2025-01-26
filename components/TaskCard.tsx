@@ -1,10 +1,12 @@
 import { Task } from "@/app/types/tasks";
 import { DateFormats, DateUtil } from "@/utils/dateUtil";
 import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 
 interface TaskCardProps {
   task: Task;
   className?: string;
+  setActiveTask: Dispatch<SetStateAction<Task | undefined>>
 }
 
 const getStatusImagePath = (status: string): string => {
@@ -17,17 +19,22 @@ const getStatusImagePath = (status: string): string => {
   }
 };
 
-export const TaskCard = ({ task, className }: TaskCardProps) => {
-  const statusImagePath = getStatusImagePath(task.status);
 
+export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
+  const statusImagePath = getStatusImagePath(task.status);
   const formattedDueDate = new DateUtil(task.dueDate).format(
     DateFormats.D_MMM_YYYY
   );
+
+  const handleClick = (task: Task) => {
+    setActiveTask(task)
+  }
 
   return (
     <div
       className={`flex justify-between items-center px-6 py-3 mt-1 mx-4 border border-[#D0D5DD] rounded-lg ${className}`}
       data-testid={`task-${task.id}`}
+      onClick={() => handleClick(task)}
     >
       <div className="flex items-center justify-between">
         <h3 className="text-sm sm:text-base font-medium text-[#74777B] mr-2">

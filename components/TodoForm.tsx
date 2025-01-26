@@ -47,11 +47,9 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
     }
 
     return (
-        <div className="w-full max-w-2xl mx-auto bg-white rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
+        <div className="w-full hidden md:block max-w-2xl bg-white rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <h2 className="text-xl font-semibold text-[#6366F1]">{mode === "create" ? "Create a Todo" : "Edit Todo"}</h2>
-
-
                 <hr className='mb-4' />
 
                 <div className="space-y-4">
@@ -79,7 +77,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                             value={formData.description}
                             onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
                             className="w-full p-2 text-sm bg-[#F5F5FF] text-[#4541C6]  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#6366F1] min-h-[100px]"
-                            placeholder="Description"
+                            placeholder="e.g Nothing is cool in here"
                             required
                         />
                     </div>
@@ -93,7 +91,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                     <div className='flex flex-row gap-2 justify-start items-center  '>
                         <Image src={calendarIcon} alt={"due data icon"} />
 
-                        <label htmlFor="dueDate" className="block text-sm min-w-fit  font-medium text-gray-700 mb-1 w-32 max-w-44">
+                        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 w-32 max-w-44">
                             Due Date<span className="text-red-500">*</span>
                         </label>
                         <input
@@ -109,7 +107,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
 
                     <div className='flex flex-row gap-2 justify-start items-center  '>
                         <Image src={AccountIcon} alt={"due data icon"} />
-                        <label htmlFor="dueDate" className="block text-sm min-w-fit  font-medium text-gray-700 mb-1 w-32 max-w-44">
+                        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 w-32 max-w-44">
                             Assignee<span className="text-red-500">*</span>
                         </label>
                         <input
@@ -118,14 +116,14 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                             value={formData.assignee}
                             onChange={(e) => setFormData((prev) => ({ ...prev, assignee: e.target.value }))}
                             className="w-full p-2 text-sm bg-[#F5F5FF] text-[#4541C6]  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
-                            placeholder="Assignee"
+                            placeholder="@ankush"
                             required
                         />
                     </div>
 
                     <div className='flex flex-row gap-2 justify-start items-center  '>
                         <Image src={TagsIcon} alt={"due data icon"} />
-                        <label htmlFor="dueDate" className="block text-sm min-w-fit  font-medium text-gray-700 mb-1 w-32 max-w-44">
+                        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 w-32 max-w-44">
                             Tags
                         </label>
                         <input
@@ -134,13 +132,13 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                             value={formData.tags}
                             onChange={(e) => setFormData((prev) => ({ ...prev, tags: e.target.value }))}
                             className="w-full p-2 text-sm bg-[#F5F5FF] text-[#4541C6]  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
-                            placeholder="Tags"
+                            placeholder="frontend"
                         />
                     </div>
 
                     <div className='flex flex-row gap-2 justify-start items-center  '>
                         <Image src={IDIcon} alt={"due data icon"} />
-                        <label htmlFor="dueDate" className="block text-sm min-w-fit  font-medium text-gray-700 mb-1 w-32 max-w-44">
+                        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1 w-32 max-w-44">
                             Task ID<span className="text-red-500">*</span>
                         </label>
                         <input
@@ -149,7 +147,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                             value={formData.taskId}
                             onChange={(e) => setFormData((prev) => ({ ...prev, taskId: e.target.value }))}
                             className="w-full p-2 text-sm bg-[#F5F5FF] text-[#4541C6]  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
-                            placeholder="Task ID"
+                            placeholder="#kda4dyodajd73j"
                             required
                         />
                     </div>
@@ -157,7 +155,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                     {mode === "edit" && (
                         <div className='flex flex-row gap-2 justify-start items-center'>
                             <Image src={StatusIcon} alt={"due data icon"} />
-                            <label htmlFor="dueDate" className="block text-sm min-w-fit font-medium text-gray-700 mb-1 w-32">
+                            <label htmlFor="dueDate" className="block text-sm ont-medium text-gray-700 mb-1 w-32">
                                 Status
                             </label>
                             <select
@@ -180,12 +178,9 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge }:
                     type="submit"
                     className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-[#6366F1] hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6366F1]"
                 >
-
-
                     <span>
                         {mode === "create" ? <Image src={sendIcon} alt='create todo' /> : <Image src={saveIcon} alt='save edit icon' />}
                     </span>
-
                     {mode === "create" ? "Submit" : "Save"}
                 </button>
             </form>

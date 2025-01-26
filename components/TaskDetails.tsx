@@ -22,7 +22,7 @@ function TaskDetails({ onAcknowledge, initialData }: Props) {
     const [activeTab, setActiveTab] = useState('all')
 
     return (
-        <div className="w-full max-w-2xl mx-auto bg-white rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
+        <div className="w-full hidden md:block max-w-2xl mx-auto bg-white rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
             <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold text-indigo-600">{initialData?.title}</h2>
