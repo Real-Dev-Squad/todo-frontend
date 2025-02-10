@@ -70,6 +70,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: YOUR_PROJECT_NAME
+          projectName: todo-frontend
           directory: out
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
