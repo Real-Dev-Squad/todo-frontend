@@ -41,7 +41,7 @@ const Tasks = () => {
 
   return (
     <>
-      <div className="md:w-5/6 lg:w-3/4 flex flex-row  justify-end mx-auto p-2">
+      <div className="md:w-5/6 lg:w-3/4 w-full flex flex-row justify-end mx-auto p-2">
         <button
           onClick={() => {
             setIsCreateAndEditFormVisibile(prev => !prev)
@@ -61,7 +61,7 @@ const Tasks = () => {
         className="md:w-5/6 lg:w-3/4 flex flex-row mx-auto"
       >
         <section
-          className="md:w-5/6 lg:w-3/4 flex flex-col mx-auto"
+          className="w-full flex flex-col"
         >
           <section data-testid="todo-section">
             <TaskHeader title="To Do" />
@@ -73,18 +73,24 @@ const Tasks = () => {
             <TaskList tasks={inProgressTasks} setActiveTask={setActiveTask} />
           </section>
         </section>
-        <section>
-          <div className="w-2xl mx-auto mt-6 space-y-8">
-            {
-              isCreateAndEditFormVisibile && <TodoForm mode="create" onSubmit={handleCreateSubmit} />
-            }
-            {
-              activeTask && <TodoForm mode="view" initialData={activeTask} onAcknowledge={handleAcknowledge} />
-            }
-            {/* 
+        <section
+          className="max-w-2xl mt-6 space-y-8"
+        >
+          {
+            isCreateAndEditFormVisibile && <TodoForm onClose={() => {
+              setIsCreateAndEditFormVisibile(false);
+              setActiveTask(undefined)
+            }} mode="create" onSubmit={handleCreateSubmit} />
+          }
+          {
+            activeTask && <TodoForm onClose={() => {
+              setIsCreateAndEditFormVisibile(false)
+              setActiveTask(undefined)
+            }} mode="view" initialData={activeTask} onAcknowledge={handleAcknowledge} />
+          }
+          {/* 
             <TodoForm mode="create" onSubmit={handleCreateSubmit} />
             <TodoForm mode="edit" initialData={tasksData[1]} onSubmit={handleEditSubmit} /> */}
-          </div>
         </section>
       </div>
     </>
