@@ -30,14 +30,9 @@ const Tasks = () => {
     console.log("Creating todo:", data)
   }
 
-  // const handleEditSubmit = (data: Task) => {
-  //   console.log("Editing todo:", data)
-  // }
-
   const handleAcknowledge = () => {
     console.log("Todo acknowledged")
   }
-
 
   return (
     <>
@@ -88,9 +83,6 @@ const Tasks = () => {
               setActiveTask(undefined)
             }} mode="view" initialData={activeTask} onAcknowledge={handleAcknowledge} />
           }
-          {/* 
-            <TodoForm mode="create" onSubmit={handleCreateSubmit} />
-            <TodoForm mode="edit" initialData={tasksData[1]} onSubmit={handleEditSubmit} /> */}
         </section>
       </div>
     </>
