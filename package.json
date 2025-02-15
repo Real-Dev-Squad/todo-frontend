@@ -19,18 +19,22 @@
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.0.1",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@vitejs/plugin-react": "^4.3.3",
-    "@vitest/coverage-v8": "2.1.4",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.2",
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "^20.17.14",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^3.0.3",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "15.1.5",
     "jsdom": "^25.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "vitest": "^2.1.4"
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.3"
+  },
+  "volta": {
+    "node": "22.13.0",
+    "pnpm": "9.15.0"
   }
 }
