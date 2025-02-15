@@ -5,15 +5,8 @@ import { TaskList } from "@/components/TaskList";
 import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
 import TodoForm from "@/components/TodoForm";
-import { TASK_STATUS } from "../constants/Task";
+import { FORM_MODE, TASK_STATUS } from "../constants/Task";
 
-type FormMode = { [key: string]: "create" | "view" | "edit" };
-
-export const FORM_MODE: FormMode = {
-  CREATE: 'create',
-  VIEW: "view",
-  EDIT: "edit",
-}
 
 
 const Tasks = () => {

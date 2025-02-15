@@ -9,3 +9,7 @@ export type Task = {
   taskId: string;
   description: string;
 };
+
+export type Mode = "create" | "view" | "edit";
+
+export type FormMode = { [key: string]: Mode };

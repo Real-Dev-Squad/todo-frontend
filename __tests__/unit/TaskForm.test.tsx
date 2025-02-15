@@ -3,6 +3,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { Task } from "@/app/types/tasks";
 import TodoForm from "@/components/TodoForm";
 import { initialData } from "../utils/constants/Task";
+import { FORM_MODE } from "@/app/constants/Task";
 
 // Mock TaskDetails component
 vi.mock("./TaskDetails", () => ({
@@ -11,9 +12,11 @@ vi.mock("./TaskDetails", () => ({
     ),
 }));
 
+
+
 const renderTodoForm = (props = {}) => {
     const defaultProps = {
-        mode: "create" as "create" | "view" | "edit",
+        mode: FORM_MODE.CREATE as "create" | "view" | "edit",
         onSubmit: vi.fn(),
         onClose: vi.fn(),
         onAcknowledge: vi.fn(),
@@ -21,8 +24,16 @@ const renderTodoForm = (props = {}) => {
     return render(<TodoForm {...defaultProps} {...props} />);
 };
 
+
+let mockOnAcknowledge: () => void;
+let mockOnClose: () => void;
+let mockOnSubmit: () => void;
+
 beforeEach(() => {
-    vi.clearAllMocks();
+    mockOnAcknowledge = vi.fn();
+    mockOnClose = vi.fn();
+    mockOnSubmit = vi.fn();
+    cleanup();
 });
 
 afterEach(() => {
@@ -45,7 +56,6 @@ test("should renders create mode with all required fields", () => {
 
 test("should renders edit mode with initial data", () => {
     renderTodoForm({ mode: "edit", initialData: initialData });
-
     expect(screen.getByDisplayValue(initialData.title)).toBeDefined();
     expect(screen.getByDisplayValue(initialData.description)).toBeDefined();
     expect(screen.getByDisplayValue(initialData.assignee)).toBeDefined();
@@ -58,7 +68,7 @@ test("should renders view mode with TaskDetails component", () => {
     renderTodoForm({
         mode: "view",
         initialData: initialData,
-        onAcknowledge: vi.fn()
+        onAcknowledge: mockOnAcknowledge
     });
 
     expect(screen.getByTestId(`task-details-${initialData.id}`)).toBeDefined();
@@ -67,22 +77,15 @@ test("should renders view mode with TaskDetails component", () => {
 });
 
 test("should submits form with correct data in create mode", () => {
-    const mockOnSubmit = vi.fn();
     renderTodoForm({ onSubmit: mockOnSubmit });
 
-    const testData = {
-        title: "New Todo",
-        description: "New Description",
-        dueDate: "2024-02-14",
-        assignee: "@newuser",
-        taskId: "#new123"
-    };
+    const { id, status, tags, ...testData } = initialData;
 
-    fireEvent.change(screen.getByTestId("title"), { target: { value: testData.title } });
-    fireEvent.change(screen.getByTestId("description"), { target: { value: testData.description } });
-    fireEvent.change(screen.getByTestId("assignee"), { target: { value: testData.assignee } });
-    fireEvent.change(screen.getByTestId("task-id"), { target: { value: testData.taskId } });
-    fireEvent.change(screen.getByTestId("due-date"), { target: { value: testData.dueDate } });
+    fireEvent.input(screen.getByTestId("title"), { target: { value: testData.title } });
+    fireEvent.input(screen.getByTestId("description"), { target: { value: testData.description } });
+    fireEvent.input(screen.getByTestId("assignee"), { target: { value: testData.assignee } });
+    fireEvent.input(screen.getByTestId("task-id"), { target: { value: testData.taskId } });
+    fireEvent.input(screen.getByTestId("due-date"), { target: { value: testData.dueDate } });
     fireEvent.click(screen.getByTestId("task-form-submit-button"));
 
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
@@ -90,7 +93,6 @@ test("should submits form with correct data in create mode", () => {
 });
 
 test("should closes form when close button is clicked", () => {
-    const mockOnClose = vi.fn();
     renderTodoForm({ onClose: mockOnClose });
 
     fireEvent.click(screen.getByTestId("form-close-button"));
@@ -98,7 +100,6 @@ test("should closes form when close button is clicked", () => {
 });
 
 test("should validates required fields before submission", () => {
-    const mockOnSubmit = vi.fn();
     renderTodoForm({ onSubmit: mockOnSubmit });
 
     fireEvent.click(screen.getByTestId("task-form-submit-button"));

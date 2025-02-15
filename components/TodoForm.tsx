@@ -1,6 +1,6 @@
 'use client'
 
-import { Task } from '@/app/types/tasks'
+import { Mode, Task } from '@/app/types/tasks'
 import { useState } from 'react'
 import TaskDetails from './TaskDetails'
 
@@ -15,14 +15,14 @@ import IDIcon from "@/public/assets/id 1.svg"
 import saveIcon from "@/public/assets/Vector-1.svg"
 import sendIcon from "@/public/assets/Vector.svg"
 import { FormEvent } from 'react'
-import { FORM_MODE } from '@/app/tasks/page'
+import { FORM_MODE } from '@/app/constants/Task'
 
 
 
 interface TodoFormProps {
     initialData?: Task
     onSubmit?: (data: Task) => void
-    mode: 'create' | 'edit' | 'view'
+    mode: Mode;
     onAcknowledge?: () => void
     onClose: () => void
 }
@@ -53,7 +53,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
         <div className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div className='flex flex-row justify-between items-center'>
-                    <h2 className="text-xl font-semibold text-indigo-600">{mode === "create" ? "Create a Todo" : "Edit Todo"}</h2>
+                    <h2 className="text-xl font-semibold text-indigo-600">{mode === FORM_MODE.CREATE ? "Create a Todo" : "Edit Todo"}</h2>
                     <button
                         data-testid='form-close-button'
                         className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
