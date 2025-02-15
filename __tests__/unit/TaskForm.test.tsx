@@ -78,13 +78,11 @@ test("should submits form with correct data in create mode", () => {
         taskId: "#new123"
     };
 
-    //fireEvent.change(screen.getByLabelText(/id/i), { target: { value: testData.title } });
     fireEvent.change(screen.getByTestId("title"), { target: { value: testData.title } });
     fireEvent.change(screen.getByTestId("description"), { target: { value: testData.description } });
     fireEvent.change(screen.getByTestId("assignee"), { target: { value: testData.assignee } });
     fireEvent.change(screen.getByTestId("task-id"), { target: { value: testData.taskId } });
     fireEvent.change(screen.getByTestId("due-date"), { target: { value: testData.dueDate } });
-
     fireEvent.click(screen.getByTestId("task-form-submit-button"));
 
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
@@ -95,7 +93,7 @@ test("should closes form when close button is clicked", () => {
     const mockOnClose = vi.fn();
     renderTodoForm({ onClose: mockOnClose });
 
-    fireEvent.click(screen.getByText("X"));
+    fireEvent.click(screen.getByTestId("form-close-button"));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 });
 
@@ -103,13 +101,13 @@ test("should validates required fields before submission", () => {
     const mockOnSubmit = vi.fn();
     renderTodoForm({ onSubmit: mockOnSubmit });
 
-    fireEvent.click(screen.getByText("Submit"));
+    fireEvent.click(screen.getByTestId("task-form-submit-button"));
     expect(mockOnSubmit).not.toHaveBeenCalled();
 
     // Fill only one required field
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: "Test Title" } });
 
-    fireEvent.click(screen.getByText("Submit"));
+    fireEvent.click(screen.getByTestId("task-form-submit-button"));
     expect(mockOnSubmit).not.toHaveBeenCalled();
 });
 

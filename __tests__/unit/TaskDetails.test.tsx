@@ -28,27 +28,27 @@ test("should renders TaskDetails component with initial data", () => {
 test("should calls onAcknowledge when Acknowledge button is clicked", () => {
     render(<TaskDetails onAcknowledge={mockOnAcknowledge} initialData={initialData} onClose={mockOnClose} />);
 
-    fireEvent.click(screen.getByText("Acknowledge"));
+    fireEvent.click(screen.getByTestId("details-acknowledge-button"));
     expect(mockOnAcknowledge).toHaveBeenCalledTimes(1);
 });
 
 test("should calls onClose when close button is clicked", () => {
     render(<TaskDetails onAcknowledge={mockOnAcknowledge} initialData={initialData} onClose={mockOnClose} />);
 
-    fireEvent.click(screen.getByText("X"));
+    fireEvent.click(screen.getByTestId("details-close-button"));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 });
 
 test("should switches activity tabs when clicked", () => {
     render(<TaskDetails onAcknowledge={mockOnAcknowledge} initialData={initialData} onClose={mockOnClose} />);
 
-    fireEvent.click(screen.getByText("History"));
-    const historyTab = screen.getByText("History");
+    fireEvent.click(screen.getByTestId("history"));
+    const historyTab = screen.getByTestId("history");
     expect(historyTab.classList.contains("border-indigo-500")).toBe(true);
     expect(historyTab.classList.contains("text-indigo-600")).toBe(true);
 
-    fireEvent.click(screen.getByText("Comments"));
-    const commentsTab = screen.getByText("Comments");
+    fireEvent.click(screen.getByTestId("comments"));
+    const commentsTab = screen.getByTestId("comments");
     expect(commentsTab.classList.contains("border-indigo-500")).toBe(true);
     expect(commentsTab.classList.contains("text-indigo-600")).toBe(true);
 });

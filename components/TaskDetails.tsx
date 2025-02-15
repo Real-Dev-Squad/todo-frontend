@@ -37,6 +37,7 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                     <div className='flex flex-row gap-2'>
                         <button
                             onClick={onAcknowledge}
+                            data-testid='details-acknowledge-button'
                             className=" flex flex-row justify-center items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             <span className='text-2xl text-white'>+</span>
@@ -45,7 +46,8 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                             </p>
                         </button>
                         <button
-                            className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-[#6366F1] hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6366F1]"
+                            data-testid='details-close-button'
+                            className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                             onClick={onClose}
                         >X</button>
                     </div>
@@ -99,6 +101,7 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                             {Object.keys(Tabs).map((tab) => (
                                 <button
+                                    data-testid={Tabs[tab]}
                                     key={tab}
                                     onClick={() => setActiveTab(Tabs[tab])}
                                     className={`${activeTab === Tabs[tab]
@@ -115,7 +118,7 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         <div className="h-fit rounded-xl overflow-hidden bg-[#F5F5FF]">
                             <textarea
                                 placeholder="Leave a comment..."
-                                className="w-full h-full text-sm bg-[#F5F5FF] text-[#4541C6] border-none p-2 placeholder-gray-400 focus:outline-none"
+                                className="w-full h-full text-sm bg-[#F5F5FF] text-indigo-600 border-none p-2 placeholder-gray-400 focus:outline-none"
                             />
                         </div>
                     </div>
