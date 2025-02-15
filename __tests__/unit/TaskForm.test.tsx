@@ -2,6 +2,7 @@ import { cleanup, render, screen, fireEvent } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { Task } from "@/app/types/tasks";
 import TodoForm from "@/components/TodoForm";
+import { initialData } from "../utils/constants/Task";
 
 // Mock TaskDetails component
 vi.mock("./TaskDetails", () => ({
@@ -9,17 +10,6 @@ vi.mock("./TaskDetails", () => ({
         <div data-testid={`task-details-${initialData.id}`}>Mocked Task Details</div>
     ),
 }));
-
-const mockInitialData: Task = {
-    id: "1",
-    title: "Test Todo",
-    description: "Test Description",
-    dueDate: "2024-02-14T12:00",
-    assignee: "@testuser",
-    tags: "test",
-    taskId: "#test123",
-    status: "Todo",
-};
 
 const renderTodoForm = (props = {}) => {
     const defaultProps = {
@@ -39,7 +29,7 @@ afterEach(() => {
     cleanup();
 });
 
-test("renders create mode with all required fields", () => {
+test("should renders create mode with all required fields", () => {
     renderTodoForm();
 
     const requiredFields = ["Title", "Description", "Due Date", "Assignee", "Task ID"];
@@ -53,30 +43,30 @@ test("renders create mode with all required fields", () => {
     expect(screen.getByText("Submit")).toBeDefined();
 });
 
-test("renders edit mode with initial data", () => {
-    renderTodoForm({ mode: "edit", initialData: mockInitialData });
+test("should renders edit mode with initial data", () => {
+    renderTodoForm({ mode: "edit", initialData: initialData });
 
-    expect(screen.getByDisplayValue(mockInitialData.title)).toBeDefined();
-    expect(screen.getByDisplayValue(mockInitialData.description)).toBeDefined();
-    expect(screen.getByDisplayValue(mockInitialData.assignee)).toBeDefined();
-    expect(screen.getByDisplayValue(mockInitialData.taskId)).toBeDefined();
+    expect(screen.getByDisplayValue(initialData.title)).toBeDefined();
+    expect(screen.getByDisplayValue(initialData.description)).toBeDefined();
+    expect(screen.getByDisplayValue(initialData.assignee)).toBeDefined();
+    expect(screen.getByDisplayValue(initialData.taskId)).toBeDefined();
     expect(screen.getByText("Edit Todo")).toBeDefined();
     expect(screen.getByText("Save")).toBeDefined();
 });
 
-test("renders view mode with TaskDetails component", () => {
+test("should renders view mode with TaskDetails component", () => {
     renderTodoForm({
         mode: "view",
-        initialData: mockInitialData,
+        initialData: initialData,
         onAcknowledge: vi.fn()
     });
 
-    expect(screen.getByTestId(`task-details-${mockInitialData.id}`)).toBeDefined();
+    expect(screen.getByTestId(`task-details-${initialData.id}`)).toBeDefined();
     expect(screen.queryByText("Create a Todo")).toBeNull();
     expect(screen.queryByText("Edit Todo")).toBeNull();
 });
 
-test("submits form with correct data in create mode", () => {
+test("should submits form with correct data in create mode", () => {
     const mockOnSubmit = vi.fn();
     renderTodoForm({ onSubmit: mockOnSubmit });
 
@@ -101,7 +91,7 @@ test("submits form with correct data in create mode", () => {
     expect(mockOnSubmit).toHaveBeenCalledWith(expect.objectContaining(testData));
 });
 
-test("closes form when close button is clicked", () => {
+test("should closes form when close button is clicked", () => {
     const mockOnClose = vi.fn();
     renderTodoForm({ onClose: mockOnClose });
 
@@ -109,7 +99,7 @@ test("closes form when close button is clicked", () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 });
 
-test("validates required fields before submission", () => {
+test("should validates required fields before submission", () => {
     const mockOnSubmit = vi.fn();
     renderTodoForm({ onSubmit: mockOnSubmit });
 
@@ -123,7 +113,7 @@ test("validates required fields before submission", () => {
     expect(mockOnSubmit).not.toHaveBeenCalled();
 });
 
-test("renders tags field as optional", () => {
+test("should renders tags field as optional", () => {
     renderTodoForm();
 
     const tagsLabel = screen.getByText(/tags/i);

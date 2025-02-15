@@ -5,6 +5,16 @@ import { TaskList } from "@/components/TaskList";
 import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
 import TodoForm from "@/components/TodoForm";
+import { TASK_STATUS } from "../constants/Task";
+
+type FormMode = { [key: string]: "create" | "view" | "edit" };
+
+export const FORM_MODE: FormMode = {
+  CREATE: 'create',
+  VIEW: "view",
+  EDIT: "edit",
+}
+
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -23,8 +33,8 @@ const Tasks = () => {
 
   }, [activeTask])
 
-  const todoTasks = tasks.filter((task) => task.status === "Todo");
-  const inProgressTasks = tasks.filter((task) => task.status === "In-Progress");
+  const todoTasks = tasks.filter((task) => task.status === TASK_STATUS.TODO);
+  const inProgressTasks = tasks.filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
 
   const handleCreateSubmit = (data: Task) => {
     console.log("Creating todo:", data)
@@ -75,13 +85,13 @@ const Tasks = () => {
             isCreateAndEditFormVisibile && <TodoForm onClose={() => {
               setIsCreateAndEditFormVisibile(false);
               setActiveTask(undefined)
-            }} mode="create" onSubmit={handleCreateSubmit} />
+            }} mode={FORM_MODE.CREATE} onSubmit={handleCreateSubmit} />
           }
           {
             activeTask && <TodoForm onClose={() => {
               setIsCreateAndEditFormVisibile(false)
               setActiveTask(undefined)
-            }} mode="view" initialData={activeTask} onAcknowledge={handleAcknowledge} />
+            }} mode={FORM_MODE.VIEW} initialData={activeTask} onAcknowledge={handleAcknowledge} />
           }
         </section>
       </div>

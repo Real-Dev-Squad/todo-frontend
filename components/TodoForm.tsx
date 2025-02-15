@@ -15,6 +15,7 @@ import IDIcon from "@/public/assets/id 1.svg"
 import saveIcon from "@/public/assets/Vector-1.svg"
 import sendIcon from "@/public/assets/Vector.svg"
 import { FormEvent } from 'react'
+import { FORM_MODE } from '@/app/tasks/page'
 
 
 
@@ -44,7 +45,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
     }
 
 
-    if (mode === 'view' && initialData && onAcknowledge) {
+    if (mode === FORM_MODE.VIEW && initialData && onAcknowledge) {
         return <TaskDetails onClose={onClose} onAcknowledge={onAcknowledge} initialData={initialData} />
     }
 
@@ -165,7 +166,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
                         />
                     </div>
 
-                    {mode === "edit" && (
+                    {mode === FORM_MODE.EDIT && (
                         <div className='flex flex-row gap-2 justify-start items-center'>
                             <Image src={StatusIcon} alt={"due data icon"} width={15} height={15} />
                             <label htmlFor="dueDate" className="block text-sm ont-medium text-gray-700 mb-1 w-32 max-w-44">
@@ -193,9 +194,8 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
                     className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-[#6366F1] hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6366F1]"
                 >
                     <span>
-                        {mode === "create" ? <Image src={sendIcon} alt='create todo' width={15} height={15} /> : <Image src={saveIcon} alt='save edit icon' width={15} height={15} />}
+                        {mode === "create" ? <><Image src={sendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={saveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
                     </span>
-                    {mode === "create" ? "Submit" : "Save"}
                 </button>
             </form>
         </div>

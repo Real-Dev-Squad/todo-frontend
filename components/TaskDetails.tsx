@@ -18,9 +18,16 @@ type Props = {
     onClose: () => void,
 }
 
+const Tabs: {
+    [key: string]: string;
+} = {
+    All: "all", History: "history", Comments: 'comments'
+}
+
+
 function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
 
-    const [activeTab, setActiveTab] = useState('all')
+    const [activeTab, setActiveTab] = useState(Tabs.All)
 
     return (
         <div data-testid="task-details-1" className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
@@ -90,11 +97,11 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                     <h3 className="text-sm font-medium text-gray-900 mb-4">Activity</h3>
                     <div className="">
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                            {['All', 'History', 'Comments'].map((tab) => (
+                            {Object.keys(Tabs).map((tab) => (
                                 <button
                                     key={tab}
-                                    onClick={() => setActiveTab(tab.toLowerCase())}
-                                    className={`${activeTab === tab.toLowerCase()
+                                    onClick={() => setActiveTab(Tabs[tab])}
+                                    className={`${activeTab === Tabs[tab]
                                         ? 'border-indigo-500 text-indigo-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
