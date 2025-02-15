@@ -18,7 +18,7 @@ export const FORM_MODE: FormMode = {
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isCreateAndEditFormVisibile, setIsCreateAndEditFormVisibile] = useState(false)
+  const [isCreateAndEditFormVisible, setIsCreateAndEditFormVisible] = useState(false)
   const [activeTask, setActiveTask] = useState<Task | undefined>();
 
   useEffect(() => {
@@ -26,12 +26,10 @@ const Tasks = () => {
   }, []);
 
 
-  useEffect(() => {
-    if (activeTask) {
-      setIsCreateAndEditFormVisibile(false);
-    }
-
-  }, [activeTask])
+  const handleTaskSelect = (task: Task) => {
+    setActiveTask(task);
+    setIsCreateAndEditFormVisible(false);
+  };
 
   const todoTasks = tasks.filter((task) => task.status === TASK_STATUS.TODO);
   const inProgressTasks = tasks.filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
@@ -44,12 +42,18 @@ const Tasks = () => {
     console.log("Todo acknowledged")
   }
 
+
+  const handleFormClose = () => {
+    setIsCreateAndEditFormVisible(false);
+    setActiveTask(undefined);
+  };
+
   return (
     <>
       <div className="md:w-5/6 lg:w-3/4 w-full flex flex-row justify-end mx-auto p-2">
         <button
           onClick={() => {
-            setIsCreateAndEditFormVisibile(prev => !prev)
+            setIsCreateAndEditFormVisible(prev => !prev)
             setActiveTask(undefined);
           }
           }
@@ -70,28 +74,22 @@ const Tasks = () => {
         >
           <section data-testid="todo-section">
             <TaskHeader title="To Do" />
-            <TaskList tasks={todoTasks} setActiveTask={setActiveTask} />
+            <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
           </section>
 
           <section data-testid="in-progress-section">
             <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
-            <TaskList tasks={inProgressTasks} setActiveTask={setActiveTask} />
+            <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />
           </section>
         </section>
         <section
           className="max-w-2xl mt-6 space-y-8"
         >
           {
-            isCreateAndEditFormVisibile && <TodoForm onClose={() => {
-              setIsCreateAndEditFormVisibile(false);
-              setActiveTask(undefined)
-            }} mode={FORM_MODE.CREATE} onSubmit={handleCreateSubmit} />
+            isCreateAndEditFormVisible && <TodoForm onClose={handleFormClose} mode={FORM_MODE.CREATE} onSubmit={handleCreateSubmit} />
           }
           {
-            activeTask && <TodoForm onClose={() => {
-              setIsCreateAndEditFormVisibile(false)
-              setActiveTask(undefined)
-            }} mode={FORM_MODE.VIEW} initialData={activeTask} onAcknowledge={handleAcknowledge} />
+            activeTask && <TodoForm onClose={handleFormClose} mode={FORM_MODE.VIEW} initialData={activeTask} onAcknowledge={handleAcknowledge} />
           }
         </section>
       </div>

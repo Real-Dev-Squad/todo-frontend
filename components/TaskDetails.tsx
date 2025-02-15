@@ -25,7 +25,20 @@ const Tabs: {
 }
 
 
+
 function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
+
+
+    const { dueDate, tags, title, description, assignee, taskId, profile, id, status } = initialData
+
+    const properties = [
+        { icon: calendarIcon, label: "Due Date:", value: new Date(dueDate || '').toLocaleDateString(), alt: "Due date icon" },
+        { icon: AccountIcon, label: "Assignee:", value: assignee, alt: "Assignee icon" },
+        { icon: StatusIcon, label: "Status:", value: status, alt: "Status icon" },
+        { icon: TagsIcon, label: "Tags:", value: tags, alt: "Tags icon" },
+        { icon: IDIcon, label: "Task ID:", value: taskId, alt: "Task Id icon" },
+    ];
+
 
     const [activeTab, setActiveTab] = useState(Tabs.All)
 
@@ -33,7 +46,7 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
         <div data-testid="task-details-1" className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
             <div className="p-6 space-y-6">
                 <div className='flex flex-row justify-between items-center'>
-                    <h2 className="text-xl font-semibold text-indigo-600">{initialData?.title}</h2>
+                    <h2 className="text-xl font-semibold text-indigo-600">{title}</h2>
                     <div className='flex flex-row gap-2'>
                         <button
                             onClick={onAcknowledge}
@@ -53,7 +66,7 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                     </div>
                 </div>
 
-                <div className="text-gray-600 text-sm mb-4 max-h-40 whitespace-pre-wrap overflow-y-scroll no-scrollbar ">{initialData?.description}</div>
+                <div className="text-gray-600 text-sm mb-4 max-h-40 whitespace-pre-wrap overflow-y-scroll no-scrollbar ">{description}</div>
 
                 <hr className='mb-4' />
 
@@ -61,35 +74,12 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                     <h3 className="text-sm font-medium text-gray-900">Properties</h3>
 
                     <div className="grid grid-cols-1 gap-4">
-                        <div className="flex items-center gap-2">
-                            <Image src={calendarIcon} alt={"due data icon"} width={15} height={15} />
-                            <span className="text-sm ">Due Date:</span>
-                            <span className="text-sm text-gray-500">{new Date(initialData?.dueDate || '').toLocaleDateString()}</span>
-                        </div>
 
-                        <div className="flex items-center gap-2">
-                            <Image src={AccountIcon} alt={"due data icon"} width={15} height={15} />
-                            <span className="text-sm ">Assignee:</span>
-                            <span className="text-sm text-gray-500">{initialData?.assignee}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <Image src={StatusIcon} alt={"due data icon"} width={15} height={15} />
-                            <span className="text-sm ">Status:</span>
-                            <span className="text-sm text-gray-500">{initialData?.status}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <Image src={TagsIcon} alt={"due data icon"} width={15} height={15} />
-                            <span className="text-sm ">Tags:</span>
-                            <span className="text-sm text-gray-500">{initialData?.tags}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <Image src={IDIcon} alt={"due data icon"} width={15} height={15} />
-                            <span className="text-sm ">Task ID:</span>
-                            <span className="text-sm text-gray-500">#{initialData?.taskId}</span>
-                        </div>
+                        {properties.map(({ icon, label, value, alt }) => <div key={label} className="flex items-center gap-2">
+                            <Image src={icon} alt={alt} width={15} height={15} />
+                            <span className="text-sm ">{label}</span>
+                            <span className="text-sm text-gray-500">{value}</span>
+                        </div>)}
                     </div>
                 </div>
 

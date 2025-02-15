@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface TaskListProps {
   tasks: Task[];
-  setActiveTask: Dispatch<SetStateAction<Task | undefined>>
+  setActiveTask: (task: Task) => void
 }
 
 export const TaskList = ({ tasks, setActiveTask }: TaskListProps) => {

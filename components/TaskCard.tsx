@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 interface TaskCardProps {
   task: Task;
   className?: string;
-  setActiveTask: Dispatch<SetStateAction<Task | undefined>>
+  setActiveTask: (task: Task) => void
 }
 
 const getStatusImagePath = (status: string): string => {
