@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Todo Listing",
-    "assignee": "Vaibhav Singh",
+    "assignee": "Vaibhav Sharma",
     "dueDate": "2023-12-15",
     "status": "todo",
     "profile": "/assets/user.png"
