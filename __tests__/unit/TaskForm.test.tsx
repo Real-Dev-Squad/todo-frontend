@@ -55,7 +55,7 @@ test("should renders create mode with all required fields", () => {
 });
 
 test("should renders edit mode with initial data", () => {
-    renderTodoForm({ mode: "edit", initialData: initialData });
+    renderTodoForm({ mode: FORM_MODE.EDIT, initialData: initialData });
     expect(screen.getByDisplayValue(initialData.title)).toBeDefined();
     expect(screen.getByDisplayValue(initialData.description)).toBeDefined();
     expect(screen.getByDisplayValue(initialData.assignee)).toBeDefined();
@@ -66,7 +66,7 @@ test("should renders edit mode with initial data", () => {
 
 test("should renders view mode with TaskDetails component", () => {
     renderTodoForm({
-        mode: "view",
+        mode: FORM_MODE.VIEW,
         initialData: initialData,
         onAcknowledge: mockOnAcknowledge
     });

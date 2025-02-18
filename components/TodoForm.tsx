@@ -195,7 +195,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
                     className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                 >
                     <span className='flex flex-row gap-2'>
-                        {mode === "create" ? <><Image src={sendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={saveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
+                        {mode === FORM_MODE.CREATE ? <><Image src={sendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={saveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
                     </span>
                 </button>
             </form>
