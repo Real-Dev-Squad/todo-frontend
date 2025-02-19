@@ -1,6 +1,5 @@
 import { Task } from "@/app/types/tasks";
 import { TaskCard } from "./TaskCard";
-import { Dispatch, SetStateAction } from "react";
 
 interface TaskListProps {
   tasks: Task[];
