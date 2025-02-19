@@ -29,7 +29,7 @@ const Tabs: {
 function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
 
 
-    const { dueDate, tags, title, description, assignee, taskId, profile, id, status } = initialData
+    const { dueDate, tags, title, description, assignee, taskId, status } = initialData
 
     const properties = [
         { icon: calendarIcon, label: "Due Date:", value: new Date(dueDate || '').toLocaleDateString(), alt: "Due date icon" },

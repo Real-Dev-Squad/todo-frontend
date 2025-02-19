@@ -1,7 +1,6 @@
 import { Task } from "@/app/types/tasks";
 import { DateFormats, DateUtil } from "@/utils/dateUtil";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
 
 interface TaskCardProps {
   task: Task;
