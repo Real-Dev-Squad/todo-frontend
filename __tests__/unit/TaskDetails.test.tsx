@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import TaskDetails from "@/components/TaskDetails";
-import { initialData } from "../utils/constants/Task";
+import { initialData } from "@/__mocks__/Task";
 
 let mockOnAcknowledge: () => void;
 let mockOnClose: () => void;

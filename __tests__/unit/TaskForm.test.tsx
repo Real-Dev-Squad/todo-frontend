@@ -2,8 +2,8 @@ import { cleanup, render, screen, fireEvent } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { Task } from "@/app/types/tasks";
 import TodoForm from "@/components/TodoForm";
-import { initialData } from "../utils/constants/Task";
 import { FORM_MODE } from "@/app/constants/Task";
+import { initialData } from "@/__mocks__/Task";
 
 // Mock TaskDetails component
 vi.mock("./TaskDetails", () => ({
@@ -33,7 +33,7 @@ beforeEach(() => {
     mockOnAcknowledge = vi.fn();
     mockOnClose = vi.fn();
     mockOnSubmit = vi.fn();
-    cleanup();
+    // cleanup();
 });
 
 afterEach(() => {

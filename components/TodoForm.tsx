@@ -8,12 +8,12 @@ import Image from 'next/image'
 
 //Import Svg for icons
 import calendarIcon from "@/public/assets/calendar.svg"
-import AccountIcon from "@/public/assets/profile-user 5.svg"
-import StatusIcon from "@/public/assets/status 1.svg"
-import TagsIcon from "@/public/assets/price-tag 1.svg"
-import IDIcon from "@/public/assets/id 1.svg"
-import saveIcon from "@/public/assets/Vector-1.svg"
-import sendIcon from "@/public/assets/Vector.svg"
+import AccountIcon from "@/public/assets/profile.svg"
+import StatusIcon from "@/public/assets/status.svg"
+import TagsIcon from "@/public/assets/priceTag.svg"
+import IDIcon from "@/public/assets/id.svg"
+import SaveIcon from "@/public/assets/save.svg"
+import SendIcon from "@/public/assets/send.svg"
 import { FormEvent } from 'react'
 import { FORM_MODE } from '@/app/constants/Task'
 
@@ -195,7 +195,7 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
                     className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                 >
                     <span className='flex flex-row gap-2'>
-                        {mode === FORM_MODE.CREATE ? <><Image src={sendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={saveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
+                        {mode === FORM_MODE.CREATE ? <><Image src={SendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={SaveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
                     </span>
                 </button>
             </form>

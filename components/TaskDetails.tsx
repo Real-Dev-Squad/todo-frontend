@@ -7,10 +7,10 @@ import React, { useState } from 'react'
 
 //Import Svg for icons
 import calendarIcon from "@/public/assets/calendar.svg"
-import AccountIcon from "@/public/assets/profile-user 5.svg"
-import StatusIcon from "@/public/assets/status 1.svg"
-import TagsIcon from "@/public/assets/price-tag 1.svg"
-import IDIcon from "@/public/assets/id 1.svg"
+import AccountIcon from "@/public/assets/profile.svg"
+import StatusIcon from "@/public/assets/status.svg"
+import TagsIcon from "@/public/assets/priceTag.svg"
+import IDIcon from "@/public/assets/id.svg"
 
 type Props = {
     onAcknowledge: () => void,
