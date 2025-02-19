@@ -26,21 +26,21 @@ const Tabs: {
 
 
 
-function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
+export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
+    const [activeTab, setActiveTab] = useState(Tabs.All)
 
 
     const { dueDate, tags, title, description, assignee, taskId, status } = initialData
 
     const properties = [
-        { icon: calendarIcon, label: "Due Date:", value: new Date(dueDate || '').toLocaleDateString(), alt: "Due date icon" },
-        { icon: AccountIcon, label: "Assignee:", value: assignee, alt: "Assignee icon" },
-        { icon: StatusIcon, label: "Status:", value: status, alt: "Status icon" },
-        { icon: TagsIcon, label: "Tags:", value: tags, alt: "Tags icon" },
-        { icon: IDIcon, label: "Task ID:", value: taskId, alt: "Task Id icon" },
+        { icon: calendarIcon, testId: "dueDate", label: "Due Date:", value: new Date(dueDate || '').toLocaleDateString(), alt: "Due date icon" },
+        { icon: AccountIcon, testId: "assignee", label: "Assignee:", value: assignee, alt: "Assignee icon" },
+        { icon: StatusIcon, testId: "status", label: "Status:", value: status, alt: "Status icon" },
+        { icon: TagsIcon, testId: "tags", label: "Tags:", value: tags, alt: "Tags icon" },
+        { icon: IDIcon, testId: "taskId", label: "Task ID:", value: taskId, alt: "Task Id icon" },
     ];
 
 
-    const [activeTab, setActiveTab] = useState(Tabs.All)
 
     return (
         <div data-testid="task-details-1" className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
@@ -75,10 +75,10 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
 
                     <div className="grid grid-cols-1 gap-4">
 
-                        {properties.map(({ icon, label, value, alt }) => <div key={label} className="flex items-center gap-2">
+                        {properties.map(({ icon, label, value, alt, testId }) => <div key={label} className="flex items-center gap-2">
                             <Image src={icon} alt={alt} width={15} height={15} />
                             <span className="text-sm ">{label}</span>
-                            <span className="text-sm text-gray-500">{value}</span>
+                            <span data-testid={testId} className="text-sm text-gray-500">{value}</span>
                         </div>)}
                     </div>
                 </div>
@@ -94,6 +94,8 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                                     data-testid={Tabs[tab]}
                                     key={tab}
                                     onClick={() => setActiveTab(Tabs[tab])}
+                                    aria-selected={activeTab === Tabs[tab]}
+                                    role="button"
                                     className={`${activeTab === Tabs[tab]
                                         ? 'border-indigo-500 text-indigo-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -117,5 +119,3 @@ function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
         </div>
     )
 }
-
-export default TaskDetails

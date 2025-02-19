@@ -2,7 +2,6 @@
 
 import { Mode, Task } from '@/app/types/tasks'
 import { useState } from 'react'
-import TaskDetails from './TaskDetails'
 
 import Image from 'next/image'
 
@@ -16,6 +15,7 @@ import SaveIcon from "@/public/assets/save.svg"
 import SendIcon from "@/public/assets/send.svg"
 import { FormEvent } from 'react'
 import { FORM_MODE } from '@/app/constants/Task'
+import { TaskDetails } from './TaskDetails'
 
 
 
@@ -27,17 +27,24 @@ interface TodoFormProps {
     onClose: () => void
 }
 
-export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }: TodoFormProps) {
-    const [formData, setFormData] = useState<Task>({
-        id: initialData?.id || '',
-        title: initialData?.title || '',
-        description: initialData?.description || '',
-        dueDate: initialData?.dueDate || '',
-        assignee: initialData?.assignee || '',
-        tags: initialData?.tags || '',
-        taskId: initialData?.taskId || '',
-        status: initialData?.status || 'Todo',
-    })
+const DEFAULT_FORM_DATA = {
+    id: '',
+    title: '',
+    description: '',
+    dueDate: '',
+    assignee: '',
+    tags: '',
+    taskId: '',
+    status: 'Todo',
+}
+
+export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }: TodoFormProps) {
+    const [formData, setFormData] = useState<Task>(initialData ?? DEFAULT_FORM_DATA)
+
+    const Icon = mode === FORM_MODE.CREATE ? SendIcon : SaveIcon;
+    const ctaText = mode === FORM_MODE.CREATE ? "Submit" : "Save";
+    const altText = mode === FORM_MODE.CREATE ? "Create todo" : "Save todo"
+
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -195,7 +202,8 @@ export default function TodoForm({ initialData, onSubmit, mode, onAcknowledge, o
                     className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                 >
                     <span className='flex flex-row gap-2'>
-                        {mode === FORM_MODE.CREATE ? <><Image src={SendIcon} alt='create todo' width={15} height={15} />  Submit </> : <> <Image src={SaveIcon} alt='save edit icon' width={15} height={15} /> Save </>}
+                        <Image src={Icon} alt={altText} width={20} height={20} />
+                        {ctaText}
                     </span>
                 </button>
             </form>

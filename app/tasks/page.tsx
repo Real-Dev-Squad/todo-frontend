@@ -4,8 +4,8 @@ import { TaskHeader } from "@/components/TaskHeader";
 import { TaskList } from "@/components/TaskList";
 import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
-import TodoForm from "@/components/TodoForm";
 import { FORM_MODE, TASK_STATUS } from "../constants/Task";
+import { TodoForm } from "@/components/TodoForm";
 
 
 
@@ -14,18 +14,13 @@ const Tasks = () => {
   const [isCreateAndEditFormVisible, setIsCreateAndEditFormVisible] = useState(false)
   const [activeTask, setActiveTask] = useState<Task | undefined>();
 
-  useEffect(() => {
-    setTasks(tasksData);
-  }, []);
-
+  const todoTasks = tasks.filter((task) => task.status === TASK_STATUS.TODO);
+  const inProgressTasks = tasks.filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
 
   const handleTaskSelect = (task: Task) => {
     setActiveTask(task);
     setIsCreateAndEditFormVisible(false);
   };
-
-  const todoTasks = tasks.filter((task) => task.status === TASK_STATUS.TODO);
-  const inProgressTasks = tasks.filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
 
   const handleCreateSubmit = (data: Task) => {
     console.log("Creating todo:", data)
@@ -41,6 +36,12 @@ const Tasks = () => {
     setActiveTask(undefined);
   };
 
+
+  useEffect(() => {
+    setTasks(tasksData);
+  }, []);
+
+
   return (
     <>
       <div className="md:w-5/6 lg:w-3/4 w-full flex flex-row justify-end mx-auto p-2">
@@ -53,9 +54,9 @@ const Tasks = () => {
           className=" flex flex-row justify-center items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <span className='text-2xl text-white'>+</span>
-          <p>
+          <span>
             Create new Task
-          </p>
+          </span>
         </button>
       </div>
       <div
