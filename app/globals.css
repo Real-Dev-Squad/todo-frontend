@@ -13,3 +13,12 @@
     --foreground: #ededed;
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.animate-shimmer {
+  animation: shimmer 1.75s infinite;
+}
