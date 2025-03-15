@@ -33,7 +33,7 @@
   }
 }
 .animate-shimmer {
-  animation: shimmer 1.75s infinite;
+  animation: shimmer 1.75s infinite ease-in-out;
 }
 
 @media (prefers-reduced-motion) {

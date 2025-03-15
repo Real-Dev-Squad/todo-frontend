@@ -26,9 +26,9 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
 
     if (loading && placeholder) {
         return <>{placeholder}</>
-    }   
+    }
 
-    // If loading, render the shimmer effectx
+    // If loading, render the shimmer effect
     return (
         <div
             className="relative overflow-hidden rounded-lg bg-white mx-6 max-w-full"

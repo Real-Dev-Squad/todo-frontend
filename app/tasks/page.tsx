@@ -6,7 +6,7 @@ import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
 import { FORM_MODE, TASK_STATUS } from "../constants/Task";
 import { TodoForm } from "@/components/TodoForm";
-import { ShimmerSkeleton } from "@/components/SimmerSkeleton";
+import { ShimmerSkeleton } from "@/components/ShimmerSkeleton";
 
 
 

@@ -1,4 +1,4 @@
-import { ShimmerSkeleton } from "@/components/SimmerSkeleton";
+import { ShimmerSkeleton } from "@/components/ShimmerSkeleton";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
@@ -56,8 +56,6 @@ test("should renders the children when loading is false", () => {
   const childElement = screen.getByTestId("shimmer-child-component");
   expect(childElement).not.toBeNull();
   expect(childElement.textContent).toBe("Child Content");
-
-
 });
 
 test("should applies custom dimensions when provided", () => {
@@ -72,11 +70,10 @@ test("should applies custom dimensions when provided", () => {
   expect(shimmerContainer).not.toBeNull();
 
   // Check if custom dimensions are applied
-  if (shimmerContainer) {
-    expect(shimmerContainer.getAttribute("style")).toContain("width: 200px");
-    expect(shimmerContainer.getAttribute("style")).toContain("height: 100px");
-    expect(shimmerContainer.getAttribute("style")).toContain("border-radius: 8px");
-  }
+  expect(shimmerContainer.getAttribute("style")).toContain("width: 200px");
+  expect(shimmerContainer.getAttribute("style")).toContain("height: 100px");
+  expect(shimmerContainer.getAttribute("style")).toContain("border-radius: 8px");
+
 });
 
 test("should applies default dimensions when not provided", () => {
@@ -91,9 +88,7 @@ test("should applies default dimensions when not provided", () => {
   expect(shimmerContainer).not.toBeNull();
 
   // Check if default dimensions are applied
-  if (shimmerContainer) {
-    expect(shimmerContainer.getAttribute("style")).not.toContain("width");
-    expect(shimmerContainer.getAttribute("style")).toContain("height: 100px");
-    expect(shimmerContainer.getAttribute("style")).not.toContain("border-radius");
-  }
+  expect(shimmerContainer.getAttribute("style")).not.toContain("width");
+  expect(shimmerContainer.getAttribute("style")).toContain("height: 100px");
+  expect(shimmerContainer.getAttribute("style")).not.toContain("border-radius");
 });
