@@ -3,9 +3,10 @@ import { TaskCard } from "./TaskCard";
 
 interface TaskListProps {
   tasks: Task[];
+  setActiveTask: (task: Task) => void
 }
 
-export const TaskList = ({ tasks }: TaskListProps) => {
+export const TaskList = ({ tasks, setActiveTask }: TaskListProps) => {
   if (tasks.length === 0) {
     return (
       <div
@@ -17,12 +18,13 @@ export const TaskList = ({ tasks }: TaskListProps) => {
     );
   }
   return (
-    <div data-testid={`task-list`}>
+    <div data-testid={`task-list`} >
       {tasks.map((task) => (
         <TaskCard
           key={task.id}
           task={task}
           className="transition-transform hover:scale-[1.01]"
+          setActiveTask={setActiveTask}
         />
       ))}
     </div>
