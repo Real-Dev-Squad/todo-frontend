@@ -75,7 +75,7 @@ test("applies default dimensions when not provided", () => {
   // Check if default dimensions are applied
   if (shimmerContainer) {
     expect(shimmerContainer.getAttribute("style")).toContain("width: 100%");
-    expect(shimmerContainer.getAttribute("style")).toContain("height: 100%");
+    expect(shimmerContainer.getAttribute("style")).toContain("height: 100px");
     expect(shimmerContainer.getAttribute("style")).not.toContain("border-radius");
   }
 });
