@@ -4,6 +4,8 @@ import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
 // Mock component to use as a child
 const MockComponent = () => <div data-testid="shimmer-child-component">Child Content</div>;
+const PlaceholderComponent = () => <div data-testid="shimmer-placeholder-component">placeholder Content</div>;
+
 
 // Clean up after each test
 afterEach(() => {
@@ -11,7 +13,7 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-test("renders the shimmer when loading is true", () => {
+test("should renders the shimmer animation when loading is true and placehlder component isn't provided", () => {
   render(
     <ShimmerSkeleton loading={true}>
       <MockComponent />
@@ -27,7 +29,27 @@ test("renders the shimmer when loading is true", () => {
   expect(childElement).toBeNull();
 });
 
-test("renders the children when loading is false", () => {
+test("should renders the placeholder when loading is true and placeholder component is provided", () => {
+  render(
+    <ShimmerSkeleton loading={true} placeholder={<PlaceholderComponent />}>
+      <MockComponent />
+    </ShimmerSkeleton>
+  );
+
+  // The shimmer element should be in the document
+  const shimmerElement = screen.getByTestId("shimmer");
+  expect(shimmerElement).not.toBeNull();
+
+  // The child component should not be in the document
+  const childElement = screen.queryByTestId("shimmer-child-component");
+  expect(childElement).toBeNull();
+
+   // The placeholder component should be in the document
+  const placeholderElement = screen.queryByTestId("shimmer-placeholder-component");
+  expect(placeholderElement).not.toBeNull();
+});
+
+test("should renders the children when loading is false", () => {
   render(
     <ShimmerSkeleton loading={false}>
       <MockComponent />
@@ -42,7 +64,7 @@ test("renders the children when loading is false", () => {
 
 });
 
-test("applies custom dimensions when provided", () => {
+test("should applies custom dimensions when provided", () => {
   render(
     <ShimmerSkeleton loading={true} width="200px" height="100px" borderRadius="8px">
       <MockComponent />
@@ -61,7 +83,7 @@ test("applies custom dimensions when provided", () => {
   }
 });
 
-test("applies default dimensions when not provided", () => {
+test("should applies default dimensions when not provided", () => {
   render(
     <ShimmerSkeleton loading={true}>
       <MockComponent />

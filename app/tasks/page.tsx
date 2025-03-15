@@ -77,14 +77,17 @@ const Tasks = () => {
         <section
           className="w-full flex flex-col"
         >
-          <section data-testid="todo-section">
+          <section data-testid="todo-section"
+            aria-busy={isFetchingTaskData} aria-live="polite"
+          >
             <TaskHeader title="To Do" />
             <ShimmerSkeleton loading={isFetchingTaskData}>
               <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
             </ShimmerSkeleton>
           </section>
 
-          <section data-testid="in-progress-section">
+          <section data-testid="in-progress-section"
+            aria-busy={isFetchingTaskData} aria-live="polite">
             <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
             <ShimmerSkeleton loading={isFetchingTaskData}>
               <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />

@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 // Define the props interface for the ShimmerSkeleton component
 interface ShimmerSkeletonProps {
     children: ReactNode;
+    placeholder?: ReactNode;
     loading: boolean;
     height?: string | number;
     width?: string | number;
@@ -16,11 +17,16 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     width,
     height = '100px',
     borderRadius,
+    placeholder
 }) => {
     // If not loading, render the children
     if (!loading) {
         return <>{children}</>;
     }
+
+    if (loading && placeholder) {
+        return <>{placeholder}</>
+    }   
 
     // If loading, render the shimmer effectx
     return (
