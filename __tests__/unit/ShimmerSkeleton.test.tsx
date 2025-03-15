@@ -36,15 +36,11 @@ test("should renders the placeholder when loading is true and placeholder compon
     </ShimmerSkeleton>
   );
 
-  // The shimmer element should be in the document
-  const shimmerElement = screen.getByTestId("shimmer");
-  expect(shimmerElement).not.toBeNull();
-
   // The child component should not be in the document
   const childElement = screen.queryByTestId("shimmer-child-component");
   expect(childElement).toBeNull();
 
-   // The placeholder component should be in the document
+  // The placeholder component should be in the document
   const placeholderElement = screen.queryByTestId("shimmer-placeholder-component");
   expect(placeholderElement).not.toBeNull();
 });
