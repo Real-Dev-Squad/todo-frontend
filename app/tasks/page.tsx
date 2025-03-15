@@ -14,8 +14,10 @@ const Tasks = () => {
   const inProgressTasks = tasks.filter((task) => task.status === "in-progress");
 
   useEffect(() => {
-    setTasks(tasksData);
-    setIsFetchingTaskData(false);
+    setTimeout(() => {
+      setTasks(tasksData);
+      setIsFetchingTaskData(false);
+    }, 2000)
   }, []);
 
 

@@ -14,7 +14,7 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     children,
     loading,
     width = '100%',
-    height = '100%',
+    height = '100px',
     borderRadius,
 }) => {
     // If not loading, render the children
@@ -25,7 +25,7 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     // If loading, render the shimmer effectx
     return (
         <div
-            className="relative overflow-hidden rounded-lg bg-white  mx-6"
+            className="relative overflow-hidden rounded-lg bg-white mx-6"
             style={{
                 height,
                 width,
