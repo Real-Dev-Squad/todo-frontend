@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 
-// Define the props interface for the ShimmerSkeleton component
 interface ShimmerSkeletonProps {
     children: ReactNode;
     placeholder?: ReactNode;
@@ -10,7 +9,6 @@ interface ShimmerSkeletonProps {
     borderRadius?: string;
 }
 
-// ShimmerSkeleton component with TypeScript typing
 const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     children,
     loading,
@@ -24,6 +22,7 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
         return <>{children}</>;
     }
 
+    // If loading and placeholder is provided render placeholder
     if (loading && placeholder) {
         return <>{placeholder}</>
     }

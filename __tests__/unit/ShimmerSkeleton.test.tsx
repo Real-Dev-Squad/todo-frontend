@@ -13,7 +13,7 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-test("should renders the shimmer animation when loading is true and placehlder component isn't provided", () => {
+test("should renders the shimmer animation when loading is true and placeholder component isn't provided", () => {
   render(
     <ShimmerSkeleton loading={true}>
       <MockComponent />
