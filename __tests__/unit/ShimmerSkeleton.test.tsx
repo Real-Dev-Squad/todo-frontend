@@ -6,14 +6,12 @@ import { afterEach, beforeEach, expect, test, vi } from "vitest";
 const MockComponent = () => <div data-testid="shimmer-child-component">Child Content</div>;
 const PlaceholderComponent = () => <div data-testid="shimmer-placeholder-component">placeholder Content</div>;
 
-
-// Clean up after each test
 afterEach(() => {
   cleanup();
   vi.resetAllMocks();
 });
 
-test("should renders the shimmer animation when loading is true and placeholder component isn't provided", () => {
+test("should render the shimmer animation when loading is true and placeholder component isn't provided", () => {
   render(
     <ShimmerSkeleton loading={true}>
       <MockComponent />
@@ -29,7 +27,7 @@ test("should renders the shimmer animation when loading is true and placeholder 
   expect(childElement).toBeNull();
 });
 
-test("should renders the placeholder when loading is true and placeholder component is provided", () => {
+test("should render the placeholder when loading is true and placeholder component is provided", () => {
   render(
     <ShimmerSkeleton loading={true} placeholder={<PlaceholderComponent />}>
       <MockComponent />
@@ -45,7 +43,7 @@ test("should renders the placeholder when loading is true and placeholder compon
   expect(placeholderElement).not.toBeNull();
 });
 
-test("should renders the children when loading is false", () => {
+test("should render the children when loading is false", () => {
   render(
     <ShimmerSkeleton loading={false}>
       <MockComponent />
