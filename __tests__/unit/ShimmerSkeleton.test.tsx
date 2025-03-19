@@ -2,7 +2,7 @@ import { ShimmerSkeleton } from "@/components/ShimmerSkeleton";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
-// Mock component to use as a child
+
 const MockComponent = () => <div data-testid="shimmer-child-component">Child Content</div>;
 const PlaceholderComponent = () => <div data-testid="shimmer-placeholder-component">placeholder Content</div>;
 
