@@ -1,6 +1,5 @@
 import { cn } from '@/utils/utils';
 import React, { ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 interface ShimmerSkeletonProps {
     children: ReactNode;
