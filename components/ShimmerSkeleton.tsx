@@ -39,7 +39,7 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
                             <div className="animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-white via-indigo-50 to-white" />
                         </div>
                     </div>
-            };
+            }
         </>
     );
 };
