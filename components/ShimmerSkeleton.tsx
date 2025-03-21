@@ -1,25 +1,25 @@
+import { cn } from '@/utils/utils';
 import React, { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface ShimmerSkeletonProps {
     children: ReactNode;
     placeholder?: ReactNode;
     loading: boolean;
-    height?: string | number;
-    width?: string | number;
-    borderRadius?: string;
+    className?: string;
+    style?: React.CSSProperties | undefined
 }
 
 const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     children,
     loading,
-    width,
-    height = '100px',
-    borderRadius,
-    placeholder
+    placeholder,
+    className,
+    style
 }) => {
     // If not loading, render the children
     if (!loading) {
-        return <>{children}</>;
+        return children;
     }
 
 
@@ -29,14 +29,9 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
             {
                 // if placeholder component provided render that instead
                 !!placeholder
-                    ? <>{placeholder}</>
-                    : <div
-                        className="relative overflow-hidden rounded-lg bg-white mx-6 max-w-full"
-                        style={{
-                            height,
-                            width,
-                            borderRadius
-                        }}
+                    ? placeholder : <div
+                        style={style}
+                        className={cn("relative overflow-hidden rounded-lg mx-6 bg-white max-w-full h-24", className)}
                         data-testid="shimmer-container"
                     >
                         {/* Shimmer animation element */}
