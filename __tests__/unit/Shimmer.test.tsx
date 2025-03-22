@@ -28,6 +28,8 @@ describe("List Shimmer Component Unit Test", () => {
     );
     const ListShimmerElement = screen.getByTestId('list-shimmer');
     expect(ListShimmerElement.children.length).toBe(5);
+    expect(ListShimmerElement.children[0].classList.contains("animate-pulse")).toBe(true);
+
   });
 
 })
