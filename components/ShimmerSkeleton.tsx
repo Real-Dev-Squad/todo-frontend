@@ -30,12 +30,12 @@ export const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
                 !!placeholder
                     ? placeholder : <div
                         style={style}
-                        className={cn("relative overflow-hidden rounded-lg mx-6 bg-white max-w-full h-24", className)}
+                        className={cn("relative overflow-hidden rounded-lg mx-6 bg-slate-50 max-w-full h-24", className)}
                         data-testid="shimmer-container"
                     >
                         {/* Shimmer animation element */}
                         <div className="absolute inset-0" data-testid="shimmer">
-                            <div className="animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-white via-indigo-50 to-white" />
+                            <div className="animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-slate-50 via-indigo-50 to-slate-50" />
                         </div>
                     </div>
             }
