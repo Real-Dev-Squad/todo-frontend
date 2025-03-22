@@ -9,7 +9,7 @@ interface ShimmerSkeletonProps {
     style?: React.CSSProperties | undefined
 }
 
-const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
+export const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     children,
     loading,
     placeholder,
@@ -43,4 +43,3 @@ const ShimmerSkeleton: React.FC<ShimmerSkeletonProps> = ({
     );
 };
 
-export { ShimmerSkeleton };
