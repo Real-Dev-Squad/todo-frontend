@@ -79,17 +79,13 @@ const Tasks = () => {
             aria-busy={isFetchingTaskData} aria-live="polite"
           >
             <TaskHeader title="To Do" />
-            {
-              isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
-            }
+            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />}
           </section>
 
           <section data-testid="in-progress-section"
             aria-busy={isFetchingTaskData} aria-live="polite">
             <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
-            {
-              isFetchingTaskData ? <ListShimmer count={2}  /> : <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />
-            }
+            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />}
           </section>
         </section>
         <section
