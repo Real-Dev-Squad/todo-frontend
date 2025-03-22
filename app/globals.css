@@ -26,18 +26,3 @@
     scrollbar-width: none; /* Firefox */
   }
 }
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-.animate-shimmer {
-  animation: shimmer 1.75s infinite ease-in-out;
-}
-
-@media (prefers-reduced-motion) {
-  .animate-shimmer {
-    animation: none;
-  }
-}

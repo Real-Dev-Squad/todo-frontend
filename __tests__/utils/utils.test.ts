@@ -1,5 +1,3 @@
-// Replace with the actual path to your module
-
 import { cn } from "@/utils/utils";
 import { describe, expect, test } from "vitest";
 

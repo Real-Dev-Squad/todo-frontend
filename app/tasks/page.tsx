@@ -6,7 +6,7 @@ import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
 import { FORM_MODE, TASK_STATUS } from "../constants/Task";
 import { TodoForm } from "@/components/TodoForm";
-import { ShimmerSkeleton } from "@/components/ShimmerSkeleton";
+import { ListShimmer } from "@/components/Shimmer";
 
 
 
@@ -81,17 +81,17 @@ const Tasks = () => {
             aria-busy={isFetchingTaskData} aria-live="polite"
           >
             <TaskHeader title="To Do" />
-            <ShimmerSkeleton loading={isFetchingTaskData}>
-              <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
-            </ShimmerSkeleton>
+            {
+              isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
+            }
           </section>
 
           <section data-testid="in-progress-section"
             aria-busy={isFetchingTaskData} aria-live="polite">
             <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
-            <ShimmerSkeleton loading={isFetchingTaskData}>
-              <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />
-            </ShimmerSkeleton>
+            {
+              isFetchingTaskData ? <ListShimmer count={2}  /> : <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />
+            }
           </section>
         </section>
         <section
