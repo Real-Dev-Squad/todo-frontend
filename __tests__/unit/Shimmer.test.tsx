@@ -2,9 +2,6 @@ import { ListShimmer, Shimmer } from "@/components/Shimmer";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-
-const MockComponent = () => <div data-testid="shimmer-child-component">Child Content</div>;
-
 afterEach(() => {
   cleanup();
   vi.resetAllMocks();
@@ -32,4 +29,5 @@ describe("List Shimmer Component Unit Test", () => {
     const ListShimmerElement = screen.getByTestId('list-shimmer');
     expect(ListShimmerElement.children.length).toBe(5);
   });
+
 })

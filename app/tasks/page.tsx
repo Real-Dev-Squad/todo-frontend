@@ -44,14 +44,12 @@ const Tasks = () => {
   }, []);
 
 
-
   useEffect(() => {
     setTimeout(() => {
       setTasks(tasksData);
       setIsFetchingTaskData(false);
     }, 2000)
   }, []);
-
 
   return (
     <>
