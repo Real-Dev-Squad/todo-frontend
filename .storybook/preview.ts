@@ -1,5 +1,7 @@
 import type { Preview } from "@storybook/react";
-import "../app/globals.css";
+
+//Global Styles
+import "!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css";
 
 const preview: Preview = {
   //👇 Enables auto-generated documentation for all stories

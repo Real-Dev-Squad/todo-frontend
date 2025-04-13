@@ -9,7 +9,7 @@ const meta: Meta<typeof ListShimmer> = {
     decorators: [/* ... */],
     parameters: {/* ... */ },
     tags: ['autodocs'],
-};
+} satisfies Meta<typeof ListShimmer>;
 
 export default meta;
 type Story = StoryObj<typeof ListShimmer>;

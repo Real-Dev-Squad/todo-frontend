@@ -12,7 +12,6 @@ const config: StorybookConfig = {
         docs: false,
       },
     },
-    "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
     {
@@ -22,7 +21,14 @@ const config: StorybookConfig = {
         mdxPluginOptions: {},
       },
     },
-    "@storybook/addon-postcss",
+    {
+      name: "@storybook/addon-postcss",
+      options: {
+        postcssLoaderOptions: {
+          implementation: require("postcss"),
+        },
+      },
+    },
   ],
   framework: {
     name: "@storybook/nextjs",
@@ -30,7 +36,7 @@ const config: StorybookConfig = {
   },
   staticDirs: ["../public"],
   docs: {
-    defaultName: "Documentation",
+    defaultName: "Documentation1",
   },
 };
 export default config;
