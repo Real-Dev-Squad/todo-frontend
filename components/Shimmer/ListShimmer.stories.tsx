@@ -18,7 +18,7 @@ export const Default: Story = {
         className: 'h-[100px]',
         count: 2
     },
-    render: function Render(args) {
+    render: (args) => {
         return <ListShimmer {...args} />
     },
 };

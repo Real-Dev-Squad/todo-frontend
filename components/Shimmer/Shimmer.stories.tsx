@@ -5,7 +5,7 @@ import { expect, within } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof Shimmer> = {
-  title: "Shimmer/ShimmerComponenet",
+  title: "Shimmer/ShimmerComponent",
   component: Shimmer,
   decorators: [(Story) => (
     <div style={{ margin: '3em' }}>
@@ -14,7 +14,6 @@ const meta: Meta<typeof Shimmer> = {
     </div>
   ),
   ],
-  parameters: {/* ... */ },
   tags: ['autodocs'],
   argTypes: {
     className: { control: 'text', },
