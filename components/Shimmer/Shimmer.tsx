@@ -1,7 +1,6 @@
 import { cn } from '@/utils/utils'
 
 type ShimmerProps = {
-
     /** Tailwind classes to override default styling */
     className?: string;
 }

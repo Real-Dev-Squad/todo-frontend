@@ -36,6 +36,5 @@ export const Primary: Story = {
   },
   render: function Render(args) {
     return <Shimmer {...args} />
-
   },
 };

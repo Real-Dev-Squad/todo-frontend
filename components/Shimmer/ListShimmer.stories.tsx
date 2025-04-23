@@ -6,8 +6,6 @@ import React from "react";
 const meta: Meta<typeof ListShimmer> = {
     title: "Shimmer/ListShimmer",
     component: ListShimmer,
-    decorators: [/* ... */],
-    parameters: {/* ... */ },
     tags: ['autodocs'],
 } satisfies Meta<typeof ListShimmer>;
 
@@ -22,6 +20,5 @@ export const Default: Story = {
     },
     render: function Render(args) {
         return <ListShimmer {...args} />
-
     },
 };
