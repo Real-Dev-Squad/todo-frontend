@@ -77,5 +77,5 @@ pnpm storybook
 ```
 We can also build the storybook using in order to deploy it from `storybook-static` folder
 ```sh
-pnpm build-storybook
+pnpm build:storybook
 ```
