@@ -70,7 +70,6 @@ All the public assets like `icons`, `images` are stored inside the `public` dire
 
 ## Storybook
 We're using storybook for our choice of technology, in order to do isolated visual component testing.
-Going forward every component requires their own stories in order for the PR to be merged. 
 
 To Run Storybook in development mode:
 ```sh
@@ -79,13 +78,4 @@ pnpm storybook
 We can also build the storybook using in order to deploy it from `storybook-static` folder
 ```sh
 pnpm build-storybook
-```
-
-In order to run just storybook documentation in development mode use: 
-```sh
-pnpm storybook-docs
-```
-We can also build the storybook using in order to deploy it from `storybook-static` folder
-```sh
-pnpm build-storybook-docs
 ```
