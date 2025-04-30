@@ -3,7 +3,6 @@ import "!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css";
 
 const preview: Preview = {
   tags: ["autodocs"],
-
   parameters: {
     controls: {
       matchers: {

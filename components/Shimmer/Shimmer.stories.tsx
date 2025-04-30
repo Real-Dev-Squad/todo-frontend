@@ -13,7 +13,6 @@ const meta: Meta<typeof Shimmer> = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByTestId("shimmer")).toBeInTheDocument();
-
   },
 } satisfies Meta<typeof Shimmer>;
 
