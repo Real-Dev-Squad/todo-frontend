@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Shimmer } from "./Shimmer";
+import { Shimmer } from "@/components/Shimmer";
 import React from "react";
 import { expect, within } from "@storybook/test";
 
 const meta: Meta<typeof Shimmer> = {
-  title: "Shimmer/ShimmerComponent",
+  title: "Shimmer/Shimmer",
   component: Shimmer,
   tags: ['autodocs'],
   argTypes: {

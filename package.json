@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && npm run build:storybook",
+    "build": "next build && storybook build -o out/storybook",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "storybook": "storybook dev -p 6006",
-    "build:storybook": "storybook build -o out/storybook"
+    "build:storybook": "storybook build"
   },
   "dependencies": {
     "clsx": "^2.1.1",
