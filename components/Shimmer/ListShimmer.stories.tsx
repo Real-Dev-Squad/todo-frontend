@@ -13,7 +13,7 @@ type Story = StoryObj<typeof ListShimmer>;
 
 export const Default: Story = {
     args: {
-        className: 'h-[100px]',
+        className: 'h-24',
         count: 2
     },
     render: (args) => {
