@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Shimmer>;
 
 export const Primary: Story = {
   args: {
-    className: 'bg-slate-300 bg-slate-100 h-[100px]'
+    className: 'bg-slate-300 bg-slate-100 h-24'
   },
   render: function Render(args) {
     return <Shimmer {...args} />
