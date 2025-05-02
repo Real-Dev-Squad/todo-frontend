@@ -2,10 +2,7 @@ import { cn } from "@/utils/utils";
 import { Shimmer } from ".";
 
 type ListShimmerProps = {
-    /** Tailwind classes to container's override default styling */
     className?: string;
-
-    /** Number of the shimmer inside the container   */
     count: number
 }
 
