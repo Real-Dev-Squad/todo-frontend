@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Shimmer } from "@/components/Shimmer";
 import React from "react";
-import { expect, within } from "@storybook/test";
 
 const meta: Meta<typeof Shimmer> = {
   title: "Shimmer/Shimmer",
@@ -9,10 +8,6 @@ const meta: Meta<typeof Shimmer> = {
   tags: ['autodocs'],
   argTypes: {
     className: { control: 'text', },
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByTestId("shimmer")).toBeInTheDocument();
   },
 } satisfies Meta<typeof Shimmer>;
 

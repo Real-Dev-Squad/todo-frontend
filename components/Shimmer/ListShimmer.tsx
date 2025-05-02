@@ -1,15 +1,5 @@
-import { cn } from '@/utils/utils'
-
-type ShimmerProps = {
-    /** Tailwind classes to override default styling */
-    className?: string;
-}
-
-export const Shimmer = ({
-    className,
-}: ShimmerProps) => {
-    return <div className={cn("animate-pulse relative overflow-hidden rounded-lg mx-3 bg-indigo-50 opacity-90 max-w-full h-full", className)} data-testid="shimmer" />
-};
+import { cn } from "@/utils/utils";
+import { Shimmer } from ".";
 
 type ListShimmerProps = {
     /** Tailwind classes to container's override default styling */

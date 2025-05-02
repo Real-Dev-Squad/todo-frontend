@@ -69,13 +69,12 @@ All the reusable components are created inside `/components` directory.
 All the public assets like `icons`, `images` are stored inside the `public` directory.
 
 ## Storybook
-We're using storybook for our choice of technology, in order to do isolated visual component testing.
 
-To Run Storybook in development mode:
+To run Storybook in development mode:
 ```sh
 pnpm storybook
 ```
-We can also build the storybook using in order to deploy it from `storybook-static` folder
+We can also build storybook in order to deploy it from `storybook-static` folder
 ```sh
 pnpm build:storybook
 ```
