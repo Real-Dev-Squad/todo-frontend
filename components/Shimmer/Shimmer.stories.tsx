@@ -6,9 +6,6 @@ const meta: Meta<typeof Shimmer> = {
   title: "Shimmer/Shimmer",
   component: Shimmer,
   tags: ['autodocs'],
-  argTypes: {
-    className: { control: 'text', },
-  },
 } satisfies Meta<typeof Shimmer>;
 
 export default meta;
@@ -16,9 +13,7 @@ type Story = StoryObj<typeof Shimmer>;
 
 export const Primary: Story = {
   args: {
-    className: 'bg-slate-300 bg-slate-100 h-24'
+    className: 'bg-slate-100 h-24'
   },
-  render: function Render(args) {
-    return <Shimmer {...args} />
-  },
+  render: (args) => <Shimmer {...args} />
 };
