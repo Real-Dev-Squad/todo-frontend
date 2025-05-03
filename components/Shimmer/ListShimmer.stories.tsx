@@ -12,9 +12,5 @@ export default meta;
 type Story = StoryObj<typeof ListShimmer>;
 
 export const Default: Story = {
-    args: {
-        className: 'h-24',
-        count: 2
-    },
-    render: (args) => <ListShimmer {...args} />
+    render: () => <ListShimmer className='h-24' count={2} />
 };

@@ -12,8 +12,5 @@ export default meta;
 type Story = StoryObj<typeof Shimmer>;
 
 export const Primary: Story = {
-  args: {
-    className: 'bg-slate-100 h-24'
-  },
-  render: (args) => <Shimmer {...args} />
+  render: () => <Shimmer className='bg-slate-100 h-24' />
 };
