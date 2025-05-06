@@ -13,10 +13,16 @@ pnpm dev
 
 This starts your app in development mode, rebuilding assets on file changes.
 
-To build your app for production (also build storybook in the `out` directory):
+To build your app for production:
 
 ```sh
 pnpm build
+```
+
+To build app along with storybook( in the `out/storybook` directory):
+
+```sh
+pnpm build:with-storybook
 ```
 
 Then run the app in production mode:

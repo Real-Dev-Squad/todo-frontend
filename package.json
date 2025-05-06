@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && storybook build -o out/storybook",
+    "build": "next build",
+    "build:with-storybook": "next build && storybook build -o out/storybook",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
