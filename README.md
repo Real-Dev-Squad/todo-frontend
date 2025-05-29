@@ -19,7 +19,7 @@ To build your app for production:
 pnpm build
 ```
 
-To build app along with storybook( in the `out/storybook` directory):
+To build your app along with Storybook (in the `out/storybook` directory):
 
 ```sh
 pnpm build:with-storybook
