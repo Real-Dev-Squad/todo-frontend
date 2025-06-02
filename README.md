@@ -19,7 +19,7 @@ To build your app for production:
 pnpm build
 ```
 
-To build next app along with Storybook in the `out/storybook` directory ( staging environment ): 
+To build next app along with Storybook in the `out/storybook` directory: 
 
 ```sh
 pnpm build-all
