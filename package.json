@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "build-with-storybook": "next build && storybook build -o out/storybook",
+    "build-app-storybook": "next build && storybook build -o out/storybook",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
