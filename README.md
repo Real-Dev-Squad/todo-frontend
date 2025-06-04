@@ -22,7 +22,7 @@ pnpm build
 To build next app along with Storybook in the `out/storybook` directory: 
 
 ```sh
-pnpm build-with-storybook
+pnpm build-app-storybook
 ```
 
 Then run the app in production mode:
