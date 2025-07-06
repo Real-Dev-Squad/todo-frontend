@@ -4,9 +4,10 @@ import { useState } from "react";
 import { TaskItem } from "@/components/tasks/taskItem";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Filter, ArrowUpDown, Plus } from "lucide-react";
+import { Filter, ArrowUpDown } from "lucide-react";
 import { Watchlist } from "@/components/tasks/watchlistTask";
 import { DeferredTask } from "@/components/tasks/deferredTask";
+import CreateTaskModal from "@/components/tasks/createTask";
 
 const sampleTasks = [
   {
@@ -65,10 +66,7 @@ export default function MyTasksPage() {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Tasks</h1>
-            <Button variant="default" size="sm">
-              <Plus className="w-4 h-4" />
-              <span>Create Task</span>
-            </Button>
+            <CreateTaskModal />
           </div>
 
           <Tabs
