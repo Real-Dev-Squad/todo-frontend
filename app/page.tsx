@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { AuthModal } from "@/components/auth/auth-modal";
+import { AuthModal } from "@/components/auth/signin-button";
 
 export default function Home() {
   return <div className="flex min-h-screen flex-col items-center py-8 ">
