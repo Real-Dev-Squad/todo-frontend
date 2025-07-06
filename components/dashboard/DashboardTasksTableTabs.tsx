@@ -24,6 +24,7 @@ export function DashboardTasksTableTabs() {
   
   return (
     <div className="">
+
       <Tabs value={currentTab} onValueChange={handleTabChange}>
         <TabsList>
           <TabsTrigger value={TabsConstants.All}>{TabsConstants.All}</TabsTrigger>

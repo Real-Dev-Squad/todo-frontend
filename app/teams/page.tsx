@@ -1,8 +1,8 @@
-import { DashboardContainer } from "@/components/dashboard/DashboardContainer";
 import React from 'react'
 
 function TeamsPage() {
-  return <DashboardContainer />;
+  // TODO: in progress by rishi
+  return <h1>This is teams page</h1>;
 }
 
 export default TeamsPage
