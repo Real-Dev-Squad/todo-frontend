@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SideBar = () => {
+export const SideBar = () => {
   return (
     <div className="fixed left-0 top-0 bg-gray-400 h-screen w-64 flex flex-col min-h-screen lg:w-56 md:w-64 sm:w-56">
     
@@ -31,5 +31,3 @@ const SideBar = () => {
     </div>
   );
 };
-
-export default SideBar;

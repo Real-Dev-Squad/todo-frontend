@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Bell } from 'lucide-react';
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <nav className="fixed top-0 left-56 right-0 bg-white h-16 flex items-center justify-end px-6 shadow-sm border-b border-gray-200 z-10">
       {/* Search Bar */}
@@ -35,4 +35,3 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
