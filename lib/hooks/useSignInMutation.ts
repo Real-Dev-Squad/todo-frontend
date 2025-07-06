@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { signInWithGoogle } from '@/api/sing-in/signin.api'
+import { signInWithGoogle } from '@/api/signin/signin.api'
 
 export const useSignInMutation = () => {
   return useMutation({

@@ -1,5 +1,5 @@
 "use client"
-import { signInWithGoogle } from "@/api/sing-in/signin.api"
+import { signInWithGoogle } from "@/api/signin/signin.api"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
