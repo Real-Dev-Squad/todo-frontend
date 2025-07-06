@@ -24,7 +24,7 @@ export const InviteForm: React.FC<InviteFormProps> = ({ onBack }) => {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [searchFocused] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const dummyUsers: User[] = [
     {
@@ -259,11 +259,13 @@ export const InviteForm: React.FC<InviteFormProps> = ({ onBack }) => {
                 Invite by Email
               </label>
               <div className="relative">
-                <Input
+ <Input
                   type="email"
                   placeholder="abc@gmail.com"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setSearchFocused(false)}
                   className="pr-10"
                 />
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
