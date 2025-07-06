@@ -48,7 +48,7 @@ export function AuthModal({ children }: AuthModalProps) {
             Continue with Real Dev Squad
           </Button>
         </div>
-        <DialogFooter className="flex justify-center">
+        <DialogFooter className="flex sm:justify-center">
           <p className="text-sm text-gray-600">
             New here?{" "}
             <button 
