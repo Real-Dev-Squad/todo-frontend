@@ -1,5 +1,5 @@
 import { cn } from "@/utils/utils";
-import { Shimmer } from "./Shimer";
+import { Shimmer } from "./Shimmer";
 
 type ListShimmerProps = {
     className?: string;
