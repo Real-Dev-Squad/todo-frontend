@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Bell } from 'lucide-react';
+import Image from 'next/image';
 
 export const NavBar = () => {
   return (
@@ -24,8 +25,10 @@ export const NavBar = () => {
         
        
         <div className="flex items-center space-x-2">
-          <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+          <Image
+            src="/user.png"
+            width={32}
+            height={32}
             alt="User Profile"
             className="w-8 h-8 rounded-full object-cover border-2 border-gray-300"
           />
