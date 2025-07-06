@@ -9,15 +9,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-interface AuthModalProps {
-  children: React.ReactNode
-}
 
-export function AuthModal({ children }: AuthModalProps) {
+
+export function SigninButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {children}
+        <Button>Sign in</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
