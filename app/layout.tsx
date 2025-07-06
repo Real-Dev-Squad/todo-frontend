@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { QueryProvider } from "./_provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +23,12 @@ export default function RootLayout({
       <head>
         <title>Introducing Todo Project</title>
       </head>
-      <body>{children}</body>
+      
+        <body>
+          <QueryProvider>
+            {children}
+          </QueryProvider>
+        </body>
     </html>
   );
 }
