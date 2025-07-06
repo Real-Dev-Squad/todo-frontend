@@ -1,14 +1,8 @@
-import {NavBar} from '@/components/NavBar'
-import {SideBar} from '@/components/SideBar'
+import { DashboardContainer } from "@/components/dashboard/DashboardContainer";
 import React from 'react'
 
 function TeamsPage() {
-  return (
-    <div>
-        <SideBar />
-        <NavBar />
-    </div>
-  )
+  return <DashboardContainer />;
 }
 
 export default TeamsPage
