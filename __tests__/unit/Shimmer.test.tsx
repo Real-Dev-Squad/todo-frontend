@@ -1,4 +1,4 @@
-import { Shimmer } from "@/components/shimmer/shimmer";
+import { Shimmer } from "@/components/shimmer";
 import { ListShimmer } from "@/components/shimmer/ListShimmer";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
