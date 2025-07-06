@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { ListShimmer } from "@/components/Shimmer/ListShimmer";
+import { ListShimmer } from "@/components/shimmer";
 
 const meta: Meta<typeof ListShimmer> = {
     title: "Shimmer/ListShimmer",

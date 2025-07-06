@@ -37,13 +37,14 @@ export function SigninButton() {
             Continue with Google
           </Button>
           <Button 
-            className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
+            className="w-full bg-primary/50 hover:bg-primary/50 text-white py-3 rounded-lg cursor-not-allowed"
             onClick={() => {
               // TODO: later we will implement RDS authentication
               console.log("Continue with Real Dev Squad clicked")
             }}
+            disabled
           >
-            Continue with Real Dev Squad
+            Continue with Real Dev Squad (Coming Soon)
           </Button>
         </div>
         <DialogFooter className="flex sm:justify-center">

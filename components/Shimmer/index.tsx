@@ -1,4 +1,3 @@
-
 import { cn } from "@/utils/utils";
 
 type ShimmerProps = {
@@ -16,3 +15,5 @@ export const Shimmer = ({ className }: ShimmerProps) => {
     />
   );
 };
+
+export { ListShimmer } from './ListShimmer';
