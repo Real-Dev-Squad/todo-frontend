@@ -2,7 +2,7 @@ import Navbar from '@/components/NavBar'
 import SideBar from '@/components/SideBar'
 import React from 'react'
 
-function page() {
+function TeamsPage() {
   return (
     <div>
         <SideBar />
@@ -11,4 +11,4 @@ function page() {
   )
 }
 
-export default page
+export default TeamsPage
