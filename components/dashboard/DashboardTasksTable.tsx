@@ -16,16 +16,17 @@ export const DashboardTasksTable = ({type}: {type: DashboardTasksTableTabs}) => 
   
   return (
     <div className="p-4">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Label</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Priority</TableHead>
-            <TableHead>Due Date</TableHead>
-          </TableRow>
-        </TableHeader>
+      <div className="w-full max-h-[500px] overflow-y-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Label</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Priority</TableHead>
+              <TableHead>Due Date</TableHead>
+            </TableRow>
+          </TableHeader>
         <TableBody>
           {tasks.map((task) => (
             <TableRow key={task.id}>
@@ -50,6 +51,7 @@ export const DashboardTasksTable = ({type}: {type: DashboardTasksTableTabs}) => 
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
   )
 }
