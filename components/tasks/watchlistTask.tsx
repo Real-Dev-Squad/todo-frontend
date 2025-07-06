@@ -1,9 +1,5 @@
 "use client";
-
-import { useState } from "react";
 import { TaskItem } from "./taskItem";
-import { Button } from "@/components/ui/button";
-import { Filter, ArrowUpDown } from "lucide-react";
 
 interface WatchlistTask {
   id: number;
