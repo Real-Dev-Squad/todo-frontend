@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { cn } from "@/lib/utils"
 
 export const DashboardTasksTable = ({type}: {type: DashboardTasksTableTabs}) => {
   const tasks = Tasks.filter((task) => 
@@ -42,7 +43,12 @@ export const DashboardTasksTable = ({type}: {type: DashboardTasksTableTabs}) => 
                 </span>
               </TableCell>
               <TableCell>
-                <span className={`text-${task.priority === 'High' ? 'red' : task.priority === 'Medium' ? 'yellow' : 'green'}-500`}>
+                <span className={cn(
+                  "text-xs font-medium rounded-full px-2 py-1",
+                  task.priority === 'High' ? 'bg-red-100 text-red-700' :
+                  task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                  'bg-green-100 text-green-700'
+                )}>
                   {task.priority}
                 </span>
               </TableCell>
