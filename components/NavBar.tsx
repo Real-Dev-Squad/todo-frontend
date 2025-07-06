@@ -16,7 +16,7 @@ const Navbar = () => {
         </div>
         
         {/* Notification Bell */}
-        <button className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
+        <button type='button' className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
           <Bell className="w-6 h-6" />
           {/* Notification dot */}
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
