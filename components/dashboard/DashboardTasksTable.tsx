@@ -15,7 +15,7 @@ export const DashboardTasksTable = ({type}: {type: DashboardTasksTableTabs}) => 
   )
   
   return (
-    <div className="p-4 border-grey-200 rounded-md border">
+    <div className="p-4 border-gray-200 rounded-md border">
       <div className="w-full max-h-[500px] overflow-y-auto">
         <Table>
           <TableHeader>
