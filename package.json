@@ -8,6 +8,7 @@
     "build-app-storybook": "next build && storybook build -o out/storybook",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",

@@ -7,7 +7,7 @@ export const DashboardWelcomeScreen = () => {
     <div className="flex flex-col  min-h-[60vh] p-6">
       <div className="text-left mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome, Anaya</h1>
-        <p className="text-gray-600 text-lg">Let's setup your workspace</p>
+        <p className="text-gray-600 text-lg">Let&apos;s setup your workspace</p>
       </div>
       <div className="flex flex-col items-center justify-center">
       <div className="mb-8">
