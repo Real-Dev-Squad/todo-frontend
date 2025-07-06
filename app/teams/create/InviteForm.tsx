@@ -24,7 +24,7 @@ export const InviteForm: React.FC<InviteFormProps> = ({ onBack }) => {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [searchFocused] = useState(false);
 
   const dummyUsers: User[] = [
     {
@@ -198,18 +198,7 @@ export const InviteForm: React.FC<InviteFormProps> = ({ onBack }) => {
     }
   }, [debouncedSearchTerm, performSearch, searchFocused]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-
-    if (value.trim() === "") {
-      setFilteredUsers([]);
-      setShowSuggestions(false);
-      setIsSearching(false);
-    } else {
-      setIsSearching(true);
-    }
-  };
+ 
 
   const handleAddUser = (user: User) => {
     setSelectedUsers((prev) => [...prev, user]);
