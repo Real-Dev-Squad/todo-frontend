@@ -15,5 +15,3 @@ export const Shimmer = ({ className }: ShimmerProps) => {
     />
   );
 };
-
-export { ListShimmer } from './ListShimmer';

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Shimmer } from "./index";
+import { Shimmer } from "./Shimer";
 import React from "react";
 
 const meta: Meta<typeof Shimmer> = {
