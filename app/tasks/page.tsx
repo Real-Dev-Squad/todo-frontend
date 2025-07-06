@@ -1,106 +1,128 @@
 "use client";
-import { useEffect, useState } from "react";
-import { TaskHeader } from "@/components/TaskHeader";
-import { TaskList } from "@/components/TaskList";
-import tasksData from "@/data/taskData.json";
-import { Task } from "@/app/types/tasks";
-import { FORM_MODE, TASK_STATUS } from "../constants/Task";
-import { TodoForm } from "@/components/TodoForm";
-import { ListShimmer } from "@/components/Shimmer/ListShimmer";
 
+import { useState } from "react";
+import { TaskItem } from "@/components/tasks/taskItem";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Filter, ArrowUpDown, Plus } from "lucide-react";
+import { Watchlist } from "@/components/tasks/watchlistTask";
+import { DeferredTask } from "@/components/tasks/deferredTask";
 
+const sampleTasks = [
+  {
+    id: 1,
+    title: "Website Design",
+    status: "In Progress" as const,
+    priority: "High" as const,
+    category: "#Design",
+    dueDate: "Today",
+    team: "Design Ninjas",
+  },
+  {
+    id: 2,
+    title: "Website Design",
+    status: "In Progress" as const,
+    priority: "High" as const,
+    category: "#Design",
+    dueDate: "Today",
+    team: "Design Ninjas",
+  },
+  {
+    id: 3,
+    title: "Website Design",
+    status: "In Progress" as const,
+    priority: "High" as const,
+    category: "#Design",
+    dueDate: "Today",
+    team: "Design Ninjas",
+  },
+  {
+    id: 4,
+    title: "Website Design",
+    status: "In Progress" as const,
+    priority: "High" as const,
+    category: "#Design",
+    dueDate: "Today",
+    team: "Design Ninjas",
+  },
+  {
+    id: 5,
+    title: "Website Design",
+    status: "In Progress" as const,
+    priority: "High" as const,
+    category: "#Design",
+    dueDate: "Today",
+    team: "Design Ninjas",
+  },
+];
 
-const Tasks = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [isFetchingTaskData, setIsFetchingTaskData] = useState(true);
-  const [isCreateAndEditFormVisible, setIsCreateAndEditFormVisible] = useState(false)
-  const [activeTask, setActiveTask] = useState<Task | undefined>();
-
-  const todoTasks = tasks.filter((task) => task.status === TASK_STATUS.TODO);
-  const inProgressTasks = tasks.filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
-
-  const handleTaskSelect = (task: Task) => {
-    setActiveTask(task);
-    setIsCreateAndEditFormVisible(false);
-  };
-
-  const handleCreateSubmit = (data: Task) => {
-    console.log("Creating todo:", data)
-  }
-
-  const handleAcknowledge = () => {
-    console.log("Todo acknowledged")
-  }
-
-
-  const handleFormClose = () => {
-    setIsCreateAndEditFormVisible(false);
-    setActiveTask(undefined);
-  };
-
-
-  useEffect(() => {
-    setTasks(tasksData);
-  }, []);
-
-
-  useEffect(() => {
-    setTimeout(() => {
-      setTasks(tasksData);
-      setIsFetchingTaskData(false);
-    }, 2000)
-  }, []);
+export default function MyTasksPage() {
+  const [activeTab, setActiveTab] = useState("my-tasks");
 
   return (
-    <>
-      <div className="md:w-5/6 lg:w-3/4 w-full flex flex-row justify-end mx-auto p-2">
-        <button
-          onClick={() => {
-            setIsCreateAndEditFormVisible(prev => !prev)
-            setActiveTask(undefined);
-          }
-          }
-          className=" flex flex-row justify-center items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          <span className='text-2xl text-white'>+</span>
-          <span>
-            Create new Task
-          </span>
-        </button>
-      </div>
-      <div
-        data-testid="tasks-container"
-        className="md:w-5/6 lg:w-3/4 flex flex-row mx-auto"
-      >
-        <section
-          className="w-full flex flex-col"
-        >
-          <section data-testid="todo-section"
-            aria-busy={isFetchingTaskData} aria-live="polite"
+    <main className="flex-1 p-6 border-none">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Tasks</h1>
+            <Button variant="default" size="sm">
+              <Plus className="w-4 h-4" />
+              <span>Create Task</span>
+            </Button>
+          </div>
+
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
           >
-            <TaskHeader title="To Do" />
-            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />}
-          </section>
+            <div className="flex items-center justify-between mb-6">
+              <TabsList className="grid w-auto grid-cols-3 bg-transparent">
+                <TabsTrigger value="my-tasks">My Tasks</TabsTrigger>
+                <TabsTrigger value="watchlist">Watchlist</TabsTrigger>
+                <TabsTrigger value="deferred">Deferred</TabsTrigger>
+              </TabsList>
 
-          <section data-testid="in-progress-section"
-            aria-busy={isFetchingTaskData} aria-live="polite">
-            <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
-            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />}
-          </section>
-        </section>
-        <section
-          className="max-w-2xl mt-6 space-y-8"
-        >
-          {
-            isCreateAndEditFormVisible && <TodoForm onClose={handleFormClose} mode={FORM_MODE.CREATE} onSubmit={handleCreateSubmit} />
-          }
-          {
-            activeTask && <TodoForm onClose={handleFormClose} mode={FORM_MODE.VIEW} initialData={activeTask} onAcknowledge={handleAcknowledge} />
-          }
-        </section>
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" size="sm">
+                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                  Sort
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filter
+                </Button>
+              </div>
+            </div>
+
+            <TabsContent value="my-tasks" className="space-y-4">
+              <div className="">
+                <div className="space-y-3">
+                  {sampleTasks.map((task) => (
+                    <TaskItem
+                      key={task.id}
+                      title={task.title}
+                      status={task.status}
+                      priority={task.priority}
+                      category={task.category}
+                      dueDate={task.dueDate}
+                      team={task.team}
+                    />
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="watchlist" className="space-y-4">
+              <Watchlist />
+            </TabsContent>
+
+            <TabsContent value="deferred" className="space-y-4">
+              <DeferredTask />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
-    </>
+    </main>
   );
-};
-
-export default Tasks;
+}
