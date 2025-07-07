@@ -1,5 +1,5 @@
 "use client"
-import { signInWithGoogle } from "@/api/signin/signin.api"
+
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -10,23 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useMutation } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { Link } from "lucide-react"
+
 
 
 export function SigninButton() {
-  const router = useRouter()
-  const googleSignInMutation = useMutation({
-    mutationFn: signInWithGoogle,
-    onSuccess: () => {
-        toast.success("Logged in successfully")
-        router.push("/dashboard")
-    },
-    onError: () => {
-      toast.error("Failed to log in. Please try again.")
-    }
-  })
+ 
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -42,15 +31,12 @@ export function SigninButton() {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-4">
-          <Button 
+          <Link
             className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
-            onClick={() => {
-              googleSignInMutation.mutate()
-            }}
-            disabled={googleSignInMutation.isPending}
+            href={`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/google/login`}
           >
-            {googleSignInMutation.isPending ? "Signing in..." : "Continue with Google"}
-          </Button>
+            Sign in with Google
+          </Link>
           <Button 
             className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
             onClick={() => {
