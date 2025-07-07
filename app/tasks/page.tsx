@@ -6,11 +6,13 @@ import tasksData from "@/data/taskData.json";
 import { Task } from "@/app/types/tasks";
 import { FORM_MODE, TASK_STATUS } from "../constants/Task";
 import { TodoForm } from "@/components/TodoForm";
+import { ListShimmer } from "@/components/Shimmer/ListShimmer";
 
 
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isFetchingTaskData, setIsFetchingTaskData] = useState(true);
   const [isCreateAndEditFormVisible, setIsCreateAndEditFormVisible] = useState(false)
   const [activeTask, setActiveTask] = useState<Task | undefined>();
 
@@ -42,6 +44,13 @@ const Tasks = () => {
   }, []);
 
 
+  useEffect(() => {
+    setTimeout(() => {
+      setTasks(tasksData);
+      setIsFetchingTaskData(false);
+    }, 2000)
+  }, []);
+
   return (
     <>
       <div className="md:w-5/6 lg:w-3/4 w-full flex flex-row justify-end mx-auto p-2">
@@ -66,14 +75,17 @@ const Tasks = () => {
         <section
           className="w-full flex flex-col"
         >
-          <section data-testid="todo-section">
+          <section data-testid="todo-section"
+            aria-busy={isFetchingTaskData} aria-live="polite"
+          >
             <TaskHeader title="To Do" />
-            <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />
+            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={todoTasks} setActiveTask={handleTaskSelect} />}
           </section>
 
-          <section data-testid="in-progress-section">
+          <section data-testid="in-progress-section"
+            aria-busy={isFetchingTaskData} aria-live="polite">
             <TaskHeader title="In Progress" icon="/assets/InProgressEllipse.svg" />
-            <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />
+            {isFetchingTaskData ? <ListShimmer count={2} /> : <TaskList tasks={inProgressTasks} setActiveTask={handleTaskSelect} />}
           </section>
         </section>
         <section

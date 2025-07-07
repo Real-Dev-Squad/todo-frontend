@@ -1,6 +1,9 @@
+// "use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { QueryProvider } from "./_provider";
+import { ConditionalLayout } from "../components/ConditionalLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +25,14 @@ export default function RootLayout({
       <head>
         <title>Introducing Todo Project</title>
       </head>
-      <body>{children}</body>
+      
+        <body>
+          <QueryProvider>
+            <ConditionalLayout>
+              {children}
+            </ConditionalLayout>
+          </QueryProvider>
+        </body>
     </html>
   );
 }

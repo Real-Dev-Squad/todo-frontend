@@ -34,5 +34,8 @@ jobs:
       - name: Test Coverage
         run: pnpm test:coverage
 
-      - name: Build
+      - name: Build:App
         run: pnpm build
+      
+      - name: Build:App-Storybook
+        run: pnpm build-app-storybook

@@ -94,8 +94,8 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                                     data-testid={Tabs[tab]}
                                     key={tab}
                                     onClick={() => setActiveTab(Tabs[tab])}
+                                    role="tab"
                                     aria-selected={activeTab === Tabs[tab]}
-                                    role="button"
                                     className={`${activeTab === Tabs[tab]
                                         ? 'border-indigo-500 text-indigo-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
