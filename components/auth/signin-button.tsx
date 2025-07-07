@@ -33,7 +33,7 @@ export function SigninButton() {
         <div className="flex flex-col gap-4 py-4">
           <Link
             className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
-            href={`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/google/login`}
+            href={`${process.env.NEXT_BACKEND_API_URL}/v1/auth/google/login`}
             target="_blank"
           >
             Sign in with Google
