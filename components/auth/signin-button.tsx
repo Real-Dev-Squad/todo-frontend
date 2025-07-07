@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Link } from "lucide-react"
+import Link from 'next/link'
 
 
 
@@ -32,7 +32,7 @@ export function SigninButton() {
         </DialogHeader>
         <div className="flex flex-col gap-4 py-4">
           <Link
-            className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
+            className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg text-center"
             href={`${process.env.NEXT_BACKEND_API_URL}/v1/auth/google/login`}
             target="_blank"
           >
