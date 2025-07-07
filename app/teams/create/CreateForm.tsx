@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { InviteForm } from "./InviteForm"; 
+import Image from "next/image";
 
 export default function CreateTeamPage() {
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -55,11 +56,7 @@ export default function CreateTeamPage() {
             <label htmlFor="avatar-upload" className="cursor-pointer flex flex-col items-center">
               <div className="w-16 h-16 rounded-full border border-gray-500 flex items-center justify-center overflow-hidden">
                 {avatar ? (
-                  <img
-                    src={avatar}
-                    alt="avatar"
-                    className="w-full h-full object-cover rounded-full"
-                  />
+                 <Image src={avatar} alt="Avatar" width={500} height={300} />
                 ) : (
                   <div className="text-sm text-gray-500">+</div>
                 )}
