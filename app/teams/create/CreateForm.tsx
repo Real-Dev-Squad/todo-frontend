@@ -42,7 +42,7 @@ export default function CreateTeamPage() {
   };
 
   if (showInviteForm) {
-   return <InviteForm onBack={() => setShowInviteForm(false)} />;
+   return <InviteForm onBack={() => setShowInviteForm(false)} teamName={teamName} />;
   }
 
   return (

@@ -6,12 +6,14 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@/app/types/user";
 import { dummyUsers } from "@/__mocks__/Task";
+import {SuccessModal} from "@/components/dashboard/SuccessModal";
 
 interface InviteFormProps {
   onBack?: () => void;
+  teamName?: string;
 }
 
-export function InviteForm({ onBack }: InviteFormProps) {
+export function InviteForm({ onBack, teamName }: InviteFormProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
@@ -19,6 +21,7 @@ export function InviteForm({ onBack }: InviteFormProps) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -100,11 +103,16 @@ export function InviteForm({ onBack }: InviteFormProps) {
 
   const handleCreateTeam = () => {
     console.log("Creating team with users:", selectedUsers);
+    setShowSuccessModal(true);
   };
 
   const handleSkipInviting = () => {
     console.log("Skipping inviting process");
   };
+
+  if (showSuccessModal) {
+    return <SuccessModal teamName={teamName} onClose={() => setShowSuccessModal(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -125,12 +133,12 @@ export function InviteForm({ onBack }: InviteFormProps) {
           <div className="p-4 space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
-                Invite by Email
+                Invite by username
               </label>
               <div className="relative">
                 <Input
-                  type="email"
-                  placeholder="abc@gmail.com"
+                  type="text"
+                  placeholder="Enter username"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={() => setSearchFocused(true)}
