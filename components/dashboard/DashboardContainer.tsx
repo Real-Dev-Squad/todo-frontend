@@ -11,7 +11,7 @@ export const DashboardContainer = () => {
   const hasTasks = (data?.tasks?.length ?? 0) > 0;
   
   return (
-    <div className="max-h-screen ">
+    <div className="min-h-screen w-full">
       {hasTasks ? <TasksDashboard /> : <DashboardWelcomeScreen />}
     </div>
   );
