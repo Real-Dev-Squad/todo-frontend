@@ -1,33 +1,26 @@
 import React from 'react';
+import Link from 'next/link';
+import { Button } from './ui/button';
 
 export const SideBar = () => {
   return (
-    <div className="fixed left-0 top-0 bg-gray-400 h-screen w-64 flex flex-col min-h-screen lg:w-56 md:w-64 sm:w-56">
-    
-      <div className="mt-4 flex justify-center">
-        <div className="bg-gray-400 text-black px-4 py-2 rounded-full text-sm font-medium border border-black">
+    <aside className="fixed left-0 top-0 bg-white h-screen w-56 border-r border-neutral-200 flex flex-col min-h-screen z-40">
+      <div className="mt-6 flex justify-center">
+        <div className="bg-neutral-800 text-white px-4 py-2 rounded-full text-sm font-medium border border-neutral-800">
           TODO
         </div>
       </div>
-      
-     
-      <div className="mt-12 flex flex-col items-center space-y-4 px-4">
-        <button type='button' className="w-full max-w-40 h-12 bg-transparent text-white hover:bg-gray-500 transition-colors duration-200 rounded-3xl flex items-center justify-center">
-          <span className="text-lg font-medium">Home</span>
-        </button>
-        
-        <button type='button' className="w-full max-w-40 h-12 bg-transparent text-white hover:bg-gray-500 transition-colors duration-200 rounded-3xl flex items-center justify-center">
-          <span className="text-lg font-medium">Updates</span>
-        </button>
-
-        <button type='button' className="w-full max-w-40 h-12 bg-transparent text-white hover:bg-gray-500 transition-colors duration-200 rounded-3xl flex items-center justify-center">
-          <span className="text-lg font-medium">My Tasks</span>
-        </button>
-
-        <button type='button' className="w-full max-w-40 h-12 bg-transparent text-black hover:bg-gray-500 transition-colors duration-200 rounded-3xl flex items-center justify-center underline">
-          <span className="text-lg font-medium">Teams</span>
-        </button>
+      <div className="mt-12 flex flex-col items-center space-y-2 px-4">
+        <Link href="/" passHref>
+          <Button variant="ghost" className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3">Home</Button>
+        </Link>
+        <Link href="/tasks" passHref>
+          <Button variant="ghost" className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3">Tasks</Button>
+        </Link>
+        <Link href="/teams" passHref>
+          <Button variant="ghost" className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3">Teams</Button>
+        </Link>
       </div>
-    </div>
+    </aside>
   );
 };

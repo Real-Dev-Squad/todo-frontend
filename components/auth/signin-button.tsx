@@ -39,6 +39,7 @@ export function SigninButton() {
             Sign in with Google
           </Link>
           <Button 
+            disabled={true}
             className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg"
             onClick={() => {
               // TODO: later we will implement RDS authentication
