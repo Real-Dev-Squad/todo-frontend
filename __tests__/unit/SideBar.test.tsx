@@ -12,7 +12,7 @@ describe('SideBar', () => {
 
   it('renders navigation links', () => {
     render(<SideBar />);
-    expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Home').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Tasks').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Teams').length).toBeGreaterThan(0);
   });

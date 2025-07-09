@@ -7,8 +7,8 @@ import { useTasks } from '@/app/hooks/useTasks';
 
 
 export const DashboardContainer = () => {
-  const { tasks } = useTasks();
-  const hasTasks = tasks?.tasks?.length > 0;
+  const  {data}  = useTasks();
+  const hasTasks = (data?.tasks?.length ?? 0) > 0;
   
   return (
     <div className="max-h-screen ">

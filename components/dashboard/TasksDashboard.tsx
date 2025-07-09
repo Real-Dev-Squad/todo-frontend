@@ -9,12 +9,12 @@ import { useTasks } from '@/app/hooks/useTasks';
 export const TasksDashboard = () => {
   const { user } = useAuth();
   const username = user?.data?.name;
-  const { tasks, isLoading, isError } = useTasks();
+  console.log(user)
+  const { data, isLoading, isError } = useTasks();
 
   if (isLoading) return <div className="p-6">Loading tasks...</div>;
   if (isError) return <div className="p-6 text-red-500">Failed to load tasks.</div>;
-
-  const taskList = tasks?.tasks
+  const taskList = data?.tasks || []
 
   return (
     <div className="p-6">

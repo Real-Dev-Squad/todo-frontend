@@ -14,7 +14,7 @@ import { Task, TASK_PRIORITY } from "@/app/types/tasks"
 
 export const DashboardTasksTable = ({
   type,
-  tasks = [],
+  tasks,
 }: {
   type: DashboardTasksTableTabs;
   tasks: Task[];

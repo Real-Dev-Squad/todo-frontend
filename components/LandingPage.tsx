@@ -61,10 +61,10 @@ export const LandingPage: React.FC = () => {
   ];
 
   const stats = [
-    { number: "10K+", label: "Active Users" },
-    { number: "50K+", label: "Tasks Completed" },
-    { number: "99.9%", label: "Uptime" },
-    { number: "24/7", label: "Support" }
+    { id:"1" ,number: "10K+", label: "Active Users" },
+    { id:"2", number: "50K+", label: "Tasks Completed" },
+    {id:"3", number: "99.9%", label: "Uptime" },
+    { id:"4",number: "24/7", label: "Support" }
   ];
 
   return (
@@ -82,7 +82,6 @@ export const LandingPage: React.FC = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-neutral-800 hover:text-neutral-600 transition-colors">Features</a>
             <a href="#how-it-works" className="text-neutral-800 hover:text-neutral-600 transition-colors">How it works</a>
-            <a href="#pricing" className="text-neutral-800 hover:text-neutral-600 transition-colors">Pricing</a>
             <SigninButton/>
             
           </div>
@@ -148,8 +147,8 @@ export const LandingPage: React.FC = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+            {stats.map((stat) => (
+              <div key={stat.id} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-neutral-800 mb-2">{stat.number}</div>
                 <div className="text-neutral-800">{stat.label}</div>
               </div>
@@ -241,7 +240,7 @@ export const LandingPage: React.FC = () => {
               <div key={index} className="bg-white p-8 rounded-2xl shadow-sm text-center">
                 <div className="flex items-center justify-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star key={i} aria-hidden="true" className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
                 <p className="text-neutral-800 mb-6 leading-relaxed">{testimonial.content}</p>

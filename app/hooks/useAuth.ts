@@ -4,9 +4,9 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:
 
 export function useAuth() {
   const { data: user, isLoading, isError } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['user', 'profile'],
     queryFn: async () => {
-      const res = await fetch(`${backendUrl}/v1/user`, { credentials: 'include' });
+      const res = await fetch(`${backendUrl}/v1/user?profile=true`, { credentials: 'include' });
       if (!res.ok) throw new Error('Not authenticated');
       return res.json();
     },
@@ -14,6 +14,7 @@ export function useAuth() {
   });
 
   const isAuthenticated = !!user && !isError;
+  const userData = isAuthenticated ? user : undefined;
 
-  return { isAuthenticated, user, isLoading, isError };
+  return { isAuthenticated, user: userData, isLoading, isError };
 } 
