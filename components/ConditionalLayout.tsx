@@ -12,9 +12,13 @@ export const ConditionalLayout = ({ children }: { children: React.ReactNode }) =
   
   return (
     <>
-      {isLoggedIn && <SideBar />}
+      {isLoggedIn && (
+        <div className="hidden md:block">
+          <SideBar />
+        </div>
+      )}
       <NavBar />
-      <main className={`${isLoggedIn ? 'ml-56' : 'ml-0'} pt-16 min-h-screen`}>
+      <main className={`${isLoggedIn ? 'md:ml-56 lg:ml-56 xl:ml-64' : 'ml-0'} pt-16 min-h-screen`}>
         {children}
       </main>
     </>

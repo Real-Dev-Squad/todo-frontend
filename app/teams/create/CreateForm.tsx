@@ -47,16 +47,16 @@ export default function CreateTeamPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <form onSubmit={handleSubmit}>
-        <Card className="w-full max-w-sm bg-gray-200 p-6 rounded-2xl shadow-md">
+    <div className="flex items-center justify-center min-h-screen bg-white px-4 py-6">
+      <form onSubmit={handleSubmit} className="w-full">
+        <Card className="w-full max-w-sm mx-auto bg-gray-200 p-4 md:p-6 rounded-2xl shadow-md">
           <CardContent className="flex flex-col items-center gap-4">
-            <h2 className="text-xl font-semibold text-center">Create your Team</h2>
+            <h2 className="text-lg md:text-xl font-semibold text-center">Create your Team</h2>
 
             <label htmlFor="avatar-upload" className="cursor-pointer flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full border border-gray-500 flex items-center justify-center overflow-hidden">
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-gray-500 flex items-center justify-center overflow-hidden">
                 {avatar ? (
-                 <Image src={avatar} alt="Avatar" width={500} height={300} />
+                 <Image src={avatar} alt="Avatar" width={500} height={300} className="w-full h-full object-cover rounded-full" />
                 ) : (
                   <div className="text-sm text-gray-500">+</div>
                 )}
@@ -69,11 +69,11 @@ export default function CreateTeamPage() {
                 onChange={handleAvatarChange}
                 className="hidden"
               />
-              {errors.avatar && <p className="text-red-600 text-xs mt-1">{errors.avatar}</p>}
+              {errors.avatar && <p className="text-red-600 text-xs mt-1 text-center">{errors.avatar}</p>}
             </label>
 
             <div className="w-full">
-              <Label htmlFor="teamName">Team Name</Label>
+              <Label htmlFor="teamName" className="text-sm md:text-base">Team Name</Label>
               <Input
                 id="teamName"
                 placeholder="Team Name"
@@ -82,23 +82,25 @@ export default function CreateTeamPage() {
                   setTeamName(e.target.value);
                   setErrors((prev) => ({ ...prev, teamName: undefined }));
                 }}
+                className="mt-1 text-sm md:text-base"
               />
               {errors.teamName && <p className="text-red-600 text-xs mt-1">{errors.teamName}</p>}
             </div>
 
             <div className="w-full">
-              <Label htmlFor="description">Team Description (optional)</Label>
+              <Label htmlFor="description" className="text-sm md:text-base">Team Description (optional)</Label>
               <Input
                 id="description"
                 placeholder="Team Description ( optional )"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                className="mt-1 text-sm md:text-base"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-neutral-800 text-white hover:bg-neutral-900"
+              className="w-full bg-neutral-800 text-white hover:bg-neutral-900 h-10 md:h-11 text-sm md:text-base font-medium"
             >
               Next
             </Button>

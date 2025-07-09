@@ -9,7 +9,7 @@ export const DashboardContainer = () => {
   const hasTasks = true; 
   
   return (
-    <div className="max-h-screen ">
+    <div className="min-h-screen w-full">
       {hasTasks ? <TasksDashboard /> : <DashboardWelcomeScreen />}
     </div>
   );
