@@ -251,7 +251,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                       <Search className="h-8 w-8" />
                     </div>
                     <span className="text-sm text-gray-500 text-center font-medium">
-                      No users found for "{debouncedSearchTerm}"
+                      No users found for &ldquo;{debouncedSearchTerm}&rdquo;
                     </span>
                     <span className="text-xs text-gray-400 text-center mt-1">
                       Try searching by name or email
