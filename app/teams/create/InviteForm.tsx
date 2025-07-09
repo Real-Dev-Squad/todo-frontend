@@ -78,56 +78,56 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
     }
   }, [debouncedSearchTerm, searchFocused, performSearch]);
 
-  const handleAddUser = useCallback((user: User) => {
+  const handleAddUser = (user: User) => {
     setSelectedUsers((prev) => [...prev, user]);
     setSearchTerm("");
     setDebouncedSearchTerm("");
     setShowSuggestions(false);
     setIsSearching(false);
-  }, []);
+  };
 
-  const handleRemoveUser = useCallback((userId: string) => {
+  const handleRemoveUser = (userId: string) => {
     setSelectedUsers((prev) => prev.filter((user) => user.id !== userId));
-  }, []);
+  };
 
-  const handleClearAllUsers = useCallback(() => {
+  const handleClearAllUsers = () => {
     setSelectedUsers([]);
-  }, []);
+  };
 
-  const handleGoBack = useCallback(() => {
+  const handleGoBack = () => {
     if (onBack) {
       onBack();
       return;
     }
     window.history.back();
-  }, [onBack]);
+  };
 
-  const getInitials = useCallback((firstName: string, lastName: string) => {
+  const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  }, []);
+  };
 
-  const handleCreateTeam = useCallback(() => {
+  const handleCreateTeam = () => {
     console.log("Creating team with users:", selectedUsers);
     setShowSuccessModal(true);
-  }, [selectedUsers]);
+  };
 
-  const handleSkipInviting = useCallback(() => {
+  const handleSkipInviting = () => {
     console.log("Skipping inviting process");
-  }, []);
+  };
 
-  const handleSearchFocus = useCallback(() => {
+  const handleSearchFocus = () => {
     setSearchFocused(true);
     setShowSuggestions(true);
-  }, []);
+  };
 
-  const handleSearchBlur = useCallback(() => {
+  const handleSearchBlur = () => {
     setTimeout(() => {
       setSearchFocused(false);
       if (searchTerm.trim() === "") {
         setShowSuggestions(false);
       }
     }, 200);
-  }, [searchTerm]);
+  };
 
   const searchStats = useMemo(
     () => ({
