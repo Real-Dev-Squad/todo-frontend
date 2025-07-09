@@ -78,7 +78,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         {properties.map(({ icon, label, value, alt, testId }) => <div key={label} className="flex items-center gap-2">
                             <Image src={icon} alt={alt} width={15} height={15} />
                             <span className="text-sm ">{label}</span>
-                            <span data-testid={testId} className="text-sm text-gray-500">{value}</span>
+                            <span data-testid={testId} className="text-sm text-gray-500">{value?.toString()}</span>
                         </div>)}
                     </div>
                 </div>

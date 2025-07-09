@@ -21,7 +21,7 @@ const getStatusImagePath = (status: string): string => {
 
 export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
   const statusImagePath = getStatusImagePath(task.status);
-  const formattedDueDate = new DateUtil(task.dueDate).format(
+  const formattedDueDate = new DateUtil(task.dueDate ?? "").format(
     DateFormats.D_MMM_YYYY
   );
 
@@ -51,7 +51,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
       <div className="flex items-center space-x-6">
         <div className="flex text-[#74787E] items-center justify-center space-x-2">
           <div className="hidden md:flex px-2 py-[2px] rounded-full border border-[#4541C6] bg-[#F5F5FF] text-xs">
-            {task.assignee}
+            {task.assignee.name}
           </div>
           <div className="px-2 py-[2px] rounded-full border border-[#4541C6] bg-[#F5F5FF] text-xs">
             {formattedDueDate}
@@ -60,7 +60,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
 
         <div className="md:hidden">
           <Image
-            src={task.profile || "/assets/user.png"}
+            src={"/assets/user.png"}
             alt="assignee-profile"
             width={20}
             height={20}

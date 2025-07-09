@@ -14,7 +14,7 @@ export default function AuthCallback() {
     if (success === 'true') {
       toast.success('Login successful!');
     } else if (error) {
-      toast.error('Login faile');
+      toast.error('Login failed');
     } else {
       toast('Login status unknown.');
     }

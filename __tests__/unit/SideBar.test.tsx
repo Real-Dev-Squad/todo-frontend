@@ -1,19 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { SideBar } from '../../components/SideBar';
-import React from 'react';
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect, beforeAll } from "vitest";
+import { SideBar } from "../../components/SideBar";
+import React from "react";
 
-describe('SideBar', () => {
-  it('renders the TODO logo', () => {
+describe("SideBar", () => {
+  beforeAll(() => {
     render(<SideBar />);
-    const logo = screen.getByText('TODO');
+  });
+  it("renders the TODO logo", () => {
+    const logo = screen.getByText("TODO");
     expect(logo).toBeDefined();
   });
 
-  it('renders navigation links', () => {
-    render(<SideBar />);
-    expect(screen.getAllByText('Home').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Tasks').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Teams').length).toBeGreaterThan(0);
+  it("renders navigation links", () => {
+    expect(screen.getByText("Home")).toBeDefined();
+    expect(screen.getByText("Tasks")).toBeDefined();
+    expect(screen.getByText("Teams")).toBeDefined();
   });
-}); 
+});

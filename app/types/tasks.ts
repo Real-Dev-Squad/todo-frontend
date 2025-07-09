@@ -1,14 +1,20 @@
 export type Task = {
   id: string;
+  taskId: string;
   title: string;
-  labels?: { name: string }[] | string[];
-  label?: string;
+  description?: string;
+  labels?: { name: string }[];
   status: TASK_STATUS;
-  priority: TASK_PRIORITY;
+  priority?: TASK_PRIORITY;
+  assignee: {
+    id: string;
+    name: string;
+  };
+  tags?: string[];
   dueAt?: string;
   dueDate?: string;
   isInWatchlist?: boolean;
-}
+};
 
 export enum TASK_STATUS {
   TODO = "Todo",
