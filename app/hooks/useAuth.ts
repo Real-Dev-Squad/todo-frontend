@@ -11,7 +11,7 @@ export function useAuth() {
   } = useQuery({
     queryKey: ["users", "profile"],
     queryFn: async () => {
-      const res = await fetch(`${backendUrl}/v1/user?profile=true`, {
+      const res = await fetch(`${backendUrl}/v1/users?profile=true`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Not authenticated");
