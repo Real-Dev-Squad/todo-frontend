@@ -4,6 +4,15 @@ import { Mode, Task, TASK_STATUS, TASK_PRIORITY } from "@/app/types/tasks";
 import { useState } from "react";
 
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 //Import Svg for icons
 import calendarIcon from "@/public/assets/calendar.svg";
@@ -20,9 +29,10 @@ import { TaskDetails } from "./TaskDetails";
 interface TodoFormProps {
   initialData?: Task;
   onSubmit?: (data: Task) => void;
-  mode: Mode;
+  mode?: Mode;
   onAcknowledge?: () => void;
   onClose: () => void;
+  open?: boolean;
 }
 
 const DEFAULT_FORM_DATA: Task = {
@@ -40,9 +50,10 @@ const DEFAULT_FORM_DATA: Task = {
 export function TodoForm({
   initialData,
   onSubmit,
-  mode,
+  mode = FORM_MODE.CREATE,
   onAcknowledge,
   onClose,
+  open = true,
 }: TodoFormProps) {
   const [formData, setFormData] = useState<Task>(
     initialData ?? DEFAULT_FORM_DATA
@@ -68,21 +79,20 @@ export function TodoForm({
   }
 
   return (
-    <div className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
-      <form onSubmit={handleSubmit} className="p-6 space-y-6">
-        <div className="flex flex-row justify-between items-center">
-          <h2 className="text-xl font-semibold text-indigo-600">
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold text-indigo-600">
             {mode === FORM_MODE.CREATE ? "Create a Todo" : "Edit Todo"}
-          </h2>
-          <button
-            data-testid="form-close-button"
-            className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-            onClick={onClose}
-          >
-            X
-          </button>
-        </div>
-        <hr className="mb-4" />
+          </DialogTitle>
+          <DialogDescription>
+            {mode === FORM_MODE.CREATE 
+              ? "Create a new task to organize your work" 
+              : "Edit your existing task details"}
+          </DialogDescription>
+        </DialogHeader>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
 
         <div className="space-y-4">
           <div>
@@ -276,19 +286,20 @@ export function TodoForm({
           )}
         </div>
 
-        <hr className="mb-4" />
-
-        <button
-          data-testid="task-form-submit-button"
-          type="submit"
-          className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-        >
-          <span className="flex flex-row gap-2">
-            <Image src={Icon} alt={altText} width={20} height={20} />
-            {ctaText}
-          </span>
-        </button>
-      </form>
-    </div>
+          <DialogFooter>
+            <Button
+              data-testid="task-form-submit-button"
+              type="submit"
+              className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              <span className="flex flex-row gap-2">
+                <Image src={Icon} alt={altText} width={20} height={20} />
+                {ctaText}
+              </span>
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

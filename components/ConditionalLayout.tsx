@@ -8,9 +8,9 @@ import { LandingPage } from "./LandingPage";
 export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    return <LandingPage />;
-  }
+  // if (!isAuthenticated) {
+  //   return <LandingPage />;
+  // }
 
   return (
     <>

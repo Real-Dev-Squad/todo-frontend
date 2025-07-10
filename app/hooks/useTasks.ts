@@ -4,6 +4,7 @@ import { TasksApiResponse } from "../types/api";
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:8000";
 
+  // !! todo:remove this  we dont need hooks anymore
 export function useTasks() {
   const { data, isLoading, isError } = useQuery<TasksApiResponse>({
     queryKey: ["tasks", "profile"],

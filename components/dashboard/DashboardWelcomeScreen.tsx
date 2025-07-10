@@ -1,8 +1,29 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { TodoForm } from '../TodoForm';
+import { tasksApi } from '@/lib/api/tasks/tasks.api';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { AxiosError } from 'axios';
+import { Task } from '@/lib/api/tasks/tasks.dto';
 
 export const DashboardWelcomeScreen = () => {
+  const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
+  const createTaskMutation = useMutation({
+    mutationFn: (task: Task) => tasksApi.createTask(task),
+    onSuccess: () => {
+      setShowCreateTaskForm(false);
+    },
+    onError: (error: AxiosError) => {
+      toast.error(error.response?.data as string); 
+    },
+  });
+
+  const handleCreateTask = (task: Task) => {
+    createTaskMutation.mutate(task);
+  };
+
   return (
     <div className="flex flex-col min-h-[60vh] p-4 md:p-6">
       <div className="text-left mb-6 md:mb-8">
@@ -23,14 +44,21 @@ export const DashboardWelcomeScreen = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full max-w-md">
-          <button className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1">
+          <button className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1 hover:cursor-pointer"
+          onClick={() => setShowCreateTaskForm(true)}
+          >
             Create Task
           </button>
-          <button className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1">
+          <button className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1" >
             Create Team
           </button>
         </div>
       </div>
+      <TodoForm 
+        open={showCreateTaskForm} 
+        onClose={() => setShowCreateTaskForm(false)}
+        onSubmit={handleCreateTask}
+      />
     </div>
   );
 }; 
