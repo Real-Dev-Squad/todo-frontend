@@ -9,7 +9,7 @@ export function useAuth() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["user", "profile"],
+    queryKey: ["users", "profile"],
     queryFn: async () => {
       const res = await fetch(`${backendUrl}/v1/user?profile=true`, {
         credentials: "include",
