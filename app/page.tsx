@@ -1,10 +1,5 @@
-"use client"
-import { SigninButton } from "@/components/auth/signin-button";
+import { DashboardContainer } from "@/components/dashboard/DashboardContainer";
 
-export default function Home() {
-  return <div className="flex min-h-screen flex-col items-center py-8 ">
-    <h1>Hello World!</h1>
-    {/* TODO: Later this AuthModal will be used from header */}
-    <SigninButton/>
-  </div>;
+export default function DashboardPage() {
+  return <DashboardContainer />;
 }

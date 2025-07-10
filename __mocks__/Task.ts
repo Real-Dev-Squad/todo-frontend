@@ -1,16 +1,5 @@
-import { Task } from "@/app/types/tasks";
+import { Task, TASK_STATUS } from "@/app/types/tasks";
 import { User } from "@/app/types/user";
-
-export const initialData: Task = {
-  id: "1",
-  title: "Sample Task",
-  description: "This is a test task description.",
-  dueDate: "2024-12-31",
-  assignee: "John Doe",
-  status: "Pending",
-  tags: "Urgent",
-  taskId: "#12345",
-};
 
 export const dummyUsers: User[] = [
   {
@@ -134,3 +123,17 @@ export const dummyUsers: User[] = [
     email: "nicole.lewis@gmail.com",
   },
 ];
+
+export const initialData: Task = {
+  id: "1",
+  title: "Sample Task",
+  description: "This is a test task description.",
+  dueDate: "2024-12-31",
+  assignee: {
+    id: dummyUsers[0].id,
+    name: `${dummyUsers[0].firstName} ${dummyUsers[0].lastName}`,
+  },
+  status: TASK_STATUS.TODO,
+  tags: ["Urgent"],
+  taskId: "#12345",
+};

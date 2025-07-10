@@ -9,8 +9,9 @@ import {
 import { DashboardTasksTableTabs as TabsConstants } from "./constants"
 import { DashboardTasksTable } from "./DashboardTasksTable"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Task } from "@/app/types/tasks"
 
-export function DashboardTasksTableTabs() {
+export function DashboardTasksTableTabs({ tasks }: { tasks: Task[] }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -31,10 +32,10 @@ export function DashboardTasksTableTabs() {
           <TabsTrigger value={TabsConstants.WatchList} className="cursor-pointer">{TabsConstants.WatchList}</TabsTrigger>
         </TabsList>
         <TabsContent value={TabsConstants.All}>
-            <DashboardTasksTable type={TabsConstants.All} />
+            <DashboardTasksTable type={TabsConstants.All} tasks={tasks} />
         </TabsContent>
         <TabsContent value={TabsConstants.WatchList}>
-            <DashboardTasksTable type={TabsConstants.WatchList} />
+            <DashboardTasksTable type={TabsConstants.WatchList} tasks={tasks} />
         </TabsContent>
       </Tabs>
     </div>

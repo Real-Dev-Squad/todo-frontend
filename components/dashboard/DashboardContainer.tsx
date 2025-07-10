@@ -2,11 +2,13 @@
 import React from 'react';
 import { DashboardWelcomeScreen } from './DashboardWelcomeScreen';
 import { TasksDashboard } from './TasksDashboard';
+import { useTasks } from '@/app/hooks/useTasks';
+
 
 
 export const DashboardContainer = () => {
-  // TODO: Replace with actual logic to check if user has tasks
-  const hasTasks = true; 
+  const  {data}  = useTasks();
+  const hasTasks = (data?.tasks?.length ?? 0) > 0;
   
   return (
     <div className="min-h-screen w-full">

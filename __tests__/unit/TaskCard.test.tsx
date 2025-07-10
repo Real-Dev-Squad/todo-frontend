@@ -1,20 +1,22 @@
-import { Task } from "@/app/types/tasks";
+import { Task, TASK_STATUS } from "@/app/types/tasks";
 import { TaskCard } from "@/components/TaskCard";
 import { DateFormats, DateUtil } from "@/utils/dateUtil";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
 const mockTask: Task = {
-  id: 1,
+  id: "1",
+  taskId: "#1",
   title: "Complete project",
-  status: "todo",
-  assignee: "John Doe",
+  status: TASK_STATUS.TODO,
+  assignee: { id: "1", name: "John Doe" },
   dueDate: "2024-12-31",
-  profile: "/assets/john.png",
 };
 
 const renderTaskCard = (task = mockTask, className = "") => {
-  return render(<TaskCard task={task} className={className} />);
+  return render(
+    <TaskCard task={task} className={className} setActiveTask={vi.fn()} />
+  );
 };
 
 beforeEach(() => {
@@ -33,9 +35,9 @@ test("renders task card with correct information", () => {
   const statusIcon = screen.getByAltText(
     "task-status-icon"
   ) as HTMLImageElement;
-  const assignee = screen.getByText(mockTask.assignee);
+  const assignee = screen.getByText(mockTask.assignee.name);
   const formattedDueDate = screen.getByText(
-    new DateUtil(mockTask.dueDate).format(DateFormats.D_MMM_YYYY)
+    new DateUtil(mockTask.dueDate ?? "").format(DateFormats.D_MMM_YYYY)
   );
 
   expect(taskTitle).toBeDefined();
@@ -46,7 +48,7 @@ test("renders task card with correct information", () => {
 });
 
 test("renders in-progress status icon correctly", () => {
-  renderTaskCard({ ...mockTask, status: "in-progress" });
+  renderTaskCard({ ...mockTask, status: TASK_STATUS.IN_PROGRESS });
 
   const statusIcon = screen.getByAltText(
     "task-status-icon"
@@ -64,7 +66,7 @@ test("applies custom className to task card", () => {
 });
 
 test("renders default profile image when profile is not provided", () => {
-  renderTaskCard({ ...mockTask, profile: undefined });
+  renderTaskCard({ ...mockTask });
 
   const profileImage = screen.getByAltText(
     "assignee-profile"
