@@ -6,31 +6,20 @@ const config: StorybookConfig = {
     "../components/**/*.stories.@(js|jsx|ts|tsx)",
     "../components/**/*.mdx",
   ],
-  addons: [
-    {
-      name: "@storybook/addon-essentials",
-      options: {
-        docs: false,
+  addons: ["@chromatic-com/storybook", {
+    name: "@storybook/addon-docs",
+    options: {
+      csfPluginOptions: null,
+      mdxPluginOptions: {},
+    },
+  }, {
+    name: "@storybook/addon-postcss",
+    options: {
+      postcssLoaderOptions: {
+        implementation: postcss,
       },
     },
-    "@chromatic-com/storybook",
-    "@storybook/addon-interactions",
-    {
-      name: "@storybook/addon-docs",
-      options: {
-        csfPluginOptions: null,
-        mdxPluginOptions: {},
-      },
-    },
-    {
-      name: "@storybook/addon-postcss",
-      options: {
-        postcssLoaderOptions: {
-          implementation: postcss,
-        },
-      },
-    },
-  ],
+  }],
   framework: {
     name: "@storybook/nextjs",
     options: {},

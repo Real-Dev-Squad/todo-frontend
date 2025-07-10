@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs";
 import "!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css";
 
 const preview: Preview = {
