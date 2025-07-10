@@ -1,5 +1,9 @@
 # TODO PROJECT
 
+## Setup SSL proxy
+To run the app locally on `https://staging-todo.realdevsquad.com/` add `127.0.0.1 staging-todo.realdevsquad.com` in your `/etc/hosts`.
+This step is requried if you want to call the staing API.
+
 ## Local Development Setup
 
 This project uses [PNPM]([https://yarnpkg.com/getting-started](https://pnpm.io/motivation)) for package management.
