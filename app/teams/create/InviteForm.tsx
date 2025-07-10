@@ -157,7 +157,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 flex-shrink-0 hover:bg-gray-100"
+              className="h-9 w-9 shrink-0 hover:bg-gray-100"
               onClick={handleGoBack}
             >
               <ArrowLeft className="h-5 w-5" />
@@ -218,7 +218,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                         }}
                         onClick={() => handleAddUser(user)}
                       >
-                        <Avatar className="h-9 w-9 flex-shrink-0">
+                        <Avatar className="h-9 w-9 shrink-0">
                           <AvatarFallback className="text-xs bg-blue-100 text-blue-600 font-medium">
                             {getInitials(user.firstName, user.lastName)}
                           </AvatarFallback>
@@ -231,7 +231,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                             {user.email}
                           </div>
                         </div>
-                        <div className="text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 font-medium">
+                        <div className="text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 font-medium">
                           + Add
                         </div>
                       </div>
@@ -289,7 +289,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                       key={user.id}
                       className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg group hover:bg-blue-100 transition-colors border border-blue-100"
                     >
-                      <Avatar className="h-9 w-9 flex-shrink-0">
+                      <Avatar className="h-9 w-9 shrink-0">
                         <AvatarFallback className="text-xs bg-blue-100 text-blue-600 font-medium">
                           {getInitials(user.firstName, user.lastName)}
                         </AvatarFallback>
@@ -324,7 +324,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
 
             <div className="space-y-3 pt-6 border-t border-gray-100">
               <Button
-                className="w-full bg-black hover:bg-gray-800 text-white h-12 text-base font-medium transition-colors shadow-sm"
+                className="w-full bg-black hover:bg-gray-800 text-white h-12 text-base font-medium transition-colors shadow-xs"
                 onClick={handleCreateTeam}
               >
                 Create Team

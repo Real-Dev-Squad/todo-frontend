@@ -32,7 +32,7 @@ export const SideBar = () => {
             <button 
               key={item.path}
               type='button' 
-              className={`w-full max-w-36 md:max-w-40 h-10 md:h-12 bg-transparent hover:bg-gray-500 transition-colors duration-200 rounded-2xl md:rounded-3xl flex items-center justify-center ${
+              className={`w-full max-w-36 md:max-w-40 h-10 md:h-12 bg-transparent cursor-pointer hover:bg-gray-500 transition-colors duration-200 rounded-2xl md:rounded-3xl flex items-center justify-center ${
                 isActive 
                   ? 'text-black underline' 
                   : 'text-white'

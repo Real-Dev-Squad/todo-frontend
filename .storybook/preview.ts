@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/nextjs";
-import "!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css";
+import "../app/globals.css"
 
 const preview: Preview = {
   tags: ["autodocs"],

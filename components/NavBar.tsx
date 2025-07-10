@@ -23,7 +23,7 @@ export const NavBar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 md:left-56 lg:left-56 xl:left-64 right-0 bg-white h-16 flex items-center justify-between md:justify-end px-4 md:px-6 shadow-sm border-b border-gray-200 z-10">
+      <nav className="fixed top-0 left-0 md:left-56 lg:left-56 xl:left-64 right-0 bg-white h-16 flex items-center justify-between md:justify-end px-4 md:px-6 shadow-xs border-b border-gray-200 z-10">
         <button
           type="button"
           className="md:hidden p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
@@ -62,7 +62,7 @@ export const NavBar = () => {
 
           <button
             type="button"
-            className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+            className="relative p-2 cursor-pointer text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <Bell className="w-5 h-5 md:w-6 md:h-6" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>

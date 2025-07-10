@@ -57,17 +57,17 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
     }
 
     return (
-        <div className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
+        <div className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-xs shadow-gray-400 border-gray-200 border overflow-hidden">
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div className='flex flex-row justify-between items-center'>
                     <h2 className="text-xl font-semibold text-indigo-600">{mode === FORM_MODE.CREATE ? "Create a Todo" : "Edit Todo"}</h2>
                     <button
                         data-testid='form-close-button'
-                        className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                        className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                         onClick={onClose}
                     >X</button>
                 </div>
-                <hr className='mb-4' />
+                <hr className='mb-6' />
 
                 <div className="space-y-4">
                     <div>
@@ -80,7 +80,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             placeholder="e.g Cool new title for my todo"
                             required
                         />
@@ -95,7 +95,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             id="description"
                             value={formData.description}
                             onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 min-h-[100px]"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600 min-h-[100px]"
                             placeholder="e.g Nothing is cool in here"
                             required
                         />
@@ -120,7 +120,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             placeholder='Please enter due date'
                             value={formData.dueDate}
                             onChange={(e) => setFormData((prev) => ({ ...prev, dueDate: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             required
                         />
                     </div>
@@ -136,7 +136,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             type="text"
                             value={formData.assignee}
                             onChange={(e) => setFormData((prev) => ({ ...prev, assignee: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             placeholder="e.g @ankush"
                             required
                         />
@@ -152,7 +152,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             type="text"
                             value={formData.tags}
                             onChange={(e) => setFormData((prev) => ({ ...prev, tags: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             placeholder="e.g frontend"
                         />
                     </div>
@@ -168,7 +168,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                             type="text"
                             value={formData.taskId}
                             onChange={(e) => setFormData((prev) => ({ ...prev, taskId: e.target.value }))}
-                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                            className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             placeholder="e.g #kda4dyodajd73j"
                             required
                         />
@@ -184,7 +184,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                                 id="status"
                                 value={formData.status}
                                 onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value as Task["status"] }))}
-                                className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                                className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
                             >
                                 <option value="Todo">Todo</option>
                                 <option value="In-Progress">In Progress</option>
@@ -199,7 +199,7 @@ export function TodoForm({ initialData, onSubmit, mode, onAcknowledge, onClose }
                 <button
                     data-testid="task-form-submit-button"
                     type="submit"
-                    className="flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    className="flex flex-row items-center cursor-pointer justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-[#4F46E5] text-white text-sm font-medium rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                 >
                     <span className='flex flex-row gap-2'>
                         <Image src={Icon} alt={altText} width={20} height={20} />

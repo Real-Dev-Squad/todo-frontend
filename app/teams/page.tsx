@@ -21,12 +21,12 @@ const TeamsPage = () => {
 
         <div className="flex flex-col justify-center gap-3 md:gap-4 mt-8 md:mt-12 items-center w-full px-4">
           <Button
-            className="w-full max-w-xs h-12 md:h-auto text-base md:text-sm"
+            className="w-full cursor-pointer max-w-xs h-12 md:h-auto text-base md:text-sm"
             onClick={() => router.push("/teams/create")}
           >
             Create a Team
           </Button>
-          <Button className="w-full max-w-xs h-12 md:h-auto bg-white text-black border border-black font-bold hover:bg-gray-50 text-base md:text-sm">
+          <Button className="w-full cursor-pointer max-w-xs h-12 md:h-auto bg-white text-black border border-black font-bold hover:bg-gray-50 text-base md:text-sm">
             Join an Existing Team
           </Button>
         </div>

@@ -1,10 +1,10 @@
 export const DashboardWeeklySummary = () => {
   return (
     <div className="lg:col-span-1">
-    <div className="bg-white rounded-lg shadow-sm border p-4">
+    <div className="bg-white rounded-lg shadow-xs border p-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">Weekly Summary</h3>
-        <button className="text-sm text-blue-600 hover:text-blue-700">See all tasks</button>
+        <button className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer">See all tasks</button>
       </div>
       
       <div className="space-y-4">

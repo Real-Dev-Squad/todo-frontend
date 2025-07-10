@@ -43,7 +43,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
 
 
     return (
-        <div data-testid="task-details-1" className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-sm shadow-gray-400 border-gray-200 border-[1px] overflow-hidden">
+        <div data-testid="task-details-1" className="w-full absolute rounded-none top-0 left-0 h-full mt-auto md:static md:max-w-2xl bg-white md:rounded-xl shadow-xs shadow-gray-400 border-gray-200 border overflow-hidden">
             <div className="p-6 space-y-6">
                 <div className='flex flex-row justify-between items-center'>
                     <h2 className="text-xl font-semibold text-indigo-600">{title}</h2>
@@ -51,7 +51,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         <button
                             onClick={onAcknowledge}
                             data-testid='details-acknowledge-button'
-                            className=" flex flex-row justify-center items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className=" flex flex-row justify-center cursor-pointer items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             <span className='text-2xl text-white'>+</span>
                             <p>
@@ -60,15 +60,15 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         </button>
                         <button
                             data-testid='details-close-button'
-                            className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                            className="md:hidden flex flex-row items-center justify-center gap-2 w-fit py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                             onClick={onClose}
                         >X</button>
                     </div>
                 </div>
 
-                <div className="text-gray-600 text-sm mb-4 max-h-40 whitespace-pre-wrap overflow-y-scroll no-scrollbar ">{description}</div>
+                <div className="text-gray-600 text-sm mb-6 max-h-40 whitespace-pre-wrap overflow-y-scroll no-scrollbar ">{description}</div>
 
-                <hr className='mb-4' />
+                <hr className='mb-6' />
 
                 <div className="space-y-6 mb-4">
                     <h3 className="text-sm font-medium text-gray-900">Properties</h3>
@@ -83,7 +83,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                     </div>
                 </div>
 
-                <hr className='mb-4' />
+                <hr className='my-6' />
 
                 <div className="mt-4">
                     <h3 className="text-sm font-medium text-gray-900 mb-4">Activity</h3>
@@ -110,7 +110,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
                         <div className="h-fit rounded-xl overflow-hidden bg-[#F5F5FF]">
                             <textarea
                                 placeholder="Leave a comment..."
-                                className="w-full h-full text-sm bg-[#F5F5FF] text-indigo-600 border-none p-2 placeholder-gray-400 focus:outline-none"
+                                className="w-full h-full text-sm bg-[#F5F5FF] text-indigo-600 border-none p-2 placeholder-gray-400 focus:outline-hidden"
                             />
                         </div>
                     </div>

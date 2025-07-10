@@ -30,7 +30,7 @@ export const TaskHeader = ({
         </h2>
       </div>
 
-      <button onClick={onCreateTask}>
+      <button onClick={onCreateTask} className="cursor-pointer">
         <Image src="/assets/plus.svg" alt="plusIcon" width={20} height={20} />
       </button>
     </div>

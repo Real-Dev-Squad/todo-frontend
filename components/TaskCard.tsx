@@ -48,7 +48,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
         <h2 className="text-sm sm:text-base ml-2 font-medium">{task.title}</h2>
       </div>
 
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-0">
         <div className="flex text-[#74787E] items-center justify-center space-x-2">
           <div className="hidden md:flex px-2 py-[2px] rounded-full border border-[#4541C6] bg-[#F5F5FF] text-xs">
             {task.assignee}

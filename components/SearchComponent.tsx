@@ -58,7 +58,7 @@ export const SearchComponent = ({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowResults(true)}
           onBlur={() => setTimeout(() => setShowResults(false), 200)}
-          className="w-full pl-8 md:pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black placeholder-gray-500 text-sm md:text-base"
+          className="w-full pl-8 md:pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-full focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black placeholder-gray-500 text-sm md:text-base"
         />
       </div>
 
