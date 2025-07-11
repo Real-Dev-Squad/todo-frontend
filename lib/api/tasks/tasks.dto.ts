@@ -12,7 +12,6 @@ export enum TASK_PRIORITY {
 
 export type TTask = {
   id: string
-  taskId: string
   title: string
   description?: string
   labels?: { name: string }[]
@@ -24,7 +23,6 @@ export type TTask = {
   }
   tags?: string[]
   dueAt?: string
-  dueDate?: string
   isInWatchlist?: boolean
 }
 

@@ -20,7 +20,7 @@ const getStatusImagePath = (status: string): string => {
 
 export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
   const statusImagePath = getStatusImagePath(task?.status ?? '')
-  const formattedDueDate = new DateUtil(task.dueDate ?? '').format(DateFormats.D_MMM_YYYY)
+  const formattedDueAt = new DateUtil(task.dueAt ?? '').format(DateFormats.D_MMM_YYYY)
 
   const handleClick = (task: Task) => {
     setActiveTask(task)
@@ -44,7 +44,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
             {task.assignee.name}
           </div>
           <div className="rounded-full border border-[#4541C6] bg-[#F5F5FF] px-2 py-[2px] text-xs">
-            {formattedDueDate}
+            {formattedDueAt}
           </div>
         </div>
 

@@ -1,10 +1,10 @@
-import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, beforeEach, expect, test, vi } from 'vitest'
-import { Task } from '@/app/types/tasks'
-import { FORM_MODE } from '@/app/constants/Task'
 import { initialData } from '@/__mocks__/Task'
+import { FORM_MODE } from '@/app/constants/Task'
+import { Task } from '@/app/types/tasks'
 import { TodoForm } from '@/components/TodoForm'
+import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 // Mock TaskDetails component
 vi.mock('./TaskDetails', () => ({
@@ -56,7 +56,6 @@ test('should renders edit mode with initial data', async () => {
   renderTodoForm({ mode: FORM_MODE.EDIT, initialData: initialData })
   expect(screen.getByDisplayValue(initialData.title ?? '')).toBeDefined()
   expect(screen.getByDisplayValue(initialData.description ?? '')).toBeDefined()
-  expect(screen.getByDisplayValue(initialData.taskId ?? '')).toBeDefined()
   expect(screen.getByText('Edit Todo')).toBeDefined()
   expect(screen.getByText('Save')).toBeDefined()
   expect(screen.getByText('Status')).toBeDefined()
@@ -81,15 +80,13 @@ test.skip('should submit form with correct data in create mode', async () => {
     id: '',
     title: 'Test Task',
     description: 'Test Description',
-    dueDate: '2024-12-31',
+    dueAt: '2024-12-31',
     tags: ['frontend'],
-    taskId: 'TEST-123',
   }
 
   await user.type(screen.getByTestId('title'), testData.title)
   await user.type(screen.getByTestId('description'), testData.description)
-  await user.type(screen.getByTestId('task-id'), testData.taskId)
-  await user.type(screen.getByTestId('due-date'), testData.dueDate)
+  await user.type(screen.getByTestId('due-date'), testData.dueAt)
   await user.type(screen.getByLabelText(/tags/i), testData.tags.join(', '))
 
   await user.click(screen.getByTestId('task-form-submit-button'))

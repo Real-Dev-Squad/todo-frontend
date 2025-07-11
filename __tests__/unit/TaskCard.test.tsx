@@ -6,11 +6,10 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 const mockTask: Task = {
   id: '1',
-  taskId: '#1',
   title: 'Complete project',
   status: TASK_STATUS.TODO,
   assignee: { id: '1', name: 'John Doe' },
-  dueDate: '2024-12-31',
+  dueAt: '2024-12-31',
 }
 
 const renderTaskCard = (task = mockTask, className = '') => {
@@ -29,18 +28,16 @@ test('renders task card with correct information', () => {
   renderTaskCard()
 
   const taskTitle = screen.getByText(mockTask.title)
-  const taskId = screen.getByText(`#${mockTask.id}`)
   const statusIcon = screen.getByAltText('task-status-icon') as HTMLImageElement
   const assignee = screen.getByText(mockTask.assignee.name)
-  const formattedDueDate = screen.getByText(
-    new DateUtil(mockTask.dueDate ?? '').format(DateFormats.D_MMM_YYYY),
+  const formattedDueAt = screen.getByText(
+    new DateUtil(mockTask.dueAt ?? '').format(DateFormats.D_MMM_YYYY),
   )
 
   expect(taskTitle).toBeDefined()
-  expect(taskId).toBeDefined()
   expect(statusIcon.src).toContain('/assets/ToDoEllipse.svg')
   expect(assignee).toBeDefined()
-  expect(formattedDueDate).toBeDefined()
+  expect(formattedDueAt).toBeDefined()
 })
 
 test('renders in-progress status icon correctly', () => {

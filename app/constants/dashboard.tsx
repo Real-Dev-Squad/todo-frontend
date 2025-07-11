@@ -8,7 +8,7 @@ export const Tasks = [
     description: 'Fix navigation menu responsiveness',
     status: TASK_STATUS.TODO,
     priority: 'High',
-    dueDate: '2024-01-15',
+    dueAt: '2024-01-15',
     isInWatchlist: true,
   },
   {
@@ -18,7 +18,7 @@ export const Tasks = [
     description: 'Update API documentation',
     status: TASK_STATUS.IN_PROGRESS,
     priority: 'Medium',
-    dueDate: '2024-01-20',
+    dueAt: '2024-01-20',
     isInWatchlist: false,
   },
   {
@@ -28,7 +28,7 @@ export const Tasks = [
     description: 'Implement user authentication',
     status: TASK_STATUS.PENDING,
     priority: 'High',
-    dueDate: '2024-02-01',
+    dueAt: '2024-02-01',
     isInWatchlist: true,
   },
   {
@@ -38,7 +38,7 @@ export const Tasks = [
     description: 'Write unit tests for dashboard components',
     status: TASK_STATUS.ACTIVE,
     priority: 'Medium',
-    dueDate: '2024-01-25',
+    dueAt: '2024-01-25',
     isInWatchlist: false,
   },
   {
@@ -48,7 +48,7 @@ export const Tasks = [
     description: 'Optimize database queries',
     status: TASK_STATUS.TODO,
     priority: 'Low',
-    dueDate: '2024-02-10',
+    dueAt: '2024-02-10',
     isInWatchlist: true,
   },
   {
@@ -58,7 +58,7 @@ export const Tasks = [
     description: 'Redesign landing page',
     status: TASK_STATUS.DEFERRED,
     priority: 'Low',
-    dueDate: '2024-03-01',
+    dueAt: '2024-03-01',
     isInWatchlist: false,
   },
   {
@@ -68,7 +68,7 @@ export const Tasks = [
     description: 'Improve page load times',
     status: TASK_STATUS.IN_PROGRESS,
     priority: 'High',
-    dueDate: '2024-01-30',
+    dueAt: '2024-01-30',
     isInWatchlist: true,
   },
   {
@@ -78,7 +78,7 @@ export const Tasks = [
     description: 'Implement input validation',
     status: TASK_STATUS.COMPLETED,
     priority: 'High',
-    dueDate: '2024-01-18',
+    dueAt: '2024-01-18',
     isInWatchlist: false,
   },
   {
@@ -88,7 +88,7 @@ export const Tasks = [
     description: 'Update dependencies',
     status: TASK_STATUS.TODO,
     priority: 'Medium',
-    dueDate: '2024-02-05',
+    dueAt: '2024-02-05',
     isInWatchlist: true,
   },
   {
@@ -98,7 +98,7 @@ export const Tasks = [
     description: 'Connect with third-party API',
     status: TASK_STATUS.ACTIVE,
     priority: 'Medium',
-    dueDate: '2024-02-15',
+    dueAt: '2024-02-15',
     isInWatchlist: false,
   },
 ]

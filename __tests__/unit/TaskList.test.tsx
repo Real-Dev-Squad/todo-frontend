@@ -1,7 +1,7 @@
+import { Task } from '@/app/types/tasks'
+import { TaskList } from '@/components/TaskList'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
-import { TaskList } from '@/components/TaskList'
-import { Task } from '@/app/types/tasks'
 
 vi.mock('../../components/TaskCard.tsx', () => ({
   TaskCard: ({ task }: { task: Task }) => (
@@ -15,7 +15,7 @@ const mockTasks: Task[] = [
     title: 'Complete project',
     status: 'todo',
     assignee: 'John Doe',
-    dueDate: '2024-12-31',
+    dueAt: '2024-12-31',
     profile: '/assets/john.png',
   },
   {
@@ -23,7 +23,7 @@ const mockTasks: Task[] = [
     title: 'Review code',
     status: 'in-progress',
     assignee: 'Jane Smith',
-    dueDate: '2024-12-25',
+    dueAt: '2024-12-25',
     profile: '/assets/jane.png',
   },
 ]

@@ -128,12 +128,11 @@ export const initialData: Task = {
   id: '1',
   title: 'Sample Task',
   description: 'This is a test task description.',
-  dueDate: '2024-12-31',
+  dueAt: '2024-12-31',
   assignee: {
     id: dummyUsers[0].id,
     name: `${dummyUsers[0].firstName} ${dummyUsers[0].lastName}`,
   },
   status: TASK_STATUS.TODO,
   tags: ['Urgent'],
-  taskId: '#12345',
 }

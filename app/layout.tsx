@@ -1,10 +1,10 @@
 // "use client";
-import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { QueryProvider } from './_provider'
-import { ConditionalLayout } from '../components/ConditionalLayout'
 import { Toaster } from 'sonner'
+import { ConditionalLayout } from '../components/ConditionalLayout'
+import { QueryProvider } from './_provider'
+import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],

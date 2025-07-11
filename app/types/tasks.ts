@@ -1,6 +1,5 @@
 export type Task = {
   id: string
-  taskId: string
   title: string
   description?: string
   labels?: { name: string }[]
@@ -12,7 +11,6 @@ export type Task = {
   }
   tags?: string[]
   dueAt?: string
-  dueDate?: string
   isInWatchlist?: boolean
 }
 

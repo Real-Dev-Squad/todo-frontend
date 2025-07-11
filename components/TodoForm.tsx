@@ -3,7 +3,7 @@
 import { Mode, Task } from '@/app/types/tasks'
 import { useState } from 'react'
 
-import Image from 'next/image'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -12,17 +12,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 //Import Svg for icons
+import { FORM_MODE, TASK_PRIORITY } from '@/app/constants/Task'
 import calendarIcon from '@/public/assets/calendar.svg'
-import StatusIcon from '@/public/assets/status.svg'
 import TagsIcon from '@/public/assets/priceTag.svg'
-import IDIcon from '@/public/assets/id.svg'
 import SaveIcon from '@/public/assets/save.svg'
 import SendIcon from '@/public/assets/send.svg'
+import StatusIcon from '@/public/assets/status.svg'
 import { FormEvent } from 'react'
-import { FORM_MODE } from '@/app/constants/Task'
 import { TaskDetails } from './TaskDetails'
 
 interface TodoFormProps {
@@ -33,14 +32,13 @@ interface TodoFormProps {
   onClose: () => void
   open?: boolean
 }
-export type TaskFormData = Omit<Task, 'priority' | 'assignee'>
+export type TaskFormData = Omit<Task, 'assignee'>
 const DEFAULT_FORM_DATA: TaskFormData = {
   id: '',
   title: '',
   description: '',
-  dueDate: '',
+  dueAt: '',
   tags: [],
-  taskId: '',
 }
 
 export function TodoForm({
@@ -55,6 +53,8 @@ export function TodoForm({
   const Icon = mode === FORM_MODE.CREATE ? SendIcon : SaveIcon
   const ctaText = mode === FORM_MODE.CREATE ? 'Submit' : 'Save'
   const altText = mode === FORM_MODE.CREATE ? 'Create todo' : 'Save todo'
+
+  console.log('first', initialData)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -97,7 +97,7 @@ export function TodoForm({
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                className="w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+                className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 placeholder="e.g Cool new title for my todo"
                 required
               />
@@ -117,7 +117,7 @@ export function TodoForm({
                     description: e.target.value,
                   }))
                 }
-                className="min-h-[100px] w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+                className="text-primary min-h-[100px] w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 placeholder="e.g Nothing is cool in here"
                 required
               />
@@ -133,21 +133,47 @@ export function TodoForm({
               <Image src={calendarIcon} alt={'due data icon'} width={15} height={15} />
 
               <label
-                htmlFor="dueDate"
+                htmlFor="dueAt"
                 className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
               >
                 Due Date<span className="text-red-500">*</span>
               </label>
               <input
                 data-testid="due-date"
-                id="dueDate"
+                id="dueAt"
                 type="date"
                 placeholder="Please enter due date"
-                value={formData.dueDate}
-                onChange={(e) => setFormData((prev) => ({ ...prev, dueDate: e.target.value }))}
-                className="w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+                value={formData.dueAt ? new Date(formData.dueAt).toISOString().split('T')[0] : ''}
+                onChange={(e) => setFormData((prev) => ({ ...prev, dueAt: e.target.value }))}
+                className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 required
               />
+            </div>
+            <div className="flex flex-row items-center justify-start gap-2">
+              <Image src={StatusIcon} alt={'due data icon'} width={15} height={15} />
+              <label
+                htmlFor="priority"
+                className="ont-medium mb-1 block w-32 max-w-44 text-sm text-gray-700"
+              >
+                Priority
+              </label>
+              <select
+                id="priority"
+                value={formData.priority}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    priority: e.target.value as Task['priority'],
+                  }))
+                }
+                className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+              >
+                {Object.entries(TASK_PRIORITY).map(([key, label]) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))}
+              </select>
             </div>
             {/* todo @tejas-gp or @anuj: add assignee later 
           -- currently we don't have API which brings assignee details
@@ -161,7 +187,7 @@ export function TodoForm({
               height={15}
             />
             <label
-              htmlFor="dueDate"
+              htmlFor="dueAt"
               className="block text-sm font-medium text-gray-700 mb-1 w-32 max-w-44"
             >
               Assignee<span className="text-red-500">*</span>
@@ -177,7 +203,7 @@ export function TodoForm({
                   assignee: { ...prev.assignee, name: e.target.value },
                 }))
               }
-              className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="w-full p-2 text-sm bg-[#F5F5FF] text-primary  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
               placeholder="e.g @ankush"
               required
             />
@@ -186,7 +212,7 @@ export function TodoForm({
             <div className="flex flex-row items-center justify-start gap-2">
               <Image src={TagsIcon} alt={'due data icon'} width={15} height={15} />
               <label
-                htmlFor="dueDate"
+                htmlFor="dueAt"
                 className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
               >
                 Tags
@@ -201,30 +227,8 @@ export function TodoForm({
                     tags: e.target.value.split(/,\s*/),
                   }))
                 }
-                className="w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+                className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 placeholder="e.g frontend"
-              />
-            </div>
-
-            <div className="flex flex-row items-center justify-start gap-2">
-              <Image src={IDIcon} alt={'due data icon'} width={15} height={15} />
-              <label
-                htmlFor="dueDate"
-                className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
-              >
-                Task ID<span className="text-red-500">*</span>
-              </label>
-              <input
-                data-testid="task-id"
-                id="taskId"
-                type="text"
-                value={formData.taskId}
-                onChange={(e) => setFormData((prev) => ({ ...prev, taskId: e.target.value }))}
-                disabled={mode === FORM_MODE.EDIT}
-                className="w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
-                placeholder="e.g #kda4dyodajd73j"
-                required
-                readOnly={mode === FORM_MODE.EDIT}
               />
             </div>
 
@@ -232,7 +236,7 @@ export function TodoForm({
               <div className="flex flex-row items-center justify-start gap-2">
                 <Image src={StatusIcon} alt={'due data icon'} width={15} height={15} />
                 <label
-                  htmlFor="dueDate"
+                  htmlFor="dueAt"
                   className="ont-medium mb-1 block w-32 max-w-44 text-sm text-gray-700"
                 >
                   Status
@@ -246,11 +250,11 @@ export function TodoForm({
                       status: e.target.value as Task['status'],
                     }))
                   }
-                  className="w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm text-indigo-700 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+                  className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 >
-                  <option value="Todo">Todo</option>
-                  <option value="In-Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
+                  <option value="TODO">Todo</option>
+                  <option value="IN_PROGRESS">In Progress</option>
+                  <option value="COMPLETED">Completed</option>
                 </select>
               </div>
             )}

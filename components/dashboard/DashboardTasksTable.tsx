@@ -1,4 +1,5 @@
-import { DashboardTasksTableTabs } from './constants'
+import { FORM_MODE } from '@/app/constants/Task'
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -7,16 +8,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import { TTask, TASK_PRIORITY } from '@/lib/api/tasks/tasks.dto'
-import { Edit2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { tasksApi } from '@/lib/api/tasks/tasks.api'
+import { TASK_PRIORITY, TTask } from '@/lib/api/tasks/tasks.dto'
+import { cn } from '@/lib/utils'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Edit2 } from 'lucide-react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import { FORM_MODE } from '@/app/constants/Task'
 import { TaskFormData, TodoForm } from '../TodoForm'
+import { DashboardTasksTableTabs } from './constants'
 
 export const DashboardTasksTable = ({
   type,
@@ -100,7 +100,7 @@ export const DashboardTasksTable = ({
                   </span>
                 </TableCell>
                 <TableCell className="text-red-500">
-                  {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : task.dueDate || '-'}
+                  {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : task.dueAt || '-'}
                 </TableCell>
                 <TableCell>
                   <Button
@@ -137,10 +137,10 @@ export const DashboardTasksTable = ({
                 id: selectedTask.id,
                 title: selectedTask.title,
                 description: selectedTask.description || '',
-                dueDate: selectedTask.dueDate || '',
+                dueAt: selectedTask.dueAt || '',
                 tags: selectedTask.tags || [],
-                taskId: selectedTask.taskId,
                 status: selectedTask.status,
+                priority: selectedTask.priority,
               }
             : undefined
         }

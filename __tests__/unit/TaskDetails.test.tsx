@@ -1,8 +1,8 @@
-import { render, screen, cleanup } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
-import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { initialData } from '@/__mocks__/Task'
 import { TaskDetails } from '@/components/TaskDetails'
+import { cleanup, render, screen } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 let mockOnAcknowledge: () => void
 let mockOnClose: () => void
@@ -27,8 +27,7 @@ test('should renders TaskDetails component with initial data', async () => {
       onClose={mockOnClose}
     />,
   )
-  expect(screen.getByTestId('dueDate').innerHTML).toBe('12/31/2024')
-  expect(screen.getByTestId('taskId').innerHTML).toBe(initialData.taskId)
+  expect(screen.getByTestId('dueAt').innerHTML).toBe('12/31/2024')
   expect(screen.getByTestId('status').innerHTML).toBe(initialData.status)
   expect(screen.getByTestId('tags').innerHTML).toBe(initialData?.tags?.join(', '))
 })

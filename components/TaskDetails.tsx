@@ -2,14 +2,13 @@
 
 import { Task } from '@/app/types/tasks'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 //Import Svg for icons
 import calendarIcon from '@/public/assets/calendar.svg'
+import TagsIcon from '@/public/assets/priceTag.svg'
 import AccountIcon from '@/public/assets/profile.svg'
 import StatusIcon from '@/public/assets/status.svg'
-import TagsIcon from '@/public/assets/priceTag.svg'
-import IDIcon from '@/public/assets/id.svg'
 
 type Props = {
   onAcknowledge: () => void
@@ -28,14 +27,14 @@ const Tabs: {
 export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
   const [activeTab, setActiveTab] = useState(Tabs.All)
 
-  const { dueDate, tags, title, description, assignee, taskId, status } = initialData
+  const { dueAt, tags, title, description, assignee, status } = initialData
 
   const properties = [
     {
       icon: calendarIcon,
-      testId: 'dueDate',
+      testId: 'dueAt',
       label: 'Due Date:',
-      value: new Date(dueDate || '').toLocaleDateString(),
+      value: new Date(dueAt || '').toLocaleDateString(),
       alt: 'Due date icon',
     },
     {
@@ -47,7 +46,6 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
     },
     { icon: StatusIcon, testId: 'status', label: 'Status:', value: status, alt: 'Status icon' },
     { icon: TagsIcon, testId: 'tags', label: 'Tags:', value: tags, alt: 'Tags icon' },
-    { icon: IDIcon, testId: 'taskId', label: 'Task ID:', value: taskId, alt: 'Task Id icon' },
   ]
 
   return (
