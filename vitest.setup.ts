@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { vi } from 'vitest'
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -13,11 +13,11 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-});
+})
 
 // Mock window.innerWidth
 Object.defineProperty(window, 'innerWidth', {
   writable: true,
   configurable: true,
   value: 1024,
-});
+})

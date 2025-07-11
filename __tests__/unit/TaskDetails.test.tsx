@@ -25,21 +25,19 @@ test('should renders TaskDetails component with initial data', async () => {
       onAcknowledge={mockOnAcknowledge}
       initialData={initialData}
       onClose={mockOnClose}
-    />
-  );
-  
+    />,
+  )
+
   // Check that the date is formatted correctly (locale-agnostic)
-  const dueDateElement = screen.getByTestId("dueDate");
-  const dateText = dueDateElement.innerHTML;
+  const dueDateElement = screen.getByTestId('dueDate')
+  const dateText = dueDateElement.innerHTML
   // Accept either US format (12/31/2024) or UK format (31/12/2024)
-  expect(dateText === "12/31/2024" || dateText === "31/12/2024").toBe(true);
-  
-  expect(screen.getByTestId("taskId").innerHTML).toBe(initialData.taskId);
-  expect(screen.getByTestId("status").innerHTML).toBe(initialData.status);
-  expect(screen.getByTestId("tags").innerHTML).toBe(
-    initialData?.tags?.join(", ")
-  );
-});
+  expect(dateText === '12/31/2024' || dateText === '31/12/2024').toBe(true)
+
+  expect(screen.getByTestId('taskId').innerHTML).toBe(initialData.taskId)
+  expect(screen.getByTestId('status').innerHTML).toBe(initialData.status)
+  expect(screen.getByTestId('tags').innerHTML).toBe(initialData?.tags?.join(', '))
+})
 
 test('should calls onAcknowledge when Acknowledge button is clicked', async () => {
   render(

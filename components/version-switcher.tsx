@@ -1,19 +1,15 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-react"
+import * as React from 'react'
+import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-react'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/dropdown-menu'
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 
 export function VersionSwitcher({
   versions,
@@ -43,17 +39,10 @@ export function VersionSwitcher({
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width)"
-            align="start"
-          >
+          <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width)" align="start">
             {versions.map((version) => (
-              <DropdownMenuItem
-                key={version}
-                onSelect={() => setSelectedVersion(version)}
-              >
-                v{version}{" "}
-                {version === selectedVersion && <Check className="ml-auto" />}
+              <DropdownMenuItem key={version} onSelect={() => setSelectedVersion(version)}>
+                v{version} {version === selectedVersion && <Check className="ml-auto" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

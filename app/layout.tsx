@@ -1,11 +1,11 @@
 // "use client";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { QueryProvider } from "./_provider";
-import { ConditionalLayout } from "../components/ConditionalLayout";
-import { SidebarProvider } from "../components/ui/sidebar";
-import { Toaster } from "sonner";
+import './globals.css'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { QueryProvider } from './_provider'
+import { ConditionalLayout } from '../components/ConditionalLayout'
+import { SidebarProvider } from '../components/ui/sidebar'
+import { Toaster } from 'sonner'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,18 +27,15 @@ export default function RootLayout({
       <head>
         <title>Introducing Todo Project</title>
       </head>
-      
-        <body>
-          
-          <QueryProvider>
-            <SidebarProvider>
-              <ConditionalLayout>
-                {children}
-              </ConditionalLayout>
-            </SidebarProvider>
-            <Toaster />
-          </QueryProvider>
-        </body>
+
+      <body>
+        <QueryProvider>
+          <SidebarProvider>
+            <ConditionalLayout>{children}</ConditionalLayout>
+          </SidebarProvider>
+          <Toaster />
+        </QueryProvider>
+      </body>
     </html>
   )
 }
