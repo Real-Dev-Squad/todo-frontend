@@ -54,8 +54,6 @@ export function TodoForm({
   const ctaText = mode === FORM_MODE.CREATE ? 'Submit' : 'Save'
   const altText = mode === FORM_MODE.CREATE ? 'Create todo' : 'Save todo'
 
-  console.log('first', initialData)
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit?.(formData)
