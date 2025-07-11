@@ -32,7 +32,7 @@ jobs:
         run: pnpm lint
 
       - name: prettier check
-        rum: pnpm check
+        run: pnpm check
 
       - name: Test Coverage
         run: pnpm test:coverage
