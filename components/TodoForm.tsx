@@ -54,9 +54,6 @@ export function TodoForm({
   const [formData, setFormData] = useState<TaskFormData>(
     initialData ?? DEFAULT_FORM_DATA
   );
-
-  console.log("formData", formData)
-  console.log("initialData", initialData)
   const Icon = mode === FORM_MODE.CREATE ? SendIcon : SaveIcon;
   const ctaText = mode === FORM_MODE.CREATE ? "Submit" : "Save";
   const altText = mode === FORM_MODE.CREATE ? "Create todo" : "Save todo";
