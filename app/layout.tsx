@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { QueryProvider } from "./_provider";
 import { ConditionalLayout } from "../components/ConditionalLayout";
+import { SidebarProvider } from "../components/ui/sidebar";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -30,9 +31,11 @@ export default function RootLayout({
         <body>
           
           <QueryProvider>
-            <ConditionalLayout>
-              {children}
-            </ConditionalLayout>
+            <SidebarProvider>
+              <ConditionalLayout>
+                {children}
+              </ConditionalLayout>
+            </SidebarProvider>
             <Toaster />
           </QueryProvider>
         </body>

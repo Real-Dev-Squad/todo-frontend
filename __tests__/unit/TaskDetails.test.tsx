@@ -27,7 +27,7 @@ test("should renders TaskDetails component with initial data", async () => {
       onClose={mockOnClose}
     />
   );
-  expect(screen.getByTestId("dueDate").innerHTML).toBe("12/31/2024");
+  expect(screen.getByTestId("dueDate").innerHTML).toBe("31/12/2024");
   expect(screen.getByTestId("taskId").innerHTML).toBe(initialData.taskId);
   expect(screen.getByTestId("status").innerHTML).toBe(initialData.status);
   expect(screen.getByTestId("tags").innerHTML).toBe(
