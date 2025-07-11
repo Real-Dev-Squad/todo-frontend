@@ -5,6 +5,7 @@ import { NavBar } from "./NavBar";
 import { useAuth } from "../app/hooks/useAuth";
 import { LandingPage } from "./LandingPage";
 import { Toaster } from "sonner";
+import { SidebarProvider, SidebarInset } from "./ui/sidebar";
 
 export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -16,11 +17,15 @@ export const ConditionalLayout = ({ children }: { children: React.ReactNode }) =
   return (
     <>
       <Toaster />
-      <SideBar />
-      <NavBar />
-      <main className="ml-56 pt-16 min-h-screen">
-        {children}
-      </main>
+      <SidebarProvider>
+        <SideBar />
+        <SidebarInset>
+          <NavBar />
+          <main className="pt-16 min-h-screen p-4">
+            {children}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
     </>
   );
 }; 

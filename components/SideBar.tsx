@@ -1,41 +1,49 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "./ui/sidebar";
 
 export const SideBar = () => {
   return (
-    <aside className="fixed left-0 top-0 bg-white h-screen w-56 border-r border-neutral-200 flex flex-col min-h-screen z-40">
-      <div className="mt-6 flex justify-center">
-        <div className="bg-neutral-800 text-white px-4 py-2 rounded-full text-sm font-medium border border-neutral-800">
+    <Sidebar className="border-r border-neutral-200">
+      <SidebarHeader className="flex justify-center items-center pt-6 pb-4 w-full">
+        <div className="bg-neutral-800 text-white px-3 py-1.5 rounded-full text-xs font-medium border border-neutral-800 w-fit mx-auto">
           TODO
         </div>
-      </div>
-      <div className="mt-12 flex flex-col items-center space-y-2 px-4">
-        <Link href="/" passHref>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3"
-          >
-            Home
-          </Button>
-        </Link>
-        <Link href="/tasks" passHref>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3"
-          >
-            Tasks
-          </Button>
-        </Link>
-        <Link href="/teams" passHref>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-neutral-800 hover:bg-neutral-100 rounded-none px-6 py-3"
-          >
-            Teams
-          </Button>
-        </Link>
-      </div>
-    </aside>
+      </SidebarHeader>
+      <SidebarContent className="flex flex-col items-center">
+        <div className="mt-8 w-full px-4 max-w-48">
+          <SidebarMenu className="space-y-2">
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild className="w-full justify-center text-neutral-800 hover:bg-neutral-100 rounded-md px-6 py-3 h-10">
+                <Link href="/">
+                  Home
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild className="w-full justify-center text-neutral-800 hover:bg-neutral-100 rounded-md px-6 py-3 h-10">
+                <Link href="/tasks">
+                  Tasks
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild className="w-full justify-center text-neutral-800 hover:bg-neutral-100 rounded-md px-6 py-3 h-10">
+                <Link href="/teams">
+                  Teams
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </div>
+      </SidebarContent>
+    </Sidebar>
   );
 };
