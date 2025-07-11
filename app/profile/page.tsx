@@ -3,6 +3,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 import React from "react";
 import { getUserInitials } from "@/lib/utils";
 import { logoutUser } from "@/lib/api/api-client";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
   const { user } = useAuth();
@@ -20,13 +21,14 @@ export default function Page() {
           <div className="text-xl font-semibold mb-1">{name}</div>
           <div className="text-gray-500 text-sm">{email}</div>
         </div>
-        <button
+        <Button
           onClick={logoutUser}
           type="button"
-          className="w-full py-2 cursor-pointer px-4 bg-red-700 hover:bg-red-800 text-white rounded-lg font-medium transition-colors mt-2 shadow-sm"
+          variant="destructive"
+          className="w-full cursor-pointer"
         >
           Log out
-        </button>
+        </Button>
       </div>
     </div>
   );
