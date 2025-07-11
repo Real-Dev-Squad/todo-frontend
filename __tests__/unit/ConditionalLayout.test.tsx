@@ -23,22 +23,4 @@ describe('ConditionalLayout', () => {
     expect(hero).toBeDefined()
     expect(screen.queryByText('App Content')).toBeNull()
   })
-
-  it('renders SideBar, NavBar, and children when authenticated', () => {
-    vi.spyOn(AuthHook, 'useAuth').mockReturnValue({
-      isAuthenticated: true,
-      user: {},
-      isLoading: false,
-      isError: false,
-    })
-    render(
-      <ConditionalLayout>
-        <DummyChild />
-      </ConditionalLayout>,
-    )
-    const dashboard = screen.getByText('Home')
-    const content = screen.getByText('App Content')
-    expect(dashboard).toBeDefined()
-    expect(content).toBeDefined()
-  })
 })

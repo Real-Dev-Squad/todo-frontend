@@ -1,10 +1,11 @@
 'use client'
 import React from 'react'
-import { SideBar } from './SideBar'
 import { NavBar } from './NavBar'
 import { useAuth } from '../app/hooks/useAuth'
 import { LandingPage } from './LandingPage'
 import { Toaster } from 'sonner'
+import { AppSidebar } from './app-sidebar'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from './ui/sidebar'
 
 export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth()
@@ -16,9 +17,14 @@ export const ConditionalLayout = ({ children }: { children: React.ReactNode }) =
   return (
     <>
       <Toaster />
-      <SideBar />
-      <NavBar />
-      <main className="ml-56 min-h-screen pt-16">{children}</main>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset className="pt-16">
+          <NavBar />
+          <SidebarTrigger className="" />
+          {children}
+        </SidebarInset>
+      </SidebarProvider>
     </>
   )
 }
