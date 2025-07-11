@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { dummyUsers } from '@/__mocks__/Task';
 import { User } from '@/app/types/user';
+import { dummyTeams } from '@/__mocks__/Team';
 
 export interface SearchResult {
   type: 'user' | 'task' | 'team';
@@ -50,6 +51,23 @@ export const useSearch = () => {
 
     results.push(...userResults);
 
+    const teamResults = dummyTeams.filter(team =>{
+      const teamName = team.name.toLowerCase();
+      const searchTerm = query.toLowerCase();
+      return(
+        teamName.toLowerCase().includes(searchTerm)
+      )
+    })
+    .slice(0, 5)
+    .map(team=> ({
+      type: 'team' as const,
+      id: team.id,
+      title: team.name,
+      subtitle: "",
+      data: team
+    }))
+
+    results.push(...teamResults)
     // TODO: Add task and team search when those data sources are available
     // For now, we'll add some mock task results
     if (query.toLowerCase().includes('task')) {

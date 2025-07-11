@@ -26,7 +26,9 @@ const TeamsPage = () => {
           >
             Create a Team
           </Button>
-          <Button className="w-full cursor-pointer max-w-xs h-12 md:h-auto bg-white text-black border border-black font-bold hover:bg-gray-50 text-base md:text-sm">
+          <Button 
+            className="w-full cursor-pointer max-w-xs h-12 md:h-auto bg-white text-black border border-black font-bold hover:bg-gray-50 text-base md:text-sm"
+            onClick={() => router.push("/teams/join")}>
             Join an Existing Team
           </Button>
         </div>
