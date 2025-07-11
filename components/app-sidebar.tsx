@@ -1,5 +1,3 @@
-'use client'
-
 import { Briefcase, ChartNetwork, Home, Inbox } from 'lucide-react'
 import * as React from 'react'
 
