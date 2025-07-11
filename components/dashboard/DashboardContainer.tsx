@@ -11,14 +11,15 @@ export const DashboardContainer = () => {
     queryKey: tasksApi.getTasks.key,
     queryFn: tasksApi.getTasks.fn,
   });
-  const hasTasks = (data?.tasks?.length ?? 0) > 0;
+  const tasks = data?.tasks || [];
+  
   // todo: add shimmer later
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading tasks</div>;
+  
   return (
     <div className="min-h-screen w-full">
-      {hasTasks ? <TasksDashboard /> : <DashboardWelcomeScreen />}
-     
+      {tasks.length > 0 ? <TasksDashboard tasks={tasks} /> : <DashboardWelcomeScreen />}
     </div>
   );
 }; 

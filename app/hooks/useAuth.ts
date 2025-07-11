@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:8000";
 
+  // todo: remove this and use zustand
 export function useAuth() {
   const {
     data: user,
