@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { QueryProvider } from "./_provider";
 import { ConditionalLayout } from "../components/ConditionalLayout";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,10 +28,12 @@ export default function RootLayout({
       </head>
       
         <body>
+          
           <QueryProvider>
             <ConditionalLayout>
               {children}
             </ConditionalLayout>
+            <Toaster />
           </QueryProvider>
         </body>
     </html>

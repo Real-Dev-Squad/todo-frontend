@@ -4,6 +4,7 @@ import { SideBar } from "./SideBar";
 import { NavBar } from "./NavBar";
 import { useAuth } from "../app/hooks/useAuth";
 import { LandingPage } from "./LandingPage";
+import { Toaster } from "sonner";
 
 export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -14,6 +15,7 @@ export const ConditionalLayout = ({ children }: { children: React.ReactNode }) =
 
   return (
     <>
+      <Toaster />
       <SideBar />
       <NavBar />
       <main className="ml-56 pt-16 min-h-screen">
