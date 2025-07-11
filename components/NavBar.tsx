@@ -14,6 +14,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { getUserInitials } from "@/lib/utils";
 import { logoutUser } from "@/lib/api/api-client";
 import Link from "next/link";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 export const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -84,9 +85,15 @@ export const NavBar = () => {
           </button>
 
           <DropdownMenu>
-
-            <DropdownMenuTrigger className="rounded-full bg-black text-sm text-white p-2 cursor-pointer" aria-label="User menu">
-              {initials}
+            <DropdownMenuTrigger
+              className="cursor-pointer"
+              aria-label="User menu"
+            >
+              <Avatar>
+                <AvatarFallback className="bg-black text-white">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="mr-4 mt-4">
