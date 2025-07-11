@@ -100,7 +100,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
   const handleSearchBlur = () => {
     setTimeout(() => {
       setSearchFocused(false)
-      if (searchTerm.trim() === '') {
+      if (searchTerm.trim() === '' && filteredUsers.length === 0) {
         setShowSuggestions(false)
       }
     }, 200)
@@ -160,7 +160,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
               )}
             </div>
 
-            {(showSuggestions || isSearching) && (
+            {(showSuggestions || isSearching || filteredUsers.length > 0) && (
               <div className="max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-200 ease-in-out">
                 {isSearching ? (
                   <div className="flex items-center justify-center p-4">
@@ -208,16 +208,13 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       </div>
                     )}
                   </div>
-                ) : debouncedSearchTerm.trim().length >= 3 ? (
+                ) : debouncedSearchTerm.trim().length < 3 ? (
                   <div className="flex flex-col items-center justify-center p-8">
                     <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
                     </div>
                     <span className="text-center text-sm font-medium text-gray-500">
-                      No users found for &ldquo;{debouncedSearchTerm}&rdquo;
-                    </span>
-                    <span className="mt-1 text-center text-xs text-gray-400">
-                      Try searching by name or email
+                      Type at least 3 characters to search for teammates
                     </span>
                   </div>
                 ) : searchFocused ? (

@@ -18,6 +18,7 @@ export default function CreateTeamPage() {
   const { user } = useAuth()
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const router = useRouter()
+  const [inviteCode, setInviteCode] = useState<string>('')
 
   const handleTeamInfoSubmit = (name: string, description: string) => {
     if (!name.trim()) {
@@ -34,12 +35,13 @@ export default function CreateTeamPage() {
       return
     }
     try {
-      await teamsApi.createTeam.fn({
+      const response = await teamsApi.createTeam.fn({
         name: teamInfo?.name,
         description: teamInfo?.description,
         member_ids: memberIds,
         poc_id: pocId,
       })
+      setInviteCode(response.team.invite_code)
       toast.success('Team created successfully!')
       setShowSuccessModal(true)
     } catch (err: unknown) {
@@ -56,7 +58,13 @@ export default function CreateTeamPage() {
   }
 
   if (showSuccessModal) {
-    return <SuccessModal teamName={teamInfo?.name || ''} onClose={handleSuccessModalClose} />
+    return (
+      <SuccessModal
+        teamName={teamInfo?.name || ''}
+        inviteCode={inviteCode}
+        onClose={handleSuccessModalClose}
+      />
+    )
   }
 
   if (!teamInfo) {
