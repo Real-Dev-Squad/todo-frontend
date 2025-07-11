@@ -34,7 +34,7 @@ export function TaskDetails({ onAcknowledge, initialData, onClose }: Props) {
       icon: calendarIcon,
       testId: 'dueAt',
       label: 'Due Date:',
-      value: new Date(dueAt || '').toLocaleDateString(),
+      value: new Date(dueAt || '').toLocaleDateString('en-US'),
       alt: 'Due date icon',
     },
     {

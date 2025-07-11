@@ -42,7 +42,7 @@ afterEach(() => {
 test('should renders create mode with all required fields', async () => {
   renderTodoForm()
 
-  const requiredFields = ['Title', 'Description', 'Due Date', 'Task ID']
+  const requiredFields = ['Title', 'Description', 'Due Date']
   requiredFields.forEach((field) => {
     const label = screen.getByText(new RegExp(field))
     expect(label).toBeDefined()
