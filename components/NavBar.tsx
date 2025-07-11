@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { Search, Bell, Menu, X } from "lucide-react";
-import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SearchComponent } from "./SearchComponent";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
+import { getUserInitials } from "@/lib/utils";
+import { logoutUser } from "@/lib/api/api-client";
+import Link from "next/link";
 
 export const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  const name = user?.data?.name || "Guest";
+  const initials = getUserInitials(name);
 
   const menuItems = [
     { label: "Home", path: "/dashboard" },
@@ -68,15 +83,21 @@ export const NavBar = () => {
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </button>
 
-          <div className="flex items-center space-x-2">
-            <Image
-              src="/user.png"
-              width={32}
-              height={32}
-              alt="User Profile"
-              className="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover border-2 border-gray-300"
-            />
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="rounded-full bg-black text-sm text-white p-2 cursor-pointer">
+              {initials}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-4 mt-4">
+              <DropdownMenuLabel>{name}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link href={"/profile"}>Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={logoutUser} className="">
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </nav>
 
