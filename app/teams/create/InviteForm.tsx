@@ -214,7 +214,10 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       <Search className="h-8 w-8" />
                     </div>
                     <span className="text-center text-sm font-medium text-gray-500">
-                      Type at least 3 characters to search for teammates
+                      No users found for &ldquo;{debouncedSearchTerm}&rdquo;
+                    </span>
+                    <span className="mt-1 text-center text-xs text-gray-400">
+                      Try searching by name or email
                     </span>
                   </div>
                 ) : searchFocused ? (
