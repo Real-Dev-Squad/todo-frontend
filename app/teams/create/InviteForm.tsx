@@ -1,93 +1,74 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { X, ArrowLeft, Search, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { User } from '@/app/types/user'
-import { dummyUsers } from '@/__mocks__/Task'
-import { SuccessModal } from '@/components/dashboard/SuccessModal'
+import { usersApi } from '@/lib/api/users/users.api'
+import { SelectPoc } from './SelectPoc'
+import { getUserInitials } from '@/lib/utils'
+import { useDebounce } from '@/app/hooks/useDebounce'
 
 interface InviteFormProps {
   onBack?: () => void
   teamName?: string
+  onCreateTeam: (memberIds: string[], pocId: string | null) => void
+  loading: boolean
+  currentUser: User
 }
 
-export function InviteForm({ onBack, teamName }: InviteFormProps) {
+const normalizeUser = (user: unknown): User => {
+  const u = user as Record<string, unknown>
+  return {
+    id: (u.id as string) || (u.user_id as string) || (u.userId as string) || '',
+    user_id: (u.user_id as string) || (u.userId as string) || (u.id as string) || '',
+    name: (u.name as string) || '',
+    email: (u.email as string) || (u.email_id as string) || '',
+  }
+}
+
+export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: InviteFormProps) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const [selectedUsers, setSelectedUsers] = useState<User[]>([])
   const [filteredUsers, setFilteredUsers] = useState<User[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [pocId, setPocId] = useState<string | null>(currentUser.user_id)
 
   const selectedUserIds = useMemo(
-    () => new Set(selectedUsers.map((user) => user.id)),
+    () => new Set(selectedUsers.map((user) => user.user_id)),
     [selectedUsers],
   )
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm)
-    }, 250)
-
-    return () => clearTimeout(timer)
-  }, [searchTerm])
-
-  const performSearch = useCallback(
-    async (term: string) => {
-      if (term.trim() === '') {
-        setFilteredUsers([])
-        setShowSuggestions(false)
-        setIsSearching(false)
-        return
-      }
-
-      setIsSearching(true)
-
-      await new Promise((resolve) => setTimeout(resolve, 50))
-
-      const searchTermLower = term.toLowerCase()
-      const filtered = dummyUsers.filter((user) => {
-        if (selectedUserIds.has(user.id)) return false
-
-        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
-        return (
-          user.firstName.toLowerCase().includes(searchTermLower) ||
-          user.lastName.toLowerCase().includes(searchTermLower) ||
-          fullName.includes(searchTermLower) ||
-          user.email.toLowerCase().includes(searchTermLower)
-        )
-      })
-
-      setFilteredUsers(filtered)
-      setShowSuggestions(true)
-      setIsSearching(false)
-    },
-    [selectedUserIds],
-  )
-
-  useEffect(() => {
-    if (searchFocused || debouncedSearchTerm.length > 0) {
-      performSearch(debouncedSearchTerm)
-    } else if (!searchFocused && debouncedSearchTerm.length === 0) {
+    if (!debouncedSearchTerm.trim() || debouncedSearchTerm.trim().length < 3) {
       setFilteredUsers([])
-      setShowSuggestions(false)
+      setIsSearching(false)
+      return
     }
-  }, [debouncedSearchTerm, searchFocused, performSearch])
+    setIsSearching(true)
+    usersApi.searchUser
+      .fn(debouncedSearchTerm)
+      .then((res: { data: { users: Partial<User>[] } }) => {
+        const users = (res?.data?.users || []).map(normalizeUser)
+        setFilteredUsers(users.filter((user: User) => !selectedUserIds.has(user.user_id)))
+      })
+      .catch(() => setFilteredUsers([]))
+      .finally(() => setIsSearching(false))
+  }, [debouncedSearchTerm, selectedUserIds])
 
   const handleAddUser = (user: User) => {
-    setSelectedUsers((prev) => [...prev, user])
+    setSelectedUsers((prev) => [...prev, normalizeUser(user)])
     setSearchTerm('')
-    setDebouncedSearchTerm('')
     setShowSuggestions(false)
     setIsSearching(false)
   }
 
-  const handleRemoveUser = (userId: string) => {
-    setSelectedUsers((prev) => prev.filter((user) => user.id !== userId))
+  const handleRemoveUser = (id: string) => {
+    setSelectedUsers((prev) => prev.filter((user) => user.user_id !== id))
   }
 
   const handleClearAllUsers = () => {
@@ -102,17 +83,13 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
     window.history.back()
   }
 
-  const getInitials = (firstName: string, lastName: string) => {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
-  }
-
-  const handleCreateTeam = () => {
-    console.log('Creating team with users:', selectedUsers)
-    setShowSuccessModal(true)
+  const handleSubmit = () => {
+    const memberIds = selectedUsers.map((u) => u.user_id)
+    onCreateTeam(memberIds, pocId)
   }
 
   const handleSkipInviting = () => {
-    console.log('Skipping inviting process')
+    onCreateTeam([], '')
   }
 
   const handleSearchFocus = () => {
@@ -140,12 +117,8 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
     [filteredUsers.length, selectedUsers.length],
   )
 
-  if (showSuccessModal) {
-    return <SuccessModal teamName={teamName} onClose={() => setShowSuccessModal(false)} />
-  }
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-start justify-center bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
       <Card className="mx-auto w-full max-w-lg border-0 bg-white shadow-xl">
         <CardContent className="p-0">
           <div className="flex items-center gap-3 border-b border-gray-100 p-4 sm:p-6">
@@ -204,7 +177,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                     </div>
                     {filteredUsers.slice(0, 8).map((user) => (
                       <div
-                        key={user.id}
+                        key={user.user_id}
                         className="group flex cursor-pointer items-center gap-3 border-b border-gray-50 p-3 transition-colors duration-150 last:border-b-0 hover:bg-blue-50"
                         onMouseDown={(e) => {
                           e.preventDefault()
@@ -213,14 +186,14 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                       >
                         <Avatar className="h-9 w-9 shrink-0">
                           <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                            {getInitials(user.firstName, user.lastName)}
+                            {getUserInitials(user.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0 flex-1">
                           <div className="truncate text-sm font-medium text-gray-900">
-                            {user.firstName} {user.lastName}
+                            {user.name}
                           </div>
-                          <div className="truncate text-xs text-gray-500">{user.email}</div>
+                          <div className="truncate text-xs text-gray-600">{user.email}</div>
                         </div>
                         <div className="shrink-0 text-xs font-medium text-blue-600 opacity-0 transition-opacity group-hover:opacity-100">
                           + Add
@@ -235,7 +208,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                       </div>
                     )}
                   </div>
-                ) : debouncedSearchTerm.length > 0 ? (
+                ) : debouncedSearchTerm.length >= 3 ? (
                   <div className="flex flex-col items-center justify-center p-8">
                     <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
@@ -252,7 +225,7 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                     <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
                     </div>
-                    <span className="text-center text-sm text-gray-500">
+                    <span className="text-center text-sm font-medium text-gray-500">
                       Start typing to search for teammates
                     </span>
                   </div>
@@ -276,17 +249,17 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                 <div className="max-h-48 space-y-2 overflow-y-auto">
                   {selectedUsers.map((user, index) => (
                     <div
-                      key={user.id}
+                      key={user.user_id}
                       className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors hover:bg-blue-100"
                     >
                       <Avatar className="h-9 w-9 shrink-0">
                         <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                          {getInitials(user.firstName, user.lastName)}
+                          {getUserInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="min-w-0 flex-1">
                         <div className="truncate text-sm font-medium text-gray-900">
-                          {user.firstName} {user.lastName}
+                          {user.name}
                         </div>
                         <div className="truncate text-xs text-gray-600">{user.email}</div>
                       </div>
@@ -298,8 +271,8 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
-                          onClick={() => handleRemoveUser(user.id)}
-                          title={`Remove ${user.firstName} ${user.lastName}`}
+                          onClick={() => handleRemoveUser(user.user_id)}
+                          title={`Remove ${user.name}`}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -310,16 +283,24 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
               </div>
             )}
 
+            <SelectPoc
+              currentUser={currentUser}
+              members={selectedUsers}
+              value={pocId}
+              onChange={setPocId}
+            />
+
             <div className="space-y-3 border-t border-gray-100 pt-6">
               <Button
-                className="h-12 w-full bg-black text-base font-medium text-white shadow-xs transition-colors hover:bg-gray-800"
-                onClick={handleCreateTeam}
+                className="h-12 w-full cursor-pointer bg-black text-base font-medium text-white shadow-xs transition-colors hover:bg-gray-800"
+                onClick={handleSubmit}
+                disabled={loading}
               >
-                Create Team
+                {loading ? 'Creating...' : 'Create Team'}
               </Button>
               <Button
                 variant="ghost"
-                className="h-12 w-full text-base font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
+                className="h-12 w-full cursor-pointer text-base font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
                 onClick={handleSkipInviting}
               >
                 Skip Inviting

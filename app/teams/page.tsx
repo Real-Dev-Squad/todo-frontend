@@ -8,7 +8,7 @@ const TeamsPage = () => {
   const router = useRouter()
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] flex-1 items-center justify-center px-4 md:px-6 lg:px-8">
+    <main className="flex min-h-[calc(100vh-4rem)] flex-1 items-start justify-center px-4 md:px-6 lg:px-8">
       <div className="w-full max-w-sm text-center md:max-w-lg">
         <h1 className="mb-3 px-2 text-xl font-bold md:mb-4 md:text-2xl lg:text-3xl">
           Your Team space awaits!

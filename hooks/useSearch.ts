@@ -1,7 +1,6 @@
-import { useState, useCallback } from 'react'
-import { dummyUsers } from '@/__mocks__/Task'
+import { useState, useCallback, useEffect } from 'react'
 import { User } from '@/app/types/user'
-import { dummyTeams } from '@/__mocks__/Team'
+import { apiClient } from '@/lib/api/api-client'
 
 export interface SearchResult {
   type: 'user' | 'task' | 'team'
@@ -11,81 +10,64 @@ export interface SearchResult {
   data: any
 }
 
+// Debounce hook
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+    return () => clearTimeout(handler)
+  }, [value, delay])
+  return debouncedValue
+}
+
 export const useSearch = () => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [query, setQuery] = useState('')
+  const debouncedQuery = useDebounce(query, 300)
 
-  const performSearch = useCallback(async (query: string) => {
-    if (!query.trim()) {
+  const performSearch = useCallback(async (searchTerm: string) => {
+    if (!searchTerm.trim()) {
       setSearchResults([])
+      setError(null)
       return
     }
-
     setIsSearching(true)
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
-
-    const results: SearchResult[] = []
-
-    // Search users
-    const userResults = dummyUsers
-      .filter((user) => {
-        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
-        const searchTerm = query.toLowerCase()
-        return (
-          user.firstName.toLowerCase().includes(searchTerm) ||
-          user.lastName.toLowerCase().includes(searchTerm) ||
-          fullName.includes(searchTerm) ||
-          user.email.toLowerCase().includes(searchTerm)
-        )
-      })
-      .slice(0, 5) // Limit to 5 results
-      .map((user) => ({
+    setError(null)
+    try {
+      const { data } = await apiClient.get<User[]>(
+        `/v1/users?search=${encodeURIComponent(searchTerm)}`,
+      )
+      const userResults: SearchResult[] = (data || []).slice(0, 10).map((user) => ({
         type: 'user' as const,
         id: user.id,
         title: `${user.firstName} ${user.lastName}`,
         subtitle: user.email,
         data: user,
       }))
-
-    results.push(...userResults)
-
-    const teamResults = dummyTeams
-      .filter((team) => {
-        const teamName = team.name.toLowerCase()
-        const searchTerm = query.toLowerCase()
-        return teamName.toLowerCase().includes(searchTerm)
-      })
-      .slice(0, 5)
-      .map((team) => ({
-        type: 'team' as const,
-        id: team.id,
-        title: team.name,
-        subtitle: '',
-        data: team,
-      }))
-
-    results.push(...teamResults)
-    // TODO: Add task and team search when those data sources are available
-    // For now, we'll add some mock task results
-    if (query.toLowerCase().includes('task')) {
-      results.push({
-        type: 'task',
-        id: '1',
-        title: 'Sample Task',
-        subtitle: 'Complete project setup',
-        data: { id: '1', title: 'Sample Task' },
-      })
+      setSearchResults(userResults)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to fetch users')
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
     }
-
-    setSearchResults(results)
-    setIsSearching(false)
   }, [])
+
+  // Trigger search when debouncedQuery changes
+  useEffect(() => {
+    performSearch(debouncedQuery)
+  }, [debouncedQuery, performSearch])
 
   return {
     searchResults,
     isSearching,
-    performSearch,
+    error,
+    query,
+    setQuery,
+    performSearch, // still exposed if you want to trigger manually
   }
 }
