@@ -1,4 +1,4 @@
 export enum DashboardTasksTableTabs {
-    All = "All",
-    WatchList = "Watch List",
+  All = 'All',
+  WatchList = 'Watch List',
 }

@@ -1,133 +1,133 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { X, ArrowLeft, Search, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
-import { User } from "@/app/types/user";
-import { dummyUsers } from "@/__mocks__/Task";
-import { SuccessModal } from "@/components/dashboard/SuccessModal";
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import { X, ArrowLeft, Search, Loader2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Card, CardContent } from '@/components/ui/card'
+import { User } from '@/app/types/user'
+import { dummyUsers } from '@/__mocks__/Task'
+import { SuccessModal } from '@/components/dashboard/SuccessModal'
 
 interface InviteFormProps {
-  onBack?: () => void;
-  teamName?: string;
+  onBack?: () => void
+  teamName?: string
 }
 
 export function InviteForm({ onBack, teamName }: InviteFormProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([])
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([])
+  const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchFocused, setSearchFocused] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const selectedUserIds = useMemo(
     () => new Set(selectedUsers.map((user) => user.id)),
-    [selectedUsers]
-  );
+    [selectedUsers],
+  )
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 250);
+      setDebouncedSearchTerm(searchTerm)
+    }, 250)
 
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+    return () => clearTimeout(timer)
+  }, [searchTerm])
 
   const performSearch = useCallback(
     async (term: string) => {
-      if (term.trim() === "") {
-        setFilteredUsers([]);
-        setShowSuggestions(false);
-        setIsSearching(false);
-        return;
+      if (term.trim() === '') {
+        setFilteredUsers([])
+        setShowSuggestions(false)
+        setIsSearching(false)
+        return
       }
 
-      setIsSearching(true);
+      setIsSearching(true)
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 50))
 
-      const searchTermLower = term.toLowerCase();
+      const searchTermLower = term.toLowerCase()
       const filtered = dummyUsers.filter((user) => {
-        if (selectedUserIds.has(user.id)) return false;
+        if (selectedUserIds.has(user.id)) return false
 
-        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
         return (
           user.firstName.toLowerCase().includes(searchTermLower) ||
           user.lastName.toLowerCase().includes(searchTermLower) ||
           fullName.includes(searchTermLower) ||
           user.email.toLowerCase().includes(searchTermLower)
-        );
-      });
+        )
+      })
 
-      setFilteredUsers(filtered);
-      setShowSuggestions(true);
-      setIsSearching(false);
+      setFilteredUsers(filtered)
+      setShowSuggestions(true)
+      setIsSearching(false)
     },
-    [selectedUserIds]
-  );
+    [selectedUserIds],
+  )
 
   useEffect(() => {
     if (searchFocused || debouncedSearchTerm.length > 0) {
-      performSearch(debouncedSearchTerm);
+      performSearch(debouncedSearchTerm)
     } else if (!searchFocused && debouncedSearchTerm.length === 0) {
-      setFilteredUsers([]);
-      setShowSuggestions(false);
+      setFilteredUsers([])
+      setShowSuggestions(false)
     }
-  }, [debouncedSearchTerm, searchFocused, performSearch]);
+  }, [debouncedSearchTerm, searchFocused, performSearch])
 
   const handleAddUser = (user: User) => {
-    setSelectedUsers((prev) => [...prev, user]);
-    setSearchTerm("");
-    setDebouncedSearchTerm("");
-    setShowSuggestions(false);
-    setIsSearching(false);
-  };
+    setSelectedUsers((prev) => [...prev, user])
+    setSearchTerm('')
+    setDebouncedSearchTerm('')
+    setShowSuggestions(false)
+    setIsSearching(false)
+  }
 
   const handleRemoveUser = (userId: string) => {
-    setSelectedUsers((prev) => prev.filter((user) => user.id !== userId));
-  };
+    setSelectedUsers((prev) => prev.filter((user) => user.id !== userId))
+  }
 
   const handleClearAllUsers = () => {
-    setSelectedUsers([]);
-  };
+    setSelectedUsers([])
+  }
 
   const handleGoBack = () => {
     if (onBack) {
-      onBack();
-      return;
+      onBack()
+      return
     }
-    window.history.back();
-  };
+    window.history.back()
+  }
 
   const getInitials = (firstName: string, lastName: string) => {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  };
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+  }
 
   const handleCreateTeam = () => {
-    console.log("Creating team with users:", selectedUsers);
-    setShowSuccessModal(true);
-  };
+    console.log('Creating team with users:', selectedUsers)
+    setShowSuccessModal(true)
+  }
 
   const handleSkipInviting = () => {
-    console.log("Skipping inviting process");
-  };
+    console.log('Skipping inviting process')
+  }
 
   const handleSearchFocus = () => {
-    setSearchFocused(true);
-    setShowSuggestions(true);
-  };
+    setSearchFocused(true)
+    setShowSuggestions(true)
+  }
 
   const handleSearchBlur = () => {
     setTimeout(() => {
-      setSearchFocused(false);
-      if (searchTerm.trim() === "") {
-        setShowSuggestions(false);
+      setSearchFocused(false)
+      if (searchTerm.trim() === '') {
+        setShowSuggestions(false)
       }
-    }, 200);
-  };
+    }, 200)
+  }
 
   const searchStats = useMemo(
     () => ({
@@ -137,23 +137,18 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
       showingCount: Math.min(filteredUsers.length, 8),
       hasMore: filteredUsers.length > 8,
     }),
-    [filteredUsers.length, selectedUsers.length]
-  );
+    [filteredUsers.length, selectedUsers.length],
+  )
 
   if (showSuccessModal) {
-    return (
-      <SuccessModal
-        teamName={teamName}
-        onClose={() => setShowSuccessModal(false)}
-      />
-    );
+    return <SuccessModal teamName={teamName} onClose={() => setShowSuccessModal(false)} />
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-lg mx-auto bg-white shadow-xl border-0">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+      <Card className="mx-auto w-full max-w-lg border-0 bg-white shadow-xl">
         <CardContent className="p-0">
-          <div className="flex items-center gap-3 p-4 sm:p-6 border-b border-gray-100">
+          <div className="flex items-center gap-3 border-b border-gray-100 p-4 sm:p-6">
             <Button
               variant="ghost"
               size="icon"
@@ -162,14 +157,14 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
+            <h2 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
               Invite Teammates
             </h2>
           </div>
 
-          <div className="p-4 sm:p-6 space-y-6">
+          <div className="space-y-6 p-4 sm:p-6">
             <div className="space-y-3">
-              <label className="text-sm font-medium text-gray-700 block">
+              <label className="block text-sm font-medium text-gray-700">
                 Search and invite teammates
               </label>
               <div className="relative">
@@ -180,89 +175,84 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={handleSearchFocus}
                   onBlur={handleSearchBlur}
-                  className="pr-10 text-sm sm:text-base h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                  className="h-11 border-gray-200 pr-10 text-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base"
                 />
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               </div>
               {searchStats.selectedCount > 0 && (
                 <p className="text-xs text-gray-500">
                   {searchStats.selectedCount} teammate
-                  {searchStats.selectedCount !== 1 ? "s" : ""} selected
+                  {searchStats.selectedCount !== 1 ? 's' : ''} selected
                 </p>
               )}
             </div>
 
             {(showSuggestions || isSearching) && (
-              <div className="border border-gray-200 rounded-lg bg-white shadow-lg max-h-64 overflow-y-auto transition-all duration-200 ease-in-out">
+              <div className="max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-200 ease-in-out">
                 {isSearching ? (
                   <div className="flex items-center justify-center p-4">
-                    <Loader2 className="h-5 w-5 text-gray-400 animate-spin mr-2" />
-                    <span className="text-sm text-gray-500">
-                      Searching users...
-                    </span>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin text-gray-400" />
+                    <span className="text-sm text-gray-500">Searching users...</span>
                   </div>
                 ) : searchStats.hasResults ? (
                   <div>
-                    <div className="px-4 py-2 bg-gray-50 border-b border-gray-100">
-                      <span className="text-xs text-gray-600 font-medium">
+                    <div className="border-b border-gray-100 bg-gray-50 px-4 py-2">
+                      <span className="text-xs font-medium text-gray-600">
                         {searchStats.resultCount} user
-                        {searchStats.resultCount !== 1 ? "s" : ""} found
+                        {searchStats.resultCount !== 1 ? 's' : ''} found
                       </span>
                     </div>
                     {filteredUsers.slice(0, 8).map((user) => (
                       <div
                         key={user.id}
-                        className="flex items-center gap-3 p-3 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-b-0 transition-colors duration-150 group"
+                        className="group flex cursor-pointer items-center gap-3 border-b border-gray-50 p-3 transition-colors duration-150 last:border-b-0 hover:bg-blue-50"
                         onMouseDown={(e) => {
-                          e.preventDefault();
+                          e.preventDefault()
                         }}
                         onClick={() => handleAddUser(user)}
                       >
                         <Avatar className="h-9 w-9 shrink-0">
-                          <AvatarFallback className="text-xs bg-blue-100 text-blue-600 font-medium">
+                          <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
                             {getInitials(user.firstName, user.lastName)}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm text-gray-900 truncate">
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-medium text-gray-900">
                             {user.firstName} {user.lastName}
                           </div>
-                          <div className="text-xs text-gray-500 truncate">
-                            {user.email}
-                          </div>
+                          <div className="truncate text-xs text-gray-500">{user.email}</div>
                         </div>
-                        <div className="text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 font-medium">
+                        <div className="shrink-0 text-xs font-medium text-blue-600 opacity-0 transition-opacity group-hover:opacity-100">
                           + Add
                         </div>
                       </div>
                     ))}
                     {searchStats.hasMore && (
-                      <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
+                      <div className="border-t border-gray-100 bg-gray-50 px-4 py-2">
                         <span className="text-xs text-gray-500">
-                          and {searchStats.resultCount - 8} more... Keep typing
-                          to narrow results
+                          and {searchStats.resultCount - 8} more... Keep typing to narrow results
                         </span>
                       </div>
                     )}
                   </div>
                 ) : debouncedSearchTerm.length > 0 ? (
                   <div className="flex flex-col items-center justify-center p-8">
-                    <div className="text-gray-400 mb-3">
+                    <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
                     </div>
-                    <span className="text-sm text-gray-500 text-center font-medium">
+                    <span className="text-center text-sm font-medium text-gray-500">
                       No users found for &ldquo;{debouncedSearchTerm}&rdquo;
                     </span>
-                    <span className="text-xs text-gray-400 text-center mt-1">
+                    <span className="mt-1 text-center text-xs text-gray-400">
                       Try searching by name or email
                     </span>
                   </div>
                 ) : searchFocused ? (
                   <div className="flex flex-col items-center justify-center p-8">
-                    <div className="text-gray-400 mb-3">
+                    <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
                     </div>
-                    <span className="text-sm text-gray-500 text-center">
+                    <span className="text-center text-sm text-gray-500">
                       Start typing to search for teammates
                     </span>
                   </div>
@@ -278,38 +268,36 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
                   </h3>
                   <button
                     onClick={handleClearAllUsers}
-                    className="text-xs text-red-600 hover:text-red-800 font-medium transition-colors"
+                    className="text-xs font-medium text-red-600 transition-colors hover:text-red-800"
                   >
                     Clear all
                   </button>
                 </div>
-                <div className="space-y-2 max-h-48 overflow-y-auto">
+                <div className="max-h-48 space-y-2 overflow-y-auto">
                   {selectedUsers.map((user, index) => (
                     <div
                       key={user.id}
-                      className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg group hover:bg-blue-100 transition-colors border border-blue-100"
+                      className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors hover:bg-blue-100"
                     >
                       <Avatar className="h-9 w-9 shrink-0">
-                        <AvatarFallback className="text-xs bg-blue-100 text-blue-600 font-medium">
+                        <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
                           {getInitials(user.firstName, user.lastName)}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm text-gray-900 truncate">
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-sm font-medium text-gray-900">
                           {user.firstName} {user.lastName}
                         </div>
-                        <div className="text-xs text-gray-600 truncate">
-                          {user.email}
-                        </div>
+                        <div className="truncate text-xs text-gray-600">{user.email}</div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-blue-600 bg-blue-200 px-2 py-1 rounded-full font-medium">
+                        <span className="rounded-full bg-blue-200 px-2 py-1 text-xs font-medium text-blue-600">
                           #{index + 1}
                         </span>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-100 hover:text-red-600"
+                          className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
                           onClick={() => handleRemoveUser(user.id)}
                           title={`Remove ${user.firstName} ${user.lastName}`}
                         >
@@ -322,16 +310,16 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
               </div>
             )}
 
-            <div className="space-y-3 pt-6 border-t border-gray-100">
+            <div className="space-y-3 border-t border-gray-100 pt-6">
               <Button
-                className="w-full bg-black hover:bg-gray-800 text-white h-12 text-base font-medium transition-colors shadow-xs"
+                className="h-12 w-full bg-black text-base font-medium text-white shadow-xs transition-colors hover:bg-gray-800"
                 onClick={handleCreateTeam}
               >
                 Create Team
               </Button>
               <Button
                 variant="ghost"
-                className="w-full text-gray-600 hover:text-gray-800 hover:bg-gray-50 h-12 text-base font-medium transition-colors"
+                className="h-12 w-full text-base font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
                 onClick={handleSkipInviting}
               >
                 Skip Inviting
@@ -341,5 +329,5 @@ export function InviteForm({ onBack, teamName }: InviteFormProps) {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

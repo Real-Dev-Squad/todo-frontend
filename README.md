@@ -1,12 +1,13 @@
 # TODO PROJECT
 
 ## Setup SSL proxy
+
 To run the app locally on `https://staging-todo.realdevsquad.com/` add `127.0.0.1 staging-todo.realdevsquad.com` in your `/etc/hosts`.
 This step is required if you want to call the staging API.
 
 ## Local Development Setup
 
-This project uses [PNPM]([https://yarnpkg.com/getting-started](https://pnpm.io/motivation)) for package management.
+This project uses [PNPM](<[https://yarnpkg.com/getting-started](https://pnpm.io/motivation)>) for package management.
 So, make sure to install PNPM to use the project.
 
 From your terminal:
@@ -23,7 +24,7 @@ To build your app for production:
 pnpm build
 ```
 
-To build next app along with Storybook in the `out/storybook` directory: 
+To build next app along with Storybook in the `out/storybook` directory:
 
 ```sh
 pnpm build-app-storybook
@@ -81,10 +82,13 @@ All the public assets like `icons`, `images` are stored inside the `public` dire
 ## Storybook
 
 To run Storybook in development mode:
+
 ```sh
 pnpm storybook
 ```
+
 We can also build storybook in order to deploy it from `storybook-static` folder
+
 ```sh
 pnpm build:storybook
 ```

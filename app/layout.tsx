@@ -8,19 +8,19 @@ import { SidebarProvider } from "../components/ui/sidebar";
 import { Toaster } from "sonner";
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "Todo Project",
-  description: "Created by Real Dev Squad",
-};
+  title: 'Todo Project',
+  description: 'Created by Real Dev Squad',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" className={inter.className}>
@@ -40,5 +40,5 @@ export default function RootLayout({
           </QueryProvider>
         </body>
     </html>
-  );
+  )
 }

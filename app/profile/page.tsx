@@ -1,20 +1,20 @@
-"use client";
-import { useAuth } from "@/app/hooks/useAuth";
-import React from "react";
-import { logoutUser } from "@/lib/api/api-client";
-import { Button } from "@/components/ui/button";
+'use client'
+import { useAuth } from '@/app/hooks/useAuth'
+import React from 'react'
+import { logoutUser } from '@/lib/api/api-client'
+import { Button } from '@/components/ui/button'
 
 export default function Page() {
-  const { user } = useAuth();
-  const name = user?.data?.name || "Guest";
-  const email = user?.data?.email || "No email";
+  const { user } = useAuth()
+  const name = user?.data?.name || 'Guest'
+  const email = user?.data?.email || 'No email'
 
   return (
-    <div className="bg-gray-50 min-h-screen flex items-start justify-start p-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm mt-8 ml-4 flex flex-col items-center">
+    <div className="flex min-h-screen items-start justify-start bg-gray-50 p-4">
+      <div className="mt-8 ml-4 flex w-full max-w-sm flex-col items-center rounded-2xl bg-white p-8 shadow-lg">
         <div className="mb-4 w-full text-center">
-          <div className="text-xl font-semibold mb-1">{name}</div>
-          <div className="text-gray-500 text-sm">{email}</div>
+          <div className="mb-1 text-xl font-semibold">{name}</div>
+          <div className="text-sm text-gray-500">{email}</div>
         </div>
         <Button
           onClick={logoutUser}
@@ -26,5 +26,5 @@ export default function Page() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

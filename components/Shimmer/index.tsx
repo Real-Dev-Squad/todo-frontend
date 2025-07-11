@@ -1,18 +1,17 @@
-
-import { cn } from "@/utils/utils";
+import { cn } from '@/utils/utils'
 
 type ShimmerProps = {
-  className?: string;
-};
+  className?: string
+}
 
 export const Shimmer = ({ className }: ShimmerProps) => {
   return (
     <div
       className={cn(
-        "animate-pulse relative overflow-hidden rounded-lg mx-3 bg-indigo-50 opacity-90 max-w-full h-full",
-        className
+        'relative mx-3 h-full max-w-full animate-pulse overflow-hidden rounded-lg bg-indigo-50 opacity-90',
+        className,
       )}
       data-testid="shimmer"
     />
-  );
-};
+  )
+}

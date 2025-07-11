@@ -4,7 +4,7 @@ import { SideBar } from "../../components/SideBar";
 import { SidebarProvider } from "../../components/ui/sidebar";
 import React from "react";
 
-describe("SideBar", () => {
+describe('SideBar', () => {
   beforeAll(() => {
     render(
       <SidebarProvider>
@@ -17,9 +17,9 @@ describe("SideBar", () => {
     expect(logo).toBeDefined();
   });
 
-  it("renders navigation links", () => {
-    expect(screen.getByText("Home")).toBeDefined();
-    expect(screen.getByText("Tasks")).toBeDefined();
-    expect(screen.getByText("Teams")).toBeDefined();
-  });
-});
+  it('renders navigation links', () => {
+    expect(screen.getByText('Home')).toBeDefined()
+    expect(screen.getByText('Tasks')).toBeDefined()
+    expect(screen.getByText('Teams')).toBeDefined()
+  })
+})

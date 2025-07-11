@@ -1,8 +1,8 @@
-import type { Preview } from "@storybook/nextjs";
-import "../app/globals.css"
+import type { Preview } from '@storybook/nextjs'
+import '../app/globals.css'
 
 const preview: Preview = {
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
     controls: {
       matchers: {
@@ -12,10 +12,10 @@ const preview: Preview = {
     },
     docs: {
       toc: {
-        contentsSelector: ".sbdocs-content",
-        headingSelector: "h1, h2, h3",
-        ignoreSelector: "#primary",
-        title: "Table of Contents",
+        contentsSelector: '.sbdocs-content',
+        headingSelector: 'h1, h2, h3',
+        ignoreSelector: '#primary',
+        title: 'Table of Contents',
         disable: false,
         unsafeTocbotOptions: {
           orderedList: false,
@@ -23,6 +23,6 @@ const preview: Preview = {
       },
     },
   },
-};
+}
 
-export default preview;
+export default preview
