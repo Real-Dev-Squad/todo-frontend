@@ -55,6 +55,8 @@ export function TodoForm({
     initialData ?? DEFAULT_FORM_DATA
   );
 
+  console.log("formData", formData)
+  console.log("initialData", initialData)
   const Icon = mode === FORM_MODE.CREATE ? SendIcon : SaveIcon;
   const ctaText = mode === FORM_MODE.CREATE ? "Submit" : "Save";
   const altText = mode === FORM_MODE.CREATE ? "Create todo" : "Save todo";
@@ -168,7 +170,7 @@ export function TodoForm({
               required
             />
           </div>
-          {/* todo: add assignee later 
+          {/* todo @tejas-gp or @anuj: add assignee later 
           -- currently we don't have API which brings assignee details
           */}
 
@@ -246,9 +248,11 @@ export function TodoForm({
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, taskId: e.target.value }))
               }
+              disabled={mode === FORM_MODE.EDIT}
               className="w-full p-2 text-sm bg-[#F5F5FF] text-indigo-700  border-none border-[#E5E7EB] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
               placeholder="e.g #kda4dyodajd73j"
               required
+              readOnly={mode === FORM_MODE.EDIT}
             />
           </div>
 

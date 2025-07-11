@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { tasksApi } from "@/lib/api/tasks/tasks.api";
 import { toast } from "sonner";
+import { FORM_MODE } from "@/app/constants/Task";
 
 export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
   const router = useRouter();
@@ -19,6 +20,9 @@ export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
   const searchParams = useSearchParams();
   const currentTab = searchParams.get("tab") || TabsConstants.All;
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
+  const [showEditTaskForm, setShowEditTaskForm] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<TTask | null>(null);
+  console.log("selected task", selectedTask)
   const queryClient = useQueryClient();
 
   const createTaskMutation = useMutation({
@@ -33,8 +37,29 @@ export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
     },
   });
 
+  const updateTaskMutation = useMutation({
+    mutationFn: (task: TTask) => tasksApi.updateTask.fn(task),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key });
+      toast.success("Task updated successfully");
+      setShowEditTaskForm(false);
+    },
+    onError: () => {
+      toast.error("Failed to update task");
+    },
+  });
+
   const handleCreateTask = (task: TaskFormData) => {
     createTaskMutation.mutate(task as TTask);
+  };
+
+  const handleEditTask = (task: TaskFormData) => {
+    updateTaskMutation.mutate(task as TTask);
+  };
+
+  const handleTaskClick = (task: TTask) => {
+    setSelectedTask(task);
+    setShowEditTaskForm(true);
   };
   
   const handleTabChange = (value: string) => {
@@ -66,16 +91,48 @@ export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
           </div>
         </div>
         <TabsContent value={TabsConstants.All}>
-          <DashboardTasksTable type={TabsConstants.All} tasks={tasks} />
+          <DashboardTasksTable 
+            type={TabsConstants.All} 
+            tasks={tasks} 
+            onTaskClick={handleTaskClick}
+          />
         </TabsContent>
         <TabsContent value={TabsConstants.WatchList}>
-          <DashboardTasksTable type={TabsConstants.WatchList} tasks={tasks} />
+          <DashboardTasksTable 
+            type={TabsConstants.WatchList} 
+            tasks={tasks} 
+            onTaskClick={handleTaskClick}
+          />
         </TabsContent>
       </Tabs>
+      
+      {/* Create Task Form */}
       <TodoForm 
         open={showCreateTaskForm} 
         onClose={() => setShowCreateTaskForm(false)}
         onSubmit={handleCreateTask as (data: TaskFormData) => void}
+        mode={FORM_MODE.CREATE}
+      />
+      
+      {/* Edit Task Form */}
+      <TodoForm 
+        key={selectedTask?.id || 'edit-form'} // Force remount when task changes
+        open={showEditTaskForm} 
+        onClose={() => {
+          setShowEditTaskForm(false);
+          setSelectedTask(null);
+        }}
+        onSubmit={handleEditTask as (data: TaskFormData) => void}
+        mode={FORM_MODE.EDIT}
+        initialData={selectedTask ? {
+          id: selectedTask.id,
+          title: selectedTask.title,
+          description: selectedTask.description || "",
+          dueDate: selectedTask.dueDate || "",
+          tags: selectedTask.tags || [],
+          taskId: selectedTask.taskId,
+          status: selectedTask.status,
+        } : undefined}
       />
     </div>
   );

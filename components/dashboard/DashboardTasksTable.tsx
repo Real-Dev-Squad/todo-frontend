@@ -8,14 +8,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { Task, TASK_PRIORITY } from "@/app/types/tasks";
+import { TTask, TASK_PRIORITY } from "@/lib/api/tasks/tasks.dto";
+import { Edit2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const DashboardTasksTable = ({
   type,
   tasks,
+  onTaskClick,
 }: {
   type: DashboardTasksTableTabs;
-  tasks: Task[];
+  tasks: TTask[];
+  onTaskClick?: (task: TTask) => void;
 }) => {
   const filteredTasks = tasks.filter(
     (task) => type === DashboardTasksTableTabs.All || task.isInWatchlist
@@ -32,11 +36,15 @@ export const DashboardTasksTable = ({
               <TableHead>Status</TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Due Date</TableHead>
+              <TableHead className="w-[50px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredTasks.map((task) => (
-              <TableRow key={task.id}>
+              <TableRow 
+                key={task.id}
+                className="hover:bg-gray-50 transition-colors"
+              >
                 <TableCell className="font-medium">{task.title}</TableCell>
                 <TableCell>
                   <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">
@@ -71,6 +79,19 @@ export const DashboardTasksTable = ({
                   {task.dueAt
                     ? new Date(task.dueAt).toLocaleDateString()
                     : task.dueDate || "-"}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onTaskClick?.(task);
+                    }}
+                    className="h-8 w-8 p-0 hover:bg-gray-200"
+                  >
+                    <Edit2 className="h-4 w-4 text-gray-600" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

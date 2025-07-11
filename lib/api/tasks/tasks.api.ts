@@ -22,7 +22,8 @@ export const tasksApi = {
   updateTask: {
     key: ["tasksApi.updateTask"],
     fn: async (task: TTask): Promise<TTask> => {
-      const { data } = await apiClient.patch<TTask>(`/v1/tasks`, task);
+      console.log("task", task);
+      const { data } = await apiClient.patch<TTask>(`/v1/tasks/${task.id}`, task);
       return data;
     },
   },
