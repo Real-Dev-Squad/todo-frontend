@@ -9,8 +9,6 @@ import { Toaster } from "sonner";
 export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
 
-  // adding a commit here to test the CI/CD pipeline
-  // else it is failing
   if (!isAuthenticated) {
     return <LandingPage />;
   }
