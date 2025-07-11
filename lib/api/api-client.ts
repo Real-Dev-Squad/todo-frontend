@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || "https://services.realdevsquad.com/staging-todo";
+const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  "https://services.realdevsquad.com/staging-todo";
 
 export const apiClient = axios.create({
   baseURL: backendUrl,
   timeout: 30000,
-  withCredentials: true, 
+  withCredentials: true,
 });
 
 apiClient.interceptors.request.use(
@@ -14,7 +16,9 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error instanceof Error ? error : new Error(String(error)));
+    return Promise.reject(
+      error instanceof Error ? error : new Error(String(error))
+    );
   }
 );
 
@@ -27,6 +31,17 @@ apiClient.interceptors.response.use(
         window.location.href = `${backendUrl}/v1/auth/google/login/`;
       }
     }
-    return Promise.reject(error instanceof Error ? error : new Error(String(error)));
+    return Promise.reject(
+      error instanceof Error ? error : new Error(String(error))
+    );
   }
-); 
+);
+
+export async function logoutUser() {
+  try {
+    await apiClient.get("/v1/auth/google/logout/");
+    window.location.href = "/";
+  } catch {
+    console.log("Logout Failed");
+  }
+}
