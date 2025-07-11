@@ -25,7 +25,6 @@ const data = {
       title: 'Teams',
       url: '/teams',
       icon: Inbox,
-      badge: '10',
     },
   ],
 }
