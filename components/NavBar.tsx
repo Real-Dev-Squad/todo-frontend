@@ -93,9 +93,7 @@ export const NavBar = () => {
               <DropdownMenuItem>
                 <Link href={"/profile"}>Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={logoutUser} className="">
-                Log out
-              </DropdownMenuItem>
+              <DropdownMenuItem onClick={logoutUser}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

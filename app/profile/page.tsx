@@ -22,6 +22,7 @@ export default function Page() {
         </div>
         <button
           onClick={logoutUser}
+          type="button"
           className="w-full py-2 cursor-pointer px-4 bg-red-700 hover:bg-red-800 text-white rounded-lg font-medium transition-colors mt-2 shadow-sm"
         >
           Log out

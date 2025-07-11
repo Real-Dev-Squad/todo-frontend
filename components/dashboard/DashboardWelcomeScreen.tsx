@@ -55,12 +55,16 @@ export const DashboardWelcomeScreen = () => {
 
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full max-w-md">
           <button
+            type="button"
             className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1 hover:cursor-pointer"
             onClick={() => setShowCreateTaskForm(true)}
           >
             Create Task
           </button>
-          <button className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1">
+          <button
+            type="button"
+            className="py-3 md:py-4 px-6 md:px-10 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200 font-medium text-sm md:text-base flex-1"
+          >
             Create Team
           </button>
         </div>

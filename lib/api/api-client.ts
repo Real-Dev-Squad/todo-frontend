@@ -40,8 +40,8 @@ apiClient.interceptors.response.use(
 export async function logoutUser() {
   try {
     await apiClient.get("/v1/auth/google/logout/");
-  } catch (e) {
-    console.log(e);
+  } catch {
+    console.log("Login Failed");
   } finally {
     window.location.href = "/";
   }

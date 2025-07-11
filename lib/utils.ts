@@ -6,13 +6,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getUserInitials(name?: string): string {
-  if (!name) return "GU";
-  const words = name.trim().split(/\s+/);
+  if (!name || typeof name !== "string") return "GU";
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return "GU";
   if (words.length >= 2) {
-    return (words[0][0] + words[1][0]).toUpperCase();
-  } else if (words[0].length >= 2) {
-    return words[0].slice(0, 2).toUpperCase();
-  } else {
-    return words[0][0].toUpperCase();
+    const [first, second] = words;
+    return `${first[0]}${second[0]}`.toUpperCase();
   }
+  const [first] = words;
+  if (first.length >= 2) {
+    return first.slice(0, 2).toUpperCase();
+  }
+  return first[0].toUpperCase();
 }
