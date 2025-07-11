@@ -41,7 +41,7 @@ export async function logoutUser() {
   try {
     await apiClient.get("/v1/auth/google/logout/");
   } catch {
-    console.log("Login Failed");
+    console.log("Logout Failed");
   } finally {
     window.location.href = "/";
   }
