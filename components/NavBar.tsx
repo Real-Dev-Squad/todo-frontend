@@ -84,9 +84,11 @@ export const NavBar = () => {
           </button>
 
           <DropdownMenu>
-            <DropdownMenuTrigger className="rounded-full bg-black text-sm text-white p-2 cursor-pointer">
+
+            <DropdownMenuTrigger className="rounded-full bg-black text-sm text-white p-2 cursor-pointer" aria-label="User menu">
               {initials}
             </DropdownMenuTrigger>
+
             <DropdownMenuContent className="mr-4 mt-4">
               <DropdownMenuLabel>{name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
