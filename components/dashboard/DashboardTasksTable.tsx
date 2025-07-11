@@ -11,16 +11,44 @@ import { cn } from "@/lib/utils";
 import { TTask, TASK_PRIORITY } from "@/lib/api/tasks/tasks.dto";
 import { Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { tasksApi } from "@/lib/api/tasks/tasks.api";
+import { toast } from "sonner";
+import { FORM_MODE } from "@/app/constants/Task";
+import { TaskFormData, TodoForm } from "../TodoForm";
 
 export const DashboardTasksTable = ({
   type,
   tasks,
-  onTaskClick,
 }: {
   type: DashboardTasksTableTabs;
   tasks: TTask[];
-  onTaskClick?: (task: TTask) => void;
 }) => {
+  const [showEditTaskForm, setShowEditTaskForm] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<TTask | null>(null);
+  const queryClient = useQueryClient();
+
+  const updateTaskMutation = useMutation({
+    mutationFn: (task: TTask) => tasksApi.updateTask.fn(task),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key });
+      toast.success("Task updated successfully");
+      setShowEditTaskForm(false);
+    },
+    onError: () => {
+      toast.error("Failed to update task");
+    },
+  });
+
+  const handleEditTask = (task: TaskFormData) => {
+    updateTaskMutation.mutate(task as TTask);
+  };
+
+  const handleTaskClick = (task: TTask) => {
+    setSelectedTask(task);
+    setShowEditTaskForm(true);
+  };
   const filteredTasks = tasks.filter(
     (task) => type === DashboardTasksTableTabs.All || task.isInWatchlist
   );
@@ -86,7 +114,7 @@ export const DashboardTasksTable = ({
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onTaskClick?.(task);
+                      handleTaskClick(task);
                     }}
                     className="h-8 w-8 p-0 hover:bg-gray-200"
                   >
@@ -98,6 +126,27 @@ export const DashboardTasksTable = ({
           </TableBody>
         </Table>
       </div>
+      
+      {/* Edit Task Form */}
+      <TodoForm 
+        key={selectedTask?.id || 'edit-form'} 
+        open={showEditTaskForm} 
+        onClose={() => {
+          setShowEditTaskForm(false);
+          setSelectedTask(null);
+        }}
+        onSubmit={handleEditTask as (data: TaskFormData) => void}
+        mode={FORM_MODE.EDIT}
+        initialData={selectedTask ? {
+          id: selectedTask.id,
+          title: selectedTask.title,
+          description: selectedTask.description || "",
+          dueDate: selectedTask.dueDate || "",
+          tags: selectedTask.tags || [],
+          taskId: selectedTask.taskId,
+          status: selectedTask.status,
+        } : undefined}
+      />
     </div>
   );
 };
