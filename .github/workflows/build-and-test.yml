@@ -1,7 +1,7 @@
 name: CI
 on:
   pull_request:
-    branches: ["*"]
+    branches: ['*']
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -31,11 +31,14 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: prettier check
+        rum: pnpm check
+
       - name: Test Coverage
         run: pnpm test:coverage
 
       - name: Build:App
         run: pnpm build
-      
+
       - name: Build:App-Storybook
         run: pnpm build-app-storybook

@@ -1,5 +1,5 @@
 import React from 'react'
-import TeamsTable from './TeamsTable';
+import TeamsTable from './TeamsTable'
 
 function page() {
   return (

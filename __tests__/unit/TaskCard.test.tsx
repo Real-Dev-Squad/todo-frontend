@@ -1,76 +1,68 @@
-import { Task, TASK_STATUS } from "@/app/types/tasks";
-import { TaskCard } from "@/components/TaskCard";
-import { DateFormats, DateUtil } from "@/utils/dateUtil";
-import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, expect, test, vi } from "vitest";
+import { Task, TASK_STATUS } from '@/app/types/tasks'
+import { TaskCard } from '@/components/TaskCard'
+import { DateFormats, DateUtil } from '@/utils/dateUtil'
+import { cleanup, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 const mockTask: Task = {
-  id: "1",
-  taskId: "#1",
-  title: "Complete project",
+  id: '1',
+  taskId: '#1',
+  title: 'Complete project',
   status: TASK_STATUS.TODO,
-  assignee: { id: "1", name: "John Doe" },
-  dueDate: "2024-12-31",
-};
+  assignee: { id: '1', name: 'John Doe' },
+  dueDate: '2024-12-31',
+}
 
-const renderTaskCard = (task = mockTask, className = "") => {
-  return render(
-    <TaskCard task={task} className={className} setActiveTask={vi.fn()} />
-  );
-};
+const renderTaskCard = (task = mockTask, className = '') => {
+  return render(<TaskCard task={task} className={className} setActiveTask={vi.fn()} />)
+}
 
 beforeEach(() => {
-  vi.clearAllMocks();
-});
+  vi.clearAllMocks()
+})
 
 afterEach(() => {
-  cleanup();
-});
+  cleanup()
+})
 
-test("renders task card with correct information", () => {
-  renderTaskCard();
+test('renders task card with correct information', () => {
+  renderTaskCard()
 
-  const taskTitle = screen.getByText(mockTask.title);
-  const taskId = screen.getByText(`#${mockTask.id}`);
-  const statusIcon = screen.getByAltText(
-    "task-status-icon"
-  ) as HTMLImageElement;
-  const assignee = screen.getByText(mockTask.assignee.name);
+  const taskTitle = screen.getByText(mockTask.title)
+  const taskId = screen.getByText(`#${mockTask.id}`)
+  const statusIcon = screen.getByAltText('task-status-icon') as HTMLImageElement
+  const assignee = screen.getByText(mockTask.assignee.name)
   const formattedDueDate = screen.getByText(
-    new DateUtil(mockTask.dueDate ?? "").format(DateFormats.D_MMM_YYYY)
-  );
+    new DateUtil(mockTask.dueDate ?? '').format(DateFormats.D_MMM_YYYY),
+  )
 
-  expect(taskTitle).toBeDefined();
-  expect(taskId).toBeDefined();
-  expect(statusIcon.src).toContain("/assets/ToDoEllipse.svg");
-  expect(assignee).toBeDefined();
-  expect(formattedDueDate).toBeDefined();
-});
+  expect(taskTitle).toBeDefined()
+  expect(taskId).toBeDefined()
+  expect(statusIcon.src).toContain('/assets/ToDoEllipse.svg')
+  expect(assignee).toBeDefined()
+  expect(formattedDueDate).toBeDefined()
+})
 
-test("renders in-progress status icon correctly", () => {
-  renderTaskCard({ ...mockTask, status: TASK_STATUS.IN_PROGRESS });
+test('renders in-progress status icon correctly', () => {
+  renderTaskCard({ ...mockTask, status: TASK_STATUS.IN_PROGRESS })
 
-  const statusIcon = screen.getByAltText(
-    "task-status-icon"
-  ) as HTMLImageElement;
+  const statusIcon = screen.getByAltText('task-status-icon') as HTMLImageElement
 
-  expect(statusIcon.src).toContain("/assets/InProgressEllipse.svg");
-});
+  expect(statusIcon.src).toContain('/assets/InProgressEllipse.svg')
+})
 
-test("applies custom className to task card", () => {
-  const customClass = "custom-test-class";
-  renderTaskCard(mockTask, customClass);
+test('applies custom className to task card', () => {
+  const customClass = 'custom-test-class'
+  renderTaskCard(mockTask, customClass)
 
-  const taskCard = screen.getByTestId(`task-${mockTask.id}`);
-  expect(taskCard.className).toContain(customClass);
-});
+  const taskCard = screen.getByTestId(`task-${mockTask.id}`)
+  expect(taskCard.className).toContain(customClass)
+})
 
-test("renders default profile image when profile is not provided", () => {
-  renderTaskCard({ ...mockTask });
+test('renders default profile image when profile is not provided', () => {
+  renderTaskCard({ ...mockTask })
 
-  const profileImage = screen.getByAltText(
-    "assignee-profile"
-  ) as HTMLImageElement;
-  const encodedPath = encodeURIComponent("/assets/user.png");
-  expect(profileImage.src).toContain(encodedPath);
-});
+  const profileImage = screen.getByAltText('assignee-profile') as HTMLImageElement
+  const encodedPath = encodeURIComponent('/assets/user.png')
+  expect(profileImage.src).toContain(encodedPath)
+})
