@@ -73,7 +73,7 @@ export default function CreateTeamPage() {
           }}
           className="w-full"
         >
-          <Card className="bg-netural-400 mx-auto w-full max-w-sm rounded-2xl p-4 shadow-md md:p-6">
+          <Card className="mx-auto w-full max-w-sm rounded-2xl p-4 shadow-md md:p-6">
             <CardContent className="flex flex-col items-start gap-4">
               <h2 className="text-center text-lg font-semibold md:text-xl">Create your Team</h2>
 

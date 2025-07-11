@@ -208,7 +208,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       </div>
                     )}
                   </div>
-                ) : debouncedSearchTerm.length >= 3 ? (
+                ) : debouncedSearchTerm.trim().length >= 3 ? (
                   <div className="flex flex-col items-center justify-center p-8">
                     <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
@@ -226,7 +226,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       <Search className="h-8 w-8" />
                     </div>
                     <span className="text-center text-sm font-medium text-gray-500">
-                      Start typing to search for teammates
+                      Type at least 3 characters to search for teammates
                     </span>
                   </div>
                 ) : null}

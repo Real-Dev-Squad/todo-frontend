@@ -11,8 +11,13 @@ export const teamsApi = {
   createTeam: {
     key: ['teamsApi.createTeam'],
     fn: async (teamData: TeamCreatePayload) => {
-      const { data } = await apiClient.post(`/v1/teams`, teamData)
-      return data
+      try {
+        const { data } = await apiClient.post(`/v1/teams`, teamData)
+        return data
+      } catch (error) {
+        console.error('Failed to create team:', error)
+        throw error
+      }
     },
   },
 }
