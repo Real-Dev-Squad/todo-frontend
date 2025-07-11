@@ -20,7 +20,7 @@ const getStatusImagePath = (status: string): string => {
 
 
 export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
-  const statusImagePath = getStatusImagePath(task.status);
+  const statusImagePath = getStatusImagePath(task?.status ?? "");
   const formattedDueDate = new DateUtil(task.dueDate ?? "").format(
     DateFormats.D_MMM_YYYY
   );
