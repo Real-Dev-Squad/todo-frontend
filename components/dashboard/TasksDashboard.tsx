@@ -4,12 +4,16 @@ import { TaskDashboardHeader } from "./TaskDashboardHeader";
 import { DashboardWeeklySummary } from "./DashboardWeeklySummary";
 import { DashboardTasksTable } from "./DashboardTasksTableContainer";
 import { useAuth } from "@/app/hooks/useAuth";
-import { useTasks } from "@/app/hooks/useTasks";
+import { tasksApi } from "@/lib/api/tasks/tasks.api";
+import { useQuery } from "@tanstack/react-query";
 
 export const TasksDashboard = () => {
   const { user } = useAuth();
   const username = user?.data?.name ?? "Guest";
-  const { data, isLoading, isError } = useTasks();
+  const { data , isLoading, isError } = useQuery({
+    queryKey: tasksApi.getTasks.key,
+    queryFn: tasksApi.getTasks.fn,
+  });
 
   if (isLoading) return <div className="p-6">Loading tasks...</div>;
   if (isError)

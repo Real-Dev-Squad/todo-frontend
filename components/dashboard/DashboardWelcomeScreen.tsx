@@ -1,18 +1,21 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { TodoForm } from '../TodoForm';
+import { TaskFormData, TodoForm } from '../TodoForm';
 import { tasksApi } from '@/lib/api/tasks/tasks.api';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
-import { Task } from '@/lib/api/tasks/tasks.dto';
+import { TTask } from '@/lib/api/tasks/tasks.dto';
 
 export const DashboardWelcomeScreen = () => {
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
+  const queryClient = useQueryClient();
   const createTaskMutation = useMutation({
-    mutationFn: (task: Task) => tasksApi.createTask(task),
+    mutationFn: (task: TTask) => tasksApi.createTask.fn(task),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key });
+      toast.success("Task created successfully");
       setShowCreateTaskForm(false);
     },
     onError: (error: AxiosError) => {
@@ -20,7 +23,7 @@ export const DashboardWelcomeScreen = () => {
     },
   });
 
-  const handleCreateTask = (task: Task) => {
+  const handleCreateTask = (task: TTask) => {
     createTaskMutation.mutate(task);
   };
 
@@ -57,7 +60,7 @@ export const DashboardWelcomeScreen = () => {
       <TodoForm 
         open={showCreateTaskForm} 
         onClose={() => setShowCreateTaskForm(false)}
-        onSubmit={handleCreateTask}
+        onSubmit={handleCreateTask as (data: TaskFormData) => void}
       />
     </div>
   );

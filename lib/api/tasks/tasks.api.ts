@@ -1,15 +1,29 @@
 
-import axios from "axios";
-import { Task } from "./tasks.dto";
-
+import { GetTasksDto, TTask } from "./tasks.dto";
+import { apiClient } from "../api-client";
 
 export const tasksApi = {
-  createTask: async (task: Task) => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/tasks`, task);
-    return response.data;
+  getTasks: {
+    key: ["tasksApi.getTasks"],
+    fn: async (): Promise<GetTasksDto> => {
+      const { data } = await apiClient.get<GetTasksDto>(`/v1/tasks`);
+      return data;
+    },
   },
-  updateTask: async (task: Task) => {
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/v1/tasks`, task);
-    return response.data;
+
+  createTask: {
+    key: ["tasksApi.createTask"],
+    fn: async (task: TTask): Promise<TTask> => {
+      const { data } = await apiClient.post<TTask>(`/v1/tasks`, task);
+      return data;
+    },
   },
-}
+
+  updateTask: {
+    key: ["tasksApi.updateTask"],
+    fn: async (task: TTask): Promise<TTask> => {
+      const { data } = await apiClient.patch<TTask>(`/v1/tasks`, task);
+      return data;
+    },
+  },
+};

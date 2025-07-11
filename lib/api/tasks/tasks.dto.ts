@@ -14,7 +14,7 @@ export enum TASK_STATUS {
 
   
 
-export type Task = {
+export type TTask = {
     id: string;
     taskId: string;
     title: string;
@@ -31,5 +31,16 @@ export type Task = {
     dueDate?: string;
     isInWatchlist?: boolean;
   };
+
+  export type GetTasksDto = {
+    links:{
+      next: string;
+    },
+    tasks: TTask[];
+  }
+  export type CreateTaskDto = Omit<TTask, "priority" | "assignee" | "id">;
+
+
+
 
   

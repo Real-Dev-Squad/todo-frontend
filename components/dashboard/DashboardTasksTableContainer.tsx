@@ -2,9 +2,9 @@
 
 import { Suspense } from "react";
 import { DashboardTasksTableTabs } from "./DashboardTasksTableTabs";
-import { Task } from "@/app/types/tasks";
+import { TTask } from "@/lib/api/tasks/tasks.dto";
 
-export const DashboardTasksTable = ({ tasks }: { tasks: Task[] }) => {
+export const DashboardTasksTable = ({ tasks }: { tasks: TTask[] }) => {
   return (
     <Suspense>
       <div className="lg:col-span-2 max-h-screen">

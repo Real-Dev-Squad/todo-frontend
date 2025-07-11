@@ -4,7 +4,7 @@ export type Task = {
   title: string;
   description?: string;
   labels?: { name: string }[];
-  status: TASK_STATUS;
+  status?: TASK_STATUS;
   priority?: TASK_PRIORITY;
   assignee: {
     id: string;

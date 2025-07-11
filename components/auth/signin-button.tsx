@@ -12,8 +12,7 @@ import {
 import Link from "next/link";
 
 export function SigninButton() {
-  const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:8000";
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || "https://services.realdevsquad.com/staging-todo";
   return (
     <Dialog>
       <DialogTrigger asChild>

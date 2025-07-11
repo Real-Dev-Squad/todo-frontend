@@ -1,6 +1,6 @@
 "use client";
 
-import { Mode, Task, TASK_STATUS, TASK_PRIORITY } from "@/app/types/tasks";
+import { Mode, Task  } from "@/app/types/tasks";
 import { useState } from "react";
 
 import Image from "next/image";
@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 
 //Import Svg for icons
 import calendarIcon from "@/public/assets/calendar.svg";
-import AccountIcon from "@/public/assets/profile.svg";
 import StatusIcon from "@/public/assets/status.svg";
 import TagsIcon from "@/public/assets/priceTag.svg";
 import IDIcon from "@/public/assets/id.svg";
@@ -27,24 +26,21 @@ import { FORM_MODE } from "@/app/constants/Task";
 import { TaskDetails } from "./TaskDetails";
 
 interface TodoFormProps {
-  initialData?: Task;
-  onSubmit?: (data: Task) => void;
+  initialData?: TaskFormData;
+  onSubmit?: (data: TaskFormData) => void;
   mode?: Mode;
   onAcknowledge?: () => void;
   onClose: () => void;
   open?: boolean;
 }
-
-const DEFAULT_FORM_DATA: Task = {
+export type TaskFormData = Omit<Task, "priority" | "assignee">;
+const DEFAULT_FORM_DATA: TaskFormData = {
   id: "",
   title: "",
   description: "",
   dueDate: "",
-  priority: TASK_PRIORITY.LOW,
-  assignee: { id: "", name: "" },
   tags: [],
   taskId: "",
-  status: TASK_STATUS.TODO,
 };
 
 export function TodoForm({
@@ -55,7 +51,7 @@ export function TodoForm({
   onClose,
   open = true,
 }: TodoFormProps) {
-  const [formData, setFormData] = useState<Task>(
+  const [formData, setFormData] = useState<TaskFormData>(
     initialData ?? DEFAULT_FORM_DATA
   );
 
@@ -73,7 +69,7 @@ export function TodoForm({
       <TaskDetails
         onClose={onClose}
         onAcknowledge={onAcknowledge}
-        initialData={initialData}
+        initialData={initialData as Task}
       />
     );
   }
@@ -172,8 +168,11 @@ export function TodoForm({
               required
             />
           </div>
+          {/* todo: add assignee later 
+          -- currently we don't have API which brings assignee details
+          */}
 
-          <div className="flex flex-row gap-2 justify-start items-center  ">
+          {/* <div className="flex flex-row gap-2 justify-start items-center  ">
             <Image
               src={AccountIcon}
               alt={"due data icon"}
@@ -201,7 +200,7 @@ export function TodoForm({
               placeholder="e.g @ankush"
               required
             />
-          </div>
+          </div> */}
 
           <div className="flex flex-row gap-2 justify-start items-center">
             <Image
@@ -269,7 +268,7 @@ export function TodoForm({
               </label>
               <select
                 id="status"
-                value={formData.status}
+                value={formData.status }
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,

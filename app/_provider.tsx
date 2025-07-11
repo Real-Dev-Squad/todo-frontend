@@ -12,7 +12,7 @@ export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
           queries: {
             retry: 3,              
             refetchOnMount: true,  
-            staleTime: 0,          
+            staleTime: 0,
           },
         },
       }));
