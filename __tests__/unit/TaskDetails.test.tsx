@@ -27,7 +27,9 @@ test("should renders TaskDetails component with initial data", async () => {
       onClose={mockOnClose}
     />
   );
-  expect(screen.getByTestId("dueDate").innerHTML).toBe("12/31/2024");
+  // Use a more flexible approach for date checking since locale can affect format
+  const expectedDate = new Date("2024-12-31").toLocaleDateString();
+  expect(screen.getByTestId("dueDate").innerHTML).toBe(expectedDate);
   expect(screen.getByTestId("taskId").innerHTML).toBe(initialData.taskId);
   expect(screen.getByTestId("status").innerHTML).toBe(initialData.status);
   expect(screen.getByTestId("tags").innerHTML).toBe(
