@@ -208,7 +208,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       </div>
                     )}
                   </div>
-                ) : debouncedSearchTerm.trim().length < 3 ? (
+                ) : debouncedSearchTerm.trim().length >= 3 ? (
                   <div className="flex flex-col items-center justify-center p-8">
                     <div className="mb-3 text-gray-400">
                       <Search className="h-8 w-8" />
