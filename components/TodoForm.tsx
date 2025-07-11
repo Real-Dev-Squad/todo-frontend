@@ -1,7 +1,9 @@
 'use client'
 
+import { FORM_MODE, TASK_PRIORITY } from '@/app/constants/Task'
 import { Mode, Task } from '@/app/types/tasks'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import { TaskDetails } from './TaskDetails'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,14 +17,11 @@ import {
 import Image from 'next/image'
 
 //Import Svg for icons
-import { FORM_MODE, TASK_PRIORITY } from '@/app/constants/Task'
 import calendarIcon from '@/public/assets/calendar.svg'
 import TagsIcon from '@/public/assets/priceTag.svg'
 import SaveIcon from '@/public/assets/save.svg'
 import SendIcon from '@/public/assets/send.svg'
 import StatusIcon from '@/public/assets/status.svg'
-import { FormEvent } from 'react'
-import { TaskDetails } from './TaskDetails'
 
 interface TodoFormProps {
   initialData?: TaskFormData
@@ -151,7 +150,7 @@ export function TodoForm({
               <Image src={StatusIcon} alt={'due data icon'} width={15} height={15} />
               <label
                 htmlFor="priority"
-                className="ont-medium mb-1 block w-32 max-w-44 text-sm text-gray-700"
+                className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
               >
                 Priority
               </label>
@@ -210,7 +209,7 @@ export function TodoForm({
             <div className="flex flex-row items-center justify-start gap-2">
               <Image src={TagsIcon} alt={'due data icon'} width={15} height={15} />
               <label
-                htmlFor="dueAt"
+                htmlFor="tags"
                 className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
               >
                 Tags
@@ -234,8 +233,8 @@ export function TodoForm({
               <div className="flex flex-row items-center justify-start gap-2">
                 <Image src={StatusIcon} alt={'due data icon'} width={15} height={15} />
                 <label
-                  htmlFor="dueAt"
-                  className="ont-medium mb-1 block w-32 max-w-44 text-sm text-gray-700"
+                  htmlFor="status"
+                  className="mb-1 block w-32 max-w-44 text-sm font-medium text-gray-700"
                 >
                   Status
                 </label>
