@@ -21,7 +21,7 @@ export function SuccessModal({ onClose, teamName = 'Team Name', inviteCode }: Su
 
   return (
     <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
-      <div className="relative w-full max-w-xs rounded-2xl p-6 shadow-lg md:max-w-sm md:rounded-3xl md:p-8">
+      <div className="relative w-full max-w-xs rounded-2xl bg-white p-6 shadow-lg md:max-w-sm md:rounded-3xl md:p-8">
         <Button
           variant="ghost"
           size="icon"
