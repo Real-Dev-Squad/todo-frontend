@@ -1,8 +1,7 @@
 'use client'
 
+import { appConfig } from '@/config/app-config'
 import { useQuery } from '@tanstack/react-query'
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:8000'
 
 // todo: remove this and use zustand
 export function useAuth() {
@@ -13,7 +12,7 @@ export function useAuth() {
   } = useQuery({
     queryKey: ['users', 'profile'],
     queryFn: async () => {
-      const res = await fetch(`${backendUrl}/v1/users?profile=true`, {
+      const res = await fetch(`${appConfig.backendBaseUrl}/v1/users?profile=true`, {
         credentials: 'include',
       })
       if (!res.ok) throw new Error('Not authenticated')

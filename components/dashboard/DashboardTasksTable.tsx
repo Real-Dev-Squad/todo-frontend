@@ -1,4 +1,3 @@
-import { FORM_MODE } from '@/app/constants/Task'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -8,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { FORM_MODE } from '@/config/task'
 import { tasksApi } from '@/lib/api/tasks/tasks.api'
 import { TASK_PRIORITY, TTask } from '@/lib/api/tasks/tasks.dto'
 import { cn } from '@/lib/utils'

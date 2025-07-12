@@ -9,11 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { appConfig } from '@/config/app-config'
 import Link from 'next/link'
 
 export function SigninButton() {
-  const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://services.realdevsquad.com/staging-todo'
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -31,7 +30,7 @@ export function SigninButton() {
         <div className="flex flex-col gap-3 py-4 md:gap-4">
           <Link
             className="bg-primary hover:bg-primary/90 w-full rounded-lg py-3 text-center text-sm font-medium text-white md:py-3 md:text-base"
-            href={`${backendUrl}/v1/auth/google/login/`}
+            href={`${appConfig.backendBaseUrl}/v1/auth/google/login/`}
             target="_blank"
           >
             Sign in with Google

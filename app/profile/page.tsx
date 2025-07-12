@@ -1,8 +1,7 @@
 'use client'
-import { useAuth } from '@/app/hooks/useAuth'
-import React from 'react'
-import { logoutUser } from '@/lib/api/api-client'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/hooks/useAuth'
+import { logoutUser } from '@/lib/api/api-client'
 
 export default function Page() {
   const { user } = useAuth()

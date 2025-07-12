@@ -1,4 +1,4 @@
-import { cn } from '@/utils/utils'
+import { cn } from '@/utils/classname'
 import { describe, expect, test } from 'vitest'
 
 describe('cn utility function', () => {

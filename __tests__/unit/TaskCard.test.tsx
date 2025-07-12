@@ -1,6 +1,6 @@
 import { Task, TASK_STATUS } from '@/app/types/tasks'
 import { TaskCard } from '@/components/TaskCard'
-import { DateFormats, DateUtil } from '@/utils/dateUtil'
+import { DateFormats, DateUtil } from '@/utils/date-util'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 

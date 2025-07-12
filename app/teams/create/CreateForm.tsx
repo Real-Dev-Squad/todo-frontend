@@ -1,16 +1,16 @@
 'use client'
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { InviteForm } from './InviteForm'
-import { teamsApi } from '@/lib/api/teams/teams.api'
-import { toast } from 'sonner'
-import { useAuth } from '@/app/hooks/useAuth'
 import { SuccessModal } from '@/components/dashboard/SuccessModal'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useAuth } from '@/hooks/useAuth'
+import { teamsApi } from '@/lib/api/teams/teams.api'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { InviteForm } from './InviteForm'
 
 export default function CreateTeamPage() {
   const [teamInfo, setTeamInfo] = useState<{ name: string; description: string } | null>(null)

@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { X, ArrowLeft, Search, Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Card, CardContent } from '@/components/ui/card'
 import { User } from '@/app/types/user'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { useDebounce } from '@/hooks/useDebounce'
 import { usersApi } from '@/lib/api/users/users.api'
-import { SelectPoc } from './SelectPoc'
 import { getUserInitials } from '@/lib/utils'
-import { useDebounce } from '@/app/hooks/useDebounce'
+import { ArrowLeft, Loader2, Search, X } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { SelectPoc } from './SelectPoc'
 
 interface InviteFormProps {
   onBack?: () => void

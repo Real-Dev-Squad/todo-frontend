@@ -1,7 +1,7 @@
 import { initialData } from '@/__mocks__/Task'
-import { FORM_MODE } from '@/app/constants/Task'
 import { Task } from '@/app/types/tasks'
 import { TodoForm } from '@/components/TodoForm'
+import { FORM_MODE } from '@/config/task'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'

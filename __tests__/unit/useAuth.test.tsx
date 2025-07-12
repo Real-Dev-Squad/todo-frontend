@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
-import { renderHook, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useAuth } from '../../app/hooks/useAuth'
+import { renderHook, waitFor } from '@testing-library/react'
 import React from 'react'
-import { describe, it, expect, vi, afterEach } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { useAuth } from '../../hooks/useAuth'
 
 const queryClient = new QueryClient()
 function Wrapper({ children }: { children: React.ReactNode }) {

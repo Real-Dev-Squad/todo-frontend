@@ -1,7 +1,7 @@
 'use client'
 
-import { FORM_MODE, TASK_PRIORITY } from '@/app/constants/Task'
 import { Mode, Task } from '@/app/types/tasks'
+import { FORM_MODE, TASK_PRIORITY } from '@/config/task'
 import { FormEvent, useState } from 'react'
 import { TaskDetails } from './TaskDetails'
 
