@@ -31,12 +31,3 @@ apiClient.interceptors.response.use(
     return Promise.reject(error instanceof Error ? error : new Error(String(error)))
   },
 )
-
-// export async function logoutUser() {
-//   try {
-//     await apiClient.get('/v1/auth/google/logout/')
-//     window.location.href = '/'
-//   } catch {
-//     console.log('Logout Failed')
-//   }
-// }
