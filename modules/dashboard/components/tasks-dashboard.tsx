@@ -1,4 +1,5 @@
 'use client'
+
 import { TTask } from '@/api/tasks/tasks.types'
 import { Suspense } from 'react'
 import { DashboardHeader } from './dashboard-header'
