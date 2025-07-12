@@ -1,11 +1,11 @@
-import { Task } from '@/app/types/tasks'
+import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/utils/date-util'
 import Image from 'next/image'
 
 interface TaskCardProps {
-  task: Task
+  task: TTask
   className?: string
-  setActiveTask: (task: Task) => void
+  setActiveTask: (task: TTask) => void
 }
 
 const getStatusImagePath = (status: string): string => {
@@ -22,7 +22,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
   const statusImagePath = getStatusImagePath(task?.status ?? '')
   const formattedDueAt = new DateUtil(task.dueAt ?? '').format(DateFormats.D_MMM_YYYY)
 
-  const handleClick = (task: Task) => {
+  const handleClick = (task: TTask) => {
     setActiveTask(task)
   }
 

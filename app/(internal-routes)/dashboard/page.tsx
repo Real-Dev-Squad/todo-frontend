@@ -1,13 +1,3 @@
-'use client'
+import { Dashboard } from '@/modules/dashboard'
 
-import { useAuth } from '@/hooks/useAuth'
-
-export default function DashboardPage() {
-  const { user } = useAuth()
-
-  return (
-    <div>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </div>
-  )
-}
+export default Dashboard

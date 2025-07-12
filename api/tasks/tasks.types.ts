@@ -1,14 +1,4 @@
-export enum TASK_STATUS {
-  TODO = 'Todo',
-  IN_PROGRESS = 'In-Progress',
-  COMPLETED = 'Completed',
-}
-
-export enum TASK_PRIORITY {
-  LOW = 'Low',
-  MEDIUM = 'Medium',
-  HIGH = 'High',
-}
+import { TASK_PRIORITY, TASK_STATUS } from './tasks.enum'
 
 export type TTask = {
   id: string
@@ -32,4 +22,5 @@ export type GetTasksDto = {
   }
   tasks: TTask[]
 }
+
 export type CreateTaskDto = Omit<TTask, 'priority' | 'assignee' | 'id'>

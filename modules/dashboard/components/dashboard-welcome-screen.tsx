@@ -1,23 +1,23 @@
 'use client'
+import { TasksApi } from '@/api/tasks/tasks.api'
+import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'
-import { tasksApi } from '@/lib/api/tasks/tasks.api'
-import { TTask } from '@/lib/api/tasks/tasks.dto'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { TaskFormData, TodoForm } from '../TodoForm'
+import { TaskFormData, TodoForm } from '../../../components/TodoForm'
 
 export const DashboardWelcomeScreen = () => {
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
   const { user } = useAuth()
-  const name = user?.data?.name || 'Guest'
+  const name = user?.name || 'Guest'
   const queryClient = useQueryClient()
   const createTaskMutation = useMutation({
-    mutationFn: (task: TTask) => tasksApi.createTask.fn(task),
+    mutationFn: (task: TTask) => TasksApi.createTask.fn(task),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
       toast.success('Task created successfully')
       setShowCreateTaskForm(false)
     },

@@ -22,12 +22,12 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response && error.response.status === 401) {
-      // For cookie-based auth, redirect to login when unauthorized
-      if (typeof window !== 'undefined') {
-        window.location.href = `${backendUrl}/v1/auth/google/login/`
-      }
+    const pathname = window.location.pathname
+
+    if (error.response && error.response.status === 401 && pathname !== '/') {
+      window.location.href = '/'
     }
+
     return Promise.reject(error instanceof Error ? error : new Error(String(error)))
   },
 )

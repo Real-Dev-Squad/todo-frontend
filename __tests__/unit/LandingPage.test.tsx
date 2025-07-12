@@ -1,7 +1,6 @@
+import { LandingPage } from '@/modules/landing-page'
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, beforeAll } from 'vitest'
-import { LandingPage } from '../../components/LandingPage'
-import React from 'react'
+import { beforeAll, describe, expect, it } from 'vitest'
 
 describe('LandingPage', () => {
   beforeAll(() => {

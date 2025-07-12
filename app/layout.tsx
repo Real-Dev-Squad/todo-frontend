@@ -1,3 +1,4 @@
+import Providers from '@/components/providers'
 import { appConfig, validateAppConfig } from '@/config/app-config'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -22,7 +23,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }

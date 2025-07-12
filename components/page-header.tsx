@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from './ui/breadcrumb'
 import { Separator } from './ui/separator'
 import { SidebarTrigger } from './ui/sidebar'
+import { UserProfileMenu } from './user-profile-menu'
 
 export function PageHeader() {
   const pathname = usePathname()
@@ -25,7 +26,9 @@ export function PageHeader() {
         </Breadcrumb>
       </div>
 
-      <div className="ml-auto px-3">{/* <NavActions /> */}</div>
+      <div className="ml-auto px-3">
+        <UserProfileMenu />
+      </div>
     </header>
   )
 }

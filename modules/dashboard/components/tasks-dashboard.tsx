@@ -1,9 +1,8 @@
 'use client'
-import React from 'react'
-import { TaskDashboardHeader } from './TaskDashboardHeader'
-import { DashboardWeeklySummary } from './DashboardWeeklySummary'
-import { DashboardTasksTableTabs } from './DashboardTasksTableTabs'
-import { TTask } from '@/lib/api/tasks/tasks.dto'
+import { TTask } from '@/api/tasks/tasks.types'
+import { TaskDashboardHeader } from '../../../components/dashboard/TaskDashboardHeader'
+import { DashboardTabs } from './dashboard-tabs'
+import { DashboardWeeklySummary } from './dashboard-weekly-summary'
 
 export const TasksDashboard = ({ tasks }: { tasks: TTask[] }) => {
   return (
@@ -13,9 +12,10 @@ export const TasksDashboard = ({ tasks }: { tasks: TTask[] }) => {
         <div className="max-h-screen lg:col-span-2">
           <div className="p-4">
             <h2 className="mb-2 text-2xl font-semibold">All Tasks</h2>
-            <DashboardTasksTableTabs tasks={tasks} />
+            <DashboardTabs tasks={tasks} />
           </div>
         </div>
+
         <DashboardWeeklySummary />
       </div>
     </div>

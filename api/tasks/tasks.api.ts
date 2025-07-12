@@ -1,9 +1,10 @@
-import { apiClient } from '../../api-client'
-import { GetTasksDto, TTask } from './tasks.dto'
+import { apiClient } from '../../lib/api-client'
+import { TApiMethodsRecord } from '../common/common-api.types'
+import { GetTasksDto, TTask } from './tasks.types'
 
-export const tasksApi = {
+export const TasksApi = {
   getTasks: {
-    key: ['tasksApi.getTasks'],
+    key: ['TasksApi.getTasks'],
     fn: async (): Promise<GetTasksDto> => {
       const { data } = await apiClient.get<GetTasksDto>(`/v1/tasks`)
       return data
@@ -26,4 +27,4 @@ export const tasksApi = {
       return data
     },
   },
-}
+} satisfies TApiMethodsRecord

@@ -1,6 +1,7 @@
+import { AuthApi } from '@/api/auth/auth.api'
 import { UsersApi } from '@/api/users/users.api'
 import { TUser } from '@/api/users/users.types'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const DEFAULT_USER: TUser = {
   user_id: '',
@@ -10,7 +11,9 @@ const DEFAULT_USER: TUser = {
   name: '',
 }
 
-export function useAuth() {
+export const useAuth = () => {
+  const queryClient = useQueryClient()
+
   const {
     data: user,
     isLoading,
@@ -21,5 +24,13 @@ export function useAuth() {
     queryFn: UsersApi.getUserInfo.fn,
   })
 
-  return { user: user || DEFAULT_USER, isLoading, isError, isLoggedIn: !!user }
+  const logoutMutation = useMutation({
+    mutationFn: AuthApi.logout.fn,
+    onSuccess: () => {
+      queryClient.clear()
+      window.location.href = '/'
+    },
+  })
+
+  return { user: user || DEFAULT_USER, isLoading, isError, isLoggedIn: !!user, logoutMutation }
 }

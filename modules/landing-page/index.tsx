@@ -1,19 +1,17 @@
-import React from 'react'
+import { SigninButton } from '@/components/signin-button'
 import {
-  CheckCircle,
-  Users,
-  Calendar,
-  BarChart3,
   ArrowRight,
-  Star,
-  Zap,
+  BarChart3,
+  Calendar,
+  CheckCircle,
   Shield,
+  Star,
+  Users,
+  Zap,
 } from 'lucide-react'
 import Link from 'next/link'
 
-import { SigninButton } from './auth/signin-button'
-
-export const LandingPage: React.FC = () => {
+export const LandingPage = () => {
   const features = [
     {
       icon: <CheckCircle className="h-6 w-6" />,

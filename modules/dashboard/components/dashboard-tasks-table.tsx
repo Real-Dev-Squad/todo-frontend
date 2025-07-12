@@ -1,3 +1,5 @@
+import { TasksApi } from '@/api/tasks/tasks.api'
+import { TTask } from '@/api/tasks/tasks.types'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -7,32 +9,29 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { FORM_MODE } from '@/config/task'
-import { tasksApi } from '@/lib/api/tasks/tasks.api'
-import { TASK_PRIORITY, TTask } from '@/lib/api/tasks/tasks.dto'
+import { FORM_MODE, TASK_PRIORITY } from '@/config/task'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { TaskFormData, TodoForm } from '../TodoForm'
-import { DashboardTasksTableTabs } from './constants'
+import { TaskFormData, TodoForm } from '../../../components/TodoForm'
+import { DashboardTasksTableTabs } from '../../../components/dashboard/constants'
 
-export const DashboardTasksTable = ({
-  type,
-  tasks,
-}: {
+type DashboardTasksTableProps = {
   type: DashboardTasksTableTabs
   tasks: TTask[]
-}) => {
+}
+
+export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) => {
   const [showEditTaskForm, setShowEditTaskForm] = useState(false)
   const [selectedTask, setSelectedTask] = useState<TTask | null>(null)
   const queryClient = useQueryClient()
 
   const updateTaskMutation = useMutation({
-    mutationFn: (task: TTask) => tasksApi.updateTask.fn(task),
+    mutationFn: (task: TTask) => TasksApi.updateTask.fn(task),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
       toast.success('Task updated successfully')
       setShowEditTaskForm(false)
     },

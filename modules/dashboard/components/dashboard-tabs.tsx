@@ -1,20 +1,24 @@
 'use client'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+import { TasksApi } from '@/api/tasks/tasks.api'
+import { TTask } from '@/api/tasks/tasks.types'
 import { FORM_MODE } from '@/config/task'
-import { tasksApi } from '@/lib/api/tasks/tasks.api'
-import { TTask } from '@/lib/api/tasks/tasks.dto'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { TaskFormData, TodoForm } from '../TodoForm'
-import { Button } from '../ui/button'
-import { DashboardTasksTableTabs as TabsConstants } from './constants'
-import { DashboardTasksTable } from './DashboardTasksTable'
+import { DashboardTasksTableTabs as TabsConstants } from '../../../components/dashboard/constants'
+import { TaskFormData, TodoForm } from '../../../components/TodoForm'
+import { Button } from '../../../components/ui/button'
+import { DashboardTasksTable } from './dashboard-tasks-table'
 
-export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
+type DashboardTabsProps = {
+  tasks: TTask[]
+}
+
+export const DashboardTabs = ({ tasks }: DashboardTabsProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -23,9 +27,9 @@ export function DashboardTasksTableTabs({ tasks }: { tasks: TTask[] }) {
   const queryClient = useQueryClient()
 
   const createTaskMutation = useMutation({
-    mutationFn: (task: TTask) => tasksApi.createTask.fn(task),
+    mutationFn: (task: TTask) => TasksApi.createTask.fn(task),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: tasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
       toast.success('Task created successfully')
       setShowCreateTaskForm(false)
     },
