@@ -9,9 +9,9 @@ import { PlusIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { DashboardTasksTableTabs as TabsConstants } from '../../../components/dashboard/constants'
 import { TaskFormData, TodoForm } from '../../../components/TodoForm'
 import { Button } from '../../../components/ui/button'
+import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { DashboardTasksTable } from './dashboard-tasks-table'
 
 type DashboardTabsProps = {

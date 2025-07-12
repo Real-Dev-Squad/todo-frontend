@@ -1,5 +1,5 @@
 import { UsersApi } from '@/api/users/users.api'
-import { User } from '@/app/types/user'
+import { TUser } from '@/api/users/users.types'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -15,24 +15,25 @@ interface InviteFormProps {
   teamName?: string
   onCreateTeam: (memberIds: string[], pocId: string | null) => void
   loading: boolean
-  currentUser: User
+  currentUser: TUser
 }
 
-const normalizeUser = (user: unknown): User => {
+const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
   return {
-    id: (u.id as string) || (u.user_id as string) || (u.userId as string) || '',
     user_id: (u.user_id as string) || (u.userId as string) || (u.id as string) || '',
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
+    auth_type: (u.auth_type as string) || '',
+    google_id: (u.google_id as string) || '',
   }
 }
 
 export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: InviteFormProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([])
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([])
+  const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
+  const [filteredUsers, setFilteredUsers] = useState<TUser[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
@@ -52,15 +53,15 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
     setIsSearching(true)
     UsersApi.searchUser
       .fn(debouncedSearchTerm)
-      .then((res: { data: { users: Partial<User>[] } }) => {
+      .then((res: { data: { users: Partial<TUser>[] } }) => {
         const users = (res?.data?.users || []).map(normalizeUser)
-        setFilteredUsers(users.filter((user: User) => !selectedUserIds.has(user.user_id)))
+        setFilteredUsers(users.filter((user: TUser) => !selectedUserIds.has(user.user_id)))
       })
       .catch(() => setFilteredUsers([]))
       .finally(() => setIsSearching(false))
   }, [debouncedSearchTerm, selectedUserIds])
 
-  const handleAddUser = (user: User) => {
+  const handleAddUser = (user: TUser) => {
     setSelectedUsers((prev) => [...prev, normalizeUser(user)])
     setSearchTerm('')
     setShowSuggestions(false)

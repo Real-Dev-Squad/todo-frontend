@@ -1,10 +1,10 @@
 'use client'
 
-import { Task } from '@/app/types/tasks'
 import Image from 'next/image'
 import { useState } from 'react'
 
 //Import Svg for icons
+import { TTask } from '@/api/tasks/tasks.types'
 import calendarIcon from '@/public/assets/calendar.svg'
 import TagsIcon from '@/public/assets/priceTag.svg'
 import AccountIcon from '@/public/assets/profile.svg'
@@ -12,7 +12,7 @@ import StatusIcon from '@/public/assets/status.svg'
 
 type Props = {
   onAcknowledge: () => void
-  initialData: Task
+  initialData: TTask
   onClose: () => void
 }
 

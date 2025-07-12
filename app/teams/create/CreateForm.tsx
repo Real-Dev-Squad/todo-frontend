@@ -1,21 +1,21 @@
 'use client'
 
-import { SuccessModal } from '@/components/dashboard/SuccessModal'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
 import { teamsApi } from '@/lib/api/teams/teams.api'
+import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { InviteForm } from './InviteForm'
 
 export default function CreateTeamPage() {
+  const { user } = useAuth()
   const [teamInfo, setTeamInfo] = useState<{ name: string; description: string } | null>(null)
   const [loading, setLoading] = useState(false)
-  const { user } = useAuth()
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const router = useRouter()
   const [inviteCode, setInviteCode] = useState<string>('')
@@ -59,7 +59,7 @@ export default function CreateTeamPage() {
 
   if (showSuccessModal) {
     return (
-      <SuccessModal
+      <TeamCreationSuccessModal
         teamName={teamInfo?.name || ''}
         inviteCode={inviteCode}
         onClose={handleSuccessModalClose}
@@ -131,7 +131,7 @@ export default function CreateTeamPage() {
       onCreateTeam={handleCreateTeam}
       loading={loading}
       onBack={() => setTeamInfo(null)}
-      currentUser={user.data}
+      currentUser={user}
     />
   )
 }

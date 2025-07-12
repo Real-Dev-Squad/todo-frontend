@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { X, Copy, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { CheckCircle, Copy, X } from 'lucide-react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-interface SuccessModalProps {
-  onClose?: () => void
+
+type Props = {
   teamName?: string
   inviteCode: string
+  onClose?: () => void
 }
 
-export function SuccessModal({ onClose, teamName = 'Team Name', inviteCode }: SuccessModalProps) {
+export const TeamCreationSuccessModal = ({ onClose, teamName, inviteCode }: Props) => {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {

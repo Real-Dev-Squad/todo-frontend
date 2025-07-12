@@ -1,8 +1,8 @@
 import { useAuth } from '@/hooks/useAuth'
 
-export const TaskDashboardHeader = () => {
+export const DashboardHeader = () => {
   const { user } = useAuth()
-  const username = user?.data?.name ? user?.data?.name : 'Guest'
+  const username = user?.name ?? 'Guest'
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'long',

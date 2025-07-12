@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from '@/app/types/user'
+import { TUser } from '@/api/users/users.types'
 import { apiClient } from '@/lib/api-client'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -40,12 +40,12 @@ export const useSearch = () => {
     setIsSearching(true)
     setError(null)
     try {
-      const { data } = await apiClient.get<User[]>(
+      const { data } = await apiClient.get<TUser[]>(
         `/v1/users?search=${encodeURIComponent(searchTerm)}`,
       )
       const userResults: SearchResult[] = (data || []).slice(0, 10).map((user) => ({
         type: 'user' as const,
-        id: user.id,
+        id: user.user_id,
         title: `${user.name}`,
         subtitle: user.email,
         data: user,

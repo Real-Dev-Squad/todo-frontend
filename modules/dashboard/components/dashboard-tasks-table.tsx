@@ -16,7 +16,7 @@ import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { TaskFormData, TodoForm } from '../../../components/TodoForm'
-import { DashboardTasksTableTabs } from '../../../components/dashboard/constants'
+import { DashboardTasksTableTabs } from '../constants'
 
 type DashboardTasksTableProps = {
   type: DashboardTasksTableTabs

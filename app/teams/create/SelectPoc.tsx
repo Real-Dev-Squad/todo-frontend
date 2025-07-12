@@ -1,5 +1,6 @@
 'use client'
 
+import { TUser } from '@/api/users/users.types'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -8,11 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { User } from '@/app/types/user'
 
 interface SelectPocProps {
-  currentUser: User
-  members: User[]
+  currentUser: TUser
+  members: TUser[]
   value: string | null
   onChange: (id: string | null) => void
 }

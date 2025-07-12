@@ -1,9 +1,9 @@
-import { Task } from '@/app/types/tasks'
+import { TTask } from '@/api/tasks/tasks.types'
 import { TaskCard } from './TaskCard'
 
 interface TaskListProps {
-  tasks: Task[]
-  setActiveTask: (task: Task) => void
+  tasks: TTask[]
+  setActiveTask: (task: TTask) => void
 }
 
 export const TaskList = ({ tasks, setActiveTask }: TaskListProps) => {

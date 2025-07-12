@@ -1,9 +1,9 @@
 'use client'
-import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
 import { toast } from 'sonner'
 
-export default function AuthCallback() {
+const AuthCallbackContent = () => {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -22,4 +22,12 @@ export default function AuthCallback() {
   }, [params, router])
 
   return <div>Processing login...</div>
+}
+
+export default function AuthCallback() {
+  return (
+    <Suspense>
+      <AuthCallbackContent />
+    </Suspense>
+  )
 }

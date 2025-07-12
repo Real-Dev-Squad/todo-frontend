@@ -1,6 +1,5 @@
 'use client'
 
-import { Mode, Task } from '@/app/types/tasks'
 import { FORM_MODE, TASK_PRIORITY } from '@/config/task'
 import { FormEvent, useState } from 'react'
 import { TaskDetails } from './TaskDetails'
@@ -16,7 +15,8 @@ import {
 } from '@/components/ui/dialog'
 import Image from 'next/image'
 
-//Import Svg for icons
+import { TASK_STATUS } from '@/api/tasks/tasks.enum'
+import { TTask } from '@/api/tasks/tasks.types'
 import calendarIcon from '@/public/assets/calendar.svg'
 import TagsIcon from '@/public/assets/priceTag.svg'
 import SaveIcon from '@/public/assets/save.svg'
@@ -26,18 +26,22 @@ import StatusIcon from '@/public/assets/status.svg'
 interface TodoFormProps {
   initialData?: TaskFormData
   onSubmit?: (data: TaskFormData) => void
-  mode?: Mode
+  mode?: (typeof FORM_MODE)[keyof typeof FORM_MODE]
   onAcknowledge?: () => void
   onClose: () => void
   open?: boolean
 }
-export type TaskFormData = Omit<Task, 'assignee'>
+export type TaskFormData = Omit<TTask, 'assignee'>
+
 const DEFAULT_FORM_DATA: TaskFormData = {
   id: '',
   title: '',
   description: '',
   dueAt: '',
   tags: [],
+  status: TASK_STATUS.TODO,
+  isInWatchlist: false,
+  labels: [],
 }
 
 export function TodoForm({
@@ -63,7 +67,7 @@ export function TodoForm({
       <TaskDetails
         onClose={onClose}
         onAcknowledge={onAcknowledge}
-        initialData={initialData as Task}
+        initialData={initialData as TTask}
       />
     )
   }
@@ -160,7 +164,7 @@ export function TodoForm({
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    priority: e.target.value as Task['priority'],
+                    priority: e.target.value as TTask['priority'],
                   }))
                 }
                 className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
@@ -244,7 +248,7 @@ export function TodoForm({
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      status: e.target.value as Task['status'],
+                      status: e.target.value as TTask['status'],
                     }))
                   }
                   className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
