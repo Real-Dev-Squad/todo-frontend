@@ -251,7 +251,7 @@ export function TodoForm({
                 >
                   <option value="TODO">Todo</option>
                   <option value="IN_PROGRESS">In Progress</option>
-                  <option value="COMPLETED">Completed</option>
+                  <option value="DONE">Done</option>
                 </select>
               </div>
             )}
