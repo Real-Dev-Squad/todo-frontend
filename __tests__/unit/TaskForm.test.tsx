@@ -90,7 +90,7 @@ test.skip('should submit form with correct data in create mode', async () => {
   await user.type(screen.getByTestId('description'), testData.description)
   await user.type(screen.getByTestId('due-at'), testData.dueAt)
   await user.type(screen.getByLabelText(/tags/i), testData.tags.join(', '))
-  await user.type(screen.getByTestId('priority'), testData.priority)
+  await user.selectOptions(screen.getByTestId('priority'), testData.priority)
 
   await user.click(screen.getByTestId('task-form-submit-button'))
   expect(mockOnSubmit).toHaveBeenCalledTimes(1)

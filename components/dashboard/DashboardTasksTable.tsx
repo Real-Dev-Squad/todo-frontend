@@ -84,7 +84,8 @@ export const DashboardTasksTable = ({
                 <TableCell>
                   <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
                     {task.status !== undefined
-                      ? TASK_STATUS[task.status.toUpperCase() as keyof typeof TASK_STATUS]
+                      ? TASK_STATUS[task.status.toUpperCase() as keyof typeof TASK_STATUS] ||
+                        task.status
                       : '-'}
                   </span>
                 </TableCell>
@@ -100,7 +101,8 @@ export const DashboardTasksTable = ({
                     )}
                   >
                     {task.priority !== undefined
-                      ? TASK_PRIORITY[task.priority.toUpperCase() as keyof typeof TASK_PRIORITY]
+                      ? TASK_PRIORITY[task.priority.toUpperCase() as keyof typeof TASK_PRIORITY] ||
+                        task.priority
                       : '-'}
                   </span>
                 </TableCell>
