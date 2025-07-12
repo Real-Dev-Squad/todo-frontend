@@ -9,31 +9,32 @@ import { fileURLToPath } from 'node:url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all,
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 })
 
 export default defineConfig([
-    importX.flatConfigs.recommended,
-    importX.flatConfigs.typescript,
-    {
-        files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
-        languageOptions: {
-            parser: tsParser,
-            ecmaVersion: 'latest',
-            sourceType: 'module',
-        },
-        rules: {
-            'import-x/no-dynamic-require': 'warn',
-            'import-x/no-nodejs-modules': 'warn',
-        },
+  importX.flatConfigs.recommended,
+  importX.flatConfigs.typescript,
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
-    {
-        extends: compat.extends(
-            'next/core-web-vitals',
-            'next/typescript',
-            'plugin:storybook/recommended',
-        ),
+    rules: {
+      'import-x/no-dynamic-require': 'warn',
+      'import-x/no-nodejs-modules': 'warn',
+      'react-hooks/exhaustive-deps': 'error',
     },
+  },
+  {
+    extends: compat.extends(
+      'next/core-web-vitals',
+      'next/typescript',
+      'plugin:storybook/recommended',
+    ),
+  },
 ])

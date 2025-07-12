@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
 import { User } from '@/app/types/user'
-import { apiClient } from '@/lib/api/api-client'
+import { apiClient } from '@/lib/api-client'
+import { useCallback, useEffect, useState } from 'react'
 
 export interface SearchResult {
   type: 'user' | 'task' | 'team'

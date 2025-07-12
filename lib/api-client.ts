@@ -32,11 +32,11 @@ apiClient.interceptors.response.use(
   },
 )
 
-export async function logoutUser() {
-  try {
-    await apiClient.get('/v1/auth/google/logout/')
-    window.location.href = '/'
-  } catch {
-    console.log('Logout Failed')
-  }
-}
+// export async function logoutUser() {
+//   try {
+//     await apiClient.get('/v1/auth/google/logout/')
+//     window.location.href = '/'
+//   } catch {
+//     console.log('Logout Failed')
+//   }
+// }

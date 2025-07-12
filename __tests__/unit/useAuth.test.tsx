@@ -21,14 +21,14 @@ describe('useAuth', () => {
       json: async () => ({ data: { name: 'Test User' } }),
     })
     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper })
-    await waitFor(() => expect(result.current.isAuthenticated).toBe(true))
+    await waitFor(() => expect(result.current.isLoggedIn).toBe(true))
     expect(result.current.user).toEqual({ data: { name: 'Test User' } })
   })
 
   it('returns isAuthenticated=false when not authenticated', async () => {
     global.fetch = vi.fn().mockResolvedValue({ ok: false })
     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper })
-    await waitFor(() => expect(result.current.isAuthenticated).toBe(false))
+    await waitFor(() => expect(result.current.isLoggedIn).toBe(false))
     expect(result.current.user).toBeUndefined()
   })
 

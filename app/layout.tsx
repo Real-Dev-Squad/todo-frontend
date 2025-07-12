@@ -1,7 +1,6 @@
 import { appConfig, validateAppConfig } from '@/config/app-config'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { QueryProvider } from './_provider'
 import './globals.css'
 
 const inter = Inter({
@@ -23,9 +22,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.className}>
-      <body>
-        <QueryProvider>{children}</QueryProvider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

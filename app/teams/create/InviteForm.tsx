@@ -1,10 +1,10 @@
+import { UsersApi } from '@/api/users/users.api'
 import { User } from '@/app/types/user'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/useDebounce'
-import { usersApi } from '@/lib/api/users/users.api'
 import { getUserInitials } from '@/lib/utils'
 import { ArrowLeft, Loader2, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -50,7 +50,7 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
       return
     }
     setIsSearching(true)
-    usersApi.searchUser
+    UsersApi.searchUser
       .fn(debouncedSearchTerm)
       .then((res: { data: { users: Partial<User>[] } }) => {
         const users = (res?.data?.users || []).map(normalizeUser)

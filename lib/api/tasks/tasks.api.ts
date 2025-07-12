@@ -1,5 +1,5 @@
+import { apiClient } from '../../api-client'
 import { GetTasksDto, TTask } from './tasks.dto'
-import { apiClient } from '../api-client'
 
 export const tasksApi = {
   getTasks: {

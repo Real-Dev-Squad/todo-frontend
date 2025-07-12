@@ -1,6 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
+  "prettier.printWidth": 100,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
