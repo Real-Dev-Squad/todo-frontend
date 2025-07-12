@@ -1,35 +1,36 @@
-export const DashboardWeeklySummary = () => {
+type SummaryItemProps = {
+  label: string
+  value: string | number
+}
+
+const SummaryItem = ({ label, value }: SummaryItemProps) => {
   return (
-    <div className="lg:col-span-1">
+    <div className="flex items-center justify-between">
+      <span className="text-sm text-gray-600">{label}</span>
+      <span className="text-xl font-bold">{value}</span>
+    </div>
+  )
+}
+
+type DashboardWeeklySummaryProps = {
+  className?: string
+}
+
+export const DashboardWeeklySummary = ({ className }: DashboardWeeklySummaryProps) => {
+  return (
+    <div className={className}>
       <div className="rounded-lg border bg-white p-4 shadow-xs">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center justify-between pb-6">
           <h3 className="text-lg font-semibold">Weekly Summary</h3>
           <button className="cursor-pointer text-sm text-blue-600 hover:text-blue-700">
             See all tasks
           </button>
         </div>
 
-        <div className="space-y-4">
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Task Completed</span>
-              <span className="text-2xl font-bold">14</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <span className="text-sm text-gray-600">New Task</span>
-              <span className="text-2xl font-bold">5</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Time Spent</span>
-              <span className="text-2xl font-bold">4 hrs</span>
-            </div>
-          </div>
+        <div className="space-y-3">
+          <SummaryItem label="Task Completed" value={14} />
+          <SummaryItem label="New Task" value={5} />
+          <SummaryItem label="Time Spent" value="4 hrs" />
         </div>
       </div>
     </div>

@@ -16,9 +16,10 @@ import { DashboardTasksTable } from './dashboard-tasks-table'
 
 type DashboardTabsProps = {
   tasks: TTask[]
+  className?: string
 }
 
-export const DashboardTabs = ({ tasks }: DashboardTabsProps) => {
+export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -49,7 +50,7 @@ export const DashboardTabs = ({ tasks }: DashboardTabsProps) => {
   }
 
   return (
-    <div className="">
+    <div className={className}>
       <Tabs value={currentTab} onValueChange={handleTabChange}>
         <div className="flex flex-row items-center justify-between">
           <TabsList>

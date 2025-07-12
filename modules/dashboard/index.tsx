@@ -32,9 +32,5 @@ export const Dashboard = () => {
     return <DashboardWelcomeScreen />
   }
 
-  return (
-    <div>
-      <TasksDashboard tasks={data.tasks} />
-    </div>
-  )
+  return <TasksDashboard tasks={data.tasks} />
 }

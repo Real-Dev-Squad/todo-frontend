@@ -7,19 +7,15 @@ import { DashboardWeeklySummary } from './dashboard-weekly-summary'
 
 export const TasksDashboard = ({ tasks }: { tasks: TTask[] }) => {
   return (
-    <div className="p-6">
-      <DashboardHeader />
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="max-h-screen lg:col-span-2">
-          <div className="p-4">
-            <h2 className="mb-2 text-2xl font-semibold">All Tasks</h2>
-            <Suspense>
-              <DashboardTabs tasks={tasks} />
-            </Suspense>
-          </div>
-        </div>
+    <div className="px-4">
+      <DashboardHeader className="py-12" />
 
-        <DashboardWeeklySummary />
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
+        <Suspense>
+          <DashboardTabs tasks={tasks} className="xl:col-span-8 2xl:col-span-9" />
+        </Suspense>
+
+        <DashboardWeeklySummary className="xl:col-span-4 2xl:col-span-3" />
       </div>
     </div>
   )
