@@ -1,4 +1,4 @@
-import { Task, TASK_STATUS } from '@/app/types/tasks'
+import { Task, TASK_PRIORITY, TASK_STATUS } from '@/app/types/tasks'
 import { User } from '@/app/types/user'
 
 export const dummyUsers: User[] = [
@@ -134,5 +134,6 @@ export const initialData: Task = {
     name: `${dummyUsers[0].firstName} ${dummyUsers[0].lastName}`,
   },
   status: TASK_STATUS.TODO,
+  priority: TASK_PRIORITY.LOW,
   tags: ['Urgent'],
 }

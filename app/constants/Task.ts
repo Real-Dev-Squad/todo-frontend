@@ -14,9 +14,3 @@ export const FORM_MODE: FormMode = {
   VIEW: 'view',
   EDIT: 'edit',
 }
-
-export const TASK_PRIORITY = {
-  LOW: 'Low',
-  MEDIUM: 'Medium',
-  HIGH: 'High',
-}

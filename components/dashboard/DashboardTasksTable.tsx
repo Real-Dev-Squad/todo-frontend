@@ -1,4 +1,5 @@
-import { FORM_MODE } from '@/app/constants/Task'
+import { FORM_MODE, TASK_STATUS } from '@/app/constants/Task'
+import { TASK_PRIORITY } from '@/app/types/tasks'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -9,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { tasksApi } from '@/lib/api/tasks/tasks.api'
-import { TASK_PRIORITY, TTask } from '@/lib/api/tasks/tasks.dto'
+import { TTask } from '@/lib/api/tasks/tasks.dto'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
@@ -82,7 +83,9 @@ export const DashboardTasksTable = ({
                 </TableCell>
                 <TableCell>
                   <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
-                    {task.status}
+                    {task.status !== undefined
+                      ? TASK_STATUS[task.status.toUpperCase() as keyof typeof TASK_STATUS]
+                      : '-'}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -96,7 +99,9 @@ export const DashboardTasksTable = ({
                           : 'bg-green-100 text-green-700',
                     )}
                   >
-                    {task.priority}
+                    {task.priority !== undefined
+                      ? TASK_PRIORITY[task.priority.toUpperCase() as keyof typeof TASK_PRIORITY]
+                      : '-'}
                   </span>
                 </TableCell>
                 <TableCell className="text-red-500">

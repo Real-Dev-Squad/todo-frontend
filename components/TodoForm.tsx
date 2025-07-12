@@ -1,7 +1,7 @@
 'use client'
 
-import { FORM_MODE, TASK_PRIORITY } from '@/app/constants/Task'
-import { Mode, Task } from '@/app/types/tasks'
+import { FORM_MODE } from '@/app/constants/Task'
+import { Mode, Task, TASK_PRIORITY, TASK_STATUS } from '@/app/types/tasks'
 import { FormEvent, useState } from 'react'
 import { TaskDetails } from './TaskDetails'
 
@@ -37,6 +37,7 @@ const DEFAULT_FORM_DATA: TaskFormData = {
   title: '',
   description: '',
   dueAt: '',
+  priority: TASK_PRIORITY.LOW,
   tags: [],
 }
 
@@ -136,7 +137,7 @@ export function TodoForm({
                 Due Date<span className="text-red-500">*</span>
               </label>
               <input
-                data-testid="due-date"
+                data-testid="due-at"
                 id="dueAt"
                 type="date"
                 placeholder="Please enter due date"
@@ -155,6 +156,7 @@ export function TodoForm({
                 Priority
               </label>
               <select
+                data-testid="priority"
                 id="priority"
                 value={formData.priority}
                 onChange={(e) =>
@@ -249,9 +251,11 @@ export function TodoForm({
                   }
                   className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 >
-                  <option value="TODO">Todo</option>
-                  <option value="IN_PROGRESS">In Progress</option>
-                  <option value="DONE">Done</option>
+                  {Object.entries(TASK_STATUS).map(([key, label]) => (
+                    <option key={key} value={key}>
+                      {label}
+                    </option>
+                  ))}
                 </select>
               </div>
             )}
