@@ -1,3 +1,4 @@
+import { appConfig, validateAppConfig } from '@/config/app-config'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { QueryProvider } from './_provider'
@@ -9,8 +10,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Todo Project',
-  description: 'Created by Real Dev Squad',
+  title: appConfig.appName,
+  description: appConfig.appDescription,
 }
 
 export default function RootLayout({
@@ -18,6 +19,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  validateAppConfig(appConfig)
+
   return (
     <html lang="en" className={inter.className}>
       <body>
