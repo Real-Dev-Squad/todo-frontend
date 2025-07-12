@@ -1,8 +1,5 @@
-// "use client";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Toaster } from 'sonner'
-import { ConditionalLayout } from '../components/ConditionalLayout'
 import { QueryProvider } from './_provider'
 import './globals.css'
 
@@ -23,15 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
-      <head>
-        <title>Introducing Todo Project</title>
-      </head>
-
       <body>
-        <QueryProvider>
-          <ConditionalLayout>{children}</ConditionalLayout>
-          <Toaster />
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   )

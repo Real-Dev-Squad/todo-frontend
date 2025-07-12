@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { Search, Bell, Menu, X } from 'lucide-react'
 import {
@@ -139,9 +141,8 @@ export const NavBar = () => {
                   <button
                     key={item.path}
                     type="button"
-                    className={`flex w-full items-center justify-center rounded-2xl bg-transparent py-3 transition-colors duration-200 hover:bg-gray-500 ${
-                      isActive ? 'text-black underline' : 'text-white'
-                    }`}
+                    className={`flex w-full items-center justify-center rounded-2xl bg-transparent py-3 transition-colors duration-200 hover:bg-gray-500 ${isActive ? 'text-black underline' : 'text-white'
+                      }`}
                     onClick={() => handleNavigation(item.path)}
                   >
                     <span className="text-lg font-medium">{item.label}</span>
