@@ -1,5 +1,5 @@
 import { TTask } from '@/api/tasks/tasks.types'
-import { DateFormats, DateUtil } from '@/utils/date-util'
+import { DateFormats, DateUtil } from '@/lib/date-util'
 import Image from 'next/image'
 
 interface TaskCardProps {

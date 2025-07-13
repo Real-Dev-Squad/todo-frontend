@@ -1,27 +1,27 @@
 'use client'
 
-import { FORM_MODE, TASK_PRIORITY } from '@/config/task'
 import { FormEvent, useState } from 'react'
 import { TaskDetails } from './TaskDetails'
 
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import Image from 'next/image'
 
-import { TASK_STATUS } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY, TASK_STATUS } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
+import { FORM_MODE } from '@/config/task'
 import calendarIcon from '@/public/assets/calendar.svg'
 import TagsIcon from '@/public/assets/priceTag.svg'
 import SaveIcon from '@/public/assets/save.svg'
 import SendIcon from '@/public/assets/send.svg'
 import StatusIcon from '@/public/assets/status.svg'
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from './ui/alert-dialog'
 
 interface TodoFormProps {
   initialData?: TaskFormData
@@ -74,18 +74,18 @@ export function TodoForm({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-indigo-600">
+    <AlertDialog open={open} onOpenChange={onClose}>
+      <AlertDialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-xl font-semibold text-indigo-600">
             {mode === FORM_MODE.CREATE ? 'Create a Todo' : 'Edit Todo'}
-          </DialogTitle>
-          <DialogDescription>
+          </AlertDialogTitle>
+          <AlertDialogDescription>
             {mode === FORM_MODE.CREATE
               ? 'Create a new task to organize your work'
               : 'Edit your existing task details'}
-          </DialogDescription>
-        </DialogHeader>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
@@ -265,7 +265,7 @@ export function TodoForm({
             )}
           </div>
 
-          <DialogFooter>
+          <AlertDialogFooter>
             <Button
               data-testid="task-form-submit-button"
               type="submit"
@@ -276,9 +276,9 @@ export function TodoForm({
                 {ctaText}
               </span>
             </Button>
-          </DialogFooter>
+          </AlertDialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

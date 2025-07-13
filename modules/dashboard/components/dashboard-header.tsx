@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/useAuth'
-import { cn } from '@/utils/classname'
+import { cn } from '@/lib/utils'
 
 type Props = {
   className?: string

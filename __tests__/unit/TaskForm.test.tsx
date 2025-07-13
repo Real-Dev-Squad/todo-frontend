@@ -1,5 +1,6 @@
 import { initialData } from '@/__mocks__/Task'
-import { Task } from '@/app/types/tasks'
+import { TASK_PRIORITY } from '@/api/tasks/tasks.enum'
+import { TTask } from '@/api/tasks/tasks.types'
 import { TodoForm } from '@/components/TodoForm'
 import { FORM_MODE } from '@/config/task'
 import { cleanup, render, screen } from '@testing-library/react'
@@ -8,7 +9,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 // Mock TaskDetails component
 vi.mock('./TaskDetails', () => ({
-  default: ({ initialData }: { initialData: Task }) => (
+  default: ({ initialData }: { initialData: TTask }) => (
     <div data-testid={`task-details-${initialData.id}`}>Mocked Task Details</div>
   ),
 }))

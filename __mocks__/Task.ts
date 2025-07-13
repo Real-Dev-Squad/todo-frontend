@@ -1,4 +1,4 @@
-import { TASK_STATUS } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY, TASK_STATUS } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TUser } from '@/api/users/users.types'
 

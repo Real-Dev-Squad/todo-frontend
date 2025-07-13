@@ -1,4 +1,4 @@
-import { cn } from '@/utils/classname'
+import { cn } from '@/lib/utils'
 
 type ShimmerProps = {
   className?: string

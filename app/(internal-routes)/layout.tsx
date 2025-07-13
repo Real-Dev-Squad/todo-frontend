@@ -9,9 +9,9 @@ import { useAuth } from '@/hooks/useAuth'
 type InternalLayoutProps = { children: React.ReactNode }
 
 const MainContainerWrapper = ({ children }: InternalLayoutProps) => {
-  const { isLoading, isError } = useAuth()
+  const { user, isLoading, isError } = useAuth()
 
-  if (isLoading) {
+  if (isLoading && !user) {
     return (
       <div className="space-y-6 p-6">
         <div className="space-y-4">

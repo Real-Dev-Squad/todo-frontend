@@ -1,17 +1,17 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
 import Link from 'next/link'
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from './ui/alert-dialog'
 
 const GoogleIcon = () => {
   return (
@@ -45,6 +45,14 @@ const GoogleIcon = () => {
 export const SigninButton = () => {
   const { isLoggedIn } = useAuth()
 
+  const handleSignIn = () => {
+    if (isLoggedIn) {
+      return
+    }
+
+    window.location.href = `${appConfig.backendBaseUrl}/v1/auth/google/login`
+  }
+
   if (isLoggedIn) {
     return (
       <Button asChild>
@@ -54,29 +62,28 @@ export const SigninButton = () => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="px-4 text-sm md:px-6 md:text-base">Sign in</Button>
-      </DialogTrigger>
+    <AlertDialog>
+      <AlertDialogTrigger>
+        {/* <Button className="px-4 text-sm md:px-6 md:text-base">Sign in</Button> */}
+        Sign in
+      </AlertDialogTrigger>
 
-      <DialogContent className="mx-4 max-w-[90vw] sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-center text-xl font-semibold md:text-2xl">
+      <AlertDialogContent className="mx-4 max-w-[90vw] sm:max-w-md">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-center text-xl font-semibold md:text-2xl">
             Log in to your account
-          </DialogTitle>
-          <DialogDescription className="text-center text-sm text-gray-600 md:text-base">
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center text-sm text-gray-600 md:text-base">
             Your tasks, just a login away.
-          </DialogDescription>
-        </DialogHeader>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
         <div className="flex flex-col gap-3 py-4 md:gap-4">
-          <Button asChild variant="outline">
-            <Link href={`${appConfig.backendBaseUrl}/v1/auth/google/login/`}>
-              <GoogleIcon /> Sign in with Google
-            </Link>
+          <Button variant="outline" onClick={handleSignIn} className="cursor-pointer">
+            <GoogleIcon /> Sign in with Google
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

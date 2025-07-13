@@ -20,6 +20,7 @@ export const useAuth = () => {
     isError,
   } = useQuery({
     retry: false,
+    staleTime: 15 * 60 * 1000,
     queryKey: UsersApi.getUserInfo.key,
     queryFn: UsersApi.getUserInfo.fn,
   })
