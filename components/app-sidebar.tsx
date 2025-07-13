@@ -1,7 +1,5 @@
 'use client'
 
-import * as React from 'react'
-
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +15,7 @@ import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS } from '@/config/sidebar'
 import { usePathname } from 'next/navigation'
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname()
 
   return (
