@@ -89,7 +89,6 @@ export const CreateEditTodoForm = ({
     },
   })
 
-  const formTitle = mode === 'create' ? 'Create a Todo' : 'Edit Todo'
   const buttonText = mode === 'create' ? 'Create' : 'Save'
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
 

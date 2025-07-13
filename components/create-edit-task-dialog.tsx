@@ -1,4 +1,4 @@
-import { CreateEditTodoForm } from '@/components/create-edit-todo-form'
+import { CreateEditTodoForm, TodoFormData } from '@/components/create-edit-todo-form'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -7,7 +7,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { type ReactNode } from 'react'
-import { TodoFormData } from './create-edit-todo-form'
 
 type BaseProps = {
   open: boolean

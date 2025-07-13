@@ -98,8 +98,6 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     queryFn: TeamsApi.getTeams.fn,
   })
 
-  const links = data
-
   return (
     <Sidebar {...props}>
       <SidebarHeader>
