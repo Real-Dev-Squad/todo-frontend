@@ -34,7 +34,7 @@ apiClient.interceptors.response.use(
 
 export async function logoutUser() {
   try {
-    await apiClient.get('/v1/auth/google/logout/')
+    await apiClient.post('/v1/auth/logout')
     window.location.href = '/'
   } catch {
     console.log('Logout Failed')
