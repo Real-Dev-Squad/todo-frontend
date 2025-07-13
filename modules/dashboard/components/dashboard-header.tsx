@@ -15,7 +15,7 @@ export const DashboardHeader = ({ className }: Props) => {
   })
 
   return (
-    <div className={cn('flex flex-col items-center justify-center', className)}>
+    <div className={cn('flex flex-col items-center justify-center space-y-1', className)}>
       <p className="text-gray-600">{currentDate}</p>
       <h1 className="text-2xl font-bold text-gray-900">Welcome Back, {username}</h1>
     </div>
