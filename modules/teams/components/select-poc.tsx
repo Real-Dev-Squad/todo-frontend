@@ -17,7 +17,7 @@ interface SelectPocProps {
   onChange: (id: string | null) => void
 }
 
-export function SelectPoc({ currentUser, members, value, onChange }: SelectPocProps) {
+export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocProps) => {
   const options = [currentUser, ...members].filter(
     (u, i, arr) => arr.findIndex((x) => x.user_id === u.user_id) === i,
   )
@@ -27,7 +27,7 @@ export function SelectPoc({ currentUser, members, value, onChange }: SelectPocPr
       <label className="mb-1 block text-sm font-medium text-gray-700">Point of Contact (POC)</label>
       <div className="flex items-center gap-2">
         <Select value={value ?? ''} onValueChange={onChange}>
-          <SelectTrigger className="w-64">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a POC" />
           </SelectTrigger>
           <SelectContent>

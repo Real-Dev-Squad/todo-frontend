@@ -1,16 +1,15 @@
 import { UsersApi } from '@/api/users/users.api'
 import { TUser } from '@/api/users/users.types'
+import { PageContainer } from '@/components/page-container'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/useDebounce'
-// import { getUserInitials } from '@/lib/utils'
-import { PageContainer } from '@/components/page-container'
 import { ArrowLeft, Loader2, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { SelectPoc } from '../../../app/(internal-routes)/teams/create/SelectPoc'
+import { SelectPoc } from './select-poc'
 
-interface InviteFormProps {
+type InviteFormProps = {
   onBack?: () => void
   teamName?: string
   onCreateTeam: (memberIds: string[], pocId: string | null) => void
@@ -136,15 +135,16 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
             <div className="relative">
               <Input
                 type="text"
-                placeholder="Type name or email to search..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={handleSearchFocus}
                 onBlur={handleSearchBlur}
-                className="h-11 border-gray-200 pr-10 text-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base"
+                onFocus={handleSearchFocus}
+                placeholder="Type name or email to search..."
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Search className="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+
+              <Search className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
             </div>
+
             {searchStats.selectedCount > 0 && (
               <p className="text-xs text-gray-500">
                 {searchStats.selectedCount} teammate
@@ -179,8 +179,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                     >
                       <Avatar className="h-9 w-9 shrink-0">
                         <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                          {/* {getUserInitials(user.name)} */}
-                          {user.name.slice(0, 2)}
+                          {user.name.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="min-w-0 flex-1">
@@ -194,6 +193,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                       </div>
                     </div>
                   ))}
+
                   {searchStats.hasMore && (
                     <div className="border-t border-gray-100 bg-gray-50 px-4 py-2">
                       <span className="text-xs text-gray-500">
@@ -248,8 +248,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                   >
                     <Avatar className="h-9 w-9 shrink-0">
                       <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                        {/* {getUserInitials(user.name)} */}
-                        {user.name.slice(0, 2)}
+                        {user.name.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
@@ -283,19 +282,16 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
             onChange={setPocId}
           />
 
-          <div className="space-y-3 border-t border-gray-100 pt-6">
+          <div className="flex w-full flex-col gap-2">
             <Button
-              className="h-12 w-full cursor-pointer bg-black text-base font-medium text-white shadow-xs transition-colors hover:bg-gray-800"
+              className="w-full"
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={loading || !selectedUsers.length}
             >
               {loading ? 'Creating...' : 'Create Team'}
             </Button>
-            <Button
-              variant="ghost"
-              className="h-12 w-full cursor-pointer text-base font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
-              onClick={handleSkipInviting}
-            >
+
+            <Button variant="outline" className="w-full" onClick={handleSkipInviting}>
               Skip Inviting
             </Button>
           </div>

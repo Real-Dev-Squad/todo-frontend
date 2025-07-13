@@ -33,15 +33,6 @@ export const CreateTeam = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [inviteCode, setInviteCode] = useState<string>('')
 
-  const handleTeamInfoSubmit = (name: string, description: string) => {
-    if (!name.trim()) {
-      toast.error('Team name is required')
-      return
-    }
-
-    setTeamInfo({ name, description })
-  }
-
   const handleCreateTeam = async (memberIds: string[], pocId: string | null) => {
     setLoading(true)
     if (!teamInfo?.name.trim()) {
