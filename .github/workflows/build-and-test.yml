@@ -40,5 +40,5 @@ jobs:
       - name: Build:App
         run: pnpm build
 
-      - name: Build:App-Storybook
-        run: pnpm build-app-storybook
+      - name: Build:Storybook
+        run: pnpm build:storybook

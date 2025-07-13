@@ -24,12 +24,6 @@ To build your app for production:
 pnpm build
 ```
 
-To build next app along with Storybook in the `out/storybook` directory:
-
-```sh
-pnpm build-app-storybook
-```
-
 Then run the app in production mode:
 
 ```sh
