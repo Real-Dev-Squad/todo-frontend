@@ -39,6 +39,8 @@ jobs:
 
       - name: Build:App
         run: pnpm build
+        env:
+          NEXT_PUBLIC_BACKEND_API_URL: 'https://services.realdevsquad.com/staging-todo'
 
       - name: Build:Storybook
         run: pnpm build:storybook
