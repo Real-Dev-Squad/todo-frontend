@@ -2,6 +2,7 @@
 
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { CommonPageError } from '@/components/common-page-error'
+import { PageContainer } from '@/components/page-container'
 import { useQuery } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { DashboardHeader } from './components/dashboard-header'
@@ -29,7 +30,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <div className="px-4 md:px-6">
+    <PageContainer>
       <DashboardHeader className="py-12" />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
@@ -39,6 +40,6 @@ export const Dashboard = () => {
 
         <DashboardWeeklySummary className="xl:col-span-4 2xl:col-span-3" />
       </div>
-    </div>
+    </PageContainer>
   )
 }

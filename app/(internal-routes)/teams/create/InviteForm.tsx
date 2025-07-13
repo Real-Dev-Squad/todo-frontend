@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/useDebounce'
-import { getUserInitials } from '@/lib/utils'
+// import { getUserInitials } from '@/lib/utils'
 import { ArrowLeft, Loader2, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { SelectPoc } from './SelectPoc'
@@ -187,7 +187,8 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                       >
                         <Avatar className="h-9 w-9 shrink-0">
                           <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                            {getUserInitials(user.name)}
+                            {/* {getUserInitials(user.name)} */}
+                            {user.name.slice(0, 2)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0 flex-1">
@@ -255,7 +256,8 @@ export function InviteForm({ onBack, onCreateTeam, loading, currentUser }: Invit
                     >
                       <Avatar className="h-9 w-9 shrink-0">
                         <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">
-                          {getUserInitials(user.name)}
+                          {/* {getUserInitials(user.name)} */}
+                          {user.name.slice(0, 2)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="min-w-0 flex-1">
