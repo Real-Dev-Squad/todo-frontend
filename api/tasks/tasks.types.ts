@@ -1,12 +1,12 @@
-import { TASK_PRIORITY, TASK_STATUS } from './tasks.enum'
+import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from './tasks.enum'
 
 export type TTask = {
   id: string
   title: string
   description?: string
   labels?: { name: string }[]
-  status: TASK_STATUS
-  priority?: TASK_PRIORITY
+  status: TASK_STATUS_ENUM
+  priority?: TASK_PRIORITY_ENUM
   assignee: {
     id: string
     name: string

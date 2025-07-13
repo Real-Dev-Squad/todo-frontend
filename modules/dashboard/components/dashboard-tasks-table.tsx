@@ -1,5 +1,9 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { TASK_STATUS } from '@/api/tasks/tasks.enum'
+import {
+  TASK_PRIORITY_ENUM,
+  TASK_PRIORITY_TO_TEXT_MAP,
+  TASK_STATUS_TO_TEXT_MAP,
+} from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { FORM_MODE, TASK_PRIORITY } from '@/config/task'
+import { FORM_MODE } from '@/config/task'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
@@ -18,6 +22,23 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { TaskFormData, TodoForm } from '../../../components/TodoForm'
 import { DashboardTasksTableTabs } from '../constants'
+
+const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
+  return (
+    <span
+      className={cn(
+        'rounded-full px-2 py-1 text-xs font-medium',
+        priority === TASK_PRIORITY_ENUM.HIGH
+          ? 'bg-red-100 text-red-700'
+          : priority === TASK_PRIORITY_ENUM.MEDIUM
+            ? 'bg-yellow-100 text-yellow-700'
+            : 'bg-green-100 text-green-700',
+      )}
+    >
+      {TASK_PRIORITY_TO_TEXT_MAP[priority]}
+    </span>
+  )
+}
 
 type DashboardTasksTableProps = {
   type: DashboardTasksTableTabs
@@ -67,6 +88,7 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
               <TableHead className="w-[50px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {filteredTasks.map((task) => (
               <TableRow key={task.id} className="transition-colors hover:bg-gray-50">
@@ -80,34 +102,21 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                       : '-'}
                   </span>
                 </TableCell>
+
                 <TableCell>
                   <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
-                    {task.status !== undefined
-                      ? TASK_STATUS[task.status.toUpperCase() as keyof typeof TASK_STATUS] ||
-                        task.status
-                      : '-'}
+                    {TASK_STATUS_TO_TEXT_MAP[task.status]}
                   </span>
                 </TableCell>
+
                 <TableCell>
-                  <span
-                    className={cn(
-                      'rounded-full px-2 py-1 text-xs font-medium',
-                      task.priority === TASK_PRIORITY.HIGH
-                        ? 'bg-red-100 text-red-700'
-                        : task.priority === TASK_PRIORITY.MEDIUM
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-green-100 text-green-700',
-                    )}
-                  >
-                    {task.priority !== undefined
-                      ? TASK_PRIORITY[task.priority.toUpperCase() as keyof typeof TASK_PRIORITY] ||
-                        task.priority
-                      : '-'}
-                  </span>
+                  {task.priority && <TaskPriorityLabel priority={task.priority} />}
                 </TableCell>
+
                 <TableCell className="text-red-500">
                   {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : task.dueAt || '-'}
                 </TableCell>
+
                 <TableCell>
                   <Button
                     variant="ghost"

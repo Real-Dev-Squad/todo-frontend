@@ -1,11 +1,23 @@
-export enum TASK_STATUS {
+export enum TASK_STATUS_ENUM {
   TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
 }
 
-export enum TASK_PRIORITY {
+export enum TASK_PRIORITY_ENUM {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH',
+}
+
+export const TASK_STATUS_TO_TEXT_MAP: Record<TASK_STATUS_ENUM, string> = {
+  [TASK_STATUS_ENUM.TODO]: 'Todo',
+  [TASK_STATUS_ENUM.IN_PROGRESS]: 'In Progress',
+  [TASK_STATUS_ENUM.COMPLETED]: 'Completed',
+}
+
+export const TASK_PRIORITY_TO_TEXT_MAP: Record<TASK_PRIORITY_ENUM, string> = {
+  [TASK_PRIORITY_ENUM.LOW]: 'Low',
+  [TASK_PRIORITY_ENUM.MEDIUM]: 'Medium',
+  [TASK_PRIORITY_ENUM.HIGH]: 'High',
 }

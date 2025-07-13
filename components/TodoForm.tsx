@@ -6,7 +6,7 @@ import { TaskDetails } from './TaskDetails'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 
-import { TASK_PRIORITY, TASK_STATUS } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { FORM_MODE } from '@/config/task'
 import calendarIcon from '@/public/assets/calendar.svg'
@@ -38,9 +38,9 @@ const DEFAULT_FORM_DATA: TaskFormData = {
   title: '',
   description: '',
   dueAt: '',
-  priority: TASK_PRIORITY.LOW,
+  priority: TASK_PRIORITY_ENUM.LOW,
   tags: [],
-  status: TASK_STATUS.TODO,
+  status: TASK_STATUS_ENUM.TODO,
   isInWatchlist: false,
   labels: [],
 }
@@ -171,7 +171,7 @@ export function TodoForm({
                 }
                 className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
               >
-                {Object.entries(TASK_PRIORITY).map(([key, label]) => (
+                {Object.entries(TASK_PRIORITY_ENUM).map(([key, label]) => (
                   <option key={key} value={key}>
                     {label}
                   </option>
@@ -255,7 +255,7 @@ export function TodoForm({
                   }
                   className="text-primary w-full rounded-md border-none border-[#E5E7EB] bg-[#F5F5FF] p-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                 >
-                  {Object.entries(TASK_STATUS).map(([key, label]) => (
+                  {Object.entries(TASK_STATUS_ENUM).map(([key, label]) => (
                     <option key={key} value={key}>
                       {label}
                     </option>

@@ -1,4 +1,4 @@
-import { TASK_PRIORITY, TASK_STATUS } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TUser } from '@/api/users/users.types'
 
@@ -119,7 +119,7 @@ export const initialData: TTask = {
     id: dummyUsers[0].user_id,
     name: dummyUsers[0].name,
   },
-  status: TASK_STATUS.TODO,
-  priority: TASK_PRIORITY.LOW,
+  status: TASK_STATUS_ENUM.TODO,
+  priority: TASK_PRIORITY_ENUM.LOW,
   tags: ['Urgent'],
 }

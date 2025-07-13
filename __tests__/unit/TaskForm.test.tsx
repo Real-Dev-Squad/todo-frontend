@@ -1,5 +1,5 @@
 import { initialData } from '@/__mocks__/Task'
-import { TASK_PRIORITY } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoForm } from '@/components/TodoForm'
 import { FORM_MODE } from '@/config/task'
@@ -84,7 +84,7 @@ test.skip('should submit form with correct data in create mode', async () => {
     description: 'Test Description',
     dueAt: '2024-12-31',
     tags: ['frontend'],
-    priority: TASK_PRIORITY.LOW,
+    priority: TASK_PRIORITY_ENUM.LOW,
   }
 
   await user.type(screen.getByTestId('title'), testData.title)
