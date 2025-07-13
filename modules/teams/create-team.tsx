@@ -1,6 +1,5 @@
 'use client'
 
-import { InviteForm } from '@/app/(internal-routes)/teams/create/InviteForm'
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
 import { teamsApi } from '@/lib/api/teams/teams.api'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
+import { InviteForm } from '@/modules/teams/components/invite-team-form'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -93,7 +93,7 @@ export const CreateTeam = () => {
         currentUser={user}
         teamName={teamInfo.name}
         onCreateTeam={handleCreateTeam}
-        onBack={() => setTeamInfo(DEFAULT_TEAM_INFO)}
+        onBack={() => setShowInviteForm(false)}
       />
     )
   }
@@ -138,8 +138,8 @@ export const CreateTeam = () => {
             />
           </div>
 
-          <Button type="submit" disabled={!teamInfo.name || loading} className="w-full">
-            {loading ? 'Creating...' : 'Create team'}
+          <Button type="submit" className="w-full" disabled={!teamInfo.name}>
+            Next
           </Button>
         </form>
       </div>
