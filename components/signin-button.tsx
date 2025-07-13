@@ -3,7 +3,9 @@
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
+import { XIcon } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -44,6 +46,7 @@ const GoogleIcon = () => {
 
 export const SigninButton = () => {
   const { isLoggedIn } = useAuth()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSignIn = () => {
     if (isLoggedIn) {
@@ -62,10 +65,9 @@ export const SigninButton = () => {
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        {/* <Button className="px-4 text-sm md:px-6 md:text-base">Sign in</Button> */}
-        Sign in
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button className="px-4 text-sm md:px-6 md:text-base">Sign in</Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent className="mx-4 max-w-[90vw] sm:max-w-md">
@@ -76,6 +78,15 @@ export const SigninButton = () => {
           <AlertDialogDescription className="text-center text-sm text-gray-600 md:text-base">
             Your tasks, just a login away.
           </AlertDialogDescription>
+
+          <Button
+            size="sm"
+            variant="ghost"
+            className="absolute top-2 right-2"
+            onClick={() => setIsOpen(false)}
+          >
+            <XIcon />
+          </Button>
         </AlertDialogHeader>
 
         <div className="flex flex-col gap-3 py-4 md:gap-4">

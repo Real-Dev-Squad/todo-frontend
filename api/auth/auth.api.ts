@@ -5,7 +5,7 @@ export const AuthApi = {
   logout: {
     key: ['AuthApi.logout'],
     fn: async (): Promise<void> => {
-      await apiClient.get('/v1/auth/google/logout/')
+      await apiClient.post('/v1/auth/logout')
     },
   },
 } satisfies TApiMethodsRecord
