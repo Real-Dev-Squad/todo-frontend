@@ -32,7 +32,7 @@ export function SigninButton() {
           <Link
             className="bg-primary hover:bg-primary/90 w-full rounded-lg py-3 text-center text-sm font-medium text-white md:py-3 md:text-base"
             href={`${backendUrl}/v1/auth/google/login`}
-            target="_blank"
+            target="_self"
           >
             Sign in with Google
           </Link>
