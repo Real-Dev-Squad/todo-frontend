@@ -43,7 +43,7 @@ const data = {
       items: [
         ...dummyTeamData.map((team) => ({
           title: team.name,
-          url: `/teams/${team.id}`,
+          url: `/teams?teamId=${team.id}`,
         })),
         {
           title: 'Create Team +',
