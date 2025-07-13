@@ -1,6 +1,6 @@
 import { apiClient } from '../../lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
-import { GetTasksDto, TTask } from './tasks.types'
+import { CrateTaskDto, GetTasksDto, TTask } from './tasks.types'
 
 export const TasksApi = {
   getTasks: {
@@ -13,7 +13,7 @@ export const TasksApi = {
 
   createTask: {
     key: ['tasksApi.createTask'],
-    fn: async (task: TTask): Promise<TTask> => {
+    fn: async (task: CrateTaskDto): Promise<TTask> => {
       const { data } = await apiClient.post<TTask>(`/v1/tasks`, task)
       return data
     },

@@ -23,4 +23,10 @@ export type GetTasksDto = {
   tasks: TTask[]
 }
 
-export type CreateTaskDto = Omit<TTask, 'priority' | 'assignee' | 'id'>
+export type CrateTaskDto = {
+  title: string
+  description?: string
+  priority?: TASK_PRIORITY_ENUM
+  status?: TASK_STATUS_ENUM
+  dueAt?: string
+}
