@@ -1,27 +1,11 @@
-import { Briefcase, ChartNetwork, Home, Users } from 'lucide-react'
+import { Briefcase, ChartNetwork, Home, Inbox } from 'lucide-react'
 import * as React from 'react'
 
 import { NavMain } from '@/components/nav-main'
 
 import { Sidebar, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
 
-//TODO: Replace with real team data from API when backend integration is complete. Currently used for development and testing of team navigation.
-
-const dummyTeamData = [
-  {
-    id: 2,
-    name: 'Design Team',
-  },
-  {
-    id: 3,
-    name: 'Development Team',
-  },
-  {
-    id: 4,
-    name: 'Marketing Team',
-  },
-]
-
+// This is sample data.
 const data = {
   navMain: [
     {
@@ -38,22 +22,7 @@ const data = {
     {
       title: 'Teams',
       url: '/teams',
-      icon: Users,
-      isActive: true,
-      items: [
-        ...dummyTeamData.map((team) => ({
-          title: team.name,
-          url: `/teams/${team.id}`,
-        })),
-        {
-          title: 'Create Team +',
-          url: '/teams/create',
-        },
-        {
-          title: 'Join Team +',
-          url: '/teams/join',
-        },
-      ],
+      icon: Inbox,
     },
   ],
 }
