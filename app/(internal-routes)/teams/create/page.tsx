@@ -1,11 +1,3 @@
-import React from 'react'
-import CreateForm from './CreateForm'
-function CreatePage() {
-  return (
-    <div>
-      <CreateForm />
-    </div>
-  )
-}
+import { CreateTeam } from '@/modules/teams/create-team'
 
-export default CreatePage
+export default CreateTeam
