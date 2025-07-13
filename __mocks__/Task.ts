@@ -120,5 +120,6 @@ export const initialData: TTask = {
     name: dummyUsers[0].name,
   },
   status: TASK_STATUS.TODO,
+  priority: TASK_PRIORITY.LOW,
   tags: ['Urgent'],
 }

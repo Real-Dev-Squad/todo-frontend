@@ -59,6 +59,7 @@ test('should renders edit mode with initial data', async () => {
   expect(screen.getByText('Edit Todo')).toBeDefined()
   expect(screen.getByText('Save')).toBeDefined()
   expect(screen.getByText('Status')).toBeDefined()
+  expect(screen.getByText('Priority')).toBeDefined()
 })
 
 test('should renders view mode with TaskDetails component', async () => {
@@ -82,12 +83,14 @@ test.skip('should submit form with correct data in create mode', async () => {
     description: 'Test Description',
     dueAt: '2024-12-31',
     tags: ['frontend'],
+    priority: TASK_PRIORITY.LOW,
   }
 
   await user.type(screen.getByTestId('title'), testData.title)
   await user.type(screen.getByTestId('description'), testData.description)
-  await user.type(screen.getByTestId('due-date'), testData.dueAt)
+  await user.type(screen.getByTestId('due-at'), testData.dueAt)
   await user.type(screen.getByLabelText(/tags/i), testData.tags.join(', '))
+  await user.selectOptions(screen.getByTestId('priority'), testData.priority)
 
   await user.click(screen.getByTestId('task-form-submit-button'))
   expect(mockOnSubmit).toHaveBeenCalledTimes(1)

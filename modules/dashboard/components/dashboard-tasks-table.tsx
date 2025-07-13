@@ -1,4 +1,5 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TASK_STATUS } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { Button } from '@/components/ui/button'
 import {
@@ -81,7 +82,10 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                 </TableCell>
                 <TableCell>
                   <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
-                    {task.status}
+                    {task.status !== undefined
+                      ? TASK_STATUS[task.status.toUpperCase() as keyof typeof TASK_STATUS] ||
+                        task.status
+                      : '-'}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -95,7 +99,10 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                           : 'bg-green-100 text-green-700',
                     )}
                   >
-                    {task.priority}
+                    {task.priority !== undefined
+                      ? TASK_PRIORITY[task.priority.toUpperCase() as keyof typeof TASK_PRIORITY] ||
+                        task.priority
+                      : '-'}
                   </span>
                 </TableCell>
                 <TableCell className="text-red-500">
