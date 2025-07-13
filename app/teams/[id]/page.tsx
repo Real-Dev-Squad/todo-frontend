@@ -1,11 +1,11 @@
 'use client'
 import { TeamActivity } from '@/components/teams/TeamActivity'
 import { TeamMembers } from '@/components/teams/TeamMember'
-import TeamSearch from '@/components/teams/TeamSearch'
+import { TeamDashboardHeader } from '@/components/teams/TeamDashboardHeader'
 import TeamTask from '@/components/teams/TeamTask'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
-
+import { TeamTab } from '@/components/teams/TeamDashboardHeader'
 const tabs = [
   {
     name: 'Tasks',
@@ -23,7 +23,7 @@ const tabs = [
     content: <TeamMembers />,
   },
 ]
-export default function TabsUnderlinedDemo() {
+export default function TeamPage() {
   const [activeTab, setActiveTab] = useState(tabs[0].value)
 
   return (
@@ -45,7 +45,7 @@ export default function TabsUnderlinedDemo() {
             </TabsTrigger>
           ))}
         </TabsList>
-        <TeamSearch activeTab={activeTab} />
+        <TeamDashboardHeader activeTab={activeTab as TeamTab} />
 
         {tabs.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="mt-4">

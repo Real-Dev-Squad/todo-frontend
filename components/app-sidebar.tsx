@@ -5,7 +5,7 @@ import { NavMain } from '@/components/nav-main'
 
 import { Sidebar, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
 
-//TODO: dummy team data
+//TODO: Replace with real team data from API when backend integration is complete. Currently used for development and testing of team navigation.
 
 const dummyTeamData = [
   {

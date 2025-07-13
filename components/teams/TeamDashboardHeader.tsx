@@ -2,11 +2,12 @@ import { SearchIcon, SlidersHorizontal } from 'lucide-react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 
-type TeamSearchProps = {
-  activeTab: string
-}
+export type TeamTab = 'tasks' | 'members' | 'activities'
 
-function TeamSearch({ activeTab }: TeamSearchProps) {
+type TeamDashboardHeaderProps = {
+  activeTab: TeamTab
+}
+export function TeamDashboardHeader({ activeTab }: TeamDashboardHeaderProps) {
   return (
     <div className="flex justify-between">
       <div className="mt-4 flex space-x-4">
@@ -32,5 +33,3 @@ function TeamSearch({ activeTab }: TeamSearchProps) {
     </div>
   )
 }
-
-export default TeamSearch

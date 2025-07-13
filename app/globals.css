@@ -130,8 +130,6 @@
 @layer base {
   * {
     @apply border-border;
-    outline: none !important;
-    box-shadow: none !important;
   }
   body {
     @apply bg-background text-foreground;

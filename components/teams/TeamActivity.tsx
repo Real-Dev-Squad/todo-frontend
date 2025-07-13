@@ -1,8 +1,9 @@
 import React from 'react'
 // import { UnderConstruction } from '../UnderConstruction'
 import { CheckCircle, RefreshCw, UserPlus } from 'lucide-react'
-import { TeamActivityCard } from './TeamAcitvityCard'
+import { TeamActivityCard } from './TeamActivityCard'
 
+// TODO: Replace with actual data fetching hook
 const teamActivities = [
   {
     id: 1,

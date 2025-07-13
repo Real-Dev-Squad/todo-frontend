@@ -15,29 +15,34 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Button } from '../ui/button'
 
 // TODO: This should be fetch from backend
 
 const members = [
   {
+    id: 1,
     name: 'Prakash',
     role: 'Admin',
     joinedOn: '1 May 2025',
     tasksAssigned: 4,
   },
   {
+    id: 2,
     name: 'Tejas',
     role: 'Admin',
     joinedOn: '1 May 2025',
     tasksAssigned: 5,
   },
   {
+    id: 3,
     name: 'Anuj',
     role: 'Member',
     joinedOn: '1 May 2025',
     tasksAssigned: 6,
   },
   {
+    id: 4,
     name: 'Mayank',
     role: 'Member',
     joinedOn: '1 May 2025',
@@ -60,7 +65,7 @@ export function TeamMembers() {
       </TableHeader>
       <TableBody>
         {members.map((member) => (
-          <TableRow key={member.name}>
+          <TableRow key={member.id}>
             <TableCell>
               <div className="flex items-center gap-2">
                 <Avatar>
@@ -76,9 +81,9 @@ export function TeamMembers() {
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="rounded-full p-2 hover:bg-gray-100">
+                    <Button variant="ghost" className="rounded-full p-2 hover:bg-gray-100">
                       <MoreVertical className="h-5 w-5" />
-                    </button>
+                    </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>Change Role</DropdownMenuItem>
