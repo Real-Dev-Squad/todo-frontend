@@ -30,3 +30,12 @@ export type CrateTaskDto = {
   status?: TASK_STATUS_ENUM
   dueAt?: string
 }
+
+export type UpdateTaskDto = {
+  id: string
+  title?: string
+  description?: string
+  priority?: TASK_PRIORITY_ENUM
+  status?: TASK_STATUS_ENUM
+  dueAt?: string
+}

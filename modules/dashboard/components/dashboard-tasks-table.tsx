@@ -5,7 +5,7 @@ import {
   TASK_STATUS_TO_TEXT_MAP,
 } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
-import { Button } from '@/components/ui/button'
+import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
 import {
   Table,
   TableBody,
@@ -14,13 +14,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { FORM_MODE } from '@/config/task'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { TaskFormData, TodoForm } from '../../../components/TodoForm'
 import { DashboardTasksTableTabs } from '../constants'
 
 const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
@@ -40,36 +38,60 @@ const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
   )
 }
 
+type EditTaskButtonProps = {
+  task: TTask
+}
+
+const EditTaskButton = ({ task }: EditTaskButtonProps) => {
+  const queryClient = useQueryClient()
+
+  const [showEditTaskForm, setShowEditTaskForm] = useState(false)
+
+  const updateTaskMutation = useMutation({
+    mutationFn: TasksApi.updateTask.fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      toast.success('Todo updated successfully')
+      setShowEditTaskForm(false)
+    },
+    onError: () => {
+      toast.error('Failed to update todo')
+    },
+  })
+
+  return (
+    <CreateEditTaskDialog
+      mode="edit"
+      open={showEditTaskForm}
+      onOpenChange={setShowEditTaskForm}
+      isMutationPending={updateTaskMutation.isPending}
+      defaultData={{
+        title: task.title,
+        description: task.description || '',
+        dueDate: task.dueAt || '',
+        priority: task.priority,
+      }}
+      onSubmit={(value) =>
+        updateTaskMutation.mutate({
+          id: task.id,
+          title: value.title,
+          dueAt: value.dueDate,
+          priority: value.priority,
+          description: value.description,
+        })
+      }
+    >
+      <Edit2 className="h-4 w-4" />
+    </CreateEditTaskDialog>
+  )
+}
+
 type DashboardTasksTableProps = {
   type: DashboardTasksTableTabs
   tasks: TTask[]
 }
 
 export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) => {
-  const [showEditTaskForm, setShowEditTaskForm] = useState(false)
-  const [selectedTask, setSelectedTask] = useState<TTask | null>(null)
-  const queryClient = useQueryClient()
-
-  const updateTaskMutation = useMutation({
-    mutationFn: (task: TTask) => TasksApi.updateTask.fn(task),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
-      toast.success('Task updated successfully')
-      setShowEditTaskForm(false)
-    },
-    onError: () => {
-      toast.error('Failed to update task')
-    },
-  })
-
-  const handleEditTask = (task: TaskFormData) => {
-    updateTaskMutation.mutate(task as TTask)
-  }
-
-  const handleTaskClick = (task: TTask) => {
-    setSelectedTask(task)
-    setShowEditTaskForm(true)
-  }
   const filteredTasks = tasks.filter(
     (task) => type === DashboardTasksTableTabs.All || task.isInWatchlist,
   )
@@ -118,48 +140,13 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                 </TableCell>
 
                 <TableCell>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleTaskClick(task)
-                    }}
-                    className="h-8 w-8 p-0 hover:bg-gray-200"
-                  >
-                    <Edit2 className="h-4 w-4 text-gray-600" />
-                  </Button>
+                  <EditTaskButton task={task} />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
-
-      {/* Edit Task Form */}
-      <TodoForm
-        key={selectedTask?.id || 'edit-form'}
-        open={showEditTaskForm}
-        onClose={() => {
-          setShowEditTaskForm(false)
-          setSelectedTask(null)
-        }}
-        onSubmit={handleEditTask as (data: TaskFormData) => void}
-        mode={FORM_MODE.EDIT}
-        initialData={
-          selectedTask
-            ? {
-                id: selectedTask.id,
-                title: selectedTask.title,
-                description: selectedTask.description || '',
-                dueAt: selectedTask.dueAt || '',
-                tags: selectedTask.tags || [],
-                status: selectedTask.status,
-                priority: selectedTask.priority,
-              }
-            : undefined
-        }
-      />
     </div>
   )
 }

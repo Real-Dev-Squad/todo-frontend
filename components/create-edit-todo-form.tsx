@@ -22,7 +22,7 @@ const todoFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
   dueDate: z.string().min(1, 'Due date is required'),
-  priority: z.nativeEnum(TASK_PRIORITY_ENUM),
+  priority: z.enum(TASK_PRIORITY_ENUM).optional(),
 })
 
 export type TodoFormData = z.infer<typeof todoFormSchema>
@@ -31,6 +31,7 @@ type SubmitButtonProps = {
   text: string
   isLoading?: boolean
   isDisabled?: boolean
+  onCancel?: () => void
   watch: UseFormWatch<TodoFormData>
   onClick: () => void
 }
@@ -61,10 +62,12 @@ type CreateEditTodoFormProps = {
   isSubmitting?: boolean
   mode?: 'create' | 'edit'
   initialData?: Partial<TodoFormData>
+  onCancel: () => void
   onSubmit: (data: TodoFormData) => void
 }
 
 export const CreateEditTodoForm = ({
+  onCancel,
   onSubmit,
   initialData,
   isSubmitting,
@@ -188,7 +191,13 @@ export const CreateEditTodoForm = ({
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4">
+      <div className="flex items-center justify-end gap-2 pt-4">
+        {onCancel && (
+          <Button variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+        )}
+
         <SubmitButton
           watch={watch}
           isDisabled={!isDirty}

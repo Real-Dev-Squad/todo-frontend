@@ -1,6 +1,6 @@
 import { apiClient } from '../../lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
-import { CrateTaskDto, GetTasksDto, TTask } from './tasks.types'
+import { CrateTaskDto, GetTasksDto, TTask, UpdateTaskDto } from './tasks.types'
 
 export const TasksApi = {
   getTasks: {
@@ -21,10 +21,8 @@ export const TasksApi = {
 
   updateTask: {
     key: ['tasksApi.updateTask'],
-    fn: async (task: TTask): Promise<TTask> => {
-      console.log('task', task)
-      const { data } = await apiClient.patch<TTask>(`/v1/tasks/${task.id}`, task)
-      return data
+    fn: async ({ id, ...task }: UpdateTaskDto): Promise<void> => {
+      await apiClient.patch<TTask>(`/v1/tasks/${id}`, task)
     },
   },
 } satisfies TApiMethodsRecord

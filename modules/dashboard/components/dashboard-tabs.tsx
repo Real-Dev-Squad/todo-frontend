@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
-import { CreateTaskButton } from './create-task-button'
+import { CreateTodoButton } from './create-todo-button'
 import { DashboardTasksTable } from './dashboard-tasks-table'
 
 type DashboardTabsProps = {
@@ -41,7 +41,7 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
             </TabsTrigger>
           </TabsList>
 
-          <CreateTaskButton />
+          <CreateTodoButton />
         </div>
         <TabsContent value={TabsConstants.All}>
           <DashboardTasksTable type={TabsConstants.All} tasks={tasks} />
