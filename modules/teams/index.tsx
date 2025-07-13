@@ -1,5 +1,6 @@
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
+import { PlusIcon, UserRoundPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export const TeamsPage = () => {
@@ -19,11 +20,17 @@ export const TeamsPage = () => {
 
         <div className="flex w-64 flex-col gap-2">
           <Button asChild>
-            <Link href="/teams/create">Create a Team</Link>
+            <Link href="/teams/create">
+              <PlusIcon />
+              Create a Team
+            </Link>
           </Button>
 
           <Button asChild variant="outline">
-            <Link href="/teams/join">Join an Existing Team</Link>
+            <Link href="/teams/join">
+              <UserRoundPlusIcon />
+              Join an Existing Team
+            </Link>
           </Button>
         </div>
       </div>

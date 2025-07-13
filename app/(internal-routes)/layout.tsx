@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/page-header'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/hooks/useAuth'
+import { Toaster } from 'sonner'
 
 type InternalLayoutProps = { children: React.ReactNode }
 
@@ -40,6 +41,7 @@ export default function InternalLayout({ children }: InternalLayoutProps) {
       <div className="relative">
         <SidebarProvider>
           <AppSidebar />
+          <Toaster position="top-right" />
 
           <SidebarInset className="relative">
             <PageHeader />

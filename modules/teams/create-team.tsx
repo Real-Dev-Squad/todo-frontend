@@ -1,5 +1,6 @@
 'use client'
 
+import { TeamsApi } from '@/api/teams/teams.api'
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { teamsApi } from '@/lib/api/teams/teams.api'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { InviteForm } from '@/modules/teams/components/invite-team-form'
+import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -25,9 +27,11 @@ const DEFAULT_TEAM_INFO: TTeamInfo = {
 export const CreateTeam = () => {
   const { user } = useAuth()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const [showInviteForm, setShowInviteForm] = useState(false)
   const [teamInfo, setTeamInfo] = useState<TTeamInfo>(DEFAULT_TEAM_INFO)
+  const [teamId, setTeamId] = useState<string | null>(null)
 
   const [loading, setLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -46,9 +50,13 @@ export const CreateTeam = () => {
         member_ids: memberIds,
         poc_id: pocId,
       })
+
+      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeams.key })
+
       setInviteCode(response.team.invite_code)
       toast.success('Team created successfully!')
       setShowSuccessModal(true)
+      setTeamId(response.team.id)
     } catch (err: unknown) {
       const error = err as Error
       toast.error(error.message || 'Failed to create team')
@@ -59,7 +67,7 @@ export const CreateTeam = () => {
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false)
-    router.push('/teams')
+    router.push(`/teams/${teamId}`)
   }
 
   const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {
