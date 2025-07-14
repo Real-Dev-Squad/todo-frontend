@@ -19,7 +19,7 @@ interface SelectPocProps {
 
 export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocProps) => {
   const options = [currentUser, ...members].filter(
-    (u, i, arr) => arr.findIndex((x) => x.user_id === u.user_id) === i,
+    (u, i, arr) => u.user_id && arr.findIndex((x) => x.user_id === u.user_id) === i,
   )
 
   return (
@@ -31,8 +31,8 @@ export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocPr
             <SelectValue placeholder="Select a POC" />
           </SelectTrigger>
           <SelectContent>
-            {options.map((user) => (
-              <SelectItem key={user.user_id} value={user.user_id}>
+            {options.map((user, index) => (
+              <SelectItem key={user.user_id || `user-${index}`} value={user.user_id}>
                 {user.name}
               </SelectItem>
             ))}

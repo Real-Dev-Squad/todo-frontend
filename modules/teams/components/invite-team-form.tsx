@@ -19,8 +19,9 @@ type InviteFormProps = {
 
 const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
+  const userId = (u.user_id as string) || (u.userId as string) || (u.id as string) || ''
   return {
-    user_id: (u.user_id as string) || (u.userId as string) || (u.id as string) || '',
+    user_id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
     auth_type: (u.auth_type as string) || '',
