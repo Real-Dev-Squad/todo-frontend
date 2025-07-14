@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 export interface ComboboxOption {
   value: string
   label: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 interface ComboboxProps {
