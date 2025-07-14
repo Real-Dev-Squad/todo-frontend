@@ -178,7 +178,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                 {selectedUsers.map((user, index) => (
                   <div
                     key={user.user_id}
-                    className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors hover:bg-blue-100"
+                    className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors"
                   >
                     <Avatar className="h-9 w-9 shrink-0">
                       <AvatarFallback className="bg-blue-100 text-xs font-medium text-blue-600">

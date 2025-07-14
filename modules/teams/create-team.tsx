@@ -1,12 +1,12 @@
 'use client'
 
+import { teamsApi } from '@/api/tasks/teams.api'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
-import { teamsApi } from '@/lib/api/teams/teams.api'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { InviteForm } from '@/modules/teams/components/invite-team-form'
 import { useQueryClient } from '@tanstack/react-query'
