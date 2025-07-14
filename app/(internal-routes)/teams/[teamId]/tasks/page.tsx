@@ -1,5 +1,5 @@
-function page() {
+function TeamTaskPage() {
   return <div>Tasks Render Here</div>
 }
 
-export default page
+export default TeamTaskPage

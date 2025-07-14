@@ -1,4 +1,3 @@
-// components/teams/TeamTabsNavigation.tsx
 'use client'
 
 import { cn } from '@/lib/utils'
@@ -6,11 +5,18 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { TeamDashboardHeader, TeamTab } from './TeamDashboardHeader'
 
+const tabs: TeamTab[] = ['tasks', 'activities', 'members']
+
+const TAB_LABELS: Record<TeamTab, string> = {
+  tasks: 'Tasks',
+  activities: 'Activities',
+  members: 'Members',
+}
+
 export function TeamTabsNavigation({ teamId }: { teamId: string }) {
   const pathname = usePathname()
-  const tabs: TeamTab[] = ['tasks', 'activities', 'members']
-  const activeTab = tabs.find((tab) => pathname.endsWith(`/${tab}`)) ?? 'tasks'
-
+  const segments = pathname.split('/').filter(Boolean)
+  const activeTab = tabs.includes(segments[2] as TeamTab) ? (segments[2] as TeamTab) : 'tasks'
   return (
     <>
       <div className="flex">
@@ -25,11 +31,11 @@ export function TeamTabsNavigation({ teamId }: { teamId: string }) {
                 : 'text-muted-foreground border-transparent',
             )}
           >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {TAB_LABELS[tab]}
           </Link>
         ))}
       </div>
-      <TeamDashboardHeader activeTab={activeTab as TeamTab} />
+      <TeamDashboardHeader activeTab={activeTab} />
     </>
   )
 }

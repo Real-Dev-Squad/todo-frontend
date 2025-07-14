@@ -1,6 +1,6 @@
 import { TeamActivity } from '@/components/teams/TeamActivity'
 
-function page() {
+function TeamActivityPage() {
   return (
     <div>
       <TeamActivity />
@@ -8,4 +8,4 @@ function page() {
   )
 }
 
-export default page
+export default TeamActivityPage

@@ -1,6 +1,6 @@
 import { TeamMembers } from '@/components/teams/TeamMember'
 
-function page() {
+function TeamMembersPage() {
   return (
     <div>
       <TeamMembers />
@@ -8,4 +8,4 @@ function page() {
   )
 }
 
-export default page
+export default TeamMembersPage
