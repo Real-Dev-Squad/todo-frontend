@@ -1,4 +1,5 @@
 export type TSidebarLink = {
+  id?: string
   url: string
   title: string
   items?: TSidebarLink[]

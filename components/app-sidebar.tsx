@@ -27,6 +27,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
   const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.url !== '/teams')
 
   const teamsLinks = teams.teams.map((team) => ({
+    id: team.id,  // Add unique id for keys
     title: team.name,
     url: `/teams/${team.id}`,
   }))
@@ -68,7 +69,7 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
         <SidebarGroupContent>
           <SidebarMenu>
             {link.items.map((item) => (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem key={item.id || item.title}>
                 <SidebarMenuButton asChild isActive={isActive}>
                   <a href={item.url}>{item.title}</a>
                 </SidebarMenuButton>
