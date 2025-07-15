@@ -13,7 +13,7 @@ export type TTask = {
   }
   tags?: string[]
   dueAt?: string
-  isInWatchlist?: boolean
+  in_watchlist?: boolean | null
 }
 
 export type GetTasksDto = {
@@ -38,4 +38,23 @@ export type UpdateTaskDto = {
   priority?: TASK_PRIORITY_ENUM
   status?: TASK_STATUS_ENUM
   dueAt?: string
+}
+
+export type AddTaskToWatchListDto = {
+  taskId: string
+}
+
+export type ToggleWatchListStatusDto = {
+  taskId: string
+  isActive: boolean
+}
+
+export type TWatchListTask = {
+  taskId: string
+  userId: string
+  isActive?: boolean
+  createdAt?: string | null
+  createdBy?: string | null
+  updatedAt?: string | null
+  updatedBy?: string | null
 }
