@@ -1,6 +1,6 @@
 'use client'
 
-import { TeamsApi } from '@/api/teams/teams.api'
+import { useGetTeams } from '@/api/teams/teams.api'
 import { GetTeamsDto } from '@/api/teams/teams.type'
 import {
   Sidebar,
@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/sidebar'
 import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
-import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { Shimmer } from './Shimmer'
 
@@ -93,10 +92,7 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
 export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname()
 
-  const { data, isLoading } = useQuery({
-    queryKey: TeamsApi.getTeams.key,
-    queryFn: TeamsApi.getTeams.fn,
-  })
+  const { data, isLoading } = useGetTeams()
 
   return (
     <Sidebar {...props}>
