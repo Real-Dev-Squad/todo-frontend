@@ -27,7 +27,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
   const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.url !== '/teams')
 
   const teamsLinks = teams.teams.map((team) => ({
-    id: team.id,  // Add unique id for keys
+    id: team.id, // Add unique id for keys
     title: team.name,
     url: `/teams/${team.id}`,
   }))
