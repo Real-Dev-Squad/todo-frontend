@@ -192,7 +192,7 @@ export const CreateEditTodoForm = ({
       {/* Submit Button */}
       <div className="flex items-center justify-end gap-2 pt-4">
         {onCancel && (
-          <Button variant="outline" onClick={onCancel}>
+          <Button variant="outline" type="button" onClick={onCancel}>
             Cancel
           </Button>
         )}
