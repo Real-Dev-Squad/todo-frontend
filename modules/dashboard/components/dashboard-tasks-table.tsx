@@ -16,10 +16,11 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Edit2 } from 'lucide-react'
+import { Edit2, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { DashboardTasksTableTabs } from '../constants'
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 
 const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
   return (
@@ -86,6 +87,53 @@ const EditTaskButton = ({ task }: EditTaskButtonProps) => {
   )
 }
 
+type WatchListButtonProps = {
+  taskId: string
+  isInWatchlist?: boolean | null
+}
+
+const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
+  const queryClient = useQueryClient()
+
+  const addTaskToWatchlistMutation = useMutation({
+    mutationFn: TasksApi.addTaskToWatchList.fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      toast.success('Task added to watchlist!')
+    },
+    onError: () => {
+      toast.error('Failed to add task in watchlist!')
+    },
+  })
+
+  const toggleWatchListStatusMutation = useMutation({
+    mutationFn: TasksApi.toogleTaskWatchListStatus.fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      toast.success('WatchList Status updated!')
+    },
+    onError: () => {
+      toast.error('Failed to update watchlist status!')
+    },
+  })
+
+  return isInWatchlist ? (
+    <EyeOff
+      className="h-5 w-5"
+      onClick={() => toggleWatchListStatusMutation.mutate({ taskId, isActive: false })}
+    />
+  ) : (
+    <Eye
+      className="h-5 w-5"
+      onClick={() =>
+        isInWatchlist == null
+          ? addTaskToWatchlistMutation.mutate({ taskId })
+          : toggleWatchListStatusMutation.mutate({ taskId, isActive: true })
+      }
+    />
+  )
+}
+
 type DashboardTasksTableProps = {
   type: DashboardTasksTableTabs
   tasks: TTask[]
@@ -93,7 +141,7 @@ type DashboardTasksTableProps = {
 
 export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) => {
   const filteredTasks = tasks.filter(
-    (task) => type === DashboardTasksTableTabs.All || task.isInWatchlist,
+    (task) => type === DashboardTasksTableTabs.All || task.in_watchlist,
   )
 
   return (
@@ -139,8 +187,16 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                   {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : task.dueAt || '-'}
                 </TableCell>
 
-                <TableCell>
+                <TableCell className="flex items-center gap-3">
                   <EditTaskButton task={task} />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <WatchListButton taskId={task.id} isInWatchlist={task.in_watchlist} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {task?.in_watchlist ? 'Remove task from watchlist' : 'Add task to watchlist'}
+                    </TooltipContent>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}

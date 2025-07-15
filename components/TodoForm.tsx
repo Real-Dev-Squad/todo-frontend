@@ -41,7 +41,6 @@ const DEFAULT_FORM_DATA: TaskFormData = {
   priority: TASK_PRIORITY_ENUM.LOW,
   tags: [],
   status: TASK_STATUS_ENUM.TODO,
-  isInWatchlist: false,
   labels: [],
 }
 
