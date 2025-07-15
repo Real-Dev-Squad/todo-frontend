@@ -44,7 +44,7 @@ export type AddTaskToWatchListDto = {
   taskId: string
 }
 
-export type ToogleWatchListStatusDto = {
+export type ToggleWatchListStatusDto = {
   taskId: string
   isActive: boolean
 }
@@ -52,7 +52,7 @@ export type ToogleWatchListStatusDto = {
 export type TWatchListTask = {
   taskId: string
   userId: string
-  isActive?: string
+  isActive?: boolean
   createdAt?: string | null
   createdBy?: string | null
   updatedAt?: string | null

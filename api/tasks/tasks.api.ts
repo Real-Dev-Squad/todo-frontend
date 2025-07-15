@@ -1,7 +1,7 @@
 import { apiClient } from '../../lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
 import {
-  ToogleWatchListStatusDto,
+  ToggleWatchListStatusDto,
   CrateTaskDto,
   GetTasksDto,
   TTask,
@@ -41,9 +41,9 @@ export const TasksApi = {
     },
   },
 
-  toogleTaskWatchListStatus: {
-    key: ['tasksApi.toogleTaskWatchListStatus'],
-    fn: async ({ taskId, isActive }: ToogleWatchListStatusDto) => {
+  toggleTaskWatchListStatus: {
+    key: ['tasksApi.toggleTaskWatchListStatus'],
+    fn: async ({ taskId, isActive }: ToggleWatchListStatusDto) => {
       await apiClient.patch(`/v1/watchlist/tasks/${taskId}`, { isActive })
     },
   },

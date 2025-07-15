@@ -107,15 +107,25 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
   })
 
   const toggleWatchListStatusMutation = useMutation({
-    mutationFn: TasksApi.toogleTaskWatchListStatus.fn,
-    onSuccess: () => {
+    mutationFn: TasksApi.toggleTaskWatchListStatus.fn,
+    onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
-      toast.success('WatchList Status updated!')
+      toast.success(
+        variables.isActive ? 'Task added to watchlist!' : 'Task removed from watchlist!',
+      )
     },
     onError: () => {
       toast.error('Failed to update watchlist status!')
     },
   })
+
+  const handleAddTaskToWatchlist = () => {
+    if (isInWatchlist == null) {
+      addTaskToWatchlistMutation.mutate({ taskId })
+    } else {
+      toggleWatchListStatusMutation.mutate({ taskId, isActive: true })
+    }
+  }
 
   return isInWatchlist ? (
     <EyeOff
@@ -123,14 +133,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
       onClick={() => toggleWatchListStatusMutation.mutate({ taskId, isActive: false })}
     />
   ) : (
-    <Eye
-      className="h-5 w-5"
-      onClick={() =>
-        isInWatchlist == null
-          ? addTaskToWatchlistMutation.mutate({ taskId })
-          : toggleWatchListStatusMutation.mutate({ taskId, isActive: true })
-      }
-    />
+    <Eye className="h-5 w-5" onClick={handleAddTaskToWatchlist} />
   )
 }
 
