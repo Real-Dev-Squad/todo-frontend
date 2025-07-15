@@ -1,7 +1,6 @@
 'use client'
 
-import { teamsApi } from '@/api/tasks/teams.api'
-import { TeamsApi } from '@/api/teams/teams.api'
+import { teamsApi, TeamsApi } from '@/api/teams/teams.api'
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
