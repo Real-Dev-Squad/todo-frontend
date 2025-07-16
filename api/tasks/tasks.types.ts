@@ -7,7 +7,7 @@ export type TTask = {
   labels?: { name: string }[]
   status: TASK_STATUS_ENUM
   priority?: TASK_PRIORITY_ENUM
-  assignee: {
+  assignee?: {
     id: string
     name: string
   }
@@ -40,6 +40,13 @@ export type UpdateTaskDto = {
   dueAt?: string
 }
 
+export type GetWatchListTaskDto = {
+  links: {
+    next: string
+  }
+  tasks: TWatchListTask[]
+}
+
 export type AddTaskToWatchListDto = {
   taskId: string
 }
@@ -51,10 +58,17 @@ export type ToggleWatchListStatusDto = {
 
 export type TWatchListTask = {
   taskId: string
+  displayId: string
   userId: string
-  isActive?: boolean
-  createdAt?: string | null
-  createdBy?: string | null
-  updatedAt?: string | null
-  updatedBy?: string | null
+  title: string
+  description?: string
+  priority?: number
+  status: TASK_STATUS_ENUM
+  isAcknowledged: boolean | null
+  isDeleted: boolean | null
+  labels?: { name: string }[]
+  dueAt: string
+  createdAt: string
+  createdBy: string
+  watchlistId: string
 }
