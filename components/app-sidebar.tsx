@@ -34,12 +34,14 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
     id: team.id,
     title: team.name,
     url: `/teams/${team.id}/tasks`,
+    baseUrl: `/teams/${team.id}`,
   }))
 
   teamsLinks.push({
     id: 'create_team_cta',
     title: 'Create a team',
     url: '/teams/create',
+    baseUrl: '/teams/create',
     icon: PlusIcon,
   })
 
@@ -49,6 +51,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
       id: 'teams_list',
       title: 'Teams',
       url: '#',
+      baseUrl: '#',
       items: teamsLinks,
     },
   ]
@@ -70,10 +73,11 @@ const SidebarShimmer = () => {
 
 type SidebarLinkProps = {
   link: TSidebarLink
-  isActive: boolean
 }
 
-const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
+const SidebarLink = ({ link }: SidebarLinkProps) => {
+  const pathname = usePathname()
+
   if (link.items) {
     return (
       <SidebarGroup>
@@ -83,7 +87,7 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
           <SidebarMenu>
             {link.items.map((item) => (
               <SidebarMenuItem key={item.id}>
-                <SidebarMenuButton asChild isActive={isActive}>
+                <SidebarMenuButton asChild isActive={pathname.startsWith(item.baseUrl)}>
                   <Link
                     href={item.url}
                     className={cn(
@@ -92,7 +96,7 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
                     )}
                   >
                     {item.icon && (
-                      <div className="pr-1">
+                      <div className="pr-0.5">
                         <item.icon className="h-4 w-4" />
                       </div>
                     )}
@@ -109,10 +113,10 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
 
   return (
     <SidebarMenuItem className="px-2">
-      <SidebarMenuButton asChild isActive={isActive}>
+      <SidebarMenuButton asChild isActive={pathname.startsWith(link.baseUrl)}>
         <Link href={link.url}>
           {link.icon && (
-            <div className="pr-1">
+            <div className="pr-0.5">
               <link.icon className="h-4 w-4" />
             </div>
           )}
@@ -125,8 +129,6 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
 }
 
 export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
-  const pathname = usePathname()
-
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeams.key,
     queryFn: TeamsApi.getTeams.fn,
@@ -145,9 +147,7 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
               {isLoading && !data ? (
                 <SidebarShimmer />
               ) : (
-                getSidebarLinks(data).map((item) => (
-                  <SidebarLink link={item} key={item.id} isActive={pathname.startsWith(item.url)} />
-                ))
+                getSidebarLinks(data).map((item) => <SidebarLink link={item} key={item.id} />)
               )}
             </SidebarMenu>
           </SidebarGroupContent>
