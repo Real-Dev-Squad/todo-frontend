@@ -12,7 +12,7 @@ export function PageHeader() {
   const pageHeaderTitle = SIDEBAR_LINKS.find((link) => pathname.startsWith(link.url))?.title
 
   return (
-    <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 border-b bg-white">
+    <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b bg-white">
       <div className="flex flex-1 items-center gap-2 px-3">
         <SidebarTrigger />
         <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />

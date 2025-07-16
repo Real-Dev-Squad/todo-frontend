@@ -13,9 +13,9 @@ type TodoStatusTableProps = {
 
 export const TodoStatusTable = ({ status }: TodoStatusTableProps) => {
   return (
-    <span
+    <div
       className={cn(
-        'rounded-full px-2 py-1 text-xs font-medium',
+        'w-max rounded-full px-2 py-1 text-xs font-medium',
         status === TASK_STATUS_ENUM.TODO
           ? 'bg-gray-100 text-gray-700'
           : status === TASK_STATUS_ENUM.IN_PROGRESS
@@ -24,6 +24,6 @@ export const TodoStatusTable = ({ status }: TodoStatusTableProps) => {
       )}
     >
       {TASK_STATUS_TO_TEXT_MAP[status]}
-    </span>
+    </div>
   )
 }

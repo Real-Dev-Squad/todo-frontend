@@ -35,14 +35,16 @@ type TodoListTableRowProps = {
 const TodoListTableRow = ({ todo }: TodoListTableRowProps) => {
   return (
     <TableRow>
-      <TableCell>{todo.title}</TableCell>
-      <TableCell>
+      <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+      <TableCell className="whitespace-nowrap">
         <TodoStatusTable status={todo.status} />
       </TableCell>
-      <TableCell>--</TableCell>
-      <TableCell>{todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}</TableCell>
-      <TableCell>{todo.assignee?.name ?? '--'}</TableCell>
-      <TableCell>
+      <TableCell className="whitespace-nowrap">--</TableCell>
+      <TableCell className="whitespace-nowrap">
+        {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
+      </TableCell>
+      <TableCell className="whitespace-nowrap">{todo.assignee?.name ?? '--'}</TableCell>
+      <TableCell className="whitespace-nowrap">
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
     </TableRow>

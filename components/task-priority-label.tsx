@@ -13,9 +13,9 @@ type Props = {
 
 export const TaskPriorityLabel = ({ priority }: Props) => {
   return (
-    <span
+    <div
       className={cn(
-        'rounded-full px-2 py-1 text-xs font-medium',
+        'w-max rounded-full px-2 py-1 text-xs font-medium',
         priority === TASK_PRIORITY_ENUM.HIGH
           ? 'bg-red-100 text-red-700'
           : priority === TASK_PRIORITY_ENUM.MEDIUM
@@ -24,6 +24,6 @@ export const TaskPriorityLabel = ({ priority }: Props) => {
       )}
     >
       {TASK_PRIORITY_TO_TEXT_MAP[priority]}
-    </span>
+    </div>
   )
 }
