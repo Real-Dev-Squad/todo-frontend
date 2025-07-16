@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:ssl": "local-ssl-proxy --source 443 --target 3000 -n staging-todo.realdevsquad.com",
+    "dev:ssl": "local-ssl-proxy --source 443 --target 3000 -n dev.realdevsquad.com",
     "dev:next": "next dev --turbopack --port 3000",
     "build": "next build",
     "start": "next start",
