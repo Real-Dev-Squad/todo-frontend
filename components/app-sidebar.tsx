@@ -30,7 +30,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
   const teamsLinks = teams.teams.map((team) => ({
     id: team.id, // Add unique id for keys
     title: team.name,
-    url: `/teams/${team.id}`,
+    url: `/teams/${team.id}/tasks`,
   }))
 
   return [
