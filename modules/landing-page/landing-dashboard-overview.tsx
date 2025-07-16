@@ -92,35 +92,23 @@ export function DashboardPreview() {
           </div>
 
           <nav className="space-y-1">
-            <a
-              href="#"
-              className="flex items-center space-x-3 rounded-md bg-white px-3 py-2 text-sm font-medium text-black shadow-sm"
-            >
+            <div className="flex items-center space-x-3 rounded-md bg-white px-3 py-2 text-sm font-medium text-black shadow-sm">
               <Home className="h-4 w-4" />
               <span>Home</span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black"
-            >
+            </div>
+            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
               <Inbox className="h-4 w-4" />
               <span>Inbox</span>
               <span className="ml-auto rounded-full bg-gray-200 px-2 py-0.5 text-xs">3</span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black"
-            >
+            </div>
+            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
               <Calendar className="h-4 w-4" />
               <span>Calendar</span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black"
-            >
+            </div>
+            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
               <Target className="h-4 w-4" />
               <span>Goals</span>
-            </a>
+            </div>
           </nav>
 
           <div className="mt-6">
@@ -280,14 +268,14 @@ export function DashboardPreview() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">Completed</span>
-                    <span className="font-medium text-black">2/5</span>
+                    <span className="font-medium text-black">9/12</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-gray-100">
-                    <div className="h-full w-2/5 rounded-full bg-black"></div>
+                    <div className="h-full w-3/4 rounded-full bg-black"></div>
                   </div>
                   <div className="flex items-center space-x-2 text-xs text-gray-500">
                     <TrendingUp className="h-3 w-3" />
-                    <span>40% completion rate</span>
+                    <span>75% completion rate</span>
                   </div>
                 </div>
               </div>
