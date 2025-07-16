@@ -1,28 +1,33 @@
+import { TeamsApi } from '@/api/teams/teams.api'
 import { PageContainer } from '@/components/page-container'
-import { Button } from '@/components/ui/button'
 import { TeamTabsNavigation } from '@/modules/teams/components/tab-navigation'
-import { PlusIcon } from 'lucide-react'
-import Link from 'next/link'
+import { TeamsLayoutHeader } from '@/modules/teams/components/teams-layout-header'
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { ReactNode } from 'react'
 
-export default async function Layout({
-  children,
-}: {
+type LayoutProps = {
   params: Promise<{ teamId: string }>
   children: ReactNode
-}) {
+}
+
+export default async function Layout({ children, params }: LayoutProps) {
+  const queryClient = new QueryClient()
+
+  const { teamId } = await params
+
+  await queryClient.prefetchQuery({
+    queryKey: TeamsApi.getTeamById.key(teamId),
+    queryFn: () => TeamsApi.getTeamById.fn(teamId),
+  })
+
   return (
-    <PageContainer>
-      <div className="flex items-center justify-between py-6">
-        <Button asChild>
-          <Link href="/teams/create">
-            <PlusIcon />
-            Create a Team
-          </Link>
-        </Button>
-      </div>
-      <TeamTabsNavigation />
-      <div className="py-5">{children}</div>
-    </PageContainer>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PageContainer>
+        <TeamsLayoutHeader teamId={teamId} />
+
+        <TeamTabsNavigation />
+        <div className="py-5">{children}</div>
+      </PageContainer>
+    </HydrationBoundary>
   )
 }
