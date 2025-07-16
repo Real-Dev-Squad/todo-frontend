@@ -8,6 +8,7 @@ import {
   TWatchListTask,
   UpdateTaskDto,
   AddTaskToWatchListDto,
+  GetWatchListTaskDto,
 } from './tasks.types'
 
 export const TasksApi = {
@@ -31,6 +32,14 @@ export const TasksApi = {
     key: ['tasksApi.updateTask'],
     fn: async ({ id, ...task }: UpdateTaskDto): Promise<void> => {
       await apiClient.patch<TTask>(`/v1/tasks/${id}`, task)
+    },
+  },
+
+  getWatchListTasks: {
+    key: ['TasksApi.getWatchListTasks'],
+    fn: async (): Promise<GetWatchListTaskDto> => {
+      const { data } = await apiClient.get<GetWatchListTaskDto>(`/v1/watchlist/tasks`)
+      return data
     },
   },
 

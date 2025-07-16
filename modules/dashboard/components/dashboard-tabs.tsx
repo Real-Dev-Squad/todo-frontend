@@ -1,13 +1,12 @@
 'use client'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TTask } from '@/api/tasks/tasks.types'
-import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from './create-todo-button'
 import { DashboardTasksTable } from './dashboard-tasks-table'
+import { DashboardWatchlistTasksTable } from './dashboard-watchlist-tasks-table'
 
 type DashboardTabsProps = {
   tasks: TTask[]
@@ -19,8 +18,6 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentTab = searchParams.get('tab') || TabsConstants.All
-  const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
-  const queryClient = useQueryClient()
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
@@ -44,10 +41,10 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
           <CreateTodoButton />
         </div>
         <TabsContent value={TabsConstants.All}>
-          <DashboardTasksTable type={TabsConstants.All} tasks={tasks} />
+          <DashboardTasksTable tasks={tasks} />
         </TabsContent>
         <TabsContent value={TabsConstants.WatchList}>
-          <DashboardTasksTable type={TabsConstants.WatchList} tasks={tasks} />
+          <DashboardWatchlistTasksTable />
         </TabsContent>
       </Tabs>
     </div>

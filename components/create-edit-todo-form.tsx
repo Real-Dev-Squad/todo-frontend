@@ -31,28 +31,18 @@ type SubmitButtonProps = {
   text: string
   isLoading?: boolean
   isDisabled?: boolean
-  onCancel?: () => void
   watch: UseFormWatch<TodoFormData>
-  onClick: () => void
 }
 
-const SubmitButton = ({ text, isLoading, isDisabled, watch, onClick }: SubmitButtonProps) => {
+const SubmitButton = ({ text, isLoading, isDisabled, watch }: SubmitButtonProps) => {
   const title = watch('title')
   const description = watch('description')
   const dueDate = watch('dueDate')
 
   const isButtonDisabled = !title || !description || !dueDate || isLoading || isDisabled
 
-  const handleOnClick = () => {
-    if (isButtonDisabled) {
-      return
-    }
-
-    onClick()
-  }
-
   return (
-    <Button type="submit" disabled={isButtonDisabled} onClick={handleOnClick}>
+    <Button type="submit" disabled={isButtonDisabled}>
       {text}
     </Button>
   )
@@ -192,16 +182,15 @@ export const CreateEditTodoForm = ({
       {/* Submit Button */}
       <div className="flex items-center justify-end gap-2 pt-4">
         {onCancel && (
-          <Button variant="outline" onClick={onCancel}>
+          <Button variant="outline" type="button" onClick={onCancel}>
             Cancel
           </Button>
         )}
 
         <SubmitButton
           watch={watch}
-          isDisabled={!isDirty}
+          isDisabled={mode === 'edit' ? !isDirty : false}
           isLoading={isSubmitting}
-          onClick={handleSubmit(handleFormSubmit)}
           text={isSubmitting ? buttonLoadingText : buttonText}
         />
       </div>
