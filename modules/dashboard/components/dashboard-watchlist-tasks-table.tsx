@@ -3,7 +3,6 @@ import { CommonPageError } from '@/components/common-page-error'
 import { Shimmer } from '@/components/Shimmer'
 import { useQuery } from '@tanstack/react-query'
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { TTask } from '@/api/tasks/tasks.types'
 import { NUM_TASK_PRIORITY_TO_TASK_ENUM } from '@/api/tasks/tasks.enum'
 
@@ -34,7 +33,7 @@ export const DashboardWatchlistTasksTable = () => {
     ...task,
     id: task.taskId,
     in_watchlist: true,
-    priority: NUM_TASK_PRIORITY_TO_TASK_ENUM[task.priority ?? 0],
+    priority: NUM_TASK_PRIORITY_TO_TASK_ENUM[task.priority ?? 1],
   }))
-  return <DashboardTasksTable type={TabsConstants.WatchList} tasks={formattedTasks} />
+  return <DashboardTasksTable tasks={formattedTasks} />
 }

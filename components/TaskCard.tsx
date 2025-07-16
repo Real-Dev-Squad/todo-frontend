@@ -41,7 +41,7 @@ export const TaskCard = ({ task, className, setActiveTask }: TaskCardProps) => {
       <div className="flex items-center">
         <div className="flex items-center justify-center space-x-2 text-[#74787E]">
           <div className="hidden rounded-full border border-[#4541C6] bg-[#F5F5FF] px-2 py-[2px] text-xs md:flex">
-            {task.assignee.name}
+            {task.assignee?.name}
           </div>
           <div className="rounded-full border border-[#4541C6] bg-[#F5F5FF] px-2 py-[2px] text-xs">
             {formattedDueAt}
