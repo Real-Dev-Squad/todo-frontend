@@ -16,7 +16,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { DashboardTasksTableTabs } from '../constants'
 
 type EditTaskButtonProps = {
   task: TTask
@@ -89,6 +88,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
     mutationFn: TasksApi.toggleTaskWatchListStatus.fn,
     onSuccess: (_, variables) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
       toast.success(
         variables.isActive ? 'Task added to watchlist!' : 'Task removed from watchlist!',
       )
@@ -117,15 +117,10 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
 }
 
 type DashboardTasksTableProps = {
-  type: DashboardTasksTableTabs
   tasks: TTask[]
 }
 
-export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) => {
-  const filteredTasks = tasks.filter(
-    (task) => type === DashboardTasksTableTabs.All || task.in_watchlist,
-  )
-
+export const DashboardTasksTable = ({ tasks }: DashboardTasksTableProps) => {
   return (
     <div className="rounded-md border border-gray-200 p-4">
       <div className="max-h-[500px] w-full overflow-y-auto">
@@ -142,7 +137,7 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
           </TableHeader>
 
           <TableBody>
-            {filteredTasks.map((task) => (
+            {tasks.map((task) => (
               <TableRow key={task.id} className="transition-colors hover:bg-gray-50">
                 <TableCell className="font-medium">{task.title}</TableCell>
                 <TableCell>

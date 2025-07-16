@@ -6,10 +6,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
-import { teamsApi } from '@/lib/api/teams/teams.api'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { InviteForm } from '@/modules/teams/components/invite-team-form'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -29,45 +28,60 @@ export const CreateTeam = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
 
+  const createTeamMutation = useMutation({
+    mutationFn: TeamsApi.createTeam.fn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeams.key })
+    },
+  })
+
   const [showInviteForm, setShowInviteForm] = useState(false)
   const [teamInfo, setTeamInfo] = useState<TTeamInfo>(DEFAULT_TEAM_INFO)
   const [teamId, setTeamId] = useState<string | null>(null)
 
-  const [loading, setLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [inviteCode, setInviteCode] = useState<string>('')
 
   const handleCreateTeam = async (memberIds: string[], pocId: string | null) => {
-    setLoading(true)
     if (!teamInfo?.name.trim()) {
       toast.error('Team name is required')
       return
     }
-    try {
-      const response = await teamsApi.createTeam.fn({
+
+    createTeamMutation.mutate(
+      {
         name: teamInfo?.name,
         description: teamInfo?.description,
         member_ids: memberIds,
         poc_id: pocId,
-      })
+      },
+      {
+        onSuccess: (response) => {
+          const team = (response as any).team || response
+          const inviteCode = team.invite_code || (response as any).invite_code
+          const teamId = team.id || (response as any).id
 
-      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeams.key })
+          if (inviteCode) {
+            setInviteCode(inviteCode)
+          }
 
-      setInviteCode(response.team.invite_code)
-      toast.success('Team created successfully!')
-      setShowSuccessModal(true)
-      setTeamId(response.team.id)
-    } catch (err: unknown) {
-      const error = err as Error
-      toast.error(error.message || 'Failed to create team')
-    } finally {
-      setLoading(false)
-    }
+          if (teamId) {
+            setTeamId(teamId)
+          }
+
+          toast.success('Team created successfully!')
+          setShowSuccessModal(true)
+        },
+        onError: (error: Error) => {
+          toast.error(error.message || 'Failed to create team')
+        },
+      },
+    )
   }
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false)
-    router.push(`/teams/${teamId}`)
+    router.push(`/teams/${teamId}/tasks`)
   }
 
   const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {
@@ -88,7 +102,7 @@ export const CreateTeam = () => {
   if (showInviteForm) {
     return (
       <InviteForm
-        loading={loading}
+        loading={createTeamMutation.isPending}
         currentUser={user}
         teamName={teamInfo.name}
         onCreateTeam={handleCreateTeam}
@@ -113,7 +127,7 @@ export const CreateTeam = () => {
             <Input
               id="teamName"
               name="teamName"
-              disabled={loading}
+              disabled={createTeamMutation.isPending}
               value={teamInfo.name}
               placeholder="Your team name"
               className="mt-1 text-sm md:text-base"
@@ -129,7 +143,7 @@ export const CreateTeam = () => {
             <Input
               id="description"
               name="description"
-              disabled={loading}
+              disabled={createTeamMutation.isPending}
               value={teamInfo.description}
               placeholder="Your team description"
               className="mt-1 text-sm md:text-base"

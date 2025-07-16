@@ -32,3 +32,10 @@ export type GetTeamByIdResponseDto = {
   updated_at: string
   users: { id: string; name: string; tasksAssignedCount?: number; addedOn?: string }[] | null
 }
+
+export type CreateTeamPayload = {
+  name: string
+  description?: string
+  member_ids: string[]
+  poc_id: string | null
+}

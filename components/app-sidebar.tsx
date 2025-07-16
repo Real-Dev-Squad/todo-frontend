@@ -132,6 +132,7 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeams.key,
     queryFn: TeamsApi.getTeams.fn,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   })
 
   return (

@@ -1,6 +1,12 @@
 import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
-import { GetTeamByIdReqDto, GetTeamByIdResponseDto, GetTeamsDto } from './teams.type'
+import {
+  CreateTeamPayload,
+  GetTeamByIdReqDto,
+  GetTeamByIdResponseDto,
+  GetTeamsDto,
+  TTeam,
+} from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -20,7 +26,13 @@ export const TeamsApi = {
       const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`, {
         params,
       })
-
+      return data
+    },
+  },
+  createTeam: {
+    key: ['TeamsApi.createTeam'],
+    fn: async (teamData: CreateTeamPayload): Promise<TTeam> => {
+      const { data } = await apiClient.post<TTeam>(`/v1/teams`, teamData)
       return data
     },
   },
