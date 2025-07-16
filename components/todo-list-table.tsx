@@ -3,17 +3,23 @@
 import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { EditTaskButton } from './edit-task-button'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
 import { TodoStatusTable } from './todo-status-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
+import { WatchListButton } from './watchlist-button'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
 }
 
-const TodoListTableHeader = () => {
+type TodoListTableHeaderProps = {
+  showActions?: boolean
+}
+
+const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
   return (
     <TableHeader>
       <TableRow>
@@ -23,6 +29,7 @@ const TodoListTableHeader = () => {
         <TableHead className="text-black">Priority</TableHead>
         <TableHead className="text-black">Assignee</TableHead>
         <TableHead className="text-black">Due date</TableHead>
+        {showActions && <TableHead className="text-black">Actions</TableHead>}
       </TableRow>
     </TableHeader>
   )
@@ -30,23 +37,36 @@ const TodoListTableHeader = () => {
 
 type TodoListTableRowProps = {
   todo: TTask
+  showActions?: boolean
 }
 
-const TodoListTableRow = ({ todo }: TodoListTableRowProps) => {
+const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
   return (
     <TableRow>
       <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+
       <TableCell className="whitespace-nowrap">
         <TodoStatusTable status={todo.status} />
       </TableCell>
+
       <TableCell className="whitespace-nowrap">--</TableCell>
+
       <TableCell className="whitespace-nowrap">
         {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
       </TableCell>
+
       <TableCell className="whitespace-nowrap">{todo.assignee?.name ?? '--'}</TableCell>
+
       <TableCell className="whitespace-nowrap">
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
+
+      {showActions && (
+        <TableCell className="flex items-center gap-0.5">
+          <EditTaskButton task={todo} />
+          <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+        </TableCell>
+      )}
     </TableRow>
   )
 }
@@ -54,14 +74,15 @@ const TodoListTableRow = ({ todo }: TodoListTableRowProps) => {
 type TodoListTableBodyProps = {
   tasks?: TTask[]
   isLoading?: boolean
+  showActions?: boolean
 }
 
-const TodoListTableBody = ({ tasks, isLoading }: TodoListTableBodyProps) => {
+const TodoListTableBody = ({ tasks, isLoading, showActions }: TodoListTableBodyProps) => {
   if (isLoading) {
     return (
       <TableBody>
         {new Array(5).fill(0).map((_, index) => (
-          <TodoListTableRowShimmer key={index} />
+          <TodoListTableRowShimmer key={index} showActions={showActions} />
         ))}
       </TableBody>
     )
@@ -71,7 +92,7 @@ const TodoListTableBody = ({ tasks, isLoading }: TodoListTableBodyProps) => {
     return (
       <TableBody>
         <TableRow className="h-32">
-          <TableCell colSpan={6}>
+          <TableCell colSpan={showActions ? 7 : 6}>
             <div className="text-center text-sm text-gray-500">No tasks found</div>
           </TableCell>
         </TableRow>
@@ -82,16 +103,16 @@ const TodoListTableBody = ({ tasks, isLoading }: TodoListTableBodyProps) => {
   return (
     <TableBody>
       {tasks?.map((task) => (
-        <TodoListTableRow key={task.id} todo={task} />
+        <TodoListTableRow key={task.id} todo={task} showActions={showActions} />
       ))}
     </TableBody>
   )
 }
 
-const TodoListTableRowShimmer = () => {
+const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: boolean }) => {
   return (
     <TableRow>
-      <TableCell colSpan={6}>
+      <TableCell colSpan={showActions ? 7 : 6}>
         <Shimmer className="h-8 w-full" />
       </TableCell>
     </TableRow>
@@ -101,9 +122,10 @@ const TodoListTableRowShimmer = () => {
 type TodoListTableProps = {
   tasks?: TTask[]
   isLoading?: boolean
+  showActions?: boolean
 }
 
-export const TodoListTable = ({ tasks, isLoading }: TodoListTableProps) => {
+export const TodoListTable = ({ tasks, isLoading, showActions }: TodoListTableProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -146,8 +168,12 @@ export const TodoListTable = ({ tasks, isLoading }: TodoListTableProps) => {
 
       <div className="overflow-hidden rounded-md border">
         <Table>
-          <TodoListTableHeader />
-          <TodoListTableBody tasks={filteredTasks} isLoading={isLoading} />
+          <TodoListTableHeader showActions={showActions} />
+          <TodoListTableBody
+            tasks={filteredTasks}
+            isLoading={isLoading}
+            showActions={showActions}
+          />
         </Table>
       </div>
     </div>

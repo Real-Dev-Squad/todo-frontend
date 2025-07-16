@@ -1,6 +1,6 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
-import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
+import { EditTaskButton } from '@/components/edit-task-button'
 import { TaskPriorityLabel } from '@/components/task-priority-label'
 import { TodoStatusTable } from '@/components/todo-status-table'
 import {
@@ -13,57 +13,8 @@ import {
 } from '@/components/ui/table'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Edit2, Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-
-type EditTaskButtonProps = {
-  task: TTask
-}
-
-const EditTaskButton = ({ task }: EditTaskButtonProps) => {
-  const queryClient = useQueryClient()
-
-  const [showEditTaskForm, setShowEditTaskForm] = useState(false)
-
-  const updateTaskMutation = useMutation({
-    mutationFn: TasksApi.updateTask.fn,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
-      toast.success('Todo updated successfully')
-      setShowEditTaskForm(false)
-    },
-    onError: () => {
-      toast.error('Failed to update todo')
-    },
-  })
-
-  return (
-    <CreateEditTaskDialog
-      mode="edit"
-      open={showEditTaskForm}
-      onOpenChange={setShowEditTaskForm}
-      isMutationPending={updateTaskMutation.isPending}
-      defaultData={{
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueAt || '',
-        priority: task.priority,
-      }}
-      onSubmit={(value) =>
-        updateTaskMutation.mutate({
-          id: task.id,
-          title: value.title,
-          dueAt: value.dueDate,
-          priority: value.priority,
-          description: value.description,
-        })
-      }
-    >
-      <Edit2 className="h-4 w-4" />
-    </CreateEditTaskDialog>
-  )
-}
 
 type WatchListButtonProps = {
   taskId: string

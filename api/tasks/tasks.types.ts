@@ -45,9 +45,6 @@ export type UpdateTaskDto = {
 }
 
 export type GetWatchListTaskDto = {
-  links: {
-    next: string
-  }
   tasks: TWatchListTask[]
 }
 

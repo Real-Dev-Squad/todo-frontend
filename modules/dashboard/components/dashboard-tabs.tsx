@@ -19,9 +19,6 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   const searchParams = useSearchParams()
   const currentTab = searchParams.get('tab') || TabsConstants.All
 
-  const filteredTasks =
-    currentTab === TabsConstants.All ? tasks : tasks.filter((task) => task.in_watchlist)
-
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('tab', value)
@@ -45,7 +42,7 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
         </div>
 
         <TabsContent value={TabsConstants.All}>
-          <TodoListTable tasks={filteredTasks} />
+          <TodoListTable showActions tasks={tasks} />
         </TabsContent>
 
         <TabsContent value={TabsConstants.WatchList}>
