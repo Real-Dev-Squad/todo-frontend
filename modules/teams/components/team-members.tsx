@@ -117,7 +117,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
 
                     <TableCell>
                       {member.addedOn
-                        ? new DateUtil(member.addedOn).format(DateFormats.DD_MM_YYYY)
+                        ? new DateUtil(member.addedOn).format(DateFormats.D_MMM_YYYY)
                         : '--'}
                     </TableCell>
 

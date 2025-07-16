@@ -1,0 +1,29 @@
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
+import { cn } from '@/lib/utils'
+
+export const TASK_STATUS_TO_TEXT_MAP: Record<TASK_STATUS_ENUM, string> = {
+  [TASK_STATUS_ENUM.TODO]: 'Todo',
+  [TASK_STATUS_ENUM.IN_PROGRESS]: 'In Progress',
+  [TASK_STATUS_ENUM.COMPLETED]: 'Completed',
+}
+
+type TodoStatusTableProps = {
+  status: TASK_STATUS_ENUM
+}
+
+export const TodoStatusTable = ({ status }: TodoStatusTableProps) => {
+  return (
+    <span
+      className={cn(
+        'rounded-full px-2 py-1 text-xs font-medium',
+        status === TASK_STATUS_ENUM.TODO
+          ? 'bg-gray-100 text-gray-700'
+          : status === TASK_STATUS_ENUM.IN_PROGRESS
+            ? 'bg-yellow-100 text-yellow-700'
+            : 'bg-green-100 text-green-700',
+      )}
+    >
+      {TASK_STATUS_TO_TEXT_MAP[status]}
+    </span>
+  )
+}

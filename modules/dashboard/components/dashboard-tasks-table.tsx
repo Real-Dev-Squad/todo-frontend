@@ -1,11 +1,8 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
-import {
-  TASK_PRIORITY_ENUM,
-  TASK_PRIORITY_TO_TEXT_MAP,
-  TASK_STATUS_TO_TEXT_MAP,
-} from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
+import { TaskPriorityLabel } from '@/components/task-priority-label'
+import { TodoStatusTable } from '@/components/todo-status-table'
 import {
   Table,
   TableBody,
@@ -15,29 +12,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { DashboardTasksTableTabs } from '../constants'
-
-const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
-  return (
-    <span
-      className={cn(
-        'rounded-full px-2 py-1 text-xs font-medium',
-        priority === TASK_PRIORITY_ENUM.HIGH
-          ? 'bg-red-100 text-red-700'
-          : priority === TASK_PRIORITY_ENUM.MEDIUM
-            ? 'bg-yellow-100 text-yellow-700'
-            : 'bg-green-100 text-green-700',
-      )}
-    >
-      {TASK_PRIORITY_TO_TEXT_MAP[priority]}
-    </span>
-  )
-}
 
 type EditTaskButtonProps = {
   task: TTask
@@ -177,9 +156,7 @@ export const DashboardTasksTable = ({ type, tasks }: DashboardTasksTableProps) =
                 </TableCell>
 
                 <TableCell>
-                  <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
-                    {TASK_STATUS_TO_TEXT_MAP[task.status]}
-                  </span>
+                  <TodoStatusTable status={task.status} />
                 </TableCell>
 
                 <TableCell>

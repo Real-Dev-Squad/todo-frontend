@@ -1,6 +1,7 @@
 'use client'
 
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TodoListTable } from '@/components/todo-list-table'
 import { useQuery } from '@tanstack/react-query'
 
 type TeamTasksProps = {
@@ -13,9 +14,5 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
     queryFn: () => TasksApi.getTasks.fn({ teamId }),
   })
 
-  return (
-    <div>
-      <div>team tasks : {teamId}</div>
-    </div>
-  )
+  return <TodoListTable isLoading={isLoading} tasks={data?.tasks} />
 }

@@ -2,6 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { TTask } from '@/api/tasks/tasks.types'
+import { TodoListTable } from '@/components/todo-list-table'
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
@@ -43,9 +44,11 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
 
           <CreateTodoButton />
         </div>
+
         <TabsContent value={TabsConstants.All}>
-          <DashboardTasksTable type={TabsConstants.All} tasks={tasks} />
+          <TodoListTable tasks={tasks} classNames={{ container: 'pt-2' }} />
         </TabsContent>
+
         <TabsContent value={TabsConstants.WatchList}>
           <DashboardTasksTable type={TabsConstants.WatchList} tasks={tasks} />
         </TabsContent>

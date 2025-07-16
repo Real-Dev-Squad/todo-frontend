@@ -10,7 +10,7 @@ export type TTask = {
   assignee: {
     id: string
     name: string
-  }
+  } | null
   tags?: string[]
   dueAt?: string
   in_watchlist?: boolean | null
