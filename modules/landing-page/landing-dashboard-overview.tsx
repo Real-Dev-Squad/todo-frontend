@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
 import {
@@ -156,9 +156,18 @@ export function DashboardPreview() {
         {/* Header */}
         <div className="border-b border-gray-200 bg-white px-6 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-medium text-black">Good morning, John</h1>
-              <p className="text-sm text-gray-600">You have 3 tasks due today</p>
+            <div className="flex items-center space-x-2">
+              <Avatar>
+                <AvatarImage src="/img/user-2.jpg" />
+                <AvatarFallback>PC</AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="flex space-x-2">
+                  <h1 className="text-xl font-medium text-black">Good Morning, Prakash Sir</h1>
+                </div>
+
+                <p className="text-sm text-gray-600">You have completed 9 task today 👏</p>
+              </div>
             </div>
             <div className="flex items-center space-x-3">
               <div className="relative">
