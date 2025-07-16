@@ -22,7 +22,7 @@ export default async function Layout({
         </Button>
       </div>
       <TeamTabsNavigation />
-      <div className="my-5">{children}</div>
+      <div className="py-5">{children}</div>
     </PageContainer>
   )
 }
