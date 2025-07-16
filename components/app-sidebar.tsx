@@ -29,7 +29,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
 
   const teamsLinks = teams.teams.map((team) => ({
     title: team.name,
-    url: `/teams/${team.id}`,
+    url: `/teams/${team.id}/tasks`,
   }))
 
   return [
