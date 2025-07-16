@@ -14,7 +14,7 @@ export type GetTeamsDto = {
   teams: TTeam[]
   total: number
 }
-export type TeamCreatePayload = {
+export type CreateTeamPayload = {
   name: string
   description?: string
   member_ids: string[]

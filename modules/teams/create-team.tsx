@@ -57,10 +57,20 @@ export const CreateTeam = () => {
       },
       {
         onSuccess: (response) => {
-          setInviteCode(response.invite_code)
+          const team = (response as any).team || response
+          const inviteCode = team.invite_code || (response as any).invite_code
+          const teamId = team.id || (response as any).id
+
+          if (inviteCode) {
+            setInviteCode(inviteCode)
+          }
+
+          if (teamId) {
+            setTeamId(teamId)
+          }
+
           toast.success('Team created successfully!')
           setShowSuccessModal(true)
-          setTeamId(response.id)
         },
         onError: (error: Error) => {
           toast.error(error.message || 'Failed to create team')

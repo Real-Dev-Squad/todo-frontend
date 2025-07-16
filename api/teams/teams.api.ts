@@ -1,6 +1,6 @@
-import { apiClient } from '../../lib/api-client'
+import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
-import { GetTeamsDto, TeamCreatePayload, TTeam } from './teams.type'
+import { CreateTeamPayload, GetTeamsDto, TTeam } from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -13,7 +13,7 @@ export const TeamsApi = {
 
   createTeam: {
     key: ['TeamsApi.createTeam'],
-    fn: async (teamData: TeamCreatePayload): Promise<TTeam> => {
+    fn: async (teamData: CreateTeamPayload): Promise<TTeam> => {
       const { data } = await apiClient.post<TTeam>(`/v1/teams`, teamData)
       return data
     },
