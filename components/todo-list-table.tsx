@@ -68,7 +68,7 @@ const TodoListTableBody = ({ tasks, isLoading }: TodoListTableBodyProps) => {
   if (!tasks?.length) {
     return (
       <TableBody>
-        <TableRow>
+        <TableRow className="h-32">
           <TableCell colSpan={6}>
             <div className="text-center text-sm text-gray-500">No tasks found</div>
           </TableCell>
@@ -99,12 +99,9 @@ const TodoListTableRowShimmer = () => {
 type TodoListTableProps = {
   tasks?: TTask[]
   isLoading?: boolean
-  classNames?: {
-    container?: string
-  }
 }
 
-export const TodoListTable = ({ tasks, isLoading, classNames }: TodoListTableProps) => {
+export const TodoListTable = ({ tasks, isLoading }: TodoListTableProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -135,7 +132,7 @@ export const TodoListTable = ({ tasks, isLoading, classNames }: TodoListTablePro
   }
 
   return (
-    <div className={classNames?.container}>
+    <div>
       <div className="pb-4">
         <Searchbar
           defaultValue={search}

@@ -3,12 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoListTable } from '@/components/todo-list-table'
-import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from './create-todo-button'
-import { DashboardTasksTable } from './dashboard-tasks-table'
 
 type DashboardTabsProps = {
   tasks: TTask[]
@@ -20,8 +17,9 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentTab = searchParams.get('tab') || TabsConstants.All
-  const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
-  const queryClient = useQueryClient()
+
+  const filteredTasks =
+    currentTab === TabsConstants.All ? tasks : tasks.filter((task) => task.in_watchlist)
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
@@ -32,7 +30,7 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   return (
     <div className={className}>
       <Tabs value={currentTab} onValueChange={handleTabChange}>
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between pb-2">
           <TabsList>
             <TabsTrigger value={TabsConstants.All} className="cursor-pointer">
               {TabsConstants.All}
@@ -46,11 +44,11 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
         </div>
 
         <TabsContent value={TabsConstants.All}>
-          <TodoListTable tasks={tasks} classNames={{ container: 'pt-2' }} />
+          <TodoListTable tasks={filteredTasks} />
         </TabsContent>
 
         <TabsContent value={TabsConstants.WatchList}>
-          <DashboardTasksTable type={TabsConstants.WatchList} tasks={tasks} />
+          <TodoListTable tasks={filteredTasks} />
         </TabsContent>
       </Tabs>
     </div>
