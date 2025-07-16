@@ -25,9 +25,10 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
     return SIDEBAR_LINKS
   }
 
-  const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.url !== '/teams')
+  const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.id !== 'teams')
 
   const teamsLinks = teams.teams.map((team) => ({
+    id: team.id,
     title: team.name,
     url: `/teams/${team.id}/tasks`,
   }))
@@ -35,6 +36,7 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
   return [
     ...sidebarLinks,
     {
+      id: 'teams_list',
       title: 'Teams',
       url: '#',
       items: teamsLinks,
@@ -69,7 +71,7 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
         <SidebarGroupContent>
           <SidebarMenu>
             {link.items.map((item) => (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton asChild isActive={isActive}>
                   <a href={item.url}>{item.title}</a>
                 </SidebarMenuButton>
@@ -108,15 +110,11 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {isLoading ? (
+              {isLoading && !data ? (
                 <SidebarShimmer />
               ) : (
                 getSidebarLinks(data).map((item) => (
-                  <SidebarLink
-                    link={item}
-                    key={item.title}
-                    isActive={pathname.startsWith(item.url)}
-                  />
+                  <SidebarLink link={item} key={item.id} isActive={pathname.startsWith(item.url)} />
                 ))
               )}
             </SidebarMenu>
