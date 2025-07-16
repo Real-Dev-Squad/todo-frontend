@@ -16,6 +16,10 @@ export type TTask = {
   in_watchlist?: boolean | null
 }
 
+export type GetTaskReqDto = {
+  teamId?: string
+}
+
 export type GetTasksDto = {
   links: {
     next: string

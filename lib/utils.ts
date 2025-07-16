@@ -10,6 +10,7 @@ export function isPastDate(date: Date) {
   return date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const debounce = <T extends (...args: any[]) => void>(fn: T, delay: number = 250) => {
   let timeout: NodeJS.Timeout
 

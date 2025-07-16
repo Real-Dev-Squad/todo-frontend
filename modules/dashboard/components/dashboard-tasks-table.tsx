@@ -14,13 +14,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { DashboardTasksTableTabs } from '../constants'
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 
 const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
   return (
@@ -51,7 +51,7 @@ const EditTaskButton = ({ task }: EditTaskButtonProps) => {
   const updateTaskMutation = useMutation({
     mutationFn: TasksApi.updateTask.fn,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     },
@@ -98,7 +98,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
   const addTaskToWatchlistMutation = useMutation({
     mutationFn: TasksApi.addTaskToWatchList.fn,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Task added to watchlist!')
     },
     onError: () => {
@@ -109,7 +109,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
   const toggleWatchListStatusMutation = useMutation({
     mutationFn: TasksApi.toggleTaskWatchListStatus.fn,
     onSuccess: (_, variables) => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success(
         variables.isActive ? 'Task added to watchlist!' : 'Task removed from watchlist!',
       )

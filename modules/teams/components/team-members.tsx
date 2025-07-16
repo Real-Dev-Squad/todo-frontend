@@ -53,7 +53,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
     return data?.users?.filter((member) => {
       return (
         member.name.toLowerCase().includes(search.toLowerCase()) ||
-        member.tasksAssigned?.toString().includes(search)
+        member.tasksAssignedCount?.toString().includes(search)
       )
     })
   }, [data?.users, search])
@@ -121,7 +121,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                         : '--'}
                     </TableCell>
 
-                    <TableCell>{member.tasksAssigned ?? '--'}</TableCell>
+                    <TableCell>{member.tasksAssignedCount ?? '--'}</TableCell>
 
                     {isAdmin && (
                       <TableCell>

@@ -30,5 +30,5 @@ export type GetTeamByIdResponseDto = {
   updated_by: string
   created_at: string
   updated_at: string
-  users: { id: string; name: string; tasksAssigned?: number; addedOn?: string }[] | null
+  users: { id: string; name: string; tasksAssignedCount?: number; addedOn?: string }[] | null
 }

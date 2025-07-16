@@ -13,7 +13,7 @@ export const CreateTodoButton = () => {
   const createTaskMutation = useMutation({
     mutationFn: TasksApi.createTask.fn,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Todo created successfully')
       setShowCreateTaskForm(false)
     },

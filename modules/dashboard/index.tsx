@@ -13,8 +13,8 @@ import { DashboardWelcomeScreen } from './components/dashboard-welcome-screen'
 
 export const Dashboard = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: TasksApi.getTasks.key,
-    queryFn: TasksApi.getTasks.fn,
+    queryKey: TasksApi.getTasks.key(),
+    queryFn: () => TasksApi.getTasks.fn(),
   })
 
   if (isLoading) {

@@ -4,7 +4,7 @@ import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/Shimmer'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon } from 'lucide-react'
+import { UserRoundPlusIcon } from 'lucide-react'
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex items-center justify-between py-6">{children}</div>
@@ -30,11 +30,11 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   }
 
   return (
-    <div className="flex items-center justify-between py-6">
+    <div className="flex items-center justify-between pt-6 pb-8">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
 
       <Button size="sm">
-        <PlusIcon />
+        <UserRoundPlusIcon />
         Add a member
       </Button>
     </div>
