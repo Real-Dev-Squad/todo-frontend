@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
-import { GetTeamByIdResponseDto, GetTeamsDto } from './teams.type'
+import { GetTeamByIdReqDto, GetTeamByIdResponseDto, GetTeamsDto } from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -11,9 +11,16 @@ export const TeamsApi = {
     },
   },
   getTeamById: {
-    key: (teamId: string) => ['TeamsApi.getTeamById', teamId],
-    fn: async (teamId: string): Promise<GetTeamByIdResponseDto> => {
-      const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`)
+    key: ({ teamId, member: members }: GetTeamByIdReqDto) => [
+      'TeamsApi.getTeamById',
+      teamId,
+      members,
+    ],
+    fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<GetTeamByIdResponseDto> => {
+      const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`, {
+        params,
+      })
+
       return data
     },
   },

@@ -2,33 +2,41 @@
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { TeamDashboardHeader, TeamTab } from '../../../components/teams/TeamDashboardHeader'
+import { useParams, usePathname } from 'next/navigation'
 
-const tabs: Record<TeamTab, string> = {
-  tasks: 'Tasks',
-  activities: 'Activities',
-  members: 'Members',
+const getTabsList = (teamId: string) => {
+  return [
+    {
+      label: 'Tasks',
+      href: `/teams/${teamId}/tasks`,
+    },
+    {
+      label: 'Activities',
+      href: `/teams/${teamId}/activities`,
+    },
+    {
+      label: 'Members',
+      href: `/teams/${teamId}/members`,
+    },
+  ]
 }
+
 export function TeamTabsNavigation() {
+  const { teamId } = useParams()
   const pathname = usePathname()
-  const segments = pathname.split('/').filter(Boolean)
-  const teamId = segments[1]
-  const activeTab = Object.keys(tabs).includes(segments[2] as TeamTab)
-    ? (segments[2] as TeamTab)
-    : 'tasks'
+
+  const tabsList = teamId ? getTabsList(teamId as string) : []
+  const activeTab = tabsList.find((tab) => pathname.includes(tab.href))?.label
+
   return (
-    <>
-      <Tabs value={activeTab}>
-        <TabsList>
-          {Object.entries(tabs).map(([key, label]) => (
-            <TabsTrigger key={key} value={key} asChild>
-              <Link href={`/teams/${teamId}/${key}`}>{label}</Link>
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-      <TeamDashboardHeader activeTab={activeTab} />
-    </>
+    <Tabs value={activeTab}>
+      <TabsList>
+        {tabsList.map((tab) => (
+          <TabsTrigger key={tab.label} value={tab.label} asChild>
+            <Link href={tab.href}>{tab.label}</Link>
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   )
 }

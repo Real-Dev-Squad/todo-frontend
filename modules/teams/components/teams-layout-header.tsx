@@ -17,8 +17,8 @@ type TeamsLayoutHeaderProps = {
 
 export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   const { data: team, isLoading } = useQuery({
-    queryKey: TeamsApi.getTeamById.key(teamId),
-    queryFn: () => TeamsApi.getTeamById.fn(teamId),
+    queryKey: TeamsApi.getTeamById.key({ teamId }),
+    queryFn: () => TeamsApi.getTeamById.fn({ teamId }),
   })
 
   if (isLoading) {

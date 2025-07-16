@@ -15,6 +15,11 @@ export type GetTeamsDto = {
   total: number
 }
 
+export type GetTeamByIdReqDto = {
+  teamId: string
+  member?: boolean
+}
+
 export type GetTeamByIdResponseDto = {
   id: string
   name: string
@@ -25,5 +30,5 @@ export type GetTeamByIdResponseDto = {
   updated_by: string
   created_at: string
   updated_at: string
-  users: null
+  users: { id: string; name: string; tasksAssigned?: number; addedOn?: string }[] | null
 }
