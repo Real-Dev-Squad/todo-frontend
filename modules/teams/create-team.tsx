@@ -81,7 +81,7 @@ export const CreateTeam = () => {
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false)
-    router.push(`/teams/${teamId}`)
+    router.push(`/teams/${teamId}/tasks`)
   }
 
   const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {
