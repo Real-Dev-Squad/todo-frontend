@@ -1,6 +1,7 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
+import { Shimmer } from '@/components/Shimmer'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -20,39 +21,6 @@ import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
 import { MoreVertical } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
-
-// TODO: This should be fetch from backend
-
-const members = [
-  {
-    id: 1,
-    name: 'Prakash',
-    role: 'Admin',
-    joinedOn: '1 May 2025',
-    tasksAssigned: 4,
-  },
-  {
-    id: 2,
-    name: 'Tejas',
-    role: 'Admin',
-    joinedOn: '1 May 2025',
-    tasksAssigned: 5,
-  },
-  {
-    id: 3,
-    name: 'Anuj',
-    role: 'Member',
-    joinedOn: '1 May 2025',
-    tasksAssigned: 6,
-  },
-  {
-    id: 4,
-    name: 'Mayank',
-    role: 'Member',
-    joinedOn: '1 May 2025',
-    tasksAssigned: 3,
-  },
-]
 
 type TeamMembersProps = {
   teamId: string
@@ -80,45 +48,53 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
         </TableHeader>
 
         <TableBody>
-          {data?.users?.map((member) => (
-            <TableRow key={member.id}>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="font-medium">{member.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <span>{member.name}</span>
-                </div>
-              </TableCell>
+          {isLoading
+            ? new Array(5).fill(0).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell colSpan={5}>
+                    <Shimmer className="h-8 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))
+            : data?.users?.map((member) => (
+                <TableRow key={member.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="font-medium">{member.name[0]}</AvatarFallback>
+                      </Avatar>
+                      <span>{member.name}</span>
+                    </div>
+                  </TableCell>
 
-              <TableCell>--</TableCell>
+                  <TableCell>--</TableCell>
 
-              <TableCell>
-                {member.addedOn
-                  ? new DateUtil(member.addedOn).format(DateFormats.DD_MM_YYYY)
-                  : '--'}
-              </TableCell>
+                  <TableCell>
+                    {member.addedOn
+                      ? new DateUtil(member.addedOn).format(DateFormats.DD_MM_YYYY)
+                      : '--'}
+                  </TableCell>
 
-              <TableCell>{member.tasksAssigned ?? '--'}</TableCell>
+                  <TableCell>{member.tasksAssigned ?? '--'}</TableCell>
 
-              {isAdmin && (
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="rounded-full p-2 hover:bg-gray-100">
-                        <MoreVertical className="h-5 w-5" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>Change Role</DropdownMenuItem>
-                      <DropdownMenuItem>Remove from team</DropdownMenuItem>
-                      <DropdownMenuItem>View Assigned tasks</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              )}
-            </TableRow>
-          ))}
+                  {isAdmin && (
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="rounded-full p-2 hover:bg-gray-100">
+                            <MoreVertical className="h-5 w-5" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem>Change Role</DropdownMenuItem>
+                          <DropdownMenuItem>Remove from team</DropdownMenuItem>
+                          <DropdownMenuItem>View Assigned tasks</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))}
         </TableBody>
       </Table>
     </div>
