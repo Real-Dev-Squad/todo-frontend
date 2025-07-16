@@ -5,7 +5,6 @@ import { Shimmer } from '@/components/Shimmer'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
-import Link from 'next/link'
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex items-center justify-between py-6">{children}</div>
@@ -34,11 +33,9 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
     <div className="flex items-center justify-between py-6">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
 
-      <Button asChild size="sm">
-        <Link href="/teams/create" className="ml-auto">
-          <PlusIcon />
-          Create a Team
-        </Link>
+      <Button size="sm">
+        <PlusIcon />
+        Add a member
       </Button>
     </div>
   )
