@@ -10,10 +10,14 @@ export type TTask = {
   assignee?: {
     id: string
     name: string
-  }
+  } | null
   tags?: string[]
   dueAt?: string
   in_watchlist?: boolean | null
+}
+
+export type GetTaskReqDto = {
+  teamId?: string
 }
 
 export type GetTasksDto = {
@@ -41,9 +45,6 @@ export type UpdateTaskDto = {
 }
 
 export type GetWatchListTaskDto = {
-  links: {
-    next: string
-  }
   tasks: TWatchListTask[]
 }
 

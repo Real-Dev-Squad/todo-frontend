@@ -1,11 +1,11 @@
 'use client'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TTask } from '@/api/tasks/tasks.types'
+import { TodoListTable } from '@/components/todo-list-table'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from './create-todo-button'
-import { DashboardTasksTable } from './dashboard-tasks-table'
 import { DashboardWatchlistTasksTable } from './dashboard-watchlist-tasks-table'
 
 type DashboardTabsProps = {
@@ -28,7 +28,7 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
   return (
     <div className={className}>
       <Tabs value={currentTab} onValueChange={handleTabChange}>
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between pb-2">
           <TabsList>
             <TabsTrigger value={TabsConstants.All} className="cursor-pointer">
               {TabsConstants.All}
@@ -40,9 +40,11 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
 
           <CreateTodoButton />
         </div>
+
         <TabsContent value={TabsConstants.All}>
-          <DashboardTasksTable tasks={tasks} />
+          <TodoListTable showActions tasks={tasks} />
         </TabsContent>
+
         <TabsContent value={TabsConstants.WatchList}>
           <DashboardWatchlistTasksTable />
         </TabsContent>

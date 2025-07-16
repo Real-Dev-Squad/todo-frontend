@@ -1,11 +1,8 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
-import {
-  TASK_PRIORITY_ENUM,
-  TASK_PRIORITY_TO_TEXT_MAP,
-  TASK_STATUS_TO_TEXT_MAP,
-} from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
-import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
+import { EditTaskButton } from '@/components/edit-task-button'
+import { TaskPriorityLabel } from '@/components/task-priority-label'
+import { TodoStatusTable } from '@/components/todo-status-table'
 import {
   Table,
   TableBody,
@@ -14,77 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { cn } from '@/lib/utils'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Edit2, Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
-
-const TaskPriorityLabel = ({ priority }: { priority: TASK_PRIORITY_ENUM }) => {
-  return (
-    <span
-      className={cn(
-        'rounded-full px-2 py-1 text-xs font-medium',
-        priority === TASK_PRIORITY_ENUM.HIGH
-          ? 'bg-red-100 text-red-700'
-          : priority === TASK_PRIORITY_ENUM.MEDIUM
-            ? 'bg-yellow-100 text-yellow-700'
-            : 'bg-green-100 text-green-700',
-      )}
-    >
-      {TASK_PRIORITY_TO_TEXT_MAP[priority]}
-    </span>
-  )
-}
-
-type EditTaskButtonProps = {
-  task: TTask
-}
-
-const EditTaskButton = ({ task }: EditTaskButtonProps) => {
-  const queryClient = useQueryClient()
-
-  const [showEditTaskForm, setShowEditTaskForm] = useState(false)
-
-  const updateTaskMutation = useMutation({
-    mutationFn: TasksApi.updateTask.fn,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
-      toast.success('Todo updated successfully')
-      setShowEditTaskForm(false)
-    },
-    onError: () => {
-      toast.error('Failed to update todo')
-    },
-  })
-
-  return (
-    <CreateEditTaskDialog
-      mode="edit"
-      open={showEditTaskForm}
-      onOpenChange={setShowEditTaskForm}
-      isMutationPending={updateTaskMutation.isPending}
-      defaultData={{
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueAt || '',
-        priority: task.priority,
-      }}
-      onSubmit={(value) =>
-        updateTaskMutation.mutate({
-          id: task.id,
-          title: value.title,
-          dueAt: value.dueDate,
-          priority: value.priority,
-          description: value.description,
-        })
-      }
-    >
-      <Edit2 className="h-4 w-4" />
-    </CreateEditTaskDialog>
-  )
-}
 
 type WatchListButtonProps = {
   taskId: string
@@ -97,8 +27,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
   const addTaskToWatchlistMutation = useMutation({
     mutationFn: TasksApi.addTaskToWatchList.fn,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Task added to watchlist!')
     },
     onError: () => {
@@ -109,7 +38,7 @@ const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps) => {
   const toggleWatchListStatusMutation = useMutation({
     mutationFn: TasksApi.toggleTaskWatchListStatus.fn,
     onSuccess: (_, variables) => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
       toast.success(
         variables.isActive ? 'Task added to watchlist!' : 'Task removed from watchlist!',
@@ -173,9 +102,7 @@ export const DashboardTasksTable = ({ tasks }: DashboardTasksTableProps) => {
                 </TableCell>
 
                 <TableCell>
-                  <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs text-yellow-700">
-                    {TASK_STATUS_TO_TEXT_MAP[task.status]}
-                  </span>
+                  <TodoStatusTable status={task.status} />
                 </TableCell>
 
                 <TableCell>

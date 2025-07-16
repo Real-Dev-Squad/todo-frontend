@@ -16,7 +16,10 @@ import {
 } from '@/components/ui/sidebar'
 import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
+import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
+import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Shimmer } from './Shimmer'
 
@@ -25,20 +28,30 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
     return SIDEBAR_LINKS
   }
 
-  const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.url !== '/teams')
+  const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.id !== 'teams')
 
-  const teamsLinks = teams.teams.map((team) => ({
+  const teamsLinks: TSidebarLink[] = teams.teams.map((team) => ({
     id: team.id,
     title: team.name,
     url: `/teams/${team.id}/tasks`,
+    baseUrl: `/teams/${team.id}`,
   }))
+
+  teamsLinks.push({
+    id: 'create_team_cta',
+    title: 'Create a team',
+    url: '/teams/create',
+    baseUrl: '/teams/create',
+    icon: PlusIcon,
+  })
 
   return [
     ...sidebarLinks,
     {
-      id: 'teams',
+      id: 'teams_list',
       title: 'Teams',
       url: '#',
+      baseUrl: '#',
       items: teamsLinks,
     },
   ]
@@ -60,20 +73,35 @@ const SidebarShimmer = () => {
 
 type SidebarLinkProps = {
   link: TSidebarLink
-  isActive: boolean
 }
 
-const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
+const SidebarLink = ({ link }: SidebarLinkProps) => {
+  const pathname = usePathname()
+
   if (link.items) {
     return (
       <SidebarGroup>
         <SidebarGroupLabel>{link.title}</SidebarGroupLabel>
+
         <SidebarGroupContent>
           <SidebarMenu>
             {link.items.map((item) => (
               <SidebarMenuItem key={item.id}>
-                <SidebarMenuButton asChild isActive={isActive}>
-                  <a href={item.url}>{item.title}</a>
+                <SidebarMenuButton asChild isActive={pathname.startsWith(item.baseUrl)}>
+                  <Link
+                    href={item.url}
+                    className={cn(
+                      item.id === 'create_team_cta' &&
+                        'opacity-75 hover:opacity-100 focus:opacity-100 active:opacity-100',
+                    )}
+                  >
+                    {item.icon && (
+                      <div className="pr-0.5">
+                        <item.icon className="h-4 w-4" />
+                      </div>
+                    )}
+                    {item.title}
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -85,16 +113,22 @@ const SidebarLink = ({ link, isActive }: SidebarLinkProps) => {
 
   return (
     <SidebarMenuItem className="px-2">
-      <SidebarMenuButton asChild isActive={isActive}>
-        <a href={link.url}>{link.title}</a>
+      <SidebarMenuButton asChild isActive={pathname.startsWith(link.baseUrl)}>
+        <Link href={link.url}>
+          {link.icon && (
+            <div className="pr-0.5">
+              <link.icon className="h-4 w-4" />
+            </div>
+          )}
+
+          {link.title}
+        </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
   )
 }
 
 export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
-  const pathname = usePathname()
-
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeams.key,
     queryFn: TeamsApi.getTeams.fn,
@@ -111,16 +145,10 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {isLoading ? (
+              {isLoading && !data ? (
                 <SidebarShimmer />
               ) : (
-                getSidebarLinks(data).map((item) => (
-                  <SidebarLink
-                    link={item}
-                    key={item.title}
-                    isActive={pathname.startsWith(item.url)}
-                  />
-                ))
+                getSidebarLinks(data).map((item) => <SidebarLink link={item} key={item.id} />)
               )}
             </SidebarMenu>
           </SidebarGroupContent>

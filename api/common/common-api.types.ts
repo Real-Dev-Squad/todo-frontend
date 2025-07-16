@@ -1,5 +1,5 @@
 type TApiFunction<T> = {
-  key: string[] | ((...args: any[]) => string[])
+  key: string[] | ((...args: any[]) => Array<string | number | boolean | undefined>)
   fn: (...args: any[]) => Promise<T>
 }
 

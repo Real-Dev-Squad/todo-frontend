@@ -1,3 +1,9 @@
-import { TeamMembers } from '@/components/teams/TeamMember'
+import { TeamMembers } from '@/modules/teams/components/team-members'
 
-export default TeamMembers
+const TeamMembersPage = async ({ params }: { params: Promise<{ teamId: string }> }) => {
+  const { teamId } = await params
+
+  return <TeamMembers teamId={teamId} />
+}
+
+export default TeamMembersPage

@@ -54,7 +54,7 @@ export const UserProfileMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src="" />
+          <AvatarImage src={user.picture} />
           <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

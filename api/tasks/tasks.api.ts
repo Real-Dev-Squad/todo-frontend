@@ -1,21 +1,22 @@
 import { apiClient } from '../../lib/api-client'
 import { TApiMethodsRecord } from '../common/common-api.types'
 import {
-  ToggleWatchListStatusDto,
+  AddTaskToWatchListDto,
   CrateTaskDto,
+  GetTaskReqDto,
   GetTasksDto,
+  GetWatchListTaskDto,
+  ToggleWatchListStatusDto,
   TTask,
   TWatchListTask,
   UpdateTaskDto,
-  AddTaskToWatchListDto,
-  GetWatchListTaskDto,
 } from './tasks.types'
 
 export const TasksApi = {
   getTasks: {
-    key: ['TasksApi.getTasks'],
-    fn: async (): Promise<GetTasksDto> => {
-      const { data } = await apiClient.get<GetTasksDto>(`/v1/tasks`)
+    key: (teamId?: string) => ['TasksApi.getTasks', teamId],
+    fn: async (params?: GetTaskReqDto): Promise<GetTasksDto> => {
+      const { data } = await apiClient.get<GetTasksDto>(`/v1/tasks`, { params })
       return data
     },
   },

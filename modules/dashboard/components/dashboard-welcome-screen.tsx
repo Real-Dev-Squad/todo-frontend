@@ -17,7 +17,7 @@ export const DashboardWelcomeScreen = () => {
   const createTaskMutation = useMutation({
     mutationFn: (task: TTask) => TasksApi.createTask.fn(task),
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Task created successfully')
       setShowCreateTaskForm(false)
     },
