@@ -93,5 +93,10 @@
   "volta": {
     "node": "22.13.0",
     "pnpm": "9.15.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
