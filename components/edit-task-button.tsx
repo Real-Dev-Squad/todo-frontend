@@ -49,7 +49,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
           dueAt: value.dueDate,
           priority: value.priority,
           description: value.description,
-          labels: value.labels,
+          labels: value.labels ?? [],
         })
       }
     >
