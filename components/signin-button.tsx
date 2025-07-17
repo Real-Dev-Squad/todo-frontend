@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
-import { XIcon } from 'lucide-react'
+import { ArrowRight, LayoutDashboard, XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './ui/alert-dialog'
+import { Skeleton } from './ui/skeleton'
 
 const GoogleIcon = () => {
   return (
@@ -45,29 +46,52 @@ const GoogleIcon = () => {
 }
 
 export const SigninButton = () => {
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn, isLoading } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
 
   const handleSignIn = () => {
-    if (isLoggedIn) {
-      return
-    }
-
+    if (isLoggedIn) return
     window.location.href = `${appConfig.backendBaseUrl}/v1/auth/google/login`
+  }
+
+  if (isLoading) {
+    return <Skeleton className="h-12 w-64 bg-neutral-950" />
   }
 
   if (isLoggedIn) {
     return (
-      <Button asChild>
-        <Link href="/dashboard">Go to dashboard</Link>
-      </Button>
+      <div className="group relative">
+        <Button
+          size="lg"
+          className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-400 to-black px-8 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
+        >
+          <Link href="/dashboard">
+            <span className="relative z-10 flex items-center gap-3 font-bold tracking-wide">
+              <LayoutDashboard className="h-5 w-5 transition-all duration-500 group-hover:scale-105" />
+              Launch Dashboard
+              <div className="ml-1 h-2 w-2 animate-pulse rounded-full bg-green-200" />
+            </span>
+          </Link>
+        </Button>
+      </div>
     )
   }
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button className="px-4 text-sm md:px-6 md:text-base">Sign in</Button>
+        <div className="group relative">
+          <Button
+            size="lg"
+            className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-400 to-black px-8 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
+          >
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+            <span className="relative z-10 flex items-center gap-3 font-bold tracking-wide">
+              <div className="flex items-center gap-2">Start Your Journey</div>
+              <ArrowRight />
+            </span>
+          </Button>
+        </div>
       </AlertDialogTrigger>
 
       <AlertDialogContent className="mx-4 max-w-[90vw] sm:max-w-md">

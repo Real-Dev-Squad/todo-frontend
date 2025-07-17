@@ -1,4 +1,5 @@
-import { ArrowRight, ArrowUpRight, Play, Star, Target } from 'lucide-react'
+import { SigninButton } from '@/components/signin-button'
+import { Star, Target } from 'lucide-react'
 import Image from 'next/image'
 
 export function HeroSection() {
@@ -22,15 +23,7 @@ export function HeroSection() {
           </p>
 
           <div className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <button className="group flex transform items-center rounded-full bg-black px-8 py-4 text-lg font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-xl">
-              Forever Free
-              <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </button>
-            <button className="group flex items-center rounded-full border-2 border-gray-200 px-8 py-4 text-lg font-medium text-black transition-all duration-300 hover:border-black">
-              <Play className="mr-3 h-5 w-5" />
-              Watch demo
-              <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+            <SigninButton />
           </div>
 
           <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
