@@ -18,9 +18,7 @@ interface SelectPocProps {
 }
 
 export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocProps) => {
-  const options = [currentUser, ...members].filter(
-    (u, i, arr) => u.user_id && arr.findIndex((x) => x.user_id === u.user_id) === i,
-  )
+  const options = [currentUser, ...members]
 
   return (
     <div>
@@ -32,8 +30,8 @@ export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocPr
           </SelectTrigger>
           <SelectContent>
             {options.map((user, index) => (
-              <SelectItem key={user.user_id || `user-${index}`} value={user.user_id}>
-                {user.name}
+              <SelectItem key={user.userId || `user-${index}`} value={user.userId}>
+                {user.name} {user.userId === currentUser.userId && '(You)'}
               </SelectItem>
             ))}
           </SelectContent>
@@ -44,6 +42,11 @@ export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocPr
           </Button>
         )}
       </div>
+      {!value && (
+        <span className="mt-2 block rounded-md border border-gray-200 bg-gray-50 p-2 text-sm text-gray-600">
+          Note: You will become the default Point of contact(POC), if no POC is selected{' '}
+        </span>
+      )}
     </div>
   )
 }

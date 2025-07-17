@@ -64,7 +64,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
       return
     }
 
-    const memberIds = selectedUsers.map((u) => u.user_id)
+    const memberIds = selectedUsers.map((u) => u.userId)
     addMembersMutation.mutate({ teamId, member_ids: memberIds })
   }
 

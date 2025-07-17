@@ -21,11 +21,10 @@ const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
   const userId = (u.user_id as string) || (u.userId as string) || (u.id as string) || ''
   return {
-    user_id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
+    userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
-    auth_type: (u.auth_type as string) || '',
-    google_id: (u.google_id as string) || '',
+    picture: (u.picture as string) || (u.avatar as string) || '',
   }
 }
 
@@ -42,7 +41,7 @@ export const UserSelection = ({
   const [isSearching, setIsSearching] = useState(false)
 
   const selectedUserIds = useMemo(
-    () => new Set(selectedUsers.map((user) => user.user_id)),
+    () => new Set(selectedUsers.map((user) => user.userId)),
     [selectedUsers],
   )
 
@@ -50,10 +49,10 @@ export const UserSelection = ({
   const userOptions = useMemo((): ComboboxOption[] => {
     return availableUsers
       .filter(
-        (user) => !selectedUserIds.has(user.user_id) && !excludeUserIds.includes(user.user_id),
+        (user) => !selectedUserIds.has(user.userId) && !excludeUserIds.includes(user.userId),
       )
       .map((user) => ({
-        value: user.user_id,
+        value: user.userId,
         label: `${user.name} (${user.email})`,
         user: user,
       }))
@@ -82,7 +81,7 @@ export const UserSelection = ({
   }
 
   const handleRemoveUser = (id: string) => {
-    onUsersChange(selectedUsers.filter((user) => user.user_id !== id))
+    onUsersChange(selectedUsers.filter((user) => user.userId !== id))
   }
 
   const handleClearAllUsers = () => {
@@ -153,7 +152,7 @@ export const UserSelection = ({
           <div className="max-h-60 space-y-2 overflow-y-auto">
             {selectedUsers.map((user, index) => (
               <div
-                key={user.user_id}
+                key={user.userId}
                 className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors"
               >
                 <Avatar className="h-9 w-9 shrink-0">
@@ -173,7 +172,7 @@ export const UserSelection = ({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
-                    onClick={() => handleRemoveUser(user.user_id)}
+                    onClick={() => handleRemoveUser(user.userId)}
                     title={`Remove ${user.name}`}
                   >
                     <X className="h-4 w-4" />

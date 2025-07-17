@@ -42,7 +42,7 @@ export const CreateTeam = () => {
   const [teamInfo, setTeamInfo] = useState<TTeamInfo>(DEFAULT_TEAM_INFO)
   const [teamId, setTeamId] = useState<string | null>(null)
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
-  const [pocId, setPocId] = useState<string | null>(user?.user_id || null)
+  const [pocId, setPocId] = useState<string | null>(user?.userId || null)
 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [inviteCode, setInviteCode] = useState<string>('')
@@ -53,7 +53,7 @@ export const CreateTeam = () => {
       return
     }
 
-    const memberIds = selectedUsers.map((u) => u.user_id)
+    const memberIds = selectedUsers.map((u) => u.userId)
 
     createTeamMutation.mutate(
       {
