@@ -24,8 +24,7 @@ const normalizeUser = (user: unknown): TUser => {
     user_id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
-    auth_type: (u.auth_type as string) || '',
-    google_id: (u.google_id as string) || '',
+    picture: (u.picture as string) || (u.avatar as string) || '',
   }
 }
 

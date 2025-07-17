@@ -5,10 +5,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const DEFAULT_USER: TUser = {
   user_id: '',
-  auth_type: '',
-  google_id: '',
   email: '',
   name: '',
+  picture: '',
 }
 
 export const useAuth = () => {
