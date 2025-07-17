@@ -21,7 +21,7 @@ const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
   const userId = (u.user_id as string) || (u.userId as string) || (u.id as string) || ''
   return {
-    user_id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
+    userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
     picture: (u.picture as string) || (u.avatar as string) || '',
@@ -34,19 +34,19 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
   const [availableUsers, setAvailableUsers] = useState<TUser[]>([])
   const [isSearching, setIsSearching] = useState(false)
-  const [pocId, setPocId] = useState<string | null>(currentUser.user_id)
+  const [pocId, setPocId] = useState<string | null>(currentUser.userId)
 
   const selectedUserIds = useMemo(
-    () => new Set(selectedUsers.map((user) => user.user_id)),
+    () => new Set(selectedUsers.map((user) => user.userId)),
     [selectedUsers],
   )
 
   // Convert users to combobox options
   const userOptions = useMemo((): ComboboxOption[] => {
     return availableUsers
-      .filter((user) => !selectedUserIds.has(user.user_id))
+      .filter((user) => !selectedUserIds.has(user.userId))
       .map((user) => ({
-        value: user.user_id,
+        value: user.userId,
         label: `${user.name} (${user.email})`,
         user: user,
       }))
@@ -75,7 +75,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   }
 
   const handleRemoveUser = (id: string) => {
-    setSelectedUsers((prev) => prev.filter((user) => user.user_id !== id))
+    setSelectedUsers((prev) => prev.filter((user) => user.userId !== id))
   }
 
   const handleClearAllUsers = () => {
@@ -83,12 +83,12 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   }
 
   const handleSubmit = () => {
-    const memberIds = selectedUsers.map((u) => u.user_id)
+    const memberIds = selectedUsers.map((u) => u.userId)
     onCreateTeam(memberIds, pocId)
   }
 
   const handleSkipInviting = () => {
-    onCreateTeam([], '')
+    onCreateTeam([], pocId ?? currentUser.userId)
   }
 
   const handleSearchChange = (search: string) => {
@@ -176,7 +176,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
               <div className="max-h-60 space-y-2 overflow-y-auto">
                 {selectedUsers.map((user, index) => (
                   <div
-                    key={user.user_id}
+                    key={user.userId}
                     className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors"
                   >
                     <Avatar className="h-9 w-9 shrink-0">
@@ -196,7 +196,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
-                        onClick={() => handleRemoveUser(user.user_id)}
+                        onClick={() => handleRemoveUser(user.userId)}
                         title={`Remove ${user.name}`}
                       >
                         <X className="h-4 w-4" />

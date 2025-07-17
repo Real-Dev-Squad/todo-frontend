@@ -45,7 +45,7 @@ export const useSearch = () => {
       )
       const userResults: SearchResult[] = (data || []).slice(0, 10).map((user) => ({
         type: 'user' as const,
-        id: user.user_id,
+        id: user.userId,
         title: `${user.name}`,
         subtitle: user.email,
         data: user,
