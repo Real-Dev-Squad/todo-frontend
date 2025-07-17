@@ -1,23 +1,7 @@
 'use client'
 
+import { Label } from '@/api/labels/labels.types'
 import { LabelMultiSelect } from './multi-labels-select'
-
-type UserRef = {
-  id: string
-  name: string
-  addedOn: string | null
-  tasksAssignedCount: number | null
-}
-
-type Label = {
-  id: string
-  name: string
-  color: string
-  createdAt: string
-  updatedAt: string | null
-  createdBy: UserRef
-  updatedBy: UserRef | null
-}
 
 type SelectLabelsProps = {
   labelData: Label[]
