@@ -19,7 +19,7 @@ type UserSelectionProps = {
 
 const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
-  const userId = (u.user_id as string) || (u.userId as string) || (u.id as string) || ''
+  const userId = (u.userId as string) || ''
   return {
     userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
@@ -48,9 +48,7 @@ export const UserSelection = ({
   // Convert users to combobox options
   const userOptions = useMemo((): ComboboxOption[] => {
     return availableUsers
-      .filter(
-        (user) => !selectedUserIds.has(user.userId) && !excludeUserIds.includes(user.userId),
-      )
+      .filter((user) => !selectedUserIds.has(user.userId) && !excludeUserIds.includes(user.userId))
       .map((user) => ({
         value: user.userId,
         label: `${user.name} (${user.email})`,
