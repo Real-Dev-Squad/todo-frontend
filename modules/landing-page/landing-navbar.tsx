@@ -1,4 +1,3 @@
-import { SigninButton } from '@/components/signin-button'
 import { appConfig } from '@/config/app-config'
 import { Zap } from 'lucide-react'
 
@@ -14,17 +13,6 @@ export function Navbar() {
               </div>
             </div>
             <span className="text-xl font-bold tracking-tight">{appConfig.appName}</span>
-          </div>
-
-          <div className="hidden items-center space-x-8 md:flex">
-            <a
-              href="#features"
-              className="group relative text-gray-600 transition-all duration-200 hover:text-black"
-            >
-              Features
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-black transition-all duration-200 group-hover:w-full" />
-            </a>
-            <SigninButton />
           </div>
         </div>
       </div>
