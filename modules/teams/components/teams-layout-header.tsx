@@ -64,7 +64,15 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
       return
     }
 
-    const memberIds = selectedUsers.map((u) => u.userId)
+    const memberIds = selectedUsers
+      .map((u) => u.userId)
+      .filter((id) => id && !id.startsWith('temp-'))
+
+    if (memberIds.length === 0) {
+      toast.error('No valid user IDs found')
+      return
+    }
+
     addMembersMutation.mutate({ teamId, member_ids: memberIds })
   }
 
@@ -92,7 +100,10 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
       </Button>
 
       <AlertDialog open={isAddMembersModalOpen} onOpenChange={handleCloseModal}>
-        <AlertDialogContent className="max-w-md">
+        <AlertDialogContent
+          className="w-96 !max-w-sm"
+          style={{ maxWidth: '384px', width: '384px' }}
+        >
           <AlertDialogHeader>
             <AlertDialogTitle>Add Members to Team</AlertDialogTitle>
           </AlertDialogHeader>

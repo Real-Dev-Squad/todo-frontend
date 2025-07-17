@@ -19,13 +19,17 @@ type UserSelectionProps = {
 
 const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
-  const userId = (u.userId as string) || ''
-  return {
+
+  const userId =
+    (u.user_id as string) || (u.userId as string) || (u.id as string) || (u._id as string) || ''
+
+  const normalized = {
     userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
-    name: (u.name as string) || '',
-    email: (u.email as string) || (u.email_id as string) || '',
-    picture: (u.picture as string) || (u.avatar as string) || '',
+    name: (u.name as string) || (u.fullName as string) || '',
+    email: (u.email as string) || (u.email_id as string) || (u.emailId as string) || '',
+    picture: (u.picture as string) || (u.avatar as string) || (u.profilePicture as string) || '',
   }
+  return normalized
 }
 
 export const UserSelection = ({
