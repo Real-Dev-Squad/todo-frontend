@@ -32,6 +32,7 @@ export type CrateTaskDto = {
   description?: string
   priority?: TASK_PRIORITY_ENUM
   status?: TASK_STATUS_ENUM
+  labels?: string[]
   dueAt?: string
 }
 
@@ -41,6 +42,7 @@ export type UpdateTaskDto = {
   description?: string
   priority?: TASK_PRIORITY_ENUM
   status?: TASK_STATUS_ENUM
+  labels: string[]
   dueAt?: string
 }
 

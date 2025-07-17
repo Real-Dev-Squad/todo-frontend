@@ -40,6 +40,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
         description: task.description || '',
         dueDate: task.dueAt || '',
         priority: task.priority,
+        labels: task.labels,
       }}
       onSubmit={(value) =>
         updateTaskMutation.mutate({
@@ -48,6 +49,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
           dueAt: value.dueDate,
           priority: value.priority,
           description: value.description,
+          labels: value.labels,
         })
       }
     >

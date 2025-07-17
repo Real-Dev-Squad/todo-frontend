@@ -34,6 +34,7 @@ export const CreateTodoButton = () => {
           description: value.description,
           priority: value.priority,
           dueAt: value.dueDate,
+          labels: value.labels,
         })
       }
     >

@@ -1,5 +1,6 @@
 'use client'
 
+import { LablesApi } from '@/api/labels/labels.api'
 import { TASK_PRIORITY_ENUM } from '@/api/tasks/tasks.enum'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -12,7 +13,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { isPastDate } from '@/lib/utils'
+import { SelectLabels } from '@/modules/dashboard/components/select-labels'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { CalendarIcon, PlayIcon } from 'lucide-react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
@@ -23,6 +26,7 @@ const todoFormSchema = z.object({
   description: z.string().min(1, 'Description is required'),
   dueDate: z.string().min(1, 'Due date is required'),
   priority: z.enum(TASK_PRIORITY_ENUM).optional(),
+  labels: z.array(z.string()).optional(),
 })
 
 export type TodoFormData = z.infer<typeof todoFormSchema>
@@ -76,6 +80,7 @@ export const CreateEditTodoForm = ({
       description: initialData?.description || '',
       dueDate: initialData?.dueDate || '',
       priority: initialData?.priority || TASK_PRIORITY_ENUM.LOW,
+      labels: initialData?.labels || [],
     },
   })
 
@@ -85,6 +90,12 @@ export const CreateEditTodoForm = ({
   const handleFormSubmit = (data: TodoFormData) => {
     onSubmit(data)
   }
+
+  const { data: labels = [] } = useQuery({
+    queryKey: LablesApi.getLabel.key,
+    queryFn: LablesApi.getLabel.fn,
+    staleTime: 5 * 60 * 1000,
+  })
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
@@ -176,6 +187,19 @@ export const CreateEditTodoForm = ({
               )}
             />
           </div>
+
+          {/* Label */}
+          <Controller
+            control={control}
+            name="labels"
+            render={({ field }) => (
+              <SelectLabels
+                labelData={labels}
+                value={field.value ?? []}
+                onChange={field.onChange}
+              />
+            )}
+          />
         </div>
       </div>
 
