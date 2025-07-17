@@ -42,7 +42,7 @@ export type UpdateTaskDto = {
   description?: string
   priority?: TASK_PRIORITY_ENUM
   status?: TASK_STATUS_ENUM
-  labels: string[]
+  labels?: string[]
   dueAt?: string
 }
 
