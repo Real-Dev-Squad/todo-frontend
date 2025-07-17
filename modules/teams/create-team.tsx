@@ -1,14 +1,17 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
+import { TUser } from '@/api/users/users.types'
 import { PageContainer } from '@/components/page-container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
-import { InviteForm } from '@/modules/teams/components/invite-team-form'
+import { SelectPoc } from '@/modules/teams/components/select-poc'
+import { UserSelection } from '@/modules/teams/components/user-selection'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -38,15 +41,19 @@ export const CreateTeam = () => {
   const [showInviteForm, setShowInviteForm] = useState(false)
   const [teamInfo, setTeamInfo] = useState<TTeamInfo>(DEFAULT_TEAM_INFO)
   const [teamId, setTeamId] = useState<string | null>(null)
+  const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
+  const [pocId, setPocId] = useState<string | null>(user?.user_id || null)
 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [inviteCode, setInviteCode] = useState<string>('')
 
-  const handleCreateTeam = async (memberIds: string[], pocId: string | null) => {
+  const handleCreateTeam = async () => {
     if (!teamInfo?.name.trim()) {
       toast.error('Team name is required')
       return
     }
+
+    const memberIds = selectedUsers.map((u) => u.user_id)
 
     createTeamMutation.mutate(
       {
@@ -79,6 +86,10 @@ export const CreateTeam = () => {
     )
   }
 
+  const handleSkipInviting = () => {
+    handleCreateTeam()
+  }
+
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false)
     router.push(`/teams/${teamId}/tasks`)
@@ -101,13 +112,49 @@ export const CreateTeam = () => {
 
   if (showInviteForm) {
     return (
-      <InviteForm
-        loading={createTeamMutation.isPending}
-        currentUser={user}
-        teamName={teamInfo.name}
-        onCreateTeam={handleCreateTeam}
-        onBack={() => setShowInviteForm(false)}
-      />
+      <PageContainer className="flex-1 py-12 md:py-20 xl:py-28">
+        <div className="mx-auto w-full max-w-xs rounded-lg border border-black bg-white p-6 shadow-2xl">
+          <div className="flex items-center gap-2 pb-8 xl:pb-10">
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => setShowInviteForm(false)}
+              className="h-9 w-9 shrink-0 hover:bg-gray-100"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+
+            <h2 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
+              Invite Teammates
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            <UserSelection selectedUsers={selectedUsers} onUsersChange={setSelectedUsers} />
+
+            <SelectPoc
+              currentUser={user}
+              members={selectedUsers}
+              value={pocId}
+              onChange={setPocId}
+            />
+
+            <div className="flex w-full flex-col gap-2">
+              <Button
+                className="w-full"
+                onClick={handleCreateTeam}
+                disabled={createTeamMutation.isPending || selectedUsers.length === 0}
+              >
+                {createTeamMutation.isPending ? 'Creating...' : 'Create Team'}
+              </Button>
+
+              <Button variant="outline" className="w-full" onClick={handleSkipInviting}>
+                Skip Inviting
+              </Button>
+            </div>
+          </div>
+        </div>
+      </PageContainer>
     )
   }
 

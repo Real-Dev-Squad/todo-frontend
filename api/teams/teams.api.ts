@@ -36,4 +36,19 @@ export const TeamsApi = {
       return data
     },
   },
+  addMembers: {
+    key: ({ teamId }: { teamId: string }) => ['TeamsApi.addMembers', teamId],
+    fn: async ({
+      teamId,
+      member_ids,
+    }: {
+      teamId: string
+      member_ids: string[]
+    }): Promise<GetTeamByIdResponseDto> => {
+      const { data } = await apiClient.post<GetTeamByIdResponseDto>(`/v1/teams/${teamId}/members`, {
+        member_ids,
+      })
+      return data
+    },
+  },
 } satisfies TApiMethodsRecord
