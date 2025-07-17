@@ -20,14 +20,18 @@ import { CalendarIcon, PlayIcon } from 'lucide-react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DatePickerSelect } from './date-picker-select'
+import { UserAndTeamSearch } from './user-and-team-search'
 
 const todoFormSchema = z.object({
+  taskId: z.string().optional(),
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
   dueDate: z.string().min(1, 'Due date is required'),
   priority: z.enum(TASK_PRIORITY_ENUM).optional(),
   status: z.enum(TASK_STATUS_ENUM).optional(),
   labels: z.array(z.string()).optional(),
+  assigneeId: z.string().optional(),
+  userType: z.enum(['user', 'team']).optional(),
 })
 
 export type TodoFormData = z.infer<typeof todoFormSchema>
@@ -71,6 +75,7 @@ export const CreateEditTodoForm = ({
   const {
     control,
     register,
+    setValue,
     handleSubmit,
     formState: { errors, isDirty },
     watch,
@@ -90,7 +95,8 @@ export const CreateEditTodoForm = ({
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
 
   const handleFormSubmit = (data: TodoFormData) => {
-    onSubmit(data)
+    // onSubmit(data)
+    console.log(data)
   }
 
   const { data: labels = [] } = useQuery({
@@ -116,7 +122,7 @@ export const CreateEditTodoForm = ({
       </div>
 
       {/* Description Field */}
-      <div className="space-y-2 pb-4">
+      <div className="space-y-2">
         <Label htmlFor="description">
           Description<span className="text-red-500">*</span>
         </Label>
@@ -129,8 +135,24 @@ export const CreateEditTodoForm = ({
         {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
       </div>
 
+      <Controller
+        control={control}
+        name="assigneeId"
+        render={({ field }) => (
+          <UserAndTeamSearch
+            label="Assignee"
+            placeholder="Select assignee"
+            value={field.value}
+            onChange={(selectedOption) => {
+              field.onChange(selectedOption?.value)
+              setValue('userType', selectedOption?.type)
+            }}
+          />
+        )}
+      />
+
       {/* Properties Section */}
-      <div>
+      <div className="pt-4">
         <h3 className="text-md pb-2 font-medium text-gray-700">Properties</h3>
 
         <div className="space-y-4">

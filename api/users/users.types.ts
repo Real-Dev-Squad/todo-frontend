@@ -4,3 +4,8 @@ export type TUser = {
   name: string
   picture?: string
 }
+
+export type TUsersSearchParams = {
+  search?: string
+  profile?: boolean
+}

@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord, TApiResponse } from '../common/common-api.types'
-import { TUser } from './users.types'
+import { TUser, TUsersSearchParams } from './users.types'
 
 export const UsersApi = {
   getUserInfo: {
@@ -15,11 +15,11 @@ export const UsersApi = {
       return data.data
     },
   },
-  searchUser: {
-    key: (username: string) => ['usersApi.searchUser', username],
-    fn: async (username: string) => {
-      const { data } = await apiClient.get(`/v1/users?search=${encodeURIComponent(username)}`)
-      return data
+  users: {
+    key: (params?: TUsersSearchParams) => ['usersApi.users', ...Object.values(params || {})],
+    fn: async (params?: TUsersSearchParams): Promise<TApiResponse<TUser[]>> => {
+      const { data } = await apiClient.get(`/v1/users`, { params })
+      return data.data
     },
   },
 } satisfies TApiMethodsRecord
