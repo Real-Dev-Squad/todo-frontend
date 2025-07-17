@@ -80,70 +80,63 @@ export function DashboardPreview() {
   ]
 
   return (
-    <div className="flex h-[600px] w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-      {/* Sidebar */}
-      <div className="w-64 border-r border-gray-200 bg-gray-50">
-        <div className="p-4">
-          <div className="mb-6 flex items-center space-x-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-black">
+    <div className="flex h-auto w-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 md:h-[600px] md:flex-row">
+      <div className="w-full border-b border-gray-200 bg-gray-50 transition-all duration-300 md:w-64 md:border-r md:border-b-0">
+        <div className="flex flex-row items-center justify-between p-4 md:flex-col md:items-stretch md:justify-start">
+          <div className="mb-0 flex items-center space-x-3 md:mb-6">
+            <div className="flex h-8 w-8 animate-bounce items-center justify-center rounded-md bg-black md:animate-none">
               <Zap className="h-4 w-4 text-white" />
             </div>
-            <span className="font-medium text-black">{appConfig.appName}</span>
-          </div>
-
-          <nav className="space-y-1">
-            <div className="flex items-center space-x-3 rounded-md bg-white px-3 py-2 text-sm font-medium text-black shadow-sm">
-              <Home className="h-4 w-4" />
-              <span>Home</span>
-            </div>
-            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
-              <Inbox className="h-4 w-4" />
-              <span>Inbox</span>
-              <span className="ml-auto rounded-full bg-gray-200 px-2 py-0.5 text-xs">3</span>
-            </div>
-            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
-              <Calendar className="h-4 w-4" />
-              <span>Calendar</span>
-            </div>
-            <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
-              <Target className="h-4 w-4" />
-              <span>Goals</span>
-            </div>
-          </nav>
-
-          <div className="mt-6">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xs font-medium tracking-wide text-gray-500 uppercase">
-                Projects
-              </h3>
-              <Button size="sm" variant="ghost" className="h-5 w-5 p-0">
-                <Plus className="h-3 w-3" />
-              </Button>
-            </div>
-            <div className="space-y-1">
-              {projects.map((project, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="group flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black"
-                >
-                  <div className={`h-2 w-2 rounded-full ${project.color}`}></div>
-                  <span className="flex-1 truncate">{project.name}</span>
-                  <span className="text-xs text-gray-400 group-hover:text-gray-600">
-                    {project.completed}/{project.tasks}
-                  </span>
-                </a>
-              ))}
-            </div>
+            <span className="text-lg font-medium text-black transition-colors duration-200 md:text-base">
+              {appConfig.appName}
+            </span>
           </div>
         </div>
+
+        <nav className="animate-fade-in hidden space-y-1 md:block">
+          <div className="flex items-center space-x-3 rounded-md bg-white px-3 py-2 text-sm font-medium text-black shadow-sm">
+            <Home className="h-4 w-4" />
+            <span>Home</span>
+          </div>
+          <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
+            <Inbox className="h-4 w-4" />
+            <span>Inbox</span>
+            <span className="ml-auto rounded-full bg-gray-200 px-2 py-0.5 text-xs">3</span>
+          </div>
+          <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
+            <Calendar className="h-4 w-4" />
+            <span>Calendar</span>
+          </div>
+          <div className="flex items-center space-x-3 rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-white hover:text-black">
+            <Target className="h-4 w-4" />
+            <span>Goals</span>
+          </div>
+        </nav>
+        <nav className="animate-fade-in flex justify-around border-t border-gray-200 bg-white py-2 md:hidden">
+          <button className="flex flex-col items-center text-xs text-gray-600 transition-colors duration-200 hover:text-black">
+            <Home className="mb-1 h-5 w-5" />
+            Home
+          </button>
+          <button className="flex flex-col items-center text-xs text-gray-600 transition-colors duration-200 hover:text-black">
+            <Inbox className="mb-1 h-5 w-5" />
+            Inbox
+          </button>
+          <button className="flex flex-col items-center text-xs text-gray-600 transition-colors duration-200 hover:text-black">
+            <Calendar className="mb-1 h-5 w-5" />
+            Calendar
+          </button>
+          <button className="flex flex-col items-center text-xs text-gray-600 transition-colors duration-200 hover:text-black">
+            <Target className="mb-1 h-5 w-5" />
+            Goals
+          </button>
+        </nav>
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col">
+      <div className="animate-slide-in-up flex flex-1 flex-col">
         {/* Header */}
-        <div className="border-b border-gray-200 bg-white px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="border-b border-gray-200 bg-white px-4 py-4 transition-all duration-300 md:px-6">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-0">
             <div className="flex items-center space-x-2">
               <Avatar>
                 <AvatarImage src="/img/user-2.jpg" />
@@ -151,25 +144,35 @@ export function DashboardPreview() {
               </Avatar>
               <div>
                 <div className="flex space-x-2">
-                  <h1 className="text-xl font-medium text-black">Good Morning, Prakash Sir</h1>
+                  <h1 className="text-lg font-medium text-black transition-all duration-200 md:text-xl">
+                    Good Morning, Prakash Sir
+                  </h1>
                 </div>
-
-                <p className="text-sm text-gray-600">You have completed 9 task today 👏</p>
+                <p className="text-xs text-gray-600 transition-all duration-200 md:text-sm">
+                  You have completed 9 task today 👏
+                </p>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="mt-3 flex flex-col items-stretch space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-3 md:mt-0">
               <div className="relative">
                 <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search tasks..."
-                  className="w-64 rounded-md border border-gray-200 bg-gray-50 py-2 pr-4 pl-10 text-sm transition-colors focus:border-gray-300 focus:bg-white focus:outline-none"
+                  className="w-full rounded-md border border-gray-200 bg-gray-50 py-2 pr-4 pl-10 text-sm transition-colors focus:border-gray-300 focus:bg-white focus:outline-none sm:w-64"
                 />
               </div>
-              <Button size="sm" variant="ghost">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="transition-transform duration-200 hover:scale-105"
+              >
                 <Filter className="h-4 w-4" />
               </Button>
-              <Button size="sm" className="bg-black text-white hover:bg-gray-800">
+              <Button
+                size="sm"
+                className="bg-black text-white transition-transform duration-200 hover:scale-105 hover:bg-gray-800"
+              >
                 <Plus className="mr-2 h-4 w-4" />
                 New Task
               </Button>
@@ -178,7 +181,7 @@ export function DashboardPreview() {
         </div>
 
         <div className="flex-1 overflow-auto">
-          <div className="grid grid-cols-3 gap-6 p-6">
+          <div className="grid grid-cols-1 gap-4 p-2 md:grid-cols-3 md:gap-6 md:p-6">
             {/* Today's Tasks */}
             <div className="col-span-2">
               <div className="mb-4 flex items-center justify-between">
