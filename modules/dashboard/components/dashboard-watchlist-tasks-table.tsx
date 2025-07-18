@@ -34,7 +34,7 @@ export const DashboardWatchlistTasksTable = () => {
     id: task.taskId,
     in_watchlist: true,
     priority: NUM_TASK_PRIORITY_TO_TASK_ENUM[task.priority ?? 1],
-    labels: [],
+    labels: task.labels,
   }))
   return <DashboardTasksTable tasks={formattedTasks} />
 }

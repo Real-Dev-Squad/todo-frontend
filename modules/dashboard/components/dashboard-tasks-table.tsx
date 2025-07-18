@@ -2,6 +2,7 @@ import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
 import { EditTodoButton } from '@/components/edit-task-button'
 import { TaskPriorityLabel } from '@/components/task-priority-label'
+import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoStatusTable } from '@/components/todo-status-table'
 import {
   Table,
@@ -92,13 +93,7 @@ export const DashboardTasksTable = ({ tasks }: DashboardTasksTableProps) => {
               <TableRow key={task.id} className="transition-colors hover:bg-gray-50">
                 <TableCell className="font-medium">{task.title}</TableCell>
                 <TableCell>
-                  <span className="rounded-full bg-purple-100 px-2 py-1 text-xs text-purple-700">
-                    {Array.isArray(task.labels)
-                      ? typeof task.labels[0] === 'object' && task.labels[0] !== null
-                        ? (task.labels[0] as { name?: string }).name || '-'
-                        : task.labels[0] || '-'
-                      : '-'}
-                  </span>
+                  <TodoLabelsList labels={task.labels ?? []} />
                 </TableCell>
 
                 <TableCell>

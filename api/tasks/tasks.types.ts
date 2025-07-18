@@ -86,7 +86,7 @@ export type TWatchListTask = {
   status: TASK_STATUS_ENUM
   isAcknowledged: boolean | null
   isDeleted: boolean | null
-  labels?: string[]
+  labels?: TLabel[]
   dueAt: string
   createdAt: string
   createdBy: string
