@@ -34,12 +34,13 @@ export class TodoUtil {
     return updateDetails
   }
 
-  static getDefaultTodoFormData = (todo: TTask): TTodoFormData => {
+  static getDefaultTodoFormData = (todo: TTask): Partial<TTodoFormData> => {
     return {
       title: todo.title,
       priority: todo.priority,
       dueDate: todo.dueAt || '',
       description: todo.description || '',
+      assigneeId: todo.assignee?.id ?? '',
       labels: todo.labels?.map((l) => l.id) ?? [],
     }
   }

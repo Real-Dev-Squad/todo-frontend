@@ -23,7 +23,7 @@ type CreateModeProps = BaseProps & {
 
 type EditModeProps = BaseProps & {
   mode: 'edit'
-  defaultData: TTodoFormData
+  defaultData: Partial<TTodoFormData>
 }
 
 type CreateEditTodoDialogProps = CreateModeProps | EditModeProps
