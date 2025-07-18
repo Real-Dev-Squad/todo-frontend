@@ -30,9 +30,9 @@ type EditModeProps = BaseProps & {
   defaultData: TTodoFormDataWithInitialAssignee
 }
 
-type CreateEditTaskDialogProps = CreateModeProps | EditModeProps
+type CreateEditTodoDialogProps = CreateModeProps | EditModeProps
 
-export const CreateEditTaskDialog = ({
+export const CreateEditTodoDialog = ({
   mode,
   open,
   children,
@@ -40,7 +40,7 @@ export const CreateEditTaskDialog = ({
   defaultData,
   onOpenChange,
   isMutationPending,
-}: CreateEditTaskDialogProps) => {
+}: CreateEditTodoDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>

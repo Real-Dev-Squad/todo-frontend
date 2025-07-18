@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { CreateEditTaskDialog } from './create-edit-task-dialog'
+import { CreateEditTodoDialog } from './create-edit-todo-dialog'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
@@ -30,7 +30,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
   })
 
   return (
-    <CreateEditTaskDialog
+    <CreateEditTodoDialog
       mode="edit"
       open={showEditTaskForm}
       onOpenChange={setShowEditTaskForm}
@@ -71,8 +71,8 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
             <Edit2 className="h-4 w-4" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Edit task</TooltipContent>
+        <TooltipContent>Edit Todo</TooltipContent>
       </Tooltip>
-    </CreateEditTaskDialog>
+    </CreateEditTodoDialog>
   )
 }

@@ -1,5 +1,5 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
+import { CreateEditTodoDialog } from '@/components/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
@@ -23,7 +23,7 @@ export const CreateTodoButton = () => {
   })
 
   return (
-    <CreateEditTaskDialog
+    <CreateEditTodoDialog
       mode="create"
       open={showCreateTaskForm}
       onOpenChange={setShowCreateTaskForm}
@@ -41,8 +41,8 @@ export const CreateTodoButton = () => {
     >
       <Button size="sm">
         <PlusIcon className="mr-1 h-4 w-4" />
-        Create Task
+        Create Todo
       </Button>
-    </CreateEditTaskDialog>
+    </CreateEditTodoDialog>
   )
 }
