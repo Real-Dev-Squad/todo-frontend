@@ -82,7 +82,7 @@ export type TWatchListTask = {
   userId: string
   title: string
   description?: string
-  priority?: number
+  priority?: TASK_PRIORITY_ENUM
   status: TASK_STATUS_ENUM
   isAcknowledged: boolean | null
   isDeleted: boolean | null
