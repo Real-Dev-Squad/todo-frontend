@@ -32,8 +32,10 @@ export class TodoUtil {
     }
 
     if (todoFormData.assignee.value !== initialTodo.assignee?.assignee_id) {
-      updateDetails.assignee_id = todoFormData.assignee.value
-      updateDetails.user_type = todoFormData.assignee.type
+      updateDetails.assignee = {
+        assignee_id: todoFormData.assignee.value,
+        user_type: todoFormData.assignee.type,
+      }
     }
 
     return updateDetails
