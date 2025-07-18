@@ -4,7 +4,7 @@ import { TUser } from '@/api/users/users.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const DEFAULT_USER: TUser = {
-  userId: '',
+  id: '',
   email: '',
   name: '',
   picture: '',

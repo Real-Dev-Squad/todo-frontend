@@ -1,10 +1,10 @@
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
-import { TUser } from '@/api/users/users.types'
+import { UsersApi } from '@/api/users/users.api'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Check, ChevronDown, XIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import {
   Command,
@@ -19,6 +19,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 type TUserOrTeamOption = {
   value: string
+  searchValue: string
   type: 'user' | 'team'
   label: React.ReactNode
 }
@@ -48,24 +49,20 @@ type UserAndTeamSearchProps = {
 export const UserAndTeamSearch = ({
   value,
   onChange,
-  placeholder = 'Select user...',
   label = 'Assignee',
+  placeholder = 'Select user...',
 }: UserAndTeamSearchProps) => {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const [selectedOption, setSelectedOption] = useState<TUserOrTeamOption | null>(null)
 
-  // const { data: users, isLoading: isUsersLoading } = useQuery({
-  //   enabled: !!search.length,
-  //   queryKey: UsersApi.users.key({ search }),
-  //   queryFn: () => UsersApi.users.fn({ search: search || undefined }),
-  //   select: (data) => data.data,
-  // })
-
-  const users: TUser[] = []
-  const isUsersLoading = false
+  const { data: usersList, isLoading: isUsersLoading } = useQuery({
+    queryKey: UsersApi.users.key({ search }),
+    queryFn: () => UsersApi.users.fn({ search: search || undefined }),
+    select: (res) => res.data.users,
+  })
 
   const { data: teamsList, isLoading: isTeamsLoading } = useQuery({
-    enabled: !!search.length,
     queryKey: TeamsApi.getTeams.key,
     queryFn: TeamsApi.getTeams.fn,
   })
@@ -75,30 +72,59 @@ export const UserAndTeamSearch = ({
     teamsList?.teams.filter((team) => team.name.toLowerCase().includes(search.toLowerCase())) ?? []
 
   const userOptions: TUserOrTeamOption[] =
-    users?.map((user) => ({
+    usersList?.map((user) => ({
       label: user.name,
-      value: user.userId,
+      value: user.id,
       type: 'user',
+      searchValue: user.name,
     })) ?? []
 
   const teamOptions: TUserOrTeamOption[] = filteredTeams.map((team) => ({
     label: <TeamOption team={team} />,
     value: team.id,
     type: 'team',
+    searchValue: team.name,
   }))
 
-  const options = [...userOptions, ...teamOptions]
-  const selectedUser = options.find((option) => option.value === value)
+  // Always include the selected option in the list, even if it's not in current results
+  const allOptions = [...userOptions, ...teamOptions]
+
+  // Add selected option if it exists and is not already in the current options
+  const optionsWithSelected =
+    selectedOption && !allOptions.some((opt) => opt.value === selectedOption.value)
+      ? [selectedOption, ...allOptions]
+      : allOptions
+
+  const options = optionsWithSelected.sort((a, b) => a.searchValue.localeCompare(b.searchValue))
 
   const handleSelect = (option: TUserOrTeamOption) => {
+    setSelectedOption(option)
     onChange(option)
     setOpen(false)
+    setSearch('')
   }
 
   const handleClear = () => {
+    setSelectedOption(null)
     onChange(null)
     setOpen(false)
   }
+
+  // Sync selectedOption with value prop when it changes externally
+  useEffect(() => {
+    if (value && !selectedOption) {
+      const foundOption = options.find((opt) => opt.value === value)
+
+      if (foundOption) {
+        setSelectedOption(foundOption)
+        return
+      }
+    }
+
+    if (!value && selectedOption) {
+      setSelectedOption(null)
+    }
+  }, [value, selectedOption, options])
 
   return (
     <div className="space-y-2">
@@ -112,9 +138,9 @@ export const UserAndTeamSearch = ({
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {value ? (
+            {selectedOption ? (
               <div className="flex flex-1 items-center gap-2 truncate font-normal">
-                {selectedUser?.label}
+                {selectedOption.label}
               </div>
             ) : (
               <div className="text-muted-foreground flex items-center gap-2 font-normal">
@@ -136,15 +162,16 @@ export const UserAndTeamSearch = ({
               <CommandEmpty>{isDataLoading ? 'Loading...' : 'No users found.'}</CommandEmpty>
 
               <CommandGroup>
-                {value && (
+                {selectedOption && (
                   <CommandItem key="clear" onSelect={handleClear} className="text-muted-foreground">
                     <XIcon className="mr-2 h-4 w-4" />
                     Clear selection
                   </CommandItem>
                 )}
-                {options.map((option) => (
+                {options.map((option, index) => (
                   <CommandItem
-                    key={option.value}
+                    value={option.searchValue}
+                    key={`${option.value}-${index}`}
                     onSelect={() => handleSelect(option)}
                     className="flex items-center gap-2"
                   >
@@ -152,7 +179,7 @@ export const UserAndTeamSearch = ({
                     <Check
                       className={cn(
                         'ml-auto h-4 w-4',
-                        value === option.value ? 'opacity-100' : 'opacity-0',
+                        selectedOption?.value === option.value ? 'opacity-100' : 'opacity-0',
                       )}
                     />
                   </CommandItem>

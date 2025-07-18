@@ -1,6 +1,6 @@
 export type TUser = {
-  userId: string
-  email: string
+  id: string
+  email?: string
   name: string
   picture?: string
 }
@@ -8,4 +8,11 @@ export type TUser = {
 export type TUsersSearchParams = {
   search?: string
   profile?: boolean
+}
+
+export type TUsersSearchResponse = {
+  users: TUser[]
+  limit: number
+  page: number
+  total_count: number
 }
