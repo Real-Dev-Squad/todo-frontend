@@ -45,6 +45,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
             ? (task.labels as { id: string }[]).map((l) => l.id)
             : (task.labels as string[])
           : [],
+        status: task.status,
       }}
       onSubmit={(value) =>
         updateTaskMutation.mutate({
@@ -53,6 +54,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
           dueAt: value.dueDate,
           priority: value.priority,
           description: value.description,
+          status: value.status,
           labels: value.labels ?? [],
         })
       }

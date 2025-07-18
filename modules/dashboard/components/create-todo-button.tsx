@@ -33,6 +33,7 @@ export const CreateTodoButton = () => {
           title: value.title,
           description: value.description,
           priority: value.priority,
+          status: value.status,
           dueAt: value.dueDate,
           labels: value.labels,
         })

@@ -1,7 +1,7 @@
 'use client'
 
 import { LablesApi } from '@/api/labels/labels.api'
-import { TASK_PRIORITY_ENUM } from '@/api/tasks/tasks.enum'
+import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -26,6 +26,7 @@ const todoFormSchema = z.object({
   description: z.string().min(1, 'Description is required'),
   dueDate: z.string().min(1, 'Due date is required'),
   priority: z.enum(TASK_PRIORITY_ENUM).optional(),
+  status: z.enum(TASK_STATUS_ENUM).optional(),
   labels: z.array(z.string()).optional(),
 })
 
@@ -80,6 +81,7 @@ export const CreateEditTodoForm = ({
       description: initialData?.description || '',
       dueDate: initialData?.dueDate || '',
       priority: initialData?.priority || TASK_PRIORITY_ENUM.LOW,
+      status: initialData?.status || TASK_STATUS_ENUM.TODO,
       labels: initialData?.labels || [],
     },
   })
@@ -181,6 +183,34 @@ export const CreateEditTodoForm = ({
                       <SelectItem value={TASK_PRIORITY_ENUM.LOW}>Low</SelectItem>
                       <SelectItem value={TASK_PRIORITY_ENUM.MEDIUM}>Medium</SelectItem>
                       <SelectItem value={TASK_PRIORITY_ENUM.HIGH}>High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            />
+          </div>
+
+          {/*status*/}
+          <div className="flex items-center gap-4">
+            <div className="flex w-28 items-center gap-2">
+              <Label htmlFor="priority">Status</Label>
+            </div>
+            <Controller
+              control={control}
+              name="status"
+              render={({ field }) => (
+                <div className="flex-1">
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value as TASK_STATUS_ENUM)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select task status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={TASK_STATUS_ENUM.TODO}>Todo</SelectItem>
+                      <SelectItem value={TASK_STATUS_ENUM.IN_PROGRESS}>In Progress</SelectItem>
+                      <SelectItem value={TASK_STATUS_ENUM.DONE}>Done</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
