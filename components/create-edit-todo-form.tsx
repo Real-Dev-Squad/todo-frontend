@@ -95,7 +95,8 @@ export const CreateEditTodoForm = ({
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
 
   const handleFormSubmit = (data: TodoFormData) => {
-    // onSubmit(data)
+    debugger
+    onSubmit(data)
     console.log(data)
   }
 

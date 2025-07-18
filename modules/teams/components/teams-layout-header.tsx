@@ -64,9 +64,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
       return
     }
 
-    const memberIds = selectedUsers
-      .map((u) => u.userId)
-      .filter((id) => id && !id.startsWith('temp-'))
+    const memberIds = selectedUsers.map((u) => u.id).filter((id) => id && !id.startsWith('temp-'))
 
     if (memberIds.length === 0) {
       toast.error('No valid user IDs found')

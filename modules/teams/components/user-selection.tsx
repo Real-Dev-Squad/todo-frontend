@@ -1,7 +1,8 @@
 'use client'
 
+import { TApiResponse } from '@/api/common/common-api.types'
 import { UsersApi } from '@/api/users/users.api'
-import { TUser } from '@/api/users/users.types'
+import { TUser, TUsersSearchResponse } from '@/api/users/users.types'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Combobox, type ComboboxOption } from '@/components/ui/combobox'
@@ -24,7 +25,7 @@ const normalizeUser = (user: unknown): TUser => {
     (u.user_id as string) || (u.userId as string) || (u.id as string) || (u._id as string) || ''
 
   const normalized = {
-    userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
+    id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || (u.fullName as string) || '',
     email: (u.email as string) || (u.email_id as string) || (u.emailId as string) || '',
     picture: (u.picture as string) || (u.avatar as string) || (u.profilePicture as string) || '',
@@ -45,16 +46,16 @@ export const UserSelection = ({
   const [isSearching, setIsSearching] = useState(false)
 
   const selectedUserIds = useMemo(
-    () => new Set(selectedUsers.map((user) => user.userId)),
+    () => new Set(selectedUsers.map((user) => user.id)),
     [selectedUsers],
   )
 
   // Convert users to combobox options
   const userOptions = useMemo((): ComboboxOption[] => {
     return availableUsers
-      .filter((user) => !selectedUserIds.has(user.userId) && !excludeUserIds.includes(user.userId))
+      .filter((user) => !selectedUserIds.has(user.id) && !excludeUserIds.includes(user.id))
       .map((user) => ({
-        value: user.userId,
+        value: user.id,
         label: `${user.name} (${user.email})`,
         user: user,
       }))
@@ -67,9 +68,9 @@ export const UserSelection = ({
       return
     }
     setIsSearching(true)
-    UsersApi.searchUser
-      .fn(debouncedSearchTerm)
-      .then((res: { data: { users: Partial<TUser>[] } }) => {
+    UsersApi.users
+      .fn({ search: debouncedSearchTerm })
+      .then((res: TApiResponse<TUsersSearchResponse>) => {
         const users = (res?.data?.users || []).map(normalizeUser)
         setAvailableUsers(users)
       })
@@ -83,7 +84,7 @@ export const UserSelection = ({
   }
 
   const handleRemoveUser = (id: string) => {
-    onUsersChange(selectedUsers.filter((user) => user.userId !== id))
+    onUsersChange(selectedUsers.filter((user) => user.id !== id))
   }
 
   const handleClearAllUsers = () => {
@@ -154,7 +155,7 @@ export const UserSelection = ({
           <div className="max-h-60 space-y-2 overflow-y-auto">
             {selectedUsers.map((user, index) => (
               <div
-                key={user.userId}
+                key={user.id}
                 className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors"
               >
                 <Avatar className="h-9 w-9 shrink-0">
@@ -174,7 +175,7 @@ export const UserSelection = ({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
-                    onClick={() => handleRemoveUser(user.userId)}
+                    onClick={() => handleRemoveUser(user.id)}
                     title={`Remove ${user.name}`}
                   >
                     <X className="h-4 w-4" />
