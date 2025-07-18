@@ -4,6 +4,7 @@ import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EditTodoButton } from './edit-task-button'
+import { ReassignUser } from './reassign-user'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
@@ -20,7 +21,7 @@ type TodoListTableHeaderProps = {
   showActions?: boolean
 }
 
-const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
+export const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
   return (
     <TableHeader>
       <TableRow>
@@ -69,6 +70,7 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
           <div className="flex items-center gap-0.5">
             <EditTodoButton todo={todo} />
             <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+            <ReassignUser />
           </div>
         </TableCell>
       )}
@@ -114,7 +116,7 @@ const TodoListTableBody = ({ tasks, isLoading, showActions }: TodoListTableBodyP
   )
 }
 
-const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: boolean }) => {
+export const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: boolean }) => {
   return (
     <TableRow>
       <TableCell colSpan={showActions ? 7 : 6}>

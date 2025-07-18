@@ -94,7 +94,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
 
       <Button size="sm" onClick={() => setIsAddMembersModalOpen(true)}>
         <UserRoundPlusIcon />
-        Add a member
+        Add members
       </Button>
 
       <AlertDialog open={isAddMembersModalOpen} onOpenChange={handleCloseModal}>
