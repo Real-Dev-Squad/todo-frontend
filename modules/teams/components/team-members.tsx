@@ -29,6 +29,22 @@ const QUERY_PARAMS_KEYS = {
   search: 'search',
 }
 
+const PocLabel = () => {
+  return (
+    <div className="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">
+      POC
+    </div>
+  )
+}
+
+const CreatorLabel = () => {
+  return (
+    <div className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+      Creator
+    </div>
+  )
+}
+
 type TeamMembersProps = {
   teamId: string
 }
@@ -110,6 +126,8 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           <AvatarFallback className="font-medium">{member.name[0]}</AvatarFallback>
                         </Avatar>
                         <span>{member.name}</span>
+                        {member.id === data?.created_by && <CreatorLabel />}
+                        {member.id === data?.poc_id && <PocLabel />}
                       </div>
                     </TableCell>
 
