@@ -1,5 +1,5 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { TTask } from '@/api/tasks/tasks.types'
+import { TEditTask } from '@/api/tasks/tasks.types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
@@ -9,7 +9,7 @@ import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 type EditTaskButtonProps = {
-  task: TTask
+  task: TEditTask
 }
 
 export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
@@ -40,7 +40,11 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
         description: task.description || '',
         dueDate: task.dueAt || '',
         priority: task.priority,
-        labels: task.labels,
+        labels: Array.isArray(task.labels)
+          ? typeof task.labels[0] === 'object'
+            ? (task.labels as { id: string }[]).map((l) => l.id)
+            : (task.labels as string[])
+          : [],
       }}
       onSubmit={(value) =>
         updateTaskMutation.mutate({

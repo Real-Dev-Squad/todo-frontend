@@ -1,10 +1,10 @@
-import { DashboardTasksTable } from './dashboard-tasks-table'
+import { TasksApi } from '@/api/tasks/tasks.api'
+import { NUM_TASK_PRIORITY_TO_TASK_ENUM } from '@/api/tasks/tasks.enum'
+import { TTask } from '@/api/tasks/tasks.types'
 import { CommonPageError } from '@/components/common-page-error'
 import { Shimmer } from '@/components/Shimmer'
 import { useQuery } from '@tanstack/react-query'
-import { TasksApi } from '@/api/tasks/tasks.api'
-import { TTask } from '@/api/tasks/tasks.types'
-import { NUM_TASK_PRIORITY_TO_TASK_ENUM } from '@/api/tasks/tasks.enum'
+import { DashboardTasksTable } from './dashboard-tasks-table'
 
 export const DashboardWatchlistTasksTable = () => {
   const { data, isLoading, isError } = useQuery({
@@ -34,6 +34,7 @@ export const DashboardWatchlistTasksTable = () => {
     id: task.taskId,
     in_watchlist: true,
     priority: NUM_TASK_PRIORITY_TO_TASK_ENUM[task.priority ?? 1],
+    labels: [],
   }))
   return <DashboardTasksTable tasks={formattedTasks} />
 }

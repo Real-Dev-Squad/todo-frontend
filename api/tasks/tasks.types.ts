@@ -1,10 +1,31 @@
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from './tasks.enum'
 
+export type Label = {
+  id: string
+  name: string
+  color: string
+}
 export type TTask = {
   id: string
   title: string
   description?: string
-  labels?: string[]
+  labels?: Label[]
+  status: TASK_STATUS_ENUM
+  priority?: TASK_PRIORITY_ENUM
+  assignee?: {
+    id: string
+    name: string
+  } | null
+  tags?: string[]
+  dueAt?: string
+  in_watchlist?: boolean | null
+}
+
+export type TEditTask = {
+  id: string
+  title: string
+  description?: string
+  labels?: Label[] | string[]
   status: TASK_STATUS_ENUM
   priority?: TASK_PRIORITY_ENUM
   assignee?: {
