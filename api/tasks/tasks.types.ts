@@ -96,3 +96,8 @@ export type TWatchListTask = {
   createdBy: string
   watchlistId: string
 }
+
+export type AssignTaskToUserReqDto = {
+  task_id: string
+  assignee_id: string
+}

@@ -1,5 +1,6 @@
 'use client'
 
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { LablesApi } from '@/api/labels/labels.api'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Button } from '@/components/ui/button'
@@ -31,7 +32,7 @@ const todoFormSchema = z.object({
   status: z.enum(TASK_STATUS_ENUM).optional(),
   labels: z.array(z.string()).optional(),
   assigneeId: z.string().optional(),
-  userType: z.enum(['user', 'team']).optional(),
+  userType: z.enum(USER_TYPE_ENUM).optional(),
 })
 
 export type TodoFormData = z.infer<typeof todoFormSchema>
@@ -146,7 +147,7 @@ export const CreateEditTodoForm = ({
             value={field.value}
             onChange={(selectedOption) => {
               field.onChange(selectedOption?.value)
-              setValue('userType', selectedOption?.type)
+              setValue('userType', selectedOption?.type as USER_TYPE_ENUM)
             }}
           />
         )}
