@@ -58,7 +58,7 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
         {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
       </TableCell>
 
-      <TableCell className="whitespace-nowrap">{todo.assignee?.name ?? '--'}</TableCell>
+      <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
 
       <TableCell className="whitespace-nowrap">
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
@@ -141,7 +141,7 @@ export const TodoListTable = ({ tasks, isLoading, showActions }: TodoListTablePr
         (task) =>
           task.title.toLowerCase().includes(search.toLowerCase()) ||
           task.labels?.join(', ').toLowerCase().includes(search.toLowerCase()) ||
-          task.assignee?.name.toLowerCase().includes(search.toLowerCase()) ||
+          task.assignee?.assignee_name.toLowerCase().includes(search.toLowerCase()) ||
           task.status.toLowerCase().includes(search.toLowerCase()) ||
           task.priority?.toLowerCase().includes(search.toLowerCase()),
       )
