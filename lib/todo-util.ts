@@ -48,6 +48,7 @@ export class TodoUtil {
   static getDefaultTodoFormData = (todo: TTask): Partial<TTodoFormData> => {
     return {
       title: todo.title,
+      status: todo.status,
       priority: todo.priority,
       dueDate: todo.dueAt || '',
       description: todo.description || '',
