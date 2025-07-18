@@ -1,9 +1,9 @@
-import { Label } from '@/api/tasks/tasks.types'
+import { TLabel } from '@/api/tasks/tasks.types'
 import { hexToRgba } from '@/lib/utils'
 import React from 'react'
 
 type TodoLabelsTableProps = {
-  labels: Label[]
+  labels: TLabel[]
 }
 
 export const TodoLabelsList: React.FC<TodoLabelsTableProps> = ({ labels }) => {

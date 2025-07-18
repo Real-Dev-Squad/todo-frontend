@@ -17,18 +17,11 @@ export function SelectLabels({ labelData, value, onChange }: SelectLabelsProps) 
   }
 
   return (
-    <div className="mx-auto space-y-4">
-      <div className="space-y-4">
-        <div className="flex items-center space-x-4">
-          <p className="min-w-28 text-sm">Labels</p>
-          <LabelMultiSelect
-            labels={labelData}
-            selectedLabels={selectedLabels}
-            onSelectionChange={handleSelectionChange}
-            placeholder="Select labels for this task..."
-          />
-        </div>
-      </div>
-    </div>
+    <LabelMultiSelect
+      labels={labelData}
+      selectedLabels={selectedLabels}
+      onSelectionChange={handleSelectionChange}
+      placeholder="Select labels for this task..."
+    />
   )
 }

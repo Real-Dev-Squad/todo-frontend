@@ -1,7 +1,6 @@
 'use client'
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
-import { TMinimalUser } from '@/api/common/common.types'
 import { LablesApi } from '@/api/labels/labels.api'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Button } from '@/components/ui/button'
@@ -14,11 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { isPastDate } from '@/lib/utils'
+import { cn, isPastDate } from '@/lib/utils'
 import { SelectLabels } from '@/modules/dashboard/components/select-labels'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
-import { CalendarIcon, PlayIcon } from 'lucide-react'
+import { CalendarIcon, CircleDotIcon, LucideIcon, PlayIcon, TagIcon } from 'lucide-react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DatePickerSelect } from './date-picker-select'
@@ -38,8 +37,39 @@ const todoFormSchema = z.object({
 
 export type TTodoFormData = z.infer<typeof todoFormSchema>
 
-export type TTodoFormDataWithInitialAssignee = TTodoFormData & {
-  initialAssignee: TMinimalUser | null
+type FormInputProps = {
+  label: string
+  htmlFor?: string
+  icon?: LucideIcon
+  required?: boolean
+  children: React.ReactNode
+  direction?: 'row' | 'column'
+}
+
+const FormInput = ({
+  children,
+  label,
+  htmlFor,
+  icon: Icon,
+  required,
+  direction = 'row',
+}: FormInputProps) => {
+  return (
+    <div className={cn('flex items-center', direction === 'row' ? 'gap-4' : 'flex-col gap-2')}>
+      <div
+        className={cn('flex items-center gap-2', direction === 'row' ? 'w-28 shrink-0' : 'w-full')}
+      >
+        {Icon && <Icon className="h-4 w-4 text-gray-500" />}
+
+        <Label htmlFor={htmlFor}>
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+      </div>
+
+      {children}
+    </div>
+  )
 }
 
 type SubmitButtonProps = {
@@ -112,11 +142,8 @@ export const CreateEditTodoForm = ({
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-      {/* Title Field */}
-      <div className="space-y-2">
-        <Label htmlFor="title">
-          Title<span className="text-red-500">*</span>
-        </Label>
+      {/* Title */}
+      <FormInput required label="Title" htmlFor="title" direction="column">
         <Input
           id="title"
           type="text"
@@ -124,13 +151,10 @@ export const CreateEditTodoForm = ({
           {...register('title')}
         />
         {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
-      </div>
+      </FormInput>
 
-      {/* Description Field */}
-      <div className="space-y-2">
-        <Label htmlFor="description">
-          Description<span className="text-red-500">*</span>
-        </Label>
+      {/* Description */}
+      <FormInput required label="Description" htmlFor="description" direction="column">
         <Input
           id="description"
           type="text"
@@ -138,21 +162,22 @@ export const CreateEditTodoForm = ({
           {...register('description')}
         />
         {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
-      </div>
+      </FormInput>
 
       <Controller
         control={control}
         name="assigneeId"
         render={({ field }) => (
-          <UserAndTeamSearch
-            label="Assignee"
-            placeholder="Select assignee"
-            value={field.value}
-            onChange={(selectedOption) => {
-              field.onChange(selectedOption?.value)
-              setValue('userType', selectedOption?.type as USER_TYPE_ENUM)
-            }}
-          />
+          <FormInput required label="Assignee" htmlFor="assigneeId" direction="column">
+            <UserAndTeamSearch
+              placeholder="Select assignee"
+              value={field.value}
+              onChange={(selectedOption) => {
+                field.onChange(selectedOption?.value)
+                setValue('userType', selectedOption?.type as USER_TYPE_ENUM)
+              }}
+            />
+          </FormInput>
         )}
       />
 
@@ -162,99 +187,84 @@ export const CreateEditTodoForm = ({
 
         <div className="space-y-4">
           {/* Due Date */}
-          <div className="flex items-center gap-4">
-            <div className="flex w-28 items-center gap-2">
-              <CalendarIcon className="h-4 w-4 text-gray-500" />
-              <Label htmlFor="dueDate">
-                Due Date<span className="text-red-500">*</span>
-              </Label>
-            </div>
-
-            <div className="flex-1">
-              <Controller
-                control={control}
-                name="dueDate"
-                render={({ field }) => (
+          <Controller
+            control={control}
+            name="dueDate"
+            render={({ field }) => (
+              <FormInput required label="Due Date" htmlFor="dueDate" icon={CalendarIcon}>
+                <div className="flex-1">
                   <DatePickerSelect
                     isDateDisabled={(date) => isPastDate(date)}
                     value={field.value ? new Date(field.value) : undefined}
                     onChange={(date) => field.onChange(date?.toISOString())}
                   />
-                )}
-              />
-              {errors.dueDate && (
-                <p className="mt-1 text-sm text-red-500">{errors.dueDate.message}</p>
-              )}
-            </div>
-          </div>
+                  {errors.dueDate && (
+                    <p className="mt-1 text-sm text-red-500">{errors.dueDate.message}</p>
+                  )}
+                </div>
+              </FormInput>
+            )}
+          />
 
           {/* Priority */}
-          <div className="flex items-center gap-4">
-            <div className="flex w-28 items-center gap-2">
-              <PlayIcon className="h-4 w-4 text-gray-500" />
-              <Label htmlFor="priority">Priority</Label>
-            </div>
-            <Controller
-              control={control}
-              name="priority"
-              render={({ field }) => (
-                <div className="flex-1">
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => field.onChange(value as TASK_PRIORITY_ENUM)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={TASK_PRIORITY_ENUM.LOW}>Low</SelectItem>
-                      <SelectItem value={TASK_PRIORITY_ENUM.MEDIUM}>Medium</SelectItem>
-                      <SelectItem value={TASK_PRIORITY_ENUM.HIGH}>High</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            />
-          </div>
+          <Controller
+            control={control}
+            name="priority"
+            render={({ field }) => (
+              <FormInput label="Priority" htmlFor="priority" icon={PlayIcon}>
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value as TASK_PRIORITY_ENUM)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={TASK_PRIORITY_ENUM.LOW}>Low</SelectItem>
+                    <SelectItem value={TASK_PRIORITY_ENUM.MEDIUM}>Medium</SelectItem>
+                    <SelectItem value={TASK_PRIORITY_ENUM.HIGH}>High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormInput>
+            )}
+          />
 
           {/*status*/}
-          <div className="flex items-center gap-4">
-            <div className="flex w-28 items-center gap-2">
-              <Label htmlFor="priority">Status</Label>
-            </div>
-            <Controller
-              control={control}
-              name="status"
-              render={({ field }) => (
-                <div className="flex-1">
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => field.onChange(value as TASK_STATUS_ENUM)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select task status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={TASK_STATUS_ENUM.TODO}>Todo</SelectItem>
-                      <SelectItem value={TASK_STATUS_ENUM.IN_PROGRESS}>In Progress</SelectItem>
-                      <SelectItem value={TASK_STATUS_ENUM.DONE}>Done</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            />
-          </div>
+          <Controller
+            control={control}
+            name="status"
+            render={({ field }) => (
+              <FormInput label="Status" htmlFor="status" icon={CircleDotIcon}>
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value as TASK_STATUS_ENUM)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select task status" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value={TASK_STATUS_ENUM.TODO}>Todo</SelectItem>
+                    <SelectItem value={TASK_STATUS_ENUM.IN_PROGRESS}>In Progress</SelectItem>
+                    <SelectItem value={TASK_STATUS_ENUM.DONE}>Done</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormInput>
+            )}
+          />
 
           {/* Label */}
           <Controller
             control={control}
             name="labels"
             render={({ field }) => (
-              <SelectLabels
-                labelData={labels}
-                value={field.value ?? []}
-                onChange={field.onChange}
-              />
+              <FormInput label="Labels" htmlFor="labels" icon={TagIcon}>
+                <SelectLabels
+                  labelData={labels}
+                  value={field.value ?? []}
+                  onChange={field.onChange}
+                />
+              </FormInput>
             )}
           />
         </div>

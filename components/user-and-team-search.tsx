@@ -14,7 +14,6 @@ import {
   CommandItem,
   CommandList,
 } from './ui/command'
-import { Label } from './ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 type TUserOrTeamOption = {
@@ -40,7 +39,6 @@ const TeamOption = ({ team }: TeamOptionProps) => {
 }
 
 type UserAndTeamSearchProps = {
-  label?: string
   value?: string
   placeholder?: string
   onChange: (value: TUserOrTeamOption | null) => void
@@ -49,7 +47,6 @@ type UserAndTeamSearchProps = {
 export const UserAndTeamSearch = ({
   value,
   onChange,
-  label = 'Assignee',
   placeholder = 'Select user...',
 }: UserAndTeamSearchProps) => {
   const [open, setOpen] = useState(false)
@@ -127,68 +124,64 @@ export const UserAndTeamSearch = ({
   }, [value, selectedOption, options])
 
   return (
-    <div className="space-y-2">
-      <Label>{label}</Label>
-
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between"
-          >
-            {selectedOption ? (
-              <div className="flex flex-1 items-center gap-2 truncate font-normal">
-                {selectedOption.label}
-              </div>
-            ) : (
-              <div className="text-muted-foreground flex items-center gap-2 font-normal">
-                {placeholder}
-              </div>
-            )}
-            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-
-        <PopoverContent
-          align="start"
-          className="p-0"
-          style={{ width: 'var(--radix-popover-trigger-width)' }}
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
         >
-          <Command>
-            <CommandInput placeholder="Search users..." value={search} onValueChange={setSearch} />
-            <CommandList>
-              <CommandEmpty>{isDataLoading ? 'Loading...' : 'No users found.'}</CommandEmpty>
+          {selectedOption ? (
+            <div className="flex flex-1 items-center gap-2 truncate font-normal">
+              {selectedOption.label}
+            </div>
+          ) : (
+            <div className="text-muted-foreground flex items-center gap-2 font-normal">
+              {placeholder}
+            </div>
+          )}
+          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
 
-              <CommandGroup>
-                {selectedOption && (
-                  <CommandItem key="clear" onSelect={handleClear} className="text-muted-foreground">
-                    <XIcon className="mr-2 h-4 w-4" />
-                    Clear selection
-                  </CommandItem>
-                )}
-                {options.map((option, index) => (
-                  <CommandItem
-                    value={option.searchValue}
-                    key={`${option.value}-${index}`}
-                    onSelect={() => handleSelect(option)}
-                    className="flex items-center gap-2"
-                  >
-                    <div className="w-full">{option.label}</div>
-                    <Check
-                      className={cn(
-                        'ml-auto h-4 w-4',
-                        selectedOption?.value === option.value ? 'opacity-100' : 'opacity-0',
-                      )}
-                    />
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </div>
+      <PopoverContent
+        align="start"
+        className="p-0"
+        style={{ width: 'var(--radix-popover-trigger-width)' }}
+      >
+        <Command>
+          <CommandInput placeholder="Search users..." value={search} onValueChange={setSearch} />
+          <CommandList>
+            <CommandEmpty>{isDataLoading ? 'Loading...' : 'No users found.'}</CommandEmpty>
+
+            <CommandGroup>
+              {selectedOption && (
+                <CommandItem key="clear" onSelect={handleClear} className="text-muted-foreground">
+                  <XIcon className="mr-2 h-4 w-4" />
+                  Clear selection
+                </CommandItem>
+              )}
+              {options.map((option, index) => (
+                <CommandItem
+                  value={option.searchValue}
+                  key={`${option.value}-${index}`}
+                  onSelect={() => handleSelect(option)}
+                  className="flex items-center gap-2"
+                >
+                  <div className="w-full">{option.label}</div>
+                  <Check
+                    className={cn(
+                      'ml-auto h-4 w-4',
+                      selectedOption?.value === option.value ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   )
 }

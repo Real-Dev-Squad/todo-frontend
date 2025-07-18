@@ -6,8 +6,8 @@ export class TodoUtil {
     todoFormData: TTodoFormData,
     initialTodo: TTask,
   ): Partial<Omit<UpdateTaskDto, 'id'>> => {
-    const sortedTodoFormDataLabels = todoFormData.labels?.sort()
-    const sortedTodoLabels = initialTodo.labels?.sort()
+    const sortedTodoFormDataLabelIds = todoFormData.labels?.sort()
+    const sortedInitialLabelIds = initialTodo.labels?.map((l) => l.id).sort()
 
     const updateDetails: Partial<Omit<UpdateTaskDto, 'id'>> = {}
 
@@ -27,7 +27,7 @@ export class TodoUtil {
       updateDetails.priority = todoFormData.priority
     }
 
-    if (sortedTodoFormDataLabels?.join(',') !== sortedTodoLabels?.join(',')) {
+    if (sortedTodoFormDataLabelIds?.join(',') !== sortedInitialLabelIds?.join(',')) {
       updateDetails.labels = todoFormData.labels
     }
 
@@ -37,10 +37,10 @@ export class TodoUtil {
   static getDefaultTodoFormData = (todo: TTask): TTodoFormData => {
     return {
       title: todo.title,
-      labels: todo.labels,
       priority: todo.priority,
       dueDate: todo.dueAt || '',
       description: todo.description || '',
+      labels: todo.labels?.map((l) => l.id) ?? [],
     }
   }
 }
