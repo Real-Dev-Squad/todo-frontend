@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from './create-todo-button'
-import { DashboardWatchlistTasksTable } from './dashboard-watchlist-tasks-table'
+import { DashboardWatchlistTable } from './dashboard-watchlist-table'
 
 type DashboardTabsProps = {
   tasks: TTask[]
@@ -46,7 +46,7 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
         </TabsContent>
 
         <TabsContent value={TabsConstants.WatchList}>
-          <DashboardWatchlistTasksTable />
+          <DashboardWatchlistTable />
         </TabsContent>
       </Tabs>
     </div>

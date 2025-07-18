@@ -124,6 +124,8 @@ export const CreateEditTodoForm = ({
       priority: initialData?.priority || TASK_PRIORITY_ENUM.LOW,
       status: initialData?.status || TASK_STATUS_ENUM.TODO,
       labels: initialData?.labels || [],
+      assigneeId: initialData?.assigneeId || undefined,
+      userType: initialData?.userType || undefined,
     },
   })
 
@@ -280,8 +282,8 @@ export const CreateEditTodoForm = ({
 
         <SubmitButton
           watch={watch}
-          isDisabled={mode === 'edit' ? !isDirty : false}
           isLoading={isSubmitting}
+          isDisabled={mode === 'edit' ? !isDirty : false}
           text={isSubmitting ? buttonLoadingText : buttonText}
         />
       </div>
