@@ -65,6 +65,7 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     } catch (error) {
+      console.debug(error)
       if (updateSucceeded) {
         toast.error('Failed to assign todo, please try again')
         return

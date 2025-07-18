@@ -3,7 +3,7 @@ import { TApiMethodsRecord } from '../common/common.types'
 import {
   AddTaskToWatchListDto,
   AssignTaskToUserReqDto,
-  CrateTaskDto,
+  CrateTaskReqDto,
   GetTaskReqDto,
   GetTasksDto,
   GetWatchListTaskDto,
@@ -24,7 +24,7 @@ export const TasksApi = {
 
   createTask: {
     key: ['tasksApi.createTask'],
-    fn: async (task: CrateTaskDto): Promise<TTask> => {
+    fn: async (task: CrateTaskReqDto): Promise<TTask> => {
       const { data } = await apiClient.post<TTask>(`/v1/tasks`, task)
       return data
     },

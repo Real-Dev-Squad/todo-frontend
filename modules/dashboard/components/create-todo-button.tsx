@@ -36,6 +36,8 @@ export const CreateTodoButton = () => {
           status: value.status,
           dueAt: value.dueDate,
           labels: value.labels,
+          assignee_id: value.assigneeId,
+          user_type: value.userType,
         })
       }
     >

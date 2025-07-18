@@ -26,13 +26,13 @@ import { UserAndTeamSearch } from './user-and-team-search'
 const todoFormSchema = z.object({
   taskId: z.string().optional(),
   title: z.string().min(1, 'Title is required'),
-  description: z.string().min(1, 'Description is required'),
+  description: z.string().optional(),
   dueDate: z.string().min(1, 'Due date is required'),
   priority: z.enum(TASK_PRIORITY_ENUM).optional(),
   status: z.enum(TASK_STATUS_ENUM).optional(),
   labels: z.array(z.string()).optional(),
-  assigneeId: z.string().optional(),
-  userType: z.enum(USER_TYPE_ENUM).optional(),
+  assigneeId: z.string().min(1, 'Assignee is required'),
+  userType: z.enum(USER_TYPE_ENUM, { message: 'Assignee is required' }),
 })
 
 export type TTodoFormData = z.infer<typeof todoFormSchema>
@@ -42,6 +42,7 @@ type FormInputProps = {
   htmlFor?: string
   icon?: LucideIcon
   required?: boolean
+  errorMessage?: string
   children: React.ReactNode
   direction?: 'row' | 'column'
 }
@@ -52,6 +53,7 @@ const FormInput = ({
   htmlFor,
   icon: Icon,
   required,
+  errorMessage,
   direction = 'row',
 }: FormInputProps) => {
   return (
@@ -68,6 +70,7 @@ const FormInput = ({
       </div>
 
       {children}
+      {errorMessage && <p className="w-full text-sm text-red-500">{errorMessage}</p>}
     </div>
   )
 }
@@ -81,10 +84,11 @@ type SubmitButtonProps = {
 
 const SubmitButton = ({ text, isLoading, isDisabled, watch }: SubmitButtonProps) => {
   const title = watch('title')
-  const description = watch('description')
   const dueDate = watch('dueDate')
+  const userType = watch('userType')
+  const assigneeId = watch('assigneeId')
 
-  const isButtonDisabled = !title || !description || !dueDate || isLoading || isDisabled
+  const isButtonDisabled = !title || !dueDate || !assigneeId || !userType || isLoading || isDisabled
 
   return (
     <Button type="submit" disabled={isButtonDisabled}>
@@ -119,7 +123,7 @@ export const CreateEditTodoForm = ({
     resolver: zodResolver(todoFormSchema),
     defaultValues: {
       title: initialData?.title || '',
-      description: initialData?.description || '',
+      description: initialData?.description || undefined,
       dueDate: initialData?.dueDate || '',
       priority: initialData?.priority || TASK_PRIORITY_ENUM.LOW,
       status: initialData?.status || TASK_STATUS_ENUM.TODO,
@@ -145,32 +149,48 @@ export const CreateEditTodoForm = ({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       {/* Title */}
-      <FormInput required label="Title" htmlFor="title" direction="column">
+      <FormInput
+        required
+        label="Title"
+        htmlFor="title"
+        direction="column"
+        errorMessage={errors.title?.message}
+      >
         <Input
           id="title"
           type="text"
           placeholder="e.g Cool new title for my todo"
           {...register('title')}
         />
-        {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
       </FormInput>
 
       {/* Description */}
-      <FormInput required label="Description" htmlFor="description" direction="column">
+      <FormInput
+        label="Description"
+        htmlFor="description"
+        direction="column"
+        errorMessage={errors.description?.message}
+      >
         <Input
           id="description"
           type="text"
           placeholder="e.g Nothing is cool in here"
           {...register('description')}
         />
-        {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
       </FormInput>
 
+      {/* Assignee */}
       <Controller
         control={control}
         name="assigneeId"
         render={({ field }) => (
-          <FormInput required label="Assignee" htmlFor="assigneeId" direction="column">
+          <FormInput
+            required
+            label="Assignee"
+            htmlFor="assigneeId"
+            direction="column"
+            errorMessage={errors.assigneeId?.message}
+          >
             <UserAndTeamSearch
               placeholder="Select assignee"
               value={field.value}
@@ -193,16 +213,19 @@ export const CreateEditTodoForm = ({
             control={control}
             name="dueDate"
             render={({ field }) => (
-              <FormInput required label="Due Date" htmlFor="dueDate" icon={CalendarIcon}>
+              <FormInput
+                required
+                label="Due Date"
+                htmlFor="dueDate"
+                icon={CalendarIcon}
+                errorMessage={errors.dueDate?.message}
+              >
                 <div className="flex-1">
                   <DatePickerSelect
                     isDateDisabled={(date) => isPastDate(date)}
                     value={field.value ? new Date(field.value) : undefined}
                     onChange={(date) => field.onChange(date?.toISOString())}
                   />
-                  {errors.dueDate && (
-                    <p className="mt-1 text-sm text-red-500">{errors.dueDate.message}</p>
-                  )}
                 </div>
               </FormInput>
             )}
@@ -213,7 +236,12 @@ export const CreateEditTodoForm = ({
             control={control}
             name="priority"
             render={({ field }) => (
-              <FormInput label="Priority" htmlFor="priority" icon={PlayIcon}>
+              <FormInput
+                label="Priority"
+                htmlFor="priority"
+                icon={PlayIcon}
+                errorMessage={errors.priority?.message}
+              >
                 <Select
                   value={field.value}
                   onValueChange={(value) => field.onChange(value as TASK_PRIORITY_ENUM)}
@@ -236,7 +264,12 @@ export const CreateEditTodoForm = ({
             control={control}
             name="status"
             render={({ field }) => (
-              <FormInput label="Status" htmlFor="status" icon={CircleDotIcon}>
+              <FormInput
+                label="Status"
+                htmlFor="status"
+                icon={CircleDotIcon}
+                errorMessage={errors.status?.message}
+              >
                 <Select
                   value={field.value}
                   onValueChange={(value) => field.onChange(value as TASK_STATUS_ENUM)}
@@ -260,7 +293,12 @@ export const CreateEditTodoForm = ({
             control={control}
             name="labels"
             render={({ field }) => (
-              <FormInput label="Labels" htmlFor="labels" icon={TagIcon}>
+              <FormInput
+                label="Labels"
+                htmlFor="labels"
+                icon={TagIcon}
+                errorMessage={errors.labels?.message}
+              >
                 <SelectLabels
                   labelData={labels}
                   value={field.value ?? []}
