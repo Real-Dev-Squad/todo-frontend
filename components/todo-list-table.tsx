@@ -7,7 +7,7 @@ import { EditTaskButton } from './edit-task-button'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
-import { TodoLabelsTable } from './todo-labels-table'
+import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { WatchListButton } from './watchlist-button'
@@ -51,7 +51,7 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
       </TableCell>
 
       <TableCell className="whitespace-nowrap">
-        <TodoLabelsTable labels={todo.labels ?? []} />
+        <TodoLabelsList labels={todo.labels ?? []} />
       </TableCell>
 
       <TableCell className="whitespace-nowrap">
