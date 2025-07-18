@@ -31,11 +31,9 @@ function Testimonials() {
         </div>
 
         <div className="text-center">
-          <p className="text-netural-600 mb-4 text-xl">Backed by teams at</p>
+          <p className="text-netural-500 mb-2 text-lg">Backed by team at</p>
           <div className="flex flex-wrap items-center justify-center gap-2 opacity-70">
-            <div className="flex items-center space-x-3 transition-opacity duration-300 hover:opacity-100">
-              <span className="text-lg font-bold text-black">Real Dev Squad</span>
-            </div>
+            <span className="text-2xl font-bold text-black">Real Dev Squad 💜</span>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { AppFeatures } from './constant'
 
 export function Features() {
   return (
-    <section id="features" className="px-6 py-32 lg:px-8">
+    <section id="features" className="px-6 py-20 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-20 text-center">
           <h2 className="mb-6 text-4xl font-bold lg:text-5xl">Everything you need</h2>
