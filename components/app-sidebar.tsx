@@ -138,7 +138,9 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <h1 className="px-2 py-1 text-xl font-semibold">{appConfig.appName}</h1>
+        <Link href="/dashboard">
+          <h1 className="px-2 py-1 text-xl font-semibold">{appConfig.appName}</h1>
+        </Link>
       </SidebarHeader>
 
       <SidebarContent>
