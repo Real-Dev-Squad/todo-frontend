@@ -27,6 +27,10 @@ export class TodoUtil {
       updateDetails.priority = todoFormData.priority
     }
 
+    if (todoFormData.status !== initialTodo.status) {
+      updateDetails.status = todoFormData.status
+    }
+
     if (sortedTodoFormDataLabelIds?.join(',') !== sortedInitialLabelIds?.join(',')) {
       updateDetails.labels = todoFormData.labels
     }
