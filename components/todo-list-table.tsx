@@ -65,9 +65,11 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
       </TableCell>
 
       {showActions && (
-        <TableCell className="flex items-center gap-0.5">
-          <EditTodoButton todo={todo} />
-          <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+        <TableCell>
+          <div className="flex items-center gap-0.5">
+            <EditTodoButton todo={todo} />
+            <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+          </div>
         </TableCell>
       )}
     </TableRow>
