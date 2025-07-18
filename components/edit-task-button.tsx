@@ -32,6 +32,7 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
     assignTaskToUserMutation.isPending
 
   const handleSubmission = async (todoDetails: TTodoFormData) => {
+    let updateSucceeded = false
     const updateDetails = TodoUtil.getUpdateTodoDetails(todoDetails, todo)
 
     try {
@@ -40,6 +41,7 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
           id: todo.id,
           ...updateDetails,
         })
+        updateSucceeded = true
       }
 
       /**
@@ -63,8 +65,12 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     } catch (error) {
-      console.error(error)
-      toast.error('Failed to update todo')
+      if (updateSucceeded) {
+        toast.error('Failed to assign todo, please try again')
+        return
+      }
+
+      toast.error('Failed to update todo, please try again')
     }
   }
 
