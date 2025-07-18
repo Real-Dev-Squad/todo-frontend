@@ -46,6 +46,7 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
             : (task.labels as string[])
           : [],
         status: task.status,
+        initialAssignee: task.assignee,
       }}
       onSubmit={(value) =>
         updateTaskMutation.mutate({

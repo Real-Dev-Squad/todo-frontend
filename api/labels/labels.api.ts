@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common-api.types'
+import { TApiMethodsRecord } from '../common/common.types'
 import { Label } from './labels.types'
 
 export const LablesApi = {

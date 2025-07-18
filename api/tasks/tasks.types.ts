@@ -1,3 +1,4 @@
+import { TMinimalUser } from '../common/common.types'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from './tasks.enum'
 
 export type Label = {
@@ -28,10 +29,7 @@ export type TEditTask = {
   labels?: Label[] | string[]
   status: TASK_STATUS_ENUM
   priority?: TASK_PRIORITY_ENUM
-  assignee?: {
-    id: string
-    name: string
-  } | null
+  assignee: TMinimalUser | null
   tags?: string[]
   dueAt?: string
   in_watchlist?: boolean | null

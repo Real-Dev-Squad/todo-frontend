@@ -1,4 +1,4 @@
-import { TApiResponse } from '@/api/common/common-api.types'
+import { TApiResponse } from '@/api/common/common.types'
 import { UsersApi } from '@/api/users/users.api'
 import { TUser, TUsersSearchResponse } from '@/api/users/users.types'
 import { PageContainer } from '@/components/page-container'

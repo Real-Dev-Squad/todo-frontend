@@ -1,6 +1,7 @@
 'use client'
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
+import { TMinimalUser } from '@/api/common/common.types'
 import { LablesApi } from '@/api/labels/labels.api'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Button } from '@/components/ui/button'
@@ -35,13 +36,17 @@ const todoFormSchema = z.object({
   userType: z.enum(USER_TYPE_ENUM).optional(),
 })
 
-export type TodoFormData = z.infer<typeof todoFormSchema>
+export type TTodoFormData = z.infer<typeof todoFormSchema>
+
+export type TTodoFormDataWithInitialAssignee = TTodoFormData & {
+  initialAssignee: TMinimalUser | null
+}
 
 type SubmitButtonProps = {
   text: string
   isLoading?: boolean
   isDisabled?: boolean
-  watch: UseFormWatch<TodoFormData>
+  watch: UseFormWatch<TTodoFormData>
 }
 
 const SubmitButton = ({ text, isLoading, isDisabled, watch }: SubmitButtonProps) => {
@@ -61,9 +66,9 @@ const SubmitButton = ({ text, isLoading, isDisabled, watch }: SubmitButtonProps)
 type CreateEditTodoFormProps = {
   isSubmitting?: boolean
   mode?: 'create' | 'edit'
-  initialData?: Partial<TodoFormData>
+  initialData?: Partial<TTodoFormDataWithInitialAssignee>
   onCancel: () => void
-  onSubmit: (data: TodoFormData) => void
+  onSubmit: (data: TTodoFormData) => void
 }
 
 export const CreateEditTodoForm = ({
@@ -80,7 +85,7 @@ export const CreateEditTodoForm = ({
     handleSubmit,
     formState: { errors, isDirty },
     watch,
-  } = useForm<TodoFormData>({
+  } = useForm<TTodoFormData>({
     resolver: zodResolver(todoFormSchema),
     defaultValues: {
       title: initialData?.title || '',
@@ -92,10 +97,12 @@ export const CreateEditTodoForm = ({
     },
   })
 
+  console.log(initialData)
+
   const buttonText = mode === 'create' ? 'Create' : 'Save'
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
 
-  const handleFormSubmit = (data: TodoFormData) => {
+  const handleFormSubmit = (data: TTodoFormData) => {
     debugger
     onSubmit(data)
     console.log(data)

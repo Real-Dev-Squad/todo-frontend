@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord, TApiResponse } from '../common/common-api.types'
+import { TApiMethodsRecord, TApiResponse } from '../common/common.types'
 import { TUser, TUsersSearchParams, TUsersSearchResponse } from './users.types'
 
 export const UsersApi = {

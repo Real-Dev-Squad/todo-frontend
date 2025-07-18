@@ -1,7 +1,7 @@
-export type TUser = {
-  id: string
+import { TMinimalUser } from '../common/common.types'
+
+export type TUser = Pick<TMinimalUser, 'id' | 'name'> & {
   email?: string
-  name: string
   picture?: string
 }
 
