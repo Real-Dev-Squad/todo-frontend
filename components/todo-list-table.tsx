@@ -3,7 +3,7 @@
 import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { EditTaskButton } from './edit-task-button'
+import { EditTodoButton } from './edit-task-button'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
@@ -66,7 +66,7 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
 
       {showActions && (
         <TableCell className="flex items-center gap-0.5">
-          <EditTaskButton task={todo} />
+          <EditTodoButton todo={todo} />
           <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
         </TableCell>
       )}

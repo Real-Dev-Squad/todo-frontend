@@ -1,8 +1,4 @@
-import {
-  CreateEditTodoForm,
-  TTodoFormData,
-  TTodoFormDataWithInitialAssignee,
-} from '@/components/create-edit-todo-form'
+import { CreateEditTodoForm, TTodoFormData } from '@/components/create-edit-todo-form'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -27,7 +23,7 @@ type CreateModeProps = BaseProps & {
 
 type EditModeProps = BaseProps & {
   mode: 'edit'
-  defaultData: TTodoFormDataWithInitialAssignee
+  defaultData: TTodoFormData
 }
 
 type CreateEditTodoDialogProps = CreateModeProps | EditModeProps

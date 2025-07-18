@@ -1,18 +1,21 @@
+import { TaskAssignmentApi } from '@/api/task-assignment/task-assignment.api'
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { TEditTask } from '@/api/tasks/tasks.types'
+import { TTask } from '@/api/tasks/tasks.types'
+import { TodoUtil } from '@/lib/todo-util'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { CreateEditTodoDialog } from './create-edit-todo-dialog'
+import { TTodoFormData } from './create-edit-todo-form'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
-type EditTaskButtonProps = {
-  task: TEditTask
+type EditTodoButtonProps = {
+  todo: TTask
 }
 
-export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
+export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
   const queryClient = useQueryClient()
 
   const [showEditTaskForm, setShowEditTaskForm] = useState(false)
@@ -29,36 +32,69 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
     },
   })
 
+  const assignTaskToUserOrTeamMutation = useMutation({
+    mutationFn: TaskAssignmentApi.assignTaskToUserOrTeam.fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      toast.success('Todo assigned successfully')
+    },
+    onError: () => {
+      toast.error('Failed to assign todo')
+    },
+  })
+
+  const assignTaskToUserMutation = useMutation({
+    mutationFn: TasksApi.assignTaskToUser.fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      toast.success('Todo assigned successfully')
+    },
+    onError: () => {
+      toast.error('Failed to assign todo')
+    },
+  })
+
+  const isMutationPending =
+    updateTaskMutation.isPending ||
+    assignTaskToUserOrTeamMutation.isPending ||
+    assignTaskToUserMutation.isPending
+
+  const handleSubmission = (todoDetails: TTodoFormData) => {
+    const updateDetails = TodoUtil.getUpdateTodoDetails(todoDetails, todo)
+
+    if (Object.keys(updateDetails).length > 0) {
+      updateTaskMutation.mutate({
+        id: todo.id,
+        ...updateDetails,
+      })
+    }
+
+    /**
+     * If the task has not been to any user then we call the post api to assign the task to a user or team.
+     * If the task has been assigned to a user then we call the patch api to update the task assignee to a different user.
+     * */
+    if (!todo.assignee && todoDetails.assigneeId && todoDetails.userType) {
+      assignTaskToUserOrTeamMutation.mutate({
+        task_id: todo.id,
+        assignee_id: todoDetails.assigneeId,
+        user_type: todoDetails.userType,
+      })
+    } else if (todo.assignee && todoDetails.assigneeId) {
+      assignTaskToUserMutation.mutate({
+        task_id: todo.id,
+        assignee_id: todoDetails.assigneeId,
+      })
+    }
+  }
+
   return (
     <CreateEditTodoDialog
       mode="edit"
       open={showEditTaskForm}
+      onSubmit={handleSubmission}
       onOpenChange={setShowEditTaskForm}
-      isMutationPending={updateTaskMutation.isPending}
-      defaultData={{
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueAt || '',
-        priority: task.priority,
-        labels: Array.isArray(task.labels)
-          ? typeof task.labels[0] === 'object'
-            ? (task.labels as { id: string }[]).map((l) => l.id)
-            : (task.labels as string[])
-          : [],
-        status: task.status,
-        initialAssignee: task.assignee,
-      }}
-      onSubmit={(value) =>
-        updateTaskMutation.mutate({
-          id: task.id,
-          title: value.title,
-          dueAt: value.dueDate,
-          priority: value.priority,
-          description: value.description,
-          status: value.status,
-          labels: value.labels ?? [],
-        })
-      }
+      isMutationPending={isMutationPending}
+      defaultData={TodoUtil.getDefaultTodoFormData(todo)}
     >
       <Tooltip>
         <TooltipTrigger asChild>

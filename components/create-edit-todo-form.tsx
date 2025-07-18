@@ -66,7 +66,7 @@ const SubmitButton = ({ text, isLoading, isDisabled, watch }: SubmitButtonProps)
 type CreateEditTodoFormProps = {
   isSubmitting?: boolean
   mode?: 'create' | 'edit'
-  initialData?: Partial<TTodoFormDataWithInitialAssignee>
+  initialData?: Partial<TTodoFormData>
   onCancel: () => void
   onSubmit: (data: TTodoFormData) => void
 }
@@ -97,15 +97,11 @@ export const CreateEditTodoForm = ({
     },
   })
 
-  console.log(initialData)
-
   const buttonText = mode === 'create' ? 'Create' : 'Save'
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
 
   const handleFormSubmit = (data: TTodoFormData) => {
-    debugger
     onSubmit(data)
-    console.log(data)
   }
 
   const { data: labels = [] } = useQuery({

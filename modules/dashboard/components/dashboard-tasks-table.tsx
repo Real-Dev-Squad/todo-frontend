@@ -1,6 +1,6 @@
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
-import { EditTaskButton } from '@/components/edit-task-button'
+import { EditTodoButton } from '@/components/edit-task-button'
 import { TaskPriorityLabel } from '@/components/task-priority-label'
 import { TodoStatusTable } from '@/components/todo-status-table'
 import {
@@ -114,7 +114,7 @@ export const DashboardTasksTable = ({ tasks }: DashboardTasksTableProps) => {
                 </TableCell>
 
                 <TableCell className="flex items-center gap-3">
-                  <EditTaskButton task={task} />
+                  <EditTodoButton todo={task} />
                   <Tooltip>
                     <TooltipTrigger>
                       <WatchListButton taskId={task.id} isInWatchlist={task.in_watchlist} />
