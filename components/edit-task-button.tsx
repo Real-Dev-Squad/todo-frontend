@@ -59,9 +59,9 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
         })
       }
 
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
     } catch (error) {
       console.error(error)
       toast.error('Failed to update todo')
