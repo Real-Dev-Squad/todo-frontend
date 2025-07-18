@@ -32,7 +32,7 @@ export const TasksApi = {
   updateTask: {
     key: ['tasksApi.updateTask'],
     fn: async ({ id, ...task }: UpdateTaskDto): Promise<void> => {
-      await apiClient.patch<TTask>(`/v1/tasks/${id}`, task)
+      await apiClient.patch<TTask>(`/v1/tasks/${id}/update`, task)
     },
   },
 
