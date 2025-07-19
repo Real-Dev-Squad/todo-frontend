@@ -18,7 +18,7 @@ import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon } from 'lucide-react'
+import { PlusIcon, UserPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import StrideAppLogo from './Animated-logo'
@@ -44,6 +44,14 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
     url: '/teams/create',
     baseUrl: '/teams/create',
     icon: PlusIcon,
+  })
+
+  teamsLinks.push({
+    id: 'join_team_cta',
+    title: 'Join a team',
+    url: '/teams/join',
+    baseUrl: '/teams/join',
+    icon: UserPlusIcon,
   })
 
   return [
@@ -92,7 +100,7 @@ const SidebarLink = ({ link }: SidebarLinkProps) => {
                   <Link
                     href={item.url}
                     className={cn(
-                      item.id === 'create_team_cta' &&
+                      (item.id === 'create_team_cta' || item.id === 'join_team_cta') &&
                         'opacity-75 hover:opacity-100 focus:opacity-100 active:opacity-100',
                     )}
                   >
