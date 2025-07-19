@@ -60,12 +60,16 @@ export const SigninButton = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="relative">
+      <div className="group relative">
         <Button
-          asChild
-          className="h-max rounded-full px-5 py-2 text-base shadow-2xl duration-500 lg:text-lg"
+          size="lg"
+          className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-600 to-black p-4 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
         >
-          <Link href="/dashboard">Launch Dashboard</Link>
+          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+          <span className="relative z-10 flex items-center gap-3 font-semibold tracking-wide">
+            <Link href="/dashboard">Launch Dashboard</Link>
+            <ArrowRight />
+          </span>
         </Button>
       </div>
     )
@@ -77,10 +81,10 @@ export const SigninButton = () => {
         <div className="group relative">
           <Button
             size="lg"
-            className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-400 to-black px-8 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
+            className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-600 to-black p-4 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
           >
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
-            <span className="relative z-10 flex items-center gap-3 font-bold tracking-wide">
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+            <span className="relative z-10 flex items-center gap-3 font-semibold tracking-wide">
               <div className="flex items-center gap-2">Start Your Journey</div>
               <ArrowRight />
             </span>
