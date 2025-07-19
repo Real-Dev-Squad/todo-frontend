@@ -93,7 +93,7 @@ type SidebarLinkProps = {
 
 const SidebarLink = ({ link }: SidebarLinkProps) => {
   const pathname = usePathname()
-  const [isTeamsOpen, setIsTeamsOpen] = useState(false)
+  const [isTeamsOpen, setIsTeamsOpen] = useState(true)
 
   if (link.id === 'separator') {
     return (
@@ -120,7 +120,7 @@ const SidebarLink = ({ link }: SidebarLinkProps) => {
             </SidebarMenuButton>
           </CollapsibleTrigger>
 
-          <CollapsibleContent className="pl-2">
+          <CollapsibleContent className="pl-1">
             <SidebarMenu>
               {link.items.map((item) => (
                 <SidebarMenuItem key={item.id} className="px-2">
