@@ -286,3 +286,94 @@
 .animate-scroll {
   animation: scroll 10s linear infinite;
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animation for the new Stride logo */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-path {
+  opacity: 0; /* Start hidden */
+  animation: fadeInUp 0.8s ease-out forwards;
+  stroke: hsl(var(--primary)); /* Uses the primary color from shadcn/ui theme */
+}
+
+.path-1 {
+  animation-delay: 0s;
+}
+
+.path-2 {
+  animation-delay: 0.2s;
+}
+
+.logo-gradient-bg {
+  background: linear-gradient(135deg, hsl(0, 0%, 0%) 0%, hsl(0, 0%, 73%) 100%);
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo-line {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: drawLine 0.6s ease-out forwards;
+}
+
+.line-1 {
+  animation-delay: 0.2s;
+}
+.line-2 {
+  animation-delay: 0.4s;
+}
+.line-3 {
+  animation-delay: 0.6s;
+}
+
+.logo-dot {
+  opacity: 0;
+  transform-origin: center;
+  animation: fadeInScale 0.3s ease-out forwards;
+}
+
+.dot-1 {
+  animation-delay: 0.5s;
+}
+.dot-2 {
+  animation-delay: 0.4s;
+}
+.dot-3 {
+  animation-delay: 0.7s;
+}
+.dot-4 {
+  animation-delay: 0.9s;
+}

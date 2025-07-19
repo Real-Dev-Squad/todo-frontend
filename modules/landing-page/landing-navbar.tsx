@@ -1,5 +1,5 @@
+import StrideAppLogo from '@/components/Animated-logo'
 import { appConfig } from '@/config/app-config'
-import { Zap } from 'lucide-react'
 
 export function Navbar() {
   return (
@@ -8,11 +8,12 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black">
-                <Zap className="h-5 w-5 text-white" />
-              </div>
+              <StrideAppLogo />
             </div>
-            <span className="text-xl font-bold tracking-tight">{appConfig.appName}</span>
+            <div className="flex flex-col -space-y-1">
+              <span className="text-xl font-bold tracking-tight">{appConfig.appName}</span>
+              <span className="text-xs text-neutral-500">By RDS</span>
+            </div>
           </div>
         </div>
       </div>
