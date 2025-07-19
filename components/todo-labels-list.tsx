@@ -98,7 +98,7 @@ export const TodoLabelsList: React.FC<TodoLabelsTableProps> = ({ labels }) => {
           className="inline-block rounded-xl px-3 py-1 text-xs font-medium"
           style={{
             color: darkenColor(label.color, 0.4),
-            backgroundColor: hexToRgba(saturateColor(label.color, 0.9), 0.2),
+            backgroundColor: hexToRgba(saturateColor(label.color, 0.7), 0.2),
           }}
         >
           {label.name}
