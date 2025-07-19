@@ -21,6 +21,7 @@ import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import StrideAppLogo from './Animated-logo'
 import { Shimmer } from './Shimmer'
 
 const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
@@ -139,7 +140,15 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     <Sidebar {...props}>
       <SidebarHeader>
         <Link href="/">
-          <h1 className="px-2 py-1 text-xl font-semibold">{appConfig.appName}</h1>
+          <div className="flex items-center space-x-3 pl-2">
+            <div className="relative">
+              <StrideAppLogo />
+            </div>
+            <div className="flex flex-col -space-y-1">
+              <span className="text-xl font-bold tracking-tight">{appConfig.appName}</span>
+              <span className="text-xs text-neutral-500">By RDS</span>
+            </div>
+          </div>
         </Link>
       </SidebarHeader>
 
