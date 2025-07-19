@@ -2,6 +2,7 @@
 
 import { TeamsApi } from '@/api/teams/teams.api'
 import { GetTeamsDto } from '@/api/teams/teams.type'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
   Sidebar,
   SidebarContent,
@@ -18,9 +19,10 @@ import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon, UserPlusIcon } from 'lucide-react'
+import { ChevronDown, ChevronRight, PlusIcon, UserPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 import StrideAppLogo from './Animated-logo'
 import { Shimmer } from './Shimmer'
 
@@ -38,22 +40,6 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
     baseUrl: `/teams/${team.id}`,
   }))
 
-  teamsLinks.push({
-    id: 'create_team_cta',
-    title: 'Create a team',
-    url: '/teams/create',
-    baseUrl: '/teams/create',
-    icon: PlusIcon,
-  })
-
-  teamsLinks.push({
-    id: 'join_team_cta',
-    title: 'Join a team',
-    url: '/teams/join',
-    baseUrl: '/teams/join',
-    icon: UserPlusIcon,
-  })
-
   return [
     ...sidebarLinks,
     {
@@ -62,6 +48,21 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
       url: '#',
       baseUrl: '#',
       items: teamsLinks,
+    },
+
+    {
+      id: 'create_team_cta',
+      title: 'Create a team',
+      url: '/teams/create',
+      baseUrl: '/teams/create',
+      icon: PlusIcon,
+    },
+    {
+      id: 'join_team_cta',
+      title: 'Join a team',
+      url: '/teams/join',
+      baseUrl: '/teams/join',
+      icon: UserPlusIcon,
     },
   ]
 }
@@ -86,6 +87,47 @@ type SidebarLinkProps = {
 
 const SidebarLink = ({ link }: SidebarLinkProps) => {
   const pathname = usePathname()
+  const [isTeamsOpen, setIsTeamsOpen] = useState(false)
+
+  if (link.items && link.id === 'teams_list') {
+    return (
+      <SidebarMenuItem className="px-2">
+        <Collapsible open={isTeamsOpen} onOpenChange={setIsTeamsOpen}>
+          <CollapsibleTrigger asChild>
+            <SidebarMenuButton className="w-full justify-between">
+              <div className="flex items-center gap-2">
+                <span>{link.title}</span>
+              </div>
+              {isTeamsOpen ? (
+                <ChevronDown className="h-4 w-4" />
+              ) : (
+                <ChevronRight className="h-4 w-4" />
+              )}
+            </SidebarMenuButton>
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="pl-2">
+            <SidebarMenu>
+              {link.items.map((item) => (
+                <SidebarMenuItem key={item.id} className="px-2">
+                  <SidebarMenuButton asChild isActive={pathname.startsWith(item.baseUrl)}>
+                    <Link href={item.url}>
+                      {item.icon && (
+                        <div className="pr-0.5">
+                          <item.icon className="h-4 w-4" />
+                        </div>
+                      )}
+                      {item.title}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </CollapsibleContent>
+        </Collapsible>
+      </SidebarMenuItem>
+    )
+  }
 
   if (link.items) {
     return (
@@ -123,7 +165,13 @@ const SidebarLink = ({ link }: SidebarLinkProps) => {
   return (
     <SidebarMenuItem className="px-2">
       <SidebarMenuButton asChild isActive={pathname.startsWith(link.baseUrl)}>
-        <Link href={link.url}>
+        <Link
+          href={link.url}
+          className={cn(
+            (link.id === 'create_team_cta' || link.id === 'join_team_cta') &&
+              'opacity-75 hover:opacity-100 focus:opacity-100 active:opacity-100',
+          )}
+        >
           {link.icon && (
             <div className="pr-0.5">
               <link.icon className="h-4 w-4" />
