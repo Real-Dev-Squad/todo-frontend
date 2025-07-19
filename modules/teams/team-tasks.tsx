@@ -64,7 +64,7 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
             {isEditTodoVisible && <EditTodoButton todo={todo} />}
           </div>
         ) : (
-          <div>--</div>
+          <div className="px-2">--</div>
         )}
       </TableCell>
     </TableRow>

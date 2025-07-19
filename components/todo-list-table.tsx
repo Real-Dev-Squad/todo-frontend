@@ -1,10 +1,10 @@
 'use client'
 
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EditTodoButton } from './edit-task-button'
-import { ReassignUser } from './reassign-user'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
@@ -65,15 +65,16 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
 
-      {showActions && (
-        <TableCell>
+      <TableCell>
+        {showActions ? (
           <div className="flex items-center gap-0.5">
             <EditTodoButton todo={todo} />
             <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
-            <ReassignUser />
           </div>
-        </TableCell>
-      )}
+        ) : (
+          <div className="px-2">--</div>
+        )}
+      </TableCell>
     </TableRow>
   )
 }
@@ -110,7 +111,11 @@ const TodoListTableBody = ({ tasks, isLoading, showActions }: TodoListTableBodyP
   return (
     <TableBody>
       {tasks?.map((task) => (
-        <TodoListTableRow key={task.id} todo={task} showActions={showActions} />
+        <TodoListTableRow
+          key={task.id}
+          todo={task}
+          showActions={showActions && task.assignee?.user_type !== USER_TYPE_ENUM.TEAM}
+        />
       ))}
     </TableBody>
   )
