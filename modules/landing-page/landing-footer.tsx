@@ -1,5 +1,6 @@
+import StrideAppLogo from '@/components/Animated-logo'
 import { appConfig } from '@/config/app-config'
-import { ArrowUpRight, Zap } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { SocialLinks } from './landing-social-links'
 
 export function Footer() {
@@ -10,9 +11,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center space-x-3">
               <div className="relative">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black">
-                  <Zap className="h-5 w-5 text-white" />
-                </div>
+                <StrideAppLogo />
               </div>
               <span className="text-2xl font-bold">{appConfig.appName}</span>
             </div>

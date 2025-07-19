@@ -1,3 +1,4 @@
+import StrideAppLogo from '@/components/Animated-logo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
@@ -15,7 +16,6 @@ import {
   Search,
   Target,
   TrendingUp,
-  Zap,
 } from 'lucide-react'
 
 export function DashboardPreview() {
@@ -84,9 +84,7 @@ export function DashboardPreview() {
       <div className="w-full border-b border-gray-200 bg-gray-50 transition-all duration-300 md:w-64 md:border-r md:border-b-0">
         <div className="flex flex-row items-center justify-between p-4 md:flex-col md:items-stretch md:justify-start">
           <div className="mb-0 flex items-center space-x-3 md:mb-6">
-            <div className="flex h-8 w-8 animate-bounce items-center justify-center rounded-md bg-black md:animate-none">
-              <Zap className="h-4 w-4 text-white" />
-            </div>
+            <StrideAppLogo />
             <span className="text-lg font-medium text-black transition-colors duration-200 md:text-base">
               {appConfig.appName}
             </span>

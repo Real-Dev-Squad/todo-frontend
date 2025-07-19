@@ -148,13 +148,13 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     <Sidebar {...props}>
       <SidebarHeader>
         <Link href="/">
-          <div className="flex items-center space-x-3 pl-2">
+          <div className="flex items-center gap-3 pl-2">
             <div className="relative">
               <StrideAppLogo />
             </div>
             <div className="flex flex-col -space-y-1">
-              <span className="text-xl font-bold tracking-tight">{appConfig.appName}</span>
-              <span className="text-xs text-neutral-500">By RDS</span>
+              <span className="text-lg font-bold tracking-tight">{appConfig.appName}</span>
+              <span className="text-[10px] font-medium text-neutral-500">By RDS</span>
             </div>
           </div>
         </Link>

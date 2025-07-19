@@ -1,6 +1,6 @@
 export default function StrideAppLogo() {
   return (
-    <div className="logo-gradient-bg relative h-10 w-10 overflow-hidden rounded-lg shadow-lg">
+    <div className="logo-gradient-bg relative h-8 w-8 overflow-hidden rounded-lg shadow-lg">
       <svg
         width="100%"
         height="100%"

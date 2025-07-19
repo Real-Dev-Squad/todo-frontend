@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
-import { ArrowRight, LayoutDashboard, XIcon } from 'lucide-react'
+import { ArrowRight, XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
@@ -60,18 +60,12 @@ export const SigninButton = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="group relative">
+      <div className="relative">
         <Button
-          size="lg"
-          className="relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-400 to-black px-8 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95"
+          asChild
+          className="h-max rounded-full px-5 py-2 text-base shadow-2xl duration-500 lg:text-lg"
         >
-          <Link href="/dashboard">
-            <span className="relative z-10 flex items-center gap-3 font-bold tracking-wide">
-              <LayoutDashboard className="h-5 w-5 transition-all duration-500 group-hover:scale-105" />
-              Launch Dashboard
-              <div className="ml-1 h-2 w-2 animate-pulse rounded-full bg-green-200" />
-            </span>
-          </Link>
+          <Link href="/dashboard">Launch Dashboard</Link>
         </Button>
       </div>
     )
