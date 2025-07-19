@@ -37,8 +37,8 @@ const saturateColor = (hex: string, factor: number = 0.3) => {
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   let h = 0,
-    s = 0,
-    l = (max + min) / 2
+    s = 0
+  const l = (max + min) / 2
 
   if (max !== min) {
     const d = max - min
@@ -98,7 +98,7 @@ export const TodoLabelsList: React.FC<TodoLabelsTableProps> = ({ labels }) => {
           className="inline-block rounded-xl px-3 py-1 text-xs font-medium"
           style={{
             color: darkenColor(label.color, 0.4),
-            backgroundColor: hexToRgba(saturateColor(label.color, 0.7), 0.2),
+            backgroundColor: hexToRgba(saturateColor(label.color, 0.8), 0.2),
           }}
         >
           {label.name}
