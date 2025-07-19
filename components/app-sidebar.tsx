@@ -3,6 +3,7 @@
 import { TeamsApi } from '@/api/teams/teams.api'
 import { GetTeamsDto } from '@/api/teams/teams.type'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Separator } from '@/components/ui/separator'
 import {
   Sidebar,
   SidebarContent,
@@ -49,7 +50,12 @@ const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
       baseUrl: '#',
       items: teamsLinks,
     },
-
+    {
+      id: 'separator',
+      title: '',
+      url: '#',
+      baseUrl: '#',
+    },
     {
       id: 'create_team_cta',
       title: 'Create a team',
@@ -88,6 +94,14 @@ type SidebarLinkProps = {
 const SidebarLink = ({ link }: SidebarLinkProps) => {
   const pathname = usePathname()
   const [isTeamsOpen, setIsTeamsOpen] = useState(false)
+
+  if (link.id === 'separator') {
+    return (
+      <div className="px-2 py-1">
+        <Separator />
+      </div>
+    )
+  }
 
   if (link.items && link.id === 'teams_list') {
     return (
