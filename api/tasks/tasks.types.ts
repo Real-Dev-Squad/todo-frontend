@@ -105,3 +105,8 @@ export type AssignTaskToUserReqDto = {
   task_id: string
   assignee_id: string
 }
+
+export type ReassignTaskReqDto = {
+  task_id: string
+  executor_id: string
+}

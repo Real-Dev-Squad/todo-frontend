@@ -17,11 +17,7 @@ export const TeamsApi = {
     },
   },
   getTeamById: {
-    key: ({ teamId, member: members }: GetTeamByIdReqDto) => [
-      'TeamsApi.getTeamById',
-      teamId,
-      members,
-    ],
+    key: ({ teamId, member }: GetTeamByIdReqDto) => ['TeamsApi.getTeamById', teamId, member],
     fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<GetTeamByIdResponseDto> => {
       const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`, {
         params,

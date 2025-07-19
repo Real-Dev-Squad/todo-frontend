@@ -29,9 +29,11 @@ type TodoListTableRowProps = {
 
 const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
   const { user } = useAuth()
-  const showReassignTodo =
+  const isRessignTodoCtaVisible =
     todo.assignee?.user_type === USER_TYPE_ENUM.TEAM && team?.poc_id === user.id
-  const showEditTodo = todo.assignee?.assignee_id === user.id
+  const isEditTodoVisible = todo.assignee?.assignee_id === user.id
+
+  const isActionsVisible = isRessignTodoCtaVisible || isEditTodoVisible
 
   return (
     <TableRow>
@@ -56,10 +58,14 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
       </TableCell>
 
       <TableCell>
-        <div className="flex items-center gap-0.5">
-          {showReassignTodo && <ReassignUser />}
-          {showEditTodo && <EditTodoButton todo={todo} />}
-        </div>
+        {isActionsVisible ? (
+          <div className="flex items-center gap-0.5">
+            {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+            {isEditTodoVisible && <EditTodoButton todo={todo} />}
+          </div>
+        ) : (
+          <div>--</div>
+        )}
       </TableCell>
     </TableRow>
   )

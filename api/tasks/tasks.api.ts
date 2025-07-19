@@ -6,6 +6,7 @@ import {
   GetTaskReqDto,
   GetTasksDto,
   GetWatchListTaskDto,
+  ReassignTaskReqDto,
   ToggleWatchListStatusDto,
   TTask,
   TWatchListTask,
@@ -55,6 +56,13 @@ export const TasksApi = {
     key: ['tasksApi.toggleTaskWatchListStatus'],
     fn: async ({ taskId, isActive }: ToggleWatchListStatusDto): Promise<void> => {
       await apiClient.patch(`/v1/watchlist/tasks/${taskId}`, { isActive })
+    },
+  },
+
+  reassignTask: {
+    key: ['TasksApi.reassignTask'],
+    fn: async ({ task_id, executor_id }: ReassignTaskReqDto): Promise<void> => {
+      await apiClient.patch(`/v1/task-assignments/${task_id}`, { executor_id })
     },
   },
 } satisfies TApiMethodsRecord

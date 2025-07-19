@@ -1,6 +1,10 @@
+import { TasksApi } from '@/api/tasks/tasks.api'
 import { TUser } from '@/api/users/users.types'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserSearchIcon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
+import { toast } from 'sonner'
+import { TeamUserSearchDropdown } from './team-user-search-dropdown'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,29 +17,50 @@ import {
 } from './ui/alert-dialog'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
-import { UserSearchDropdown } from './user-search-dropdown'
 
 type ReassignUserModalProps = {
+  taskId: string
+  teamId: string
   open: boolean
   children: ReactNode
   onOpenChange: (open: boolean) => void
 }
 
-const ReassignUserModal = ({ open, children, onOpenChange }: ReassignUserModalProps) => {
+const ReassignUserModal = ({
+  open,
+  taskId,
+  teamId,
+  children,
+  onOpenChange,
+}: ReassignUserModalProps) => {
+  const queryClient = useQueryClient()
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null)
 
-  const handleOpenChange = (open: boolean) => {
-    if (!open) {
+  const reassignTaskMutation = useMutation({
+    mutationFn: TasksApi.reassignTask.fn,
+    onSuccess: () => {
+      toast.success(`Task assigned to ${selectedUser?.name}`)
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key(teamId) })
       onOpenChange(false)
       setSelectedUser(null)
-      return
-    }
+    },
+    onError: () => {
+      toast.error('Failed to reassign task, please try again')
+    },
+  })
 
-    onOpenChange(true)
+  const handleReassign = () => {
+    if (!selectedUser) return
+
+    debugger
+    reassignTaskMutation.mutate({
+      task_id: taskId,
+      executor_id: selectedUser.id,
+    })
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={handleOpenChange}>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
 
       <AlertDialogContent>
@@ -43,26 +68,37 @@ const ReassignUserModal = ({ open, children, onOpenChange }: ReassignUserModalPr
           <AlertDialogTitle>Reassign user</AlertDialogTitle>
         </AlertDialogHeader>
 
-        <UserSearchDropdown
+        <TeamUserSearchDropdown
+          teamId={teamId}
           value={selectedUser?.id}
           placeholder="Search user"
           onUserSelect={setSelectedUser}
         />
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={!selectedUser}>Reassign</AlertDialogAction>
+          <AlertDialogCancel disabled={reassignTaskMutation.isPending}>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleReassign}
+            disabled={!selectedUser || reassignTaskMutation.isPending}
+          >
+            {reassignTaskMutation.isPending ? 'Reassigning...' : 'Reassign'}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export const ReassignUser = () => {
+type ReassignUserProps = {
+  taskId: string
+  teamId: string
+}
+
+export const ReassignUser = ({ taskId, teamId }: ReassignUserProps) => {
   const [showModal, setShowModal] = useState(false)
 
   return (
-    <ReassignUserModal open={showModal} onOpenChange={setShowModal}>
+    <ReassignUserModal open={showModal} onOpenChange={setShowModal} taskId={taskId} teamId={teamId}>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button

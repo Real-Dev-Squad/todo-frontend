@@ -1,4 +1,4 @@
-import { UsersApi } from '@/api/users/users.api'
+import { TeamsApi } from '@/api/teams/teams.api'
 import { TUser } from '@/api/users/users.types'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
@@ -15,25 +15,26 @@ import {
 } from './ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
-type UserSearchDropdownProps = {
+type TeamUserSearchDropdownProps = {
+  teamId: string
   value?: string
   placeholder?: string
   onUserSelect: (user: TUser) => void
 }
 
-export const UserSearchDropdown = ({
+export const TeamUserSearchDropdown = ({
+  teamId,
   value,
   placeholder = 'Search user',
   onUserSelect,
-}: UserSearchDropdownProps) => {
+}: TeamUserSearchDropdownProps) => {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
 
   const { data: usersList, isLoading } = useQuery({
-    queryKey: UsersApi.users.key({ search }),
-    queryFn: () => UsersApi.users.fn({ search: search || undefined }),
-    select: (res) => res.data.users,
-    enabled: open || search.length > 0,
+    queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
+    queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
+    select: (res) => res.users,
   })
 
   const selectedUser = usersList?.find((user) => user.id === value)
@@ -83,9 +84,6 @@ export const UserSearchDropdown = ({
                   <User className="text-muted-foreground h-4 w-4" />
                   <div className="flex-1">
                     <div className="font-medium">{user.name}</div>
-                    {user.email && (
-                      <div className="text-muted-foreground text-xs">{user.email}</div>
-                    )}
                   </div>
                 </CommandItem>
               ))}
