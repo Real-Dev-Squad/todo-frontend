@@ -1,12 +1,6 @@
 import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord } from '../common/common.types'
-import {
-  CreateTeamPayload,
-  GetTeamByIdReqDto,
-  GetTeamByIdResponseDto,
-  GetTeamsDto,
-  TTeam,
-} from './teams.type'
+import { CreateTeamPayload, GetTeamByIdReqDto, GetTeamsDto, TeamDto, TTeam } from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -18,8 +12,8 @@ export const TeamsApi = {
   },
   getTeamById: {
     key: ({ teamId, member }: GetTeamByIdReqDto) => ['TeamsApi.getTeamById', teamId, member],
-    fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<GetTeamByIdResponseDto> => {
-      const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`, {
+    fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<TeamDto> => {
+      const { data } = await apiClient.get<TeamDto>(`/v1/teams/${teamId}`, {
         params,
       })
       return data
@@ -40,10 +34,20 @@ export const TeamsApi = {
     }: {
       teamId: string
       member_ids: string[]
-    }): Promise<GetTeamByIdResponseDto> => {
-      const { data } = await apiClient.post<GetTeamByIdResponseDto>(`/v1/teams/${teamId}/members`, {
+    }): Promise<TeamDto> => {
+      const { data } = await apiClient.post<TeamDto>(`/v1/teams/${teamId}/members`, {
         member_ids,
       })
+      return data
+    },
+  },
+  joinTeamByInviteCode: {
+    key: ['TeamsApi.joinTeamByInviteCode'],
+    fn: async ({ inviteCode }: { inviteCode: string }): Promise<TeamDto> => {
+      const { data } = await apiClient.post<TeamDto>(`/v1/teams/join-by-invite`, {
+        invite_code: inviteCode,
+      })
+
       return data
     },
   },
