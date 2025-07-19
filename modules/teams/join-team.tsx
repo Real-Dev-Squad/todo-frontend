@@ -1,7 +1,7 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
-import { PageContainer } from '@/components/page-container'
+import { PageContainerWithLogo } from '@/components/page-container-with-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -38,35 +38,35 @@ export const JoinTeam = () => {
   }
 
   return (
-    <PageContainer className="flex-1 py-12 md:py-20 xl:py-28">
-      <div className="mx-auto w-full max-w-sm">
-        <h1 className="pb-8 text-center text-2xl font-bold xl:pb-10 xl:text-3xl">Join a team</h1>
+    <PageContainerWithLogo>
+      <h1 className="pb-16 text-center text-2xl font-semibold text-gray-900 xl:text-3xl">
+        Join your squad
+      </h1>
 
-        <form className="space-y-4" onSubmit={handleFormSubmission}>
-          <div>
-            <Label htmlFor="inviteCode" className="text-sm md:text-base">
-              Invite Code
-            </Label>
+      <form className="space-y-8" onSubmit={handleFormSubmission}>
+        <div>
+          <Label htmlFor="inviteCode" className="text-sm md:text-base">
+            Invite Code
+          </Label>
 
-            <Input
-              id="inviteCode"
-              name="inviteCode"
-              value={inviteCode}
-              placeholder="Enter invite code"
-              className="mt-1 text-sm md:text-base"
-              onChange={(e) => setInviteCode(e.target.value)}
-            />
-          </div>
+          <Input
+            id="inviteCode"
+            name="inviteCode"
+            value={inviteCode}
+            placeholder="Enter invite code"
+            className="mt-1 text-sm md:text-base"
+            onChange={(e) => setInviteCode(e.target.value)}
+          />
+        </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={joinByInviteCodeMutation.isPending || !inviteCode}
-          >
-            {joinByInviteCodeMutation.isPending ? 'Joining...' : 'Join Team'}
-          </Button>
-        </form>
-      </div>
-    </PageContainer>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={joinByInviteCodeMutation.isPending || !inviteCode}
+        >
+          {joinByInviteCodeMutation.isPending ? 'Joining...' : 'Join Team'}
+        </Button>
+      </form>
+    </PageContainerWithLogo>
   )
 }

@@ -2,7 +2,7 @@
 
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TUser } from '@/api/users/users.types'
-import { PageContainer } from '@/components/page-container'
+import { PageContainerWithLogo } from '@/components/page-container-with-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -112,97 +112,86 @@ export const CreateTeam = () => {
 
   if (showInviteForm) {
     return (
-      <PageContainer className="flex-1 py-12 md:py-20 xl:py-28">
-        <div className="mx-auto w-full max-w-sm">
-          <div className="flex items-center gap-2 pb-8 xl:pb-10">
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => setShowInviteForm(false)}
-              className="h-9 w-9 shrink-0 hover:bg-gray-100"
-            >
-              <ArrowLeft className="h-5 w-5" />
+      <PageContainerWithLogo>
+        <div className="flex items-center gap-2 pb-8 xl:pb-10">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => setShowInviteForm(false)}
+            className="h-9 w-9 shrink-0 hover:bg-gray-100"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+
+          <h2 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
+            Invite Teammates
+          </h2>
+        </div>
+
+        <div className="space-y-6">
+          <UserSelection selectedUsers={selectedUsers} onUsersChange={setSelectedUsers} />
+
+          <SelectPoc value={pocId} currentUser={user} onChange={setPocId} members={selectedUsers} />
+
+          <div className="flex items-center gap-2">
+            <Button variant="outline" className="flex-1" onClick={handleSkipInviting}>
+              Skip Inviting
             </Button>
 
-            <h2 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
-              Invite Teammates
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <UserSelection selectedUsers={selectedUsers} onUsersChange={setSelectedUsers} />
-
-            <SelectPoc
-              value={pocId}
-              currentUser={user}
-              onChange={setPocId}
-              members={selectedUsers}
-            />
-
-            <div className="flex items-center gap-2">
-              <Button variant="outline" className="flex-1" onClick={handleSkipInviting}>
-                Skip Inviting
-              </Button>
-
-              <Button
-                className="flex-1"
-                onClick={handleCreateTeam}
-                disabled={createTeamMutation.isPending || selectedUsers.length === 0}
-              >
-                {createTeamMutation.isPending ? 'Creating...' : 'Create Team'}
-              </Button>
-            </div>
+            <Button
+              className="flex-1"
+              onClick={handleCreateTeam}
+              disabled={createTeamMutation.isPending || selectedUsers.length === 0}
+            >
+              {createTeamMutation.isPending ? 'Creating...' : 'Create Team'}
+            </Button>
           </div>
         </div>
-      </PageContainer>
+      </PageContainerWithLogo>
     )
   }
 
   return (
-    <PageContainer className="flex-1 py-12 md:py-20 xl:py-28">
-      <div className="mx-auto w-full max-w-sm">
-        <h1 className="pb-8 text-center text-2xl font-bold xl:pb-10 xl:text-3xl">
-          Create your team
-        </h1>
+    <PageContainerWithLogo>
+      <h1 className="pb-8 text-center text-2xl font-bold xl:pb-10 xl:text-3xl">Create your team</h1>
 
-        <form className="space-y-4" onSubmit={handleFormSubmission}>
-          <div>
-            <Label htmlFor="teamName" className="text-sm md:text-base">
-              Team Name
-            </Label>
+      <form className="space-y-4" onSubmit={handleFormSubmission}>
+        <div>
+          <Label htmlFor="teamName" className="text-sm md:text-base">
+            Team Name
+          </Label>
 
-            <Input
-              id="teamName"
-              name="teamName"
-              disabled={createTeamMutation.isPending}
-              value={teamInfo.name}
-              placeholder="Your team name"
-              className="mt-1 text-sm md:text-base"
-              onChange={(e) => setTeamInfo((prev) => ({ ...prev, name: e.target.value }))}
-            />
-          </div>
+          <Input
+            id="teamName"
+            name="teamName"
+            disabled={createTeamMutation.isPending}
+            value={teamInfo.name}
+            placeholder="Your team name"
+            className="mt-1 text-sm md:text-base"
+            onChange={(e) => setTeamInfo((prev) => ({ ...prev, name: e.target.value }))}
+          />
+        </div>
 
-          <div className="pb-4">
-            <Label htmlFor="description" className="text-sm md:text-base">
-              Description <span className="text-xs text-gray-500">(optional)</span>
-            </Label>
+        <div className="pb-4">
+          <Label htmlFor="description" className="text-sm md:text-base">
+            Description <span className="text-xs text-gray-500">(optional)</span>
+          </Label>
 
-            <Input
-              id="description"
-              name="description"
-              disabled={createTeamMutation.isPending}
-              value={teamInfo.description}
-              placeholder="Your team description"
-              className="mt-1 text-sm md:text-base"
-              onChange={(e) => setTeamInfo((prev) => ({ ...prev, description: e.target.value }))}
-            />
-          </div>
+          <Input
+            id="description"
+            name="description"
+            disabled={createTeamMutation.isPending}
+            value={teamInfo.description}
+            placeholder="Your team description"
+            className="mt-1 text-sm md:text-base"
+            onChange={(e) => setTeamInfo((prev) => ({ ...prev, description: e.target.value }))}
+          />
+        </div>
 
-          <Button type="submit" className="w-full" disabled={!teamInfo.name}>
-            Next
-          </Button>
-        </form>
-      </div>
-    </PageContainer>
+        <Button type="submit" className="w-full" disabled={!teamInfo.name}>
+          Next
+        </Button>
+      </form>
+    </PageContainerWithLogo>
   )
 }

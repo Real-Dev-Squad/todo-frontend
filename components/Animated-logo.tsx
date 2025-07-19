@@ -1,6 +1,17 @@
-export default function StrideAppLogo() {
+import { cn } from '@/lib/utils'
+
+type Props = {
+  className?: string
+}
+
+export default function StrideAppLogo({ className }: Props) {
   return (
-    <div className="logo-gradient-bg relative h-8 w-8 overflow-hidden rounded-lg shadow-lg">
+    <div
+      className={cn(
+        'logo-gradient-bg relative h-8 w-8 overflow-hidden rounded-lg shadow-lg',
+        className,
+      )}
+    >
       <svg
         width="100%"
         height="100%"
