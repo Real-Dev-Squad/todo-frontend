@@ -3,6 +3,7 @@ export async function enableMocking() {
   const isMockingEnabled = process.env.NEXT_PUBLIC_API_MOCKING === 'true'
 
   if (!isDev || !isMockingEnabled) {
+    console.log('MSW mocking disabled: ', { isDev, isMockingEnabled })
     return
   }
   try {

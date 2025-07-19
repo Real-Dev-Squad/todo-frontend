@@ -2,7 +2,7 @@
 
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MSWProvider } from './msw-provider'
+import { MockServiceWorkerProvider } from './msw-provider'
 
 function makeQueryClient() {
   return new QueryClient({
@@ -40,8 +40,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
 
   return (
-    <MSWProvider>
+    <MockServiceWorkerProvider>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </MSWProvider>
+    </MockServiceWorkerProvider>
   )
 }

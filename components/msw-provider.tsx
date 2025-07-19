@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-export function MSWProvider({ children }: { children: React.ReactNode }) {
+export function MockServiceWorkerProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     import('@/__mocks__/init').then(({ enableMocking }) => {
       enableMocking()
