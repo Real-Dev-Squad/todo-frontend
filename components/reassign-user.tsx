@@ -41,6 +41,7 @@ const ReassignUserModal = ({
     onSuccess: () => {
       toast.success(`Task assigned to ${selectedUser?.name}`)
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key(teamId) })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       onOpenChange(false)
       setSelectedUser(null)
     },
@@ -52,7 +53,6 @@ const ReassignUserModal = ({
   const handleReassign = () => {
     if (!selectedUser) return
 
-    debugger
     reassignTaskMutation.mutate({
       task_id: taskId,
       executor_id: selectedUser.id,

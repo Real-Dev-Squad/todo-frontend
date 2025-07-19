@@ -1,3 +1,4 @@
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoUtil } from '@/lib/todo-util'
@@ -21,8 +22,14 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
 
   const updateTaskMutation = useMutation({
     mutationFn: TasksApi.updateTask.fn,
-    onSuccess: () => {
+    onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+
+      if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key(res.assignee.assignee_id),
+        })
+      }
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     },

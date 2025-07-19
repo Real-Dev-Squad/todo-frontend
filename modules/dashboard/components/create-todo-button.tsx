@@ -1,3 +1,4 @@
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { CreateEditTodoDialog } from '@/components/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
@@ -12,9 +13,15 @@ export const CreateTodoButton = () => {
 
   const createTaskMutation = useMutation({
     mutationFn: TasksApi.createTask.fn,
-    onSuccess: () => {
+    onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+
+      if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key(res.assignee.assignee_id),
+        })
+      }
+
       toast.success('Todo created successfully')
       setShowCreateTaskForm(false)
     },
