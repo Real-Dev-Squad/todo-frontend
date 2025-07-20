@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 export const TASK_STATUS_TO_TEXT_MAP: Record<TASK_STATUS_ENUM, string> = {
   [TASK_STATUS_ENUM.TODO]: 'Todo',
   [TASK_STATUS_ENUM.IN_PROGRESS]: 'In Progress',
-  [TASK_STATUS_ENUM.COMPLETED]: 'Completed',
+  [TASK_STATUS_ENUM.DONE]: 'Done',
 }
 
 type TodoStatusTableProps = {

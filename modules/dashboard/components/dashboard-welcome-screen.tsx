@@ -1,35 +1,14 @@
 'use client'
-import { TasksApi } from '@/api/tasks/tasks.api'
-import { TTask } from '@/api/tasks/tasks.types'
+
 import { useAuth } from '@/hooks/useAuth'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+
 import Image from 'next/image'
-import { useState } from 'react'
-import { toast } from 'sonner'
-import { TaskFormData, TodoForm } from '../../../components/TodoForm'
+import Link from 'next/link'
+import { CreateTodoButton } from './create-todo-button'
 
 export const DashboardWelcomeScreen = () => {
-  const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
   const { user } = useAuth()
   const name = user?.name || 'Guest'
-  const queryClient = useQueryClient()
-  const createTaskMutation = useMutation({
-    mutationFn: (task: TTask) => TasksApi.createTask.fn(task),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
-      toast.success('Task created successfully')
-      setShowCreateTaskForm(false)
-    },
-    onError: (error: AxiosError) => {
-      toast.error(error.response?.data as string)
-    },
-  })
-
-  const handleCreateTask = (task: TTask) => {
-    createTaskMutation.mutate(task)
-  }
-
   return (
     <div className="flex min-h-[60vh] flex-col p-4 md:p-6">
       <div className="mb-6 text-center md:mb-8">
@@ -49,27 +28,17 @@ export const DashboardWelcomeScreen = () => {
           </div>
         </div>
 
-        <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row md:gap-4">
-          <button
-            type="button"
-            className="bg-primary hover:bg-primary-dark flex-1 rounded-lg px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:cursor-pointer md:px-10 md:py-4 md:text-base"
-            onClick={() => setShowCreateTaskForm(true)}
+        <div className="flex gap-3 sm:flex-row md:gap-4">
+          <CreateTodoButton />
+
+          <Link
+            href="/teams/create"
+            className="bg-primary hover:bg-primary-dark rounded-lg px-4 py-1 pt-1 text-center text-sm font-medium text-white transition-colors duration-200"
           >
-            Create Task
-          </button>
-          <button
-            type="button"
-            className="bg-primary hover:bg-primary-dark flex-1 rounded-lg px-6 py-3 text-sm font-medium text-white transition-colors duration-200 md:px-10 md:py-4 md:text-base"
-          >
-            Create Team
-          </button>
+            + Create Team
+          </Link>
         </div>
       </div>
-      <TodoForm
-        open={showCreateTaskForm}
-        onClose={() => setShowCreateTaskForm(false)}
-        onSubmit={handleCreateTask as (data: TaskFormData) => void}
-      />
     </div>
   )
 }

@@ -1,12 +1,6 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common-api.types'
-import {
-  CreateTeamPayload,
-  GetTeamByIdReqDto,
-  GetTeamByIdResponseDto,
-  GetTeamsDto,
-  TTeam,
-} from './teams.type'
+import { TApiMethodsRecord } from '../common/common.types'
+import { CreateTeamPayload, GetTeamByIdReqDto, GetTeamsDto, TeamDto, TTeam } from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -17,13 +11,9 @@ export const TeamsApi = {
     },
   },
   getTeamById: {
-    key: ({ teamId, member: members }: GetTeamByIdReqDto) => [
-      'TeamsApi.getTeamById',
-      teamId,
-      members,
-    ],
-    fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<GetTeamByIdResponseDto> => {
-      const { data } = await apiClient.get<GetTeamByIdResponseDto>(`/v1/teams/${teamId}`, {
+    key: ({ teamId, member }: GetTeamByIdReqDto) => ['TeamsApi.getTeamById', teamId, member],
+    fn: async ({ teamId, ...params }: GetTeamByIdReqDto): Promise<TeamDto> => {
+      const { data } = await apiClient.get<TeamDto>(`/v1/teams/${teamId}`, {
         params,
       })
       return data
@@ -33,6 +23,31 @@ export const TeamsApi = {
     key: ['TeamsApi.createTeam'],
     fn: async (teamData: CreateTeamPayload): Promise<TTeam> => {
       const { data } = await apiClient.post<TTeam>(`/v1/teams`, teamData)
+      return data
+    },
+  },
+  addMembers: {
+    key: ({ teamId }: { teamId: string }) => ['TeamsApi.addMembers', teamId],
+    fn: async ({
+      teamId,
+      member_ids,
+    }: {
+      teamId: string
+      member_ids: string[]
+    }): Promise<TeamDto> => {
+      const { data } = await apiClient.post<TeamDto>(`/v1/teams/${teamId}/members`, {
+        member_ids,
+      })
+      return data
+    },
+  },
+  joinTeamByInviteCode: {
+    key: ['TeamsApi.joinTeamByInviteCode'],
+    fn: async ({ inviteCode }: { inviteCode: string }): Promise<TeamDto> => {
+      const { data } = await apiClient.post<TeamDto>(`/v1/teams/join-by-invite`, {
+        invite_code: inviteCode,
+      })
+
       return data
     },
   },

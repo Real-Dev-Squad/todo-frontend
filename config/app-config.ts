@@ -9,7 +9,7 @@ const appConfigSchema = z.object({
 type TAppConfig = z.infer<typeof appConfigSchema>
 
 export const appConfig: TAppConfig = {
-  appName: 'TODO App',
+  appName: 'Stride',
   appDescription: 'An effective todo management systems for your teams.',
   backendBaseUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || '',
 }

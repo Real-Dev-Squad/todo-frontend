@@ -7,8 +7,8 @@ import { useParams, usePathname } from 'next/navigation'
 const getTabsList = (teamId: string) => {
   return [
     {
-      label: 'Tasks',
-      href: `/teams/${teamId}/tasks`,
+      label: 'Todos',
+      href: `/teams/${teamId}/todos`,
     },
     {
       label: 'Activities',

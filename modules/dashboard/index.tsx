@@ -28,7 +28,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <PageContainer>
+    <PageContainer className="pb-4">
       <DashboardHeader className="py-12" />
 
       <div className="container mx-auto">

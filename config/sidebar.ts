@@ -1,4 +1,4 @@
-import { HomeIcon, ListTodoIcon, LucideIcon, UsersRoundIcon } from 'lucide-react'
+import { HomeIcon, LucideIcon, UsersRoundIcon } from 'lucide-react'
 
 export type TSidebarLink = {
   id: string
@@ -17,13 +17,13 @@ export const SIDEBAR_LINKS: TSidebarLink[] = [
     baseUrl: '/dashboard',
     icon: HomeIcon,
   },
-  {
-    id: 'tasks',
-    title: 'Tasks',
-    url: '/tasks',
-    baseUrl: '/tasks',
-    icon: ListTodoIcon,
-  },
+  // {
+  //   id: 'tasks',
+  //   title: 'Tasks',
+  //   url: '/tasks',
+  //   baseUrl: '/tasks',
+  //   icon: ListTodoIcon,
+  // },
   {
     id: 'teams',
     title: 'Teams',

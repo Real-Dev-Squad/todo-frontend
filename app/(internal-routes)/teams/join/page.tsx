@@ -1,12 +1,3 @@
-import React from 'react'
-import TeamsTable from './TeamsTable'
+import { JoinTeam } from '@/modules/teams/join-team'
 
-function page() {
-  return (
-    <div>
-      <TeamsTable />
-    </div>
-  )
-}
-
-export default page
+export default JoinTeam

@@ -1,5 +1,6 @@
+import { TApiResponse } from '@/api/common/common.types'
 import { UsersApi } from '@/api/users/users.api'
-import { TUser } from '@/api/users/users.types'
+import { TUser, TUsersSearchResponse } from '@/api/users/users.types'
 import { PageContainer } from '@/components/page-container'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -21,7 +22,7 @@ const normalizeUser = (user: unknown): TUser => {
   const u = user as Record<string, unknown>
   const userId = (u.user_id as string) || (u.userId as string) || (u.id as string) || ''
   return {
-    userId: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
+    id: userId || `temp-${Math.random().toString(36).substr(2, 9)}`,
     name: (u.name as string) || '',
     email: (u.email as string) || (u.email_id as string) || '',
     picture: (u.picture as string) || (u.avatar as string) || '',
@@ -34,19 +35,19 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
   const [availableUsers, setAvailableUsers] = useState<TUser[]>([])
   const [isSearching, setIsSearching] = useState(false)
-  const [pocId, setPocId] = useState<string | null>(currentUser.userId)
+  const [pocId, setPocId] = useState<string | null>(currentUser.id)
 
   const selectedUserIds = useMemo(
-    () => new Set(selectedUsers.map((user) => user.userId)),
+    () => new Set(selectedUsers.map((user) => user.id)),
     [selectedUsers],
   )
 
   // Convert users to combobox options
   const userOptions = useMemo((): ComboboxOption[] => {
     return availableUsers
-      .filter((user) => !selectedUserIds.has(user.userId))
+      .filter((user) => !selectedUserIds.has(user.id))
       .map((user) => ({
-        value: user.userId,
+        value: user.id,
         label: `${user.name} (${user.email})`,
         user: user,
       }))
@@ -59,10 +60,10 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
       return
     }
     setIsSearching(true)
-    UsersApi.searchUser
-      .fn(debouncedSearchTerm)
-      .then((res: { data: { users: Partial<TUser>[] } }) => {
-        const users = (res?.data?.users || []).map(normalizeUser)
+    UsersApi.users
+      .fn({ search: debouncedSearchTerm })
+      .then((res: TApiResponse<TUsersSearchResponse>) => {
+        const users = (res.data?.users || []).map(normalizeUser)
         setAvailableUsers(users)
       })
       .catch(() => setAvailableUsers([]))
@@ -75,7 +76,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   }
 
   const handleRemoveUser = (id: string) => {
-    setSelectedUsers((prev) => prev.filter((user) => user.userId !== id))
+    setSelectedUsers((prev) => prev.filter((user) => user.id !== id))
   }
 
   const handleClearAllUsers = () => {
@@ -83,12 +84,12 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
   }
 
   const handleSubmit = () => {
-    const memberIds = selectedUsers.map((u) => u.userId)
+    const memberIds = selectedUsers.map((u) => u.id)
     onCreateTeam(memberIds, pocId)
   }
 
   const handleSkipInviting = () => {
-    onCreateTeam([], pocId ?? currentUser.userId)
+    onCreateTeam([], pocId ?? currentUser.id)
   }
 
   const handleSearchChange = (search: string) => {
@@ -176,7 +177,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
               <div className="max-h-60 space-y-2 overflow-y-auto">
                 {selectedUsers.map((user, index) => (
                   <div
-                    key={user.userId}
+                    key={user.id}
                     className="group flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 transition-colors"
                   >
                     <Avatar className="h-9 w-9 shrink-0">
@@ -196,7 +197,7 @@ export const InviteForm = ({ onBack, onCreateTeam, loading, currentUser }: Invit
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
-                        onClick={() => handleRemoveUser(user.userId)}
+                        onClick={() => handleRemoveUser(user.id)}
                         title={`Remove ${user.name}`}
                       >
                         <X className="h-4 w-4" />

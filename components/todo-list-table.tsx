@@ -1,12 +1,14 @@
 'use client'
 
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { EditTaskButton } from './edit-task-button'
+import { EditTodoButton } from './edit-task-button'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
+import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { WatchListButton } from './watchlist-button'
@@ -19,7 +21,7 @@ type TodoListTableHeaderProps = {
   showActions?: boolean
 }
 
-const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
+export const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
   return (
     <TableHeader>
       <TableRow>
@@ -49,24 +51,30 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
         <TodoStatusTable status={todo.status} />
       </TableCell>
 
-      <TableCell className="whitespace-nowrap">--</TableCell>
+      <TableCell className="whitespace-nowrap">
+        <TodoLabelsList labels={todo.labels ?? []} />
+      </TableCell>
 
       <TableCell className="whitespace-nowrap">
         {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
       </TableCell>
 
-      <TableCell className="whitespace-nowrap">{todo.assignee?.name ?? '--'}</TableCell>
+      <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
 
       <TableCell className="whitespace-nowrap">
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
 
-      {showActions && (
-        <TableCell className="flex items-center gap-0.5">
-          <EditTaskButton task={todo} />
-          <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
-        </TableCell>
-      )}
+      <TableCell>
+        {showActions ? (
+          <div className="flex items-center gap-0.5">
+            <EditTodoButton todo={todo} />
+            <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+          </div>
+        ) : (
+          <div className="px-2">--</div>
+        )}
+      </TableCell>
     </TableRow>
   )
 }
@@ -103,13 +111,17 @@ const TodoListTableBody = ({ tasks, isLoading, showActions }: TodoListTableBodyP
   return (
     <TableBody>
       {tasks?.map((task) => (
-        <TodoListTableRow key={task.id} todo={task} showActions={showActions} />
+        <TodoListTableRow
+          key={task.id}
+          todo={task}
+          showActions={showActions && task.assignee?.user_type !== USER_TYPE_ENUM.TEAM}
+        />
       ))}
     </TableBody>
   )
 }
 
-const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: boolean }) => {
+export const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: boolean }) => {
   return (
     <TableRow>
       <TableCell colSpan={showActions ? 7 : 6}>
@@ -138,7 +150,7 @@ export const TodoListTable = ({ tasks, isLoading, showActions }: TodoListTablePr
         (task) =>
           task.title.toLowerCase().includes(search.toLowerCase()) ||
           task.labels?.join(', ').toLowerCase().includes(search.toLowerCase()) ||
-          task.assignee?.name.toLowerCase().includes(search.toLowerCase()) ||
+          task.assignee?.assignee_name.toLowerCase().includes(search.toLowerCase()) ||
           task.status.toLowerCase().includes(search.toLowerCase()) ||
           task.priority?.toLowerCase().includes(search.toLowerCase()),
       )

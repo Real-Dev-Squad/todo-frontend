@@ -30,8 +30,8 @@ export const SelectPoc = ({ currentUser, members, value, onChange }: SelectPocPr
           </SelectTrigger>
           <SelectContent>
             {options.map((user, index) => (
-              <SelectItem key={user.userId || `user-${index}`} value={user.userId}>
-                {user.name} {user.userId === currentUser.userId && '(You)'}
+              <SelectItem key={user.id || `user-${index}`} value={user.id}>
+                {user.name} {user.id === currentUser.id && '(You)'}
               </SelectItem>
             ))}
           </SelectContent>

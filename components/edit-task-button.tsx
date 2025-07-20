@@ -1,55 +1,63 @@
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
+import { TodoUtil } from '@/lib/todo-util'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { CreateEditTaskDialog } from './create-edit-task-dialog'
+import { CreateEditTodoDialog } from './create-edit-todo-dialog'
+import { TTodoFormData } from './create-edit-todo-form'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
-type EditTaskButtonProps = {
-  task: TTask
+type EditTodoButtonProps = {
+  todo: TTask
 }
 
-export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
+export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
   const queryClient = useQueryClient()
 
   const [showEditTaskForm, setShowEditTaskForm] = useState(false)
 
   const updateTaskMutation = useMutation({
     mutationFn: TasksApi.updateTask.fn,
-    onSuccess: () => {
+    onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
+
+      if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key(res.assignee.assignee_id),
+        })
+      }
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     },
     onError: () => {
-      toast.error('Failed to update todo')
+      toast.error('Failed to update todo, please try again')
     },
   })
 
+  const handleSubmission = async (todoDetails: TTodoFormData) => {
+    const updateDetails = TodoUtil.getUpdateTodoDetails(todoDetails, todo)
+
+    if (Object.keys(updateDetails).length > 0) {
+      updateTaskMutation.mutate({
+        id: todo.id,
+        ...updateDetails,
+      })
+    }
+  }
+
   return (
-    <CreateEditTaskDialog
+    <CreateEditTodoDialog
       mode="edit"
       open={showEditTaskForm}
+      onSubmit={handleSubmission}
       onOpenChange={setShowEditTaskForm}
       isMutationPending={updateTaskMutation.isPending}
-      defaultData={{
-        title: task.title,
-        description: task.description || '',
-        dueDate: task.dueAt || '',
-        priority: task.priority,
-      }}
-      onSubmit={(value) =>
-        updateTaskMutation.mutate({
-          id: task.id,
-          title: value.title,
-          dueAt: value.dueDate,
-          priority: value.priority,
-          description: value.description,
-        })
-      }
+      defaultData={TodoUtil.getDefaultTodoFormData(todo)}
     >
       <Tooltip>
         <TooltipTrigger asChild>
@@ -62,8 +70,8 @@ export const EditTaskButton = ({ task }: EditTaskButtonProps) => {
             <Edit2 className="h-4 w-4" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Edit task</TooltipContent>
+        <TooltipContent>Edit Todo</TooltipContent>
       </Tooltip>
-    </CreateEditTaskDialog>
+    </CreateEditTodoDialog>
   )
 }

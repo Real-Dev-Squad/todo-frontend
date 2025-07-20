@@ -1,5 +1,6 @@
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { CreateEditTaskDialog } from '@/components/create-edit-task-dialog'
+import { CreateEditTodoDialog } from '@/components/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
@@ -12,8 +13,15 @@ export const CreateTodoButton = () => {
 
   const createTaskMutation = useMutation({
     mutationFn: TasksApi.createTask.fn,
-    onSuccess: () => {
+    onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+
+      if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key(res.assignee.assignee_id),
+        })
+      }
+
       toast.success('Todo created successfully')
       setShowCreateTaskForm(false)
     },
@@ -23,7 +31,7 @@ export const CreateTodoButton = () => {
   })
 
   return (
-    <CreateEditTaskDialog
+    <CreateEditTodoDialog
       mode="create"
       open={showCreateTaskForm}
       onOpenChange={setShowCreateTaskForm}
@@ -33,14 +41,18 @@ export const CreateTodoButton = () => {
           title: value.title,
           description: value.description,
           priority: value.priority,
+          status: value.status,
           dueAt: value.dueDate,
+          labels: value.labels,
+          assignee_id: value.assignee.value,
+          user_type: value.assignee.type,
         })
       }
     >
       <Button size="sm">
         <PlusIcon className="mr-1 h-4 w-4" />
-        Create Task
+        Create Todo
       </Button>
-    </CreateEditTaskDialog>
+    </CreateEditTodoDialog>
   )
 }

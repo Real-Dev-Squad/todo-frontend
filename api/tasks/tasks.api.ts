@@ -1,11 +1,12 @@
 import { apiClient } from '../../lib/api-client'
-import { TApiMethodsRecord } from '../common/common-api.types'
+import { TApiMethodsRecord } from '../common/common.types'
 import {
   AddTaskToWatchListDto,
-  CrateTaskDto,
+  CrateTaskReqDto,
   GetTaskReqDto,
   GetTasksDto,
   GetWatchListTaskDto,
+  ReassignTaskReqDto,
   ToggleWatchListStatusDto,
   TTask,
   TWatchListTask,
@@ -23,7 +24,7 @@ export const TasksApi = {
 
   createTask: {
     key: ['tasksApi.createTask'],
-    fn: async (task: CrateTaskDto): Promise<TTask> => {
+    fn: async (task: CrateTaskReqDto): Promise<TTask> => {
       const { data } = await apiClient.post<TTask>(`/v1/tasks`, task)
       return data
     },
@@ -31,8 +32,9 @@ export const TasksApi = {
 
   updateTask: {
     key: ['tasksApi.updateTask'],
-    fn: async ({ id, ...task }: UpdateTaskDto): Promise<void> => {
-      await apiClient.patch<TTask>(`/v1/tasks/${id}`, task)
+    fn: async ({ id, ...task }: UpdateTaskDto): Promise<TTask> => {
+      const { data } = await apiClient.patch<TTask>(`/v1/tasks/${id}/update`, task)
+      return data
     },
   },
 
@@ -46,15 +48,22 @@ export const TasksApi = {
 
   addTaskToWatchList: {
     key: ['tasksApi.addTaskToWatchList'],
-    fn: async ({ taskId }: AddTaskToWatchListDto) => {
+    fn: async ({ taskId }: AddTaskToWatchListDto): Promise<void> => {
       await apiClient.post<TWatchListTask>(`/v1/watchlist/tasks`, { taskId })
     },
   },
 
   toggleTaskWatchListStatus: {
     key: ['tasksApi.toggleTaskWatchListStatus'],
-    fn: async ({ taskId, isActive }: ToggleWatchListStatusDto) => {
+    fn: async ({ taskId, isActive }: ToggleWatchListStatusDto): Promise<void> => {
       await apiClient.patch(`/v1/watchlist/tasks/${taskId}`, { isActive })
+    },
+  },
+
+  reassignTask: {
+    key: ['TasksApi.reassignTask'],
+    fn: async ({ task_id, executor_id }: ReassignTaskReqDto): Promise<void> => {
+      await apiClient.patch(`/v1/task-assignments/${task_id}`, { executor_id })
     },
   },
 } satisfies TApiMethodsRecord

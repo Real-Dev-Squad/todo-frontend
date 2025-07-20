@@ -1,4 +1,4 @@
-import { CreateEditTodoForm, TodoFormData } from '@/components/create-edit-todo-form'
+import { CreateEditTodoForm, TTodoFormData } from '@/components/create-edit-todo-form'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -12,7 +12,7 @@ type BaseProps = {
   open: boolean
   children: ReactNode
   isMutationPending?: boolean
-  onSubmit: (data: TodoFormData) => void
+  onSubmit: (data: TTodoFormData) => void
   onOpenChange: (open: boolean) => void
 }
 
@@ -23,12 +23,12 @@ type CreateModeProps = BaseProps & {
 
 type EditModeProps = BaseProps & {
   mode: 'edit'
-  defaultData: TodoFormData
+  defaultData: Partial<TTodoFormData>
 }
 
-type CreateEditTaskDialogProps = CreateModeProps | EditModeProps
+type CreateEditTodoDialogProps = CreateModeProps | EditModeProps
 
-export const CreateEditTaskDialog = ({
+export const CreateEditTodoDialog = ({
   mode,
   open,
   children,
@@ -36,7 +36,7 @@ export const CreateEditTaskDialog = ({
   defaultData,
   onOpenChange,
   isMutationPending,
-}: CreateEditTaskDialogProps) => {
+}: CreateEditTodoDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
