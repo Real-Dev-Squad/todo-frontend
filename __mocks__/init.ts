@@ -1,9 +1,8 @@
-export async function enableMocking() {
-  const isDev = process.env.NODE_ENV === 'development'
-  const isMockingEnabled = process.env.NEXT_PUBLIC_API_MOCKING === 'true'
+import { appConfig } from '@/config/app-config'
 
-  if (!isDev || !isMockingEnabled) {
-    console.log('MSW mocking disabled: ', { isDev, isMockingEnabled })
+export async function enableMocking() {
+  if (appConfig.isDev && !appConfig.isMockingEnabled) {
+    console.log(`MSW mocking disabled: ${appConfig.isDev}, ${appConfig.isMockingEnabled} `)
     return
   }
   try {
