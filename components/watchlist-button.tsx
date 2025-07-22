@@ -55,7 +55,7 @@ export const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps)
           <Button
             variant="ghost"
             size="icon"
-            className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
+            className="hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
             onClick={() => toggleWatchListStatusMutation.mutate({ taskId, isActive: false })}
           >
             {toggleWatchListStatusMutation.isPending ? (
@@ -76,7 +76,7 @@ export const WatchListButton = ({ taskId, isInWatchlist }: WatchListButtonProps)
         <Button
           variant="ghost"
           size="icon"
-          className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
+          className="hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
           onClick={handleAddTaskToWatchlist}
         >
           {addTaskToWatchlistMutation.isPending ? (

@@ -58,7 +58,7 @@ const AnimatedButton = ({
     <Button
       size="lg"
       onClick={onClick}
-      className={`relative cursor-pointer overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-600 to-black p-4 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95 ${className}`}
+      className={`relative overflow-hidden rounded-xl border-2 border-neutral-600 bg-gradient-to-r from-black via-neutral-600 to-black p-4 py-6 text-lg font-bold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95 ${className}`}
     >
       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
       <span className="relative z-10 flex items-center gap-3 font-semibold tracking-wide">
@@ -118,7 +118,7 @@ export const SigninButton = () => {
         </AlertDialogHeader>
 
         <div className="flex flex-col gap-3 py-4 md:gap-4">
-          <Button variant="outline" onClick={handleSignIn} className="cursor-pointer">
+          <Button variant="outline" onClick={handleSignIn}>
             <GoogleIcon /> Sign in with Google
           </Button>
         </div>

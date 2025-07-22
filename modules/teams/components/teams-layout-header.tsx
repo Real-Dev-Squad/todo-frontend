@@ -92,7 +92,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
     <div className="flex items-center justify-between pt-6 pb-8">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
 
-      <Button size="sm" onClick={() => setIsAddMembersModalOpen(true)} className="cursor-pointer">
+      <Button size="sm" onClick={() => setIsAddMembersModalOpen(true)}>
         <UserRoundPlusIcon />
         Add members
       </Button>

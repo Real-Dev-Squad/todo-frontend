@@ -105,7 +105,7 @@ export const ReassignUser = ({ taskId, teamId }: ReassignUserProps) => {
             size="icon"
             variant="ghost"
             onClick={() => setShowModal(true)}
-            className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
+            className="hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
           >
             <UserSearchIcon className="h-5 w-5" />
           </Button>

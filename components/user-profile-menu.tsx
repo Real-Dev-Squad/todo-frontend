@@ -26,7 +26,7 @@ const LogoutButton = () => {
         variant="ghost"
         onClick={handleLogout}
         disabled={logoutMutation.isPending}
-        className="w-full cursor-pointer justify-start text-red-500 hover:bg-red-100 hover:text-red-600 disabled:text-gray-700"
+        className="w-full justify-start text-red-500 hover:bg-red-100 hover:text-red-600 disabled:text-gray-700"
       >
         {logoutMutation.isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />

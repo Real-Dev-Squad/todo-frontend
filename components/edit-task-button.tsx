@@ -64,7 +64,7 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
           <Button
             size="icon"
             variant="ghost"
-            className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
+            className="hover:bg-gray-200 hover:text-gray-800 active:bg-gray-300 active:text-gray-900"
             onClick={() => setShowEditTaskForm(true)}
           >
             <Edit2 className="h-4 w-4" />
