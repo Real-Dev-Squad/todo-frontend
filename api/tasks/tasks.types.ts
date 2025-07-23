@@ -36,6 +36,7 @@ export type TEditTask = {
 
 export type GetTaskReqDto = {
   teamId?: string
+  status?: string
 }
 
 export type GetTasksDto = {

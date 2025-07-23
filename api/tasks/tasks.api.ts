@@ -15,7 +15,7 @@ import {
 
 export const TasksApi = {
   getTasks: {
-    key: (teamId?: string) => ['TasksApi.getTasks', teamId],
+    key: (params?: GetTaskReqDto) => ['TasksApi.getTasks', JSON.stringify(params)],
     fn: async (params?: GetTaskReqDto): Promise<GetTasksDto> => {
       const { data } = await apiClient.get<GetTasksDto>(`/v1/tasks`, { params })
       return data

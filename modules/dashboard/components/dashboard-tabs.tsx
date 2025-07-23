@@ -2,6 +2,8 @@
 
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoListTable } from '@/components/todo-list-table'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
@@ -11,9 +13,16 @@ import { DashboardWatchlistTable } from './dashboard-watchlist-table'
 type DashboardTabsProps = {
   tasks: TTask[]
   className?: string
+  includeDone: boolean
+  onIncludeDoneChange: (checked: boolean) => void
 }
 
-export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
+export const DashboardTabs = ({
+  tasks,
+  className,
+  includeDone,
+  onIncludeDoneChange,
+}: DashboardTabsProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -29,15 +38,26 @@ export const DashboardTabs = ({ tasks, className }: DashboardTabsProps) => {
     <div className={className}>
       <Tabs value={currentTab} onValueChange={handleTabChange}>
         <div className="flex flex-row items-center justify-between pb-2">
-          <TabsList>
-            <TabsTrigger value={TabsConstants.All} className="cursor-pointer">
-              {TabsConstants.All}
-            </TabsTrigger>
-            <TabsTrigger value={TabsConstants.WatchList} className="cursor-pointer">
-              {TabsConstants.WatchList}
-            </TabsTrigger>
-          </TabsList>
-
+          <div>
+            <TabsList>
+              <TabsTrigger value={TabsConstants.All} className="cursor-pointer">
+                {TabsConstants.All}
+              </TabsTrigger>
+              <TabsTrigger value={TabsConstants.WatchList} className="cursor-pointer">
+                {TabsConstants.WatchList}
+              </TabsTrigger>
+            </TabsList>
+            <div className="flex px-1 py-4">
+              <Checkbox
+                id="includeDoneTasks"
+                checked={includeDone}
+                onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
+              />
+              <Label htmlFor="includeDoneTasks" className="px-2">
+                Include Done
+              </Label>
+            </div>
+          </div>
           <CreateTodoButton />
         </div>
 
