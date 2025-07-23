@@ -40,7 +40,7 @@ const ReassignUserModal = ({
     mutationFn: TasksApi.reassignTask.fn,
     onSuccess: () => {
       toast.success(`Task assigned to ${selectedUser?.name}`)
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key(teamId) })
+      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       onOpenChange(false)
       setSelectedUser(null)

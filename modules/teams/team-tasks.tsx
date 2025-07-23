@@ -125,7 +125,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   })
 
   const { data: tasks, isLoading: isLoadingTasks } = useQuery({
-    queryKey: TasksApi.getTasks.key(teamId),
+    queryKey: TasksApi.getTasks.key({ teamId }),
     queryFn: () => TasksApi.getTasks.fn({ teamId }),
     select: (data) => data.tasks,
   })

@@ -18,7 +18,7 @@ export const CreateTodoButton = () => {
 
       if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
         void queryClient.invalidateQueries({
-          queryKey: TasksApi.getTasks.key(res.assignee.assignee_id),
+          queryKey: TasksApi.getTasks.key({ teamId: res.assignee.assignee_id }),
         })
       }
 
