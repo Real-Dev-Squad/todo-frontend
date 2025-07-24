@@ -137,8 +137,8 @@ type TodoListTableProps = {
   tasks?: TTask[]
   isLoading?: boolean
   showActions?: boolean
-  includeDone: boolean
-  onIncludeDoneChange: (checked: boolean) => void
+  includeDone?: boolean
+  onIncludeDoneChange?: (checked: boolean) => void
 }
 
 export const TodoListTable = ({
@@ -192,7 +192,7 @@ export const TodoListTable = ({
             <Switch
               id="includeDoneTasks"
               checked={includeDone}
-              onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
+              onCheckedChange={(checked) => onIncludeDoneChange?.(!!checked)}
             />
             <Label htmlFor="includeDoneTasks" className="px-2">
               Include Done
