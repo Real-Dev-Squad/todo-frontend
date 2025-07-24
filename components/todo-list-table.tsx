@@ -10,6 +10,8 @@ import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
 import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
+import { Label } from './ui/label'
+import { Switch } from './ui/switch'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { WatchListButton } from './watchlist-button'
 
@@ -135,9 +137,17 @@ type TodoListTableProps = {
   tasks?: TTask[]
   isLoading?: boolean
   showActions?: boolean
+  includeDone: boolean
+  onIncludeDoneChange: (checked: boolean) => void
 }
 
-export const TodoListTable = ({ tasks, isLoading, showActions }: TodoListTableProps) => {
+export const TodoListTable = ({
+  tasks,
+  isLoading,
+  showActions,
+  includeDone,
+  onIncludeDoneChange,
+}: TodoListTableProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -169,13 +179,23 @@ export const TodoListTable = ({ tasks, isLoading, showActions }: TodoListTablePr
 
   return (
     <div>
-      <div className="pb-4">
+      <div className="flex items-center pb-4">
         <Searchbar
           defaultValue={search}
           placeholder="Search tasks"
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
+        <div className="flex px-4">
+          <Switch
+            id="includeDoneTasks"
+            checked={includeDone}
+            onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
+          />
+          <Label htmlFor="includeDoneTasks" className="px-2">
+            Include Done
+          </Label>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-md border">

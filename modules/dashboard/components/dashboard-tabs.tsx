@@ -2,8 +2,6 @@
 
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoListTable } from '@/components/todo-list-table'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
@@ -47,22 +45,17 @@ export const DashboardTabs = ({
                 {TabsConstants.WatchList}
               </TabsTrigger>
             </TabsList>
-            <div className="flex px-1 py-4">
-              <Checkbox
-                id="includeDoneTasks"
-                checked={includeDone}
-                onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
-              />
-              <Label htmlFor="includeDoneTasks" className="px-2">
-                Include Done
-              </Label>
-            </div>
           </div>
           <CreateTodoButton />
         </div>
 
         <TabsContent value={TabsConstants.All}>
-          <TodoListTable showActions tasks={tasks} />
+          <TodoListTable
+            showActions
+            tasks={tasks}
+            includeDone={includeDone}
+            onIncludeDoneChange={onIncludeDoneChange}
+          />
         </TabsContent>
 
         <TabsContent value={TabsConstants.WatchList}>
