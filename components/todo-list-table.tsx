@@ -153,6 +153,7 @@ export const TodoListTable = ({
   const searchParams = useSearchParams()
 
   const search = searchParams.get(QUERY_PARAMS_KEYS.search) ?? ''
+  const currentTab = searchParams.get('tab')
 
   const filteredTasks = !search
     ? tasks
@@ -186,16 +187,20 @@ export const TodoListTable = ({
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <div className="flex px-4">
-          <Switch
-            id="includeDoneTasks"
-            checked={includeDone}
-            onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
-          />
-          <Label htmlFor="includeDoneTasks" className="px-2">
-            Include Done
-          </Label>
-        </div>
+        {currentTab == 'All' ? (
+          <div className="flex px-4">
+            <Switch
+              id="includeDoneTasks"
+              checked={includeDone}
+              onCheckedChange={(checked) => onIncludeDoneChange(!!checked)}
+            />
+            <Label htmlFor="includeDoneTasks" className="px-2">
+              Include Done
+            </Label>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="overflow-hidden rounded-md border">
