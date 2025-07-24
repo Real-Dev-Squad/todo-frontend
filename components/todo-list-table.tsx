@@ -3,6 +3,7 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { DateFormats, DateUtil } from '@/lib/date-util'
+import { DashboardTasksTableTabs } from '@/modules/dashboard/constants'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EditTodoButton } from './edit-task-button'
 import { Searchbar } from './searchbar'
@@ -187,7 +188,7 @@ export const TodoListTable = ({
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        {currentTab == 'All' ? (
+        {currentTab == DashboardTasksTableTabs.All && (
           <div className="flex px-4">
             <Switch
               id="includeDoneTasks"
@@ -198,8 +199,6 @@ export const TodoListTable = ({
               Include Done
             </Label>
           </div>
-        ) : (
-          <></>
         )}
       </div>
 
