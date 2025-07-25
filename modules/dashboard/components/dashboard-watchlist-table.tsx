@@ -1,9 +1,19 @@
+'use client'
+
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { CommonPageError } from '@/components/common-page-error'
 import { TodoListTable } from '@/components/todo-list-table'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
+import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 
 export const DashboardWatchlistTable = () => {
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab')
+  console.log('tab', tab)
+  const status = searchParams.get('status')
+  const isInvalidCombination = tab === TabsConstants.WatchList && status === 'Done'
+
   const { data, isLoading, isError } = useQuery({
     queryKey: TasksApi.getWatchListTasks.key,
     queryFn: TasksApi.getWatchListTasks.fn,
@@ -17,7 +27,7 @@ export const DashboardWatchlistTable = () => {
       })),
   })
 
-  if (isError) {
+  if (isError || isInvalidCombination) {
     return <CommonPageError />
   }
 

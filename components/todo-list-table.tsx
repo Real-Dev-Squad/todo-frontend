@@ -85,11 +85,17 @@ const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
 type TodoListTableBodyProps = {
   tasks?: TTask[]
   isLoading?: boolean
+  isPlaceholderData?: boolean
   showActions?: boolean
 }
 
-const TodoListTableBody = ({ tasks, isLoading, showActions }: TodoListTableBodyProps) => {
-  if (isLoading) {
+const TodoListTableBody = ({
+  tasks,
+  isLoading,
+  isPlaceholderData,
+  showActions,
+}: TodoListTableBodyProps) => {
+  if (isLoading || isPlaceholderData) {
     return (
       <TableBody>
         {new Array(5).fill(0).map((_, index) => (
@@ -137,6 +143,7 @@ export const TodoListTableRowShimmer = ({ showActions = true }: { showActions?: 
 type TodoListTableProps = {
   tasks?: TTask[]
   isLoading?: boolean
+  isPlaceholderData?: boolean
   showActions?: boolean
   includeDone?: boolean
   onIncludeDoneChange?: (checked: boolean) => void
@@ -145,6 +152,7 @@ type TodoListTableProps = {
 export const TodoListTable = ({
   tasks,
   isLoading,
+  isPlaceholderData,
   showActions,
   includeDone,
   onIncludeDoneChange,
@@ -188,7 +196,7 @@ export const TodoListTable = ({
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        {currentTab == DashboardTasksTableTabs.All && (
+        {currentTab !== DashboardTasksTableTabs.WatchList && (
           <div className="flex px-4">
             <Switch
               id="includeDoneTasks"
@@ -208,6 +216,7 @@ export const TodoListTable = ({
           <TodoListTableBody
             tasks={filteredTasks}
             isLoading={isLoading}
+            isPlaceholderData={isPlaceholderData}
             showActions={showActions}
           />
         </Table>

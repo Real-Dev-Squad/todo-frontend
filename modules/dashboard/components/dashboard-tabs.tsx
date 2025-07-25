@@ -12,6 +12,7 @@ type DashboardTabsProps = {
   tasks: TTask[]
   className?: string
   includeDone: boolean
+  isPlaceholderData: boolean
   onIncludeDoneChange: (checked: boolean) => void
 }
 
@@ -19,6 +20,7 @@ export const DashboardTabs = ({
   tasks,
   className,
   includeDone,
+  isPlaceholderData,
   onIncludeDoneChange,
 }: DashboardTabsProps) => {
   const router = useRouter()
@@ -29,6 +31,14 @@ export const DashboardTabs = ({
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('tab', value)
+
+    if (value === TabsConstants.WatchList) {
+      params.delete('status')
+    } else {
+      if (includeDone) {
+        params.set('status', 'Done')
+      }
+    }
     router.push(`${pathname}?${params.toString()}`)
   }
 
@@ -53,6 +63,7 @@ export const DashboardTabs = ({
           <TodoListTable
             showActions
             tasks={tasks}
+            isPlaceholderData={isPlaceholderData}
             includeDone={includeDone}
             onIncludeDoneChange={onIncludeDoneChange}
           />
