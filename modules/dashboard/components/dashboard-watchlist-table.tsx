@@ -10,7 +10,6 @@ import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 export const DashboardWatchlistTable = () => {
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab')
-  console.log('tab', tab)
   const status = searchParams.get('status')
   const isInvalidCombination = tab === TabsConstants.WatchList && status === 'Done'
 

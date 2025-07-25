@@ -38,7 +38,6 @@ export const Dashboard = () => {
     queryFn: () => TasksApi.getTasks.fn(queryParams),
     placeholderData: keepPreviousData,
   })
-  console.log('Is loading: ', isLoading, 'Is placeholder data:', isPlaceholderData)
   useEffect(() => {
     if (!isLoading) {
       isFirstLoad.current = false

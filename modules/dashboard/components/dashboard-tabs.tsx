@@ -37,6 +37,8 @@ export const DashboardTabs = ({
     } else {
       if (includeDone) {
         params.set('status', 'Done')
+      } else {
+        params.delete('status')
       }
     }
     router.push(`${pathname}?${params.toString()}`)
