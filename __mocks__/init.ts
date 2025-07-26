@@ -3,7 +3,9 @@ import { appConfig } from '@/config/app-config'
 export async function enableMocking() {
   if (!(appConfig.isDev && appConfig.isMockingEnabled)) {
     if (appConfig.isDev && !appConfig.isMockingEnabled) {
-      console.log(`MSW mocking disabled: ${appConfig.isDev}, ${appConfig.isMockingEnabled} `)
+      console.log(
+        `[MSW] Mocking disabled → Environment: ${appConfig.isDev ? 'Development' : 'Production'}, Mocking Enabled: ${appConfig.isMockingEnabled}`,
+      )
     }
     return
   }
