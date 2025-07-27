@@ -42,27 +42,72 @@ export type CreateTeamPayload = {
   poc_id: string | null
 }
 
-export type TeamActivityActions =
-  | 'assigned_to_team'
-  | 'unassigned_from_team'
-  | 'status_changed'
-  | 'reassign_executor'
-  | 'team_created'
-  | 'member_joined_team'
-  | 'member_added_to_team'
-
-export type TeamActivity = {
-  action: TeamActivityActions
-  timestamp: string
-  task_title?: string
-  team_name?: string
-  performed_by_name?: string
-  spoc_name?: string
-  status_from?: string
-  status_to?: string
-  previous_executor_name?: string
-  new_executor_name?: string
+export enum TeamActivityActions {
+  ASSIGNED_TO_TEAM = 'assigned_to_team',
+  UNASSIGNED_FROM_TEAM = 'unassigned_from_team',
+  STATUS_CHANGED = 'status_changed',
+  REASSIGN_EXECUTOR = 'reassign_executor',
+  TEAM_CREATED = 'team_created',
+  MEMBER_JOINED_TEAM = 'member_joined_team',
+  MEMBER_ADDED_TO_TEAM = 'member_added_to_team',
 }
+
+export type BaseActivity = {
+  timestamp: string
+  team_name: string
+}
+
+export type TeamCreationActivity = BaseActivity & {
+  action: TeamActivityActions.TEAM_CREATED
+  performed_by_name: string
+}
+
+export type TaskAssignActivity = BaseActivity & {
+  action: TeamActivityActions.ASSIGNED_TO_TEAM
+  task_title: string
+  performed_by_name: string
+}
+
+export type TaskUnassignActivity = BaseActivity & {
+  action: TeamActivityActions.UNASSIGNED_FROM_TEAM
+  task_title: string
+  performed_by_name: string
+}
+
+export type TaskStatusChangeActivity = BaseActivity & {
+  action: TeamActivityActions.STATUS_CHANGED
+  task_title: string
+  performed_by_name: string
+  status_from: string
+  status_to: string
+}
+
+export type ReassignExecutorActivity = BaseActivity & {
+  action: TeamActivityActions.REASSIGN_EXECUTOR
+  task_title: string
+  previous_executor_name: string
+  new_executor_name: string
+  spoc_name: string
+}
+
+export type AddMemberActivity = BaseActivity & {
+  action: TeamActivityActions.MEMBER_ADDED_TO_TEAM
+  performed_by_name: string
+}
+
+export type MemberJoinActivity = BaseActivity & {
+  action: TeamActivityActions.MEMBER_JOINED_TEAM
+  performed_by_name: string
+}
+
+export type TeamActivity =
+  | TeamCreationActivity
+  | TaskAssignActivity
+  | TaskUnassignActivity
+  | TaskStatusChangeActivity
+  | ReassignExecutorActivity
+  | AddMemberActivity
+  | MemberJoinActivity
 
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]

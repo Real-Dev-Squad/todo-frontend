@@ -1,6 +1,7 @@
-import { TeamActivity } from '@/api/teams/teams.type'
+import { TeamActivity, TeamActivityActions } from '@/api/teams/teams.type'
 import { TASK_STATUS_TO_TEXT_MAP } from '@/components/todo-status-table'
 import { LucideIcon, Minus, Plus, RefreshCcw, UserPlus, Users, UsersRound } from 'lucide-react'
+import { DateFormats, DateUtil } from './date-util'
 
 type ActivityUIData = {
   icon: LucideIcon
@@ -10,61 +11,59 @@ type ActivityUIData = {
 }
 
 export function getActivityUIData(activity: TeamActivity): ActivityUIData | undefined {
-  const date = new Date(activity.timestamp).toISOString().split('T')[0]
-  const actor = activity.performed_by_name || activity.spoc_name
-
+  const date = new DateUtil(activity.timestamp).format(DateFormats.YYYY_MM_DD)
   switch (activity.action) {
-    case 'team_created':
+    case TeamActivityActions.TEAM_CREATED:
       return {
         icon: Users,
         title: 'Team created',
-        description: `${actor} created the team ${activity.team_name}`,
+        description: `${activity.performed_by_name} created the team ${activity.team_name}`,
         date,
       }
-    case 'assigned_to_team':
+    case TeamActivityActions.ASSIGNED_TO_TEAM:
       return {
         icon: Plus,
         title: 'Task assigned to team',
-        description: `${actor} assigned task ${activity.task_title} to ${activity.team_name}`,
+        description: `${activity.performed_by_name} assigned task ${activity.task_title} to ${activity.team_name}`,
         date,
       }
-    case 'unassigned_from_team':
+    case TeamActivityActions.UNASSIGNED_FROM_TEAM:
       return {
         icon: Minus,
         title: 'Task unassigned from team',
-        description: `${actor} unassigned task ${activity.task_title} from ${activity.team_name}`,
+        description: `${activity.performed_by_name} unassigned task ${activity.task_title} from ${activity.team_name}`,
         date,
       }
-    case 'status_changed':
+    case TeamActivityActions.STATUS_CHANGED:
       return {
         icon: RefreshCcw,
         title: 'Task status changed',
-        description: `${actor} changed status of ${activity.task_title} from ${TASK_STATUS_TO_TEXT_MAP[activity.status_from as keyof typeof TASK_STATUS_TO_TEXT_MAP]} to ${activity.status_to as keyof typeof TASK_STATUS_TO_TEXT_MAP}`,
+        description: `${activity.performed_by_name} changed status of ${activity.task_title} from ${TASK_STATUS_TO_TEXT_MAP[activity.status_from as keyof typeof TASK_STATUS_TO_TEXT_MAP]} to ${TASK_STATUS_TO_TEXT_MAP[activity.status_to as keyof typeof TASK_STATUS_TO_TEXT_MAP]}`,
         date,
       }
-    case 'reassign_executor':
+    case TeamActivityActions.REASSIGN_EXECUTOR:
       return {
         icon: UsersRound,
         title: 'Executor reassigned',
-        description: `${actor} changed executor of ${activity.task_title} ${
+        description: `${activity.spoc_name} changed executor of ${activity.task_title} ${
           activity.previous_executor_name
             ? `from ${activity.previous_executor_name} to ${activity.new_executor_name}`
             : `to ${activity.new_executor_name}`
         }`,
         date,
       }
-    case 'member_added_to_team':
+    case TeamActivityActions.MEMBER_ADDED_TO_TEAM:
       return {
         icon: UserPlus,
         title: 'Member added to team',
-        description: `${actor} added a member to team ${activity.team_name}`,
+        description: `${activity.performed_by_name} added a member to team ${activity.team_name}`,
         date,
       }
-    case 'member_joined_team':
+    case TeamActivityActions.MEMBER_JOINED_TEAM:
       return {
         icon: UserPlus,
         title: 'Member joined team',
-        description: `${actor} joined team ${activity.team_name}`,
+        description: `${activity.performed_by_name} joined team ${activity.team_name}`,
         date,
       }
     default:
