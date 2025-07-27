@@ -1,6 +1,13 @@
 import { apiClient } from '@/lib/api-client'
 import { TApiMethodsRecord } from '../common/common.types'
-import { CreateTeamPayload, GetTeamByIdReqDto, GetTeamsDto, TeamDto, TTeam } from './teams.type'
+import {
+  CreateTeamPayload,
+  GetTeamByIdReqDto,
+  GetTeamsDto,
+  TeamActivityTimeline,
+  TeamDto,
+  TTeam,
+} from './teams.type'
 
 export const TeamsApi = {
   getTeams: {
@@ -47,6 +54,16 @@ export const TeamsApi = {
       const { data } = await apiClient.post<TeamDto>(`/v1/teams/join-by-invite`, {
         invite_code: inviteCode,
       })
+
+      return data
+    },
+  },
+  getTeamActivities: {
+    key: ({ teamId }: { teamId: string }) => ['TeamsApi.getTeamActivities', teamId],
+    fn: async ({ teamId }: { teamId: string }): Promise<TeamActivityTimeline> => {
+      const { data } = await apiClient.get<TeamActivityTimeline>(
+        `/v1/teams/${teamId}/activity-timeline`,
+      )
 
       return data
     },

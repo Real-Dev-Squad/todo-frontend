@@ -1,49 +1,35 @@
-import React from 'react'
+'use client'
+
 // import { UnderConstruction } from '../UnderConstruction'
-import { CheckCircle, RefreshCw, UserPlus } from 'lucide-react'
+import { TeamsApi } from '@/api/teams/teams.api'
+import { getActivityUIData } from '@/lib/team-utils'
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 import { TeamActivityCard } from './TeamActivityCard'
 
-// TODO: Replace with actual data fetching hook
-const teamActivities = [
-  {
-    id: 1,
-    icon: CheckCircle,
-    date: '2024-07-01',
-    title: 'Finished the Task',
-    description: 'The team successfully completed the homepage redesign task.',
-    user: 'Anuj',
-  },
-  {
-    id: 2,
-    icon: RefreshCw,
-    date: '2024-07-02',
-    title: 'Updated Task Status',
-    description: 'The status of the API integration task was updated to "In Progress".',
-    user: 'Shobhan',
-  },
-  {
-    id: 3,
-    icon: UserPlus,
-    date: '2024-07-03',
-    title: 'Got a Task Assigned',
-    description: 'You were assigned to the bug fix task for the login page.',
-    user: 'Mayank',
-  },
-]
-
 function Activity() {
+  const { teamId } = useParams<{ teamId: string }>()
+  const { data } = useQuery({
+    queryKey: TeamsApi.getTeamActivities.key({ teamId }),
+    queryFn: () => TeamsApi.getTeamActivities.fn({ teamId }),
+  })
   return (
     <div className="grid grid-cols-1 gap-4">
-      {teamActivities.map((activity) => (
-        <TeamActivityCard
-          key={activity.id}
-          icon={activity.icon}
-          title={activity.title}
-          description={activity.description}
-          date={activity.date}
-          user={activity.user}
-        />
-      ))}
+      {data?.timeline.map((activity, index) => {
+        const uiData = getActivityUIData(activity)
+        if (!uiData) {
+          return null
+        }
+        return (
+          <TeamActivityCard
+            Icon={uiData.icon}
+            key={`${activity.action}-${index}`}
+            title={uiData.title}
+            description={uiData.description}
+            date={uiData.date}
+          />
+        )
+      })}
     </div>
   )
 }

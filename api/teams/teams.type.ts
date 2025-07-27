@@ -41,3 +41,29 @@ export type CreateTeamPayload = {
   member_ids: string[]
   poc_id: string | null
 }
+
+export type TeamActivityActions =
+  | 'assigned_to_team'
+  | 'unassigned_from_team'
+  | 'status_changed'
+  | 'reassign_executor'
+  | 'team_created'
+  | 'member_joined_team'
+  | 'member_added_to_team'
+
+export type TeamActivity = {
+  action: TeamActivityActions
+  timestamp: string
+  task_title?: string
+  team_name?: string
+  performed_by_name?: string
+  spoc_name?: string
+  status_from?: string
+  status_to?: string
+  previous_executor_name?: string
+  new_executor_name?: string
+}
+
+export type TeamActivityTimeline = {
+  timeline: TeamActivity[]
+}

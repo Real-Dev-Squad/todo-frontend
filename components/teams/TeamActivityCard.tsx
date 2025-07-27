@@ -1,21 +1,13 @@
-import React from 'react'
-import type { LucideIcon } from 'lucide-react'
+import { LucideIcon } from 'lucide-react'
 
 type TeamActivityCardProps = {
-  icon: LucideIcon
+  Icon: LucideIcon
   date: string
   title: string
   description: string
-  user: string
 }
 
-export function TeamActivityCard({
-  icon: Icon,
-  date,
-  title,
-  description,
-  user,
-}: TeamActivityCardProps) {
+export function TeamActivityCard({ Icon, date, title, description }: TeamActivityCardProps) {
   return (
     <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm">
       <div className="flex items-center gap-3">
@@ -26,9 +18,7 @@ export function TeamActivityCard({
           <div className="font-medium text-gray-900">
             <span className="mr-1 text-lg font-semibold">{title}</span>
           </div>
-          <div className="text-xs text-gray-500">
-            {user} {description}
-          </div>
+          <div className="text-xs text-gray-500">{description}</div>
         </div>
       </div>
       <div className="ml-4 text-xs whitespace-nowrap text-gray-400">{date}</div>
