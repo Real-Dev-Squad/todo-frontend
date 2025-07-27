@@ -5,14 +5,35 @@ import { TeamsApi } from '@/api/teams/teams.api'
 import { getActivityUIData } from '@/lib/team-utils'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
+import { CommonPageError } from '../common-page-error'
+import { Shimmer } from '../Shimmer'
 import { TeamActivityCard } from './TeamActivityCard'
 
 function Activity() {
   const { teamId } = useParams<{ teamId: string }>()
-  const { data } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: TeamsApi.getTeamActivities.key({ teamId }),
     queryFn: () => TeamsApi.getTeamActivities.fn({ teamId }),
   })
+
+  if (isLoading) {
+    return (
+      <>
+        {new Array(5).fill(0).map((_, index) => (
+          <Shimmer key={index} />
+        ))}
+      </>
+    )
+  }
+
+  if (isError) {
+    return <CommonPageError />
+  }
+
+  if (!data || !data.timeline || data.timeline.length === 0) {
+    return <div>No activities found</div>
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4">
       {data?.timeline.map((activity, index) => {
