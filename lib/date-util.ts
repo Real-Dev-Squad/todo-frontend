@@ -5,6 +5,7 @@ export enum DateFormats {
   D_MMM_YYYY = 'D MMM YYYY',
   MM_DD_YYYY = 'MM/DD/YYYY',
   YYYY_MM_DD = 'YYYY-MM-DD',
+  D_MMM_YYYY_HH_mm = 'D MMM YYYY HH:mm',
 }
 
 export class DateUtil {

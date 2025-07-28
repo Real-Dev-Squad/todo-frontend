@@ -9,7 +9,7 @@ type TeamActivityCardProps = {
 
 export function TeamActivityCard({ Icon, date, title, description }: TeamActivityCardProps) {
   return (
-    <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm">
+    <div className="flex flex-col rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100">
           <Icon className="h-5 w-5 text-gray-500" />
@@ -21,7 +21,9 @@ export function TeamActivityCard({ Icon, date, title, description }: TeamActivit
           <div className="text-xs text-gray-500">{description}</div>
         </div>
       </div>
-      <div className="ml-4 text-xs whitespace-nowrap text-gray-400">{date}</div>
+      <div className="ml-4 flex justify-end pt-2 text-xs whitespace-nowrap text-gray-400 sm:pt-0">
+        {date}
+      </div>
     </div>
   )
 }
