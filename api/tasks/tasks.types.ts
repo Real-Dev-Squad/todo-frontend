@@ -111,3 +111,8 @@ export type ReassignTaskReqDto = {
   task_id: string
   executor_id: string
 }
+
+export type DeferTaskReqDto = {
+  taskId: string
+  deferredTill?: string
+}

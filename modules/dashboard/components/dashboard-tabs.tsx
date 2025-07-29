@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from './create-todo-button'
+import { DashboardDeferredTable } from './dashboard-deferred-table'
 import { DashboardWatchlistTable } from './dashboard-watchlist-table'
 
 type DashboardTabsProps = {
@@ -32,7 +33,7 @@ export const DashboardTabs = ({
     const params = new URLSearchParams(searchParams)
     params.set('tab', value)
 
-    if (value === TabsConstants.WatchList) {
+    if (value === TabsConstants.WatchList || value === TabsConstants.Deferred) {
       params.delete('status')
     } else {
       if (includeDone) {
@@ -56,6 +57,9 @@ export const DashboardTabs = ({
               <TabsTrigger value={TabsConstants.WatchList} className="cursor-pointer">
                 {TabsConstants.WatchList}
               </TabsTrigger>
+              <TabsTrigger value={TabsConstants.Deferred} className="cursor-pointer">
+                {TabsConstants.Deferred}
+              </TabsTrigger>
             </TabsList>
           </div>
           <CreateTodoButton />
@@ -73,6 +77,10 @@ export const DashboardTabs = ({
 
         <TabsContent value={TabsConstants.WatchList}>
           <DashboardWatchlistTable />
+        </TabsContent>
+
+        <TabsContent value={TabsConstants.Deferred}>
+          <DashboardDeferredTable />
         </TabsContent>
       </Tabs>
     </div>
