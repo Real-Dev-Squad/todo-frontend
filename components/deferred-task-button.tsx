@@ -74,10 +74,10 @@ export const DeferredTaskButton = ({ todo }: DeferredTaskButtonProps) => {
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Defer Task</DialogTitle>
+          <DialogTitle>Defer Todo</DialogTitle>
           <DialogDescription>
-            Defer &quot;{todo.title}&quot; to a later date. The task will be moved to your deferred
-            tasks.
+            Defer &quot;{todo.title}&quot; to a later date. The todo will be moved to your deferred
+            todos.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -100,7 +100,7 @@ export const DeferredTaskButton = ({ todo }: DeferredTaskButtonProps) => {
             onClick={handleDeferTask}
             disabled={!deferredTill || deferTaskMutation.isPending}
           >
-            {deferTaskMutation.isPending ? 'Deferring...' : 'Defer Task'}
+            {deferTaskMutation.isPending ? 'Deferring...' : 'Defer Todo'}
           </Button>
         </DialogFooter>
       </DialogContent>

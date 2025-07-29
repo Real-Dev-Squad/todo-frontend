@@ -56,11 +56,8 @@ export const TasksApi = {
 
   deferredTask: {
     key: ['tasksApi.deferredTask'],
-    fn: async ({ taskId, ...payload }: DeferTaskReqDto): Promise<GetTasksDto> => {
-      const { data } = await apiClient.patch<GetTasksDto>(
-        `/v1/tasks/${taskId}?action=defer`,
-        payload,
-      )
+    fn: async ({ taskId, ...payload }: DeferTaskReqDto): Promise<TTask> => {
+      const { data } = await apiClient.patch<TTask>(`/v1/tasks/${taskId}?action=defer`, payload)
       return data
     },
   },

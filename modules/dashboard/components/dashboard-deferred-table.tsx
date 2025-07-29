@@ -22,8 +22,6 @@ export const DashboardDeferredTable = () => {
     select: (data) => data.tasks,
   })
 
-  console.log(data)
-
   if (isError || isInvalidCombination) {
     return <CommonPageError />
   }
