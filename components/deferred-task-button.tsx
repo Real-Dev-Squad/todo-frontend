@@ -28,7 +28,7 @@ export const DeferredTaskButton = ({ todo, open, setOpen }: DeferredTaskButtonPr
   const queryClient = useQueryClient()
 
   const deferTaskMutation = useMutation({
-    mutationFn: TasksApi.deferredTask.fn,
+    mutationFn: TasksApi.deferTask.fn,
     onSuccess: () => {
       toast.success('Task deferred successfully')
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
