@@ -9,11 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { CalendarClock } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { TTodoFormData } from './create-edit-todo-form'
@@ -21,10 +19,11 @@ import { DatePickerSelect } from './date-picker-select'
 
 type DeferredTaskButtonProps = {
   todo: Partial<TTodoFormData>
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-export const DeferredTaskButton = ({ todo }: DeferredTaskButtonProps) => {
-  const [open, setOpen] = useState(false)
+export const DeferredTaskButton = ({ todo, open, setOpen }: DeferredTaskButtonProps) => {
   const [deferredTill, setDeferredTill] = useState<Date>()
   const queryClient = useQueryClient()
 
@@ -56,22 +55,8 @@ export const DeferredTaskButton = ({ todo }: DeferredTaskButtonProps) => {
     })
   }
 
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) {
-      setDeferredTill(undefined)
-    }
-    setOpen(newOpen)
-  }
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <div className="flex cursor-pointer items-center gap-2 rounded-md p-2 duration-300 hover:bg-gray-100">
-          <CalendarClock className="h-4 w-4" />
-          <span className="text-sm">Defer Todo</span>
-        </div>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Defer Todo</DialogTitle>

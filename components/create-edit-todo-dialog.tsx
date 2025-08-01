@@ -7,7 +7,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { type ReactNode } from 'react'
-import { DeferredTaskButton } from './deferred-task-button'
 
 type BaseProps = {
   open: boolean
@@ -43,12 +42,10 @@ export const CreateEditTodoDialog = ({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
 
       <AlertDialogContent>
-        <AlertDialogHeader className="flex flex-row items-center justify-between">
+        <AlertDialogHeader className="">
           <AlertDialogTitle className="h-max text-xl">
             {mode === 'create' ? 'Create Todo' : 'Edit Todo'}
           </AlertDialogTitle>
-
-          {mode === 'edit' && <DeferredTaskButton todo={defaultData} />}
         </AlertDialogHeader>
 
         <CreateEditTodoForm

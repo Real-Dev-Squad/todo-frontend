@@ -25,6 +25,9 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
     onSuccess: (res) => {
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
+      void queryClient.invalidateQueries({
+        queryKey: TasksApi.getTasks.key({ status: 'DEFERRED' }),
+      })
 
       if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
         void queryClient.invalidateQueries({

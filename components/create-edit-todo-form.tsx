@@ -18,9 +18,11 @@ import { SelectLabels } from '@/modules/dashboard/components/select-labels'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { CalendarIcon, CircleDotIcon, LucideIcon, PlayIcon, TagIcon } from 'lucide-react'
+import { useState } from 'react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DatePickerSelect } from './date-picker-select'
+import { DeferredTaskButton } from './deferred-task-button'
 import { UserAndTeamSearch } from './user-and-team-search'
 
 const todoFormSchema = z.object({
@@ -138,6 +140,7 @@ export const CreateEditTodoForm = ({
 
   const buttonText = mode === 'create' ? 'Create' : 'Save'
   const buttonLoadingText = mode === 'create' ? 'Creating...' : 'Saving...'
+  const [deferModalOpen, setDeferModalOpen] = useState(false)
 
   const handleFormSubmit = (data: TTodoFormData) => {
     onSubmit(data)
@@ -272,7 +275,14 @@ export const CreateEditTodoForm = ({
               >
                 <Select
                   value={field.value}
-                  onValueChange={(value) => field.onChange(value as TASK_STATUS_ENUM)}
+                  onValueChange={(value) => {
+                    const isAlreadyDeferred = field.value === TASK_STATUS_ENUM.DEFERRED
+                    if (value === TASK_STATUS_ENUM.DEFERRED && !isAlreadyDeferred) {
+                      setDeferModalOpen(true)
+                    } else {
+                      field.onChange(value as TASK_STATUS_ENUM)
+                    }
+                  }}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select task status" />
@@ -282,8 +292,19 @@ export const CreateEditTodoForm = ({
                     <SelectItem value={TASK_STATUS_ENUM.TODO}>Todo</SelectItem>
                     <SelectItem value={TASK_STATUS_ENUM.IN_PROGRESS}>In Progress</SelectItem>
                     <SelectItem value={TASK_STATUS_ENUM.DONE}>Done</SelectItem>
+
+                    {initialData && (
+                      <SelectItem value={TASK_STATUS_ENUM.DEFERRED}>Defer</SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
+                {initialData && (
+                  <DeferredTaskButton
+                    todo={initialData}
+                    open={deferModalOpen}
+                    setOpen={setDeferModalOpen}
+                  />
+                )}
               </FormInput>
             )}
           />
