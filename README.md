@@ -2,7 +2,7 @@
 
 ## Setup SSL proxy
 
-To run the app locally on `https://staging-todo.realdevsquad.com/` add `127.0.0.1 staging-todo.realdevsquad.com` in your `/etc/hosts`.
+To run the app locally on `https://staging-todo.realdevsquad.com/` add `127.0.0.1 dev.realdevsquad.com` in your `/etc/hosts`.
 This step is required if you want to call the staging API.
 
 ## Local Development Setup
