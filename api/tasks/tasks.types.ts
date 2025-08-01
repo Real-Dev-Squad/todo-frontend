@@ -121,5 +121,5 @@ export type TDeferredDetails = {
 
 export type DeferTaskReqDto = {
   taskId: string
-  deferredTill?: string
+  deferredTill: string
 }
