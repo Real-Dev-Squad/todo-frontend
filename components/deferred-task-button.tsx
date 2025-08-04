@@ -11,9 +11,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
-import { hasValidDeferDates, isDateValidForDefer } from '@/lib/utils'
+import { hasValidDeferDates, isDateValidForDefer } from '@/lib/date-util'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { TTodoFormData } from './create-edit-todo-form'
 import { DatePickerSelect } from './date-picker-select'
@@ -28,7 +28,7 @@ export const DeferredTaskButton = ({ todo, open, setOpen }: DeferredTaskButtonPr
   const [deferredTill, setDeferredTill] = useState<Date>()
   const queryClient = useQueryClient()
 
-  const canDeferTask = hasValidDeferDates(todo.dueDate)
+  const canDeferTask = useMemo(() => hasValidDeferDates(todo.dueDate), [todo.dueDate])
 
   const deferTaskMutation = useMutation({
     mutationFn: TasksApi.deferTask.fn,

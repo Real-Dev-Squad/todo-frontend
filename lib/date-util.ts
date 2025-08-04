@@ -19,3 +19,27 @@ export class DateUtil {
     return this.date.format(format)
   }
 }
+
+export const isDateValidForDefer = (date: Date, dueDate?: string): boolean => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  if (date <= today) return false
+  if (dueDate) {
+    const taskDueDate = new Date(dueDate)
+    taskDueDate.setHours(0, 0, 0, 0)
+    if (date >= taskDueDate) return false
+  }
+
+  return true
+}
+
+export const hasValidDeferDates = (dueDate?: string): boolean => {
+  if (!dueDate) return true
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const taskDueDate = new Date(dueDate)
+  taskDueDate.setHours(0, 0, 0, 0)
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  return tomorrow < taskDueDate
+}
