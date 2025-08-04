@@ -54,6 +54,7 @@ export type CrateTaskReqDto = {
   labels?: string[]
   dueAt?: string
   assignee_id: string
+  timezone: string
   user_type: USER_TYPE_ENUM
 }
 
@@ -70,6 +71,7 @@ export type UpdateTaskDto = {
     user_type: string
   }
   user_type?: USER_TYPE_ENUM
+  timezone?: string
 }
 
 export type GetWatchListTaskDto = {

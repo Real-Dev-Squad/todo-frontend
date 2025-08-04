@@ -46,6 +46,7 @@ export const CreateTodoButton = () => {
           labels: value.labels,
           assignee_id: value.assignee.value,
           user_type: value.assignee.type,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         })
       }
     >

@@ -21,6 +21,7 @@ export class TodoUtil {
 
     if (todoFormData.dueDate !== initialTodo.dueAt) {
       updateDetails.dueAt = todoFormData.dueDate
+      updateDetails.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
     }
 
     if (todoFormData.priority !== initialTodo.priority) {
