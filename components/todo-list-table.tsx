@@ -22,15 +22,13 @@ const QUERY_PARAMS_KEYS = {
 
 type TodoListTableHeaderProps = {
   showActions?: boolean
+  showDeferredColumn?: boolean
 }
 
-export const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) => {
-  const searchParams = useSearchParams()
-  const currentTab = searchParams.get('tab')
-  const showDeferredColumn =
-    currentTab === DashboardTasksTableTabs.Deferred ||
-    currentTab === DashboardTasksTableTabs.WatchList
-
+export const TodoListTableHeader = ({
+  showActions,
+  showDeferredColumn,
+}: TodoListTableHeaderProps) => {
   return (
     <TableHeader>
       <TableRow>
@@ -50,15 +48,10 @@ export const TodoListTableHeader = ({ showActions }: TodoListTableHeaderProps) =
 type TodoListTableRowProps = {
   todo: TTask
   showActions?: boolean
+  showDeferredColumn?: boolean
 }
 
-const TodoListTableRow = ({ todo, showActions }: TodoListTableRowProps) => {
-  const searchParams = useSearchParams()
-  const currentTab = searchParams.get('tab')
-  const showDeferredColumn =
-    currentTab === DashboardTasksTableTabs.Deferred ||
-    currentTab === DashboardTasksTableTabs.WatchList
-
+const TodoListTableRow = ({ todo, showActions, showDeferredColumn }: TodoListTableRowProps) => {
   return (
     <TableRow>
       <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
@@ -108,6 +101,7 @@ type TodoListTableBodyProps = {
   isLoading?: boolean
   isPlaceholderData?: boolean
   showActions?: boolean
+  showDeferredColumn?: boolean
 }
 
 const TodoListTableBody = ({
@@ -115,6 +109,7 @@ const TodoListTableBody = ({
   isLoading,
   isPlaceholderData,
   showActions,
+  showDeferredColumn,
 }: TodoListTableBodyProps) => {
   if (isLoading || isPlaceholderData) {
     return (
@@ -145,6 +140,7 @@ const TodoListTableBody = ({
           key={task.id}
           todo={task}
           showActions={showActions && task.assignee?.user_type !== USER_TYPE_ENUM.TEAM}
+          showDeferredColumn={showDeferredColumn}
         />
       ))}
     </TableBody>
@@ -184,6 +180,9 @@ export const TodoListTable = ({
 
   const search = searchParams.get(QUERY_PARAMS_KEYS.search) ?? ''
   const currentTab = searchParams.get('tab')
+  const showDeferredColumn =
+    currentTab === DashboardTasksTableTabs.Deferred ||
+    currentTab === DashboardTasksTableTabs.WatchList
 
   const filteredTasks = !search
     ? tasks
@@ -233,12 +232,13 @@ export const TodoListTable = ({
 
       <div className="overflow-hidden rounded-md border">
         <Table>
-          <TodoListTableHeader showActions={showActions} />
+          <TodoListTableHeader showActions={showActions} showDeferredColumn={showDeferredColumn} />
           <TodoListTableBody
             tasks={filteredTasks}
             isLoading={isLoading}
             isPlaceholderData={isPlaceholderData}
             showActions={showActions}
+            showDeferredColumn={showDeferredColumn}
           />
         </Table>
       </div>
