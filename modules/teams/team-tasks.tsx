@@ -34,8 +34,6 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
     todo.assignee?.user_type === USER_TYPE_ENUM.TEAM && team?.poc_id === user.id
   const isEditTodoVisible = todo.assignee?.assignee_id === user.id
 
-  const isActionsVisible = isRessignTodoCtaVisible || isEditTodoVisible
-
   return (
     <TableRow>
       <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
@@ -60,12 +58,8 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
 
       <TableCell>
         <div className="flex items-center gap-0.5">
-          {isActionsVisible && (
-            <>
-              {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-              {isEditTodoVisible && <EditTodoButton todo={todo} />}
-            </>
-          )}
+          {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+          {isEditTodoVisible && <EditTodoButton todo={todo} />}
           <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
         </div>
       </TableCell>
