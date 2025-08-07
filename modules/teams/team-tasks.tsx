@@ -30,7 +30,7 @@ type TodoListTableRowProps = {
 
 const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
   const { user } = useAuth()
-  const isRessignTodoCtaVisible =
+  const isReassignTodoCtaVisible =
     todo.assignee?.user_type === USER_TYPE_ENUM.TEAM && team?.poc_id === user.id
   const isEditTodoVisible = todo.assignee?.assignee_id === user.id
 
@@ -58,7 +58,7 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
 
       <TableCell>
         <div className="flex items-center gap-0.5">
-          {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+          {isReassignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
           {isEditTodoVisible && <EditTodoButton todo={todo} />}
           <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
         </div>
