@@ -13,6 +13,7 @@ import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todo-list-table'
 import { TodoStatusTable } from '@/components/todo-status-table'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { WatchListButton } from '@/components/watchlist-button'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
@@ -58,14 +59,15 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
       </TableCell>
 
       <TableCell>
-        {isActionsVisible ? (
-          <div className="flex items-center gap-0.5">
-            {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-            {isEditTodoVisible && <EditTodoButton todo={todo} />}
-          </div>
-        ) : (
-          <div className="px-2">--</div>
-        )}
+        <div className="flex items-center gap-0.5">
+          {isActionsVisible && (
+            <>
+              {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+              {isEditTodoVisible && <EditTodoButton todo={todo} />}
+            </>
+          )}
+          <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+        </div>
       </TableCell>
     </TableRow>
   )
