@@ -13,6 +13,7 @@ import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todo-list-table'
 import { TodoStatusTable } from '@/components/todo-status-table'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { WatchListButton } from '@/components/watchlist-button'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
@@ -32,8 +33,6 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
   const isRessignTodoCtaVisible =
     todo.assignee?.user_type === USER_TYPE_ENUM.TEAM && team?.poc_id === user.id
   const isEditTodoVisible = todo.assignee?.assignee_id === user.id
-
-  const isActionsVisible = isRessignTodoCtaVisible || isEditTodoVisible
 
   return (
     <TableRow>
@@ -57,14 +56,11 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
 
-      <TableCell>
-        {isActionsVisible ? (
-          <div className="flex items-center gap-0.5">
-            {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-            {isEditTodoVisible && <EditTodoButton todo={todo} />}
-          </div>
-        ) : (
-          <div className="px-2">--</div>
+      <TableCell className="flex items-center gap-0.5">
+        {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+        {isEditTodoVisible && <EditTodoButton todo={todo} />}
+        {!isRessignTodoCtaVisible && (
+          <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
         )}
       </TableCell>
     </TableRow>
