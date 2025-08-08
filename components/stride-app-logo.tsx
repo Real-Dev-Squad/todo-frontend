@@ -4,7 +4,7 @@ type Props = {
   className?: string
 }
 
-export default function StrideAppLogo({ className }: Props) {
+export const StrideAppLogo = ({ className }: Props) => {
   return (
     <div
       className={cn(
