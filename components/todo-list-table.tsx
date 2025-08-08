@@ -216,7 +216,7 @@ export const TodoListTable = ({
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        {currentTab == DashboardTasksTableTabs.All && (
+        {(currentTab == DashboardTasksTableTabs.All || currentTab == undefined) && (
           <div className="flex px-4">
             <Switch
               id="includeDoneTasks"
