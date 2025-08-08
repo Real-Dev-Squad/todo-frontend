@@ -1,4 +1,4 @@
-import StrideAppLogo from '@/components/Animated-logo'
+import { StrideAppLogo } from '@/components/stride-app-logo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
@@ -18,13 +18,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 
-export function DashboardPreview() {
-  const projects = [
-    { name: 'Website Redesign', tasks: 12, completed: 8, color: 'bg-blue-500' },
-    { name: 'Mobile App', tasks: 8, completed: 3, color: 'bg-green-500' },
-    { name: 'Marketing Campaign', tasks: 6, completed: 6, color: 'bg-purple-500' },
-  ]
-
+export const DashboardPreview = () => {
   const todayTasks = [
     {
       id: 1,

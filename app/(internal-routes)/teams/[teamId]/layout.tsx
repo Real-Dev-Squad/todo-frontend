@@ -1,5 +1,5 @@
 import { PageContainer } from '@/components/page-container'
-import { TeamTabsNavigation } from '@/modules/teams/components/tab-navigation'
+import { TeamTabNavigation } from '@/modules/teams/components/team-tab-navigation'
 import { TeamsLayoutHeader } from '@/modules/teams/components/teams-layout-header'
 import { ReactNode } from 'react'
 
@@ -14,7 +14,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   return (
     <PageContainer>
       <TeamsLayoutHeader teamId={teamId} />
-      <TeamTabsNavigation />
+      <TeamTabNavigation />
 
       <div className="py-5">{children}</div>
     </PageContainer>

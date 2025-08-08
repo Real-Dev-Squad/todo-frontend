@@ -24,7 +24,7 @@ import { ChevronDown, ChevronRight, PlusIcon, UserPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import StrideAppLogo from './Animated-logo'
+import { StrideAppLogo } from './stride-app-logo'
 import { Shimmer } from './Shimmer'
 
 const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
