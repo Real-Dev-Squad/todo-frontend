@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { CreateTodoButton } from './create-todo-button'
+import { CreateTodoButton } from '../../../components/create-todo-button'
 
 export const DashboardWelcomeScreen = () => {
   const { user } = useAuth()

@@ -2,6 +2,7 @@
 
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/Shimmer'
+import { CreateTodoButton } from '@/components/create-todo-button'
 import { useQuery } from '@tanstack/react-query'
 
 const Container = ({ children }: { children: React.ReactNode }) => {
@@ -30,6 +31,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   return (
     <div className="flex items-center justify-between pt-6 pb-8">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
+      <CreateTodoButton />
     </div>
   )
 }

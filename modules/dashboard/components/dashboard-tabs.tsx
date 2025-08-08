@@ -5,7 +5,7 @@ import { TodoListTable } from '@/components/todo-list-table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
-import { CreateTodoButton } from './create-todo-button'
+import { CreateTodoButton } from '../../../components/create-todo-button'
 import { DashboardDeferredTable } from './dashboard-deferred-table'
 import { DashboardWatchlistTable } from './dashboard-watchlist-table'
 
