@@ -221,7 +221,7 @@ export const TodoListTable = ({
           <div className="flex px-4">
             <Switch
               id="includeDoneTasks"
-              checked={includeDone}
+              checked={!!includeDone}
               onCheckedChange={(checked) => onIncludeDoneChange?.(!!checked)}
             />
             <Label htmlFor="includeDoneTasks" className="px-2">
