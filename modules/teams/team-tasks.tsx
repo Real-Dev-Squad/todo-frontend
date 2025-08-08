@@ -58,7 +58,7 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
 
       <TableCell className="flex items-center gap-0.5">
         {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-        {isEditTodoVisible && <EditTodoButton todo={todo} />}
+        {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
         {!isRessignTodoCtaVisible && (
           <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
         )}

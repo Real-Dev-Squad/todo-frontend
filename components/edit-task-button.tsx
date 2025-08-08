@@ -13,9 +13,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 type EditTodoButtonProps = {
   todo: TTask
+  teamId?: string
 }
 
-export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
+export const EditTodoButton = ({ todo, teamId }: EditTodoButtonProps) => {
   const queryClient = useQueryClient()
 
   const [showEditTaskForm, setShowEditTaskForm] = useState(false)
@@ -34,6 +35,12 @@ export const EditTodoButton = ({ todo }: EditTodoButtonProps) => {
           queryKey: TasksApi.getTasks.key({ teamId: res.assignee.assignee_id }),
         })
       }
+
+      // invalidate a task on the teams page if the task edited
+      if (teamId) {
+        void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
+      }
+
       toast.success('Todo updated successfully')
       setShowEditTaskForm(false)
     },
