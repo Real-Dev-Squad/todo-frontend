@@ -24,6 +24,7 @@ import { MoreVertical } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 import { Button } from '../../components/ui/button'
+import { AddMembersButton } from '@/components/add-members-button'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -88,13 +89,15 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
 
   return (
     <div>
-      <div className="pb-4">
+      <div className="flex items-center justify-between pb-4">
         <Searchbar
           defaultValue={search}
           containerClassName="w-full lg:max-w-xs"
           placeholder="Search by name, role or tasks count"
           onChange={(e) => handleSearch(e.target.value)}
         />
+
+        <AddMembersButton teamId={teamId} />
       </div>
 
       <div className="overflow-hidden rounded-md border">
