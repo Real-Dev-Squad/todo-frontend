@@ -1,4 +1,4 @@
-import { TeamMembers } from '@/modules/teams/components/team-members'
+import { TeamMembers } from '@/modules/teams/team-members'
 
 const TeamMembersPage = async ({ params }: { params: Promise<{ teamId: string }> }) => {
   const { teamId } = await params

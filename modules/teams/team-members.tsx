@@ -23,7 +23,7 @@ import { useQuery } from '@tanstack/react-query'
 import { MoreVertical } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
-import { Button } from '../../../components/ui/button'
+import { Button } from '../../components/ui/button'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
