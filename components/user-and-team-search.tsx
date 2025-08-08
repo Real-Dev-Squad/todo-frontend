@@ -90,7 +90,9 @@ export const UserAndTeamSearch = ({
       ? [selectedOption, ...allOptions]
       : allOptions
 
-  const options = optionsWithSelectedUser.sort((a, b) => a.label.localeCompare(b.label))
+  const options = optionsWithSelectedUser
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .sort((a, _) => (a.value === selectedOption?.value ? -1 : 1))
 
   const handleSelect = (option: TUserOrTeamOption) => {
     setSelectedOption(option)
