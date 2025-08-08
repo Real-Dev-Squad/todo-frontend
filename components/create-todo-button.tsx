@@ -6,8 +6,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { TTodoFormData } from './create-edit-todo-form'
 
-export const CreateTodoButton = () => {
+type Props = {
+  defaultData?: Partial<TTodoFormData>
+}
+
+export const CreateTodoButton = ({ defaultData }: Props) => {
   const queryClient = useQueryClient()
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
 
@@ -33,6 +38,7 @@ export const CreateTodoButton = () => {
   return (
     <CreateEditTodoDialog
       mode="create"
+      defaultData={defaultData}
       open={showCreateTaskForm}
       onOpenChange={setShowCreateTaskForm}
       isMutationPending={createTaskMutation.isPending}

@@ -12,13 +12,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from './ui/alert-dialog'
-import { Button } from './ui/button'
+import { Button, type TButtonVariants } from './ui/button'
 
 type AddMemberButtonProps = {
   teamId: string
+  variant?: TButtonVariants
 }
 
-export const AddMembersButton = ({ teamId }: AddMemberButtonProps) => {
+export const AddMembersButton = ({ teamId, variant }: AddMemberButtonProps) => {
   const queryClient = useQueryClient()
 
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
@@ -68,7 +69,7 @@ export const AddMembersButton = ({ teamId }: AddMemberButtonProps) => {
 
   return (
     <>
-      <Button size="sm" onClick={() => setIsAddMembersModalOpen(true)}>
+      <Button size="sm" variant={variant} onClick={() => setIsAddMembersModalOpen(true)}>
         Add members
       </Button>
 

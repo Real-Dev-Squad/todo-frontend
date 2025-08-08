@@ -97,7 +97,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
           onChange={(e) => handleSearch(e.target.value)}
         />
 
-        <AddMembersButton teamId={teamId} />
+        <AddMembersButton teamId={teamId} variant="secondary" />
       </div>
 
       <div className="overflow-hidden rounded-md border">

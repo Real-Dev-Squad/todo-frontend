@@ -1,5 +1,6 @@
 'use client'
 
+import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/Shimmer'
 import { CreateTodoButton } from '@/components/create-todo-button'
@@ -31,7 +32,11 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   return (
     <div className="flex items-center justify-between pt-6 pb-8">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
-      <CreateTodoButton />
+      <CreateTodoButton
+        defaultData={{
+          assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
+        }}
+      />
     </div>
   )
 }

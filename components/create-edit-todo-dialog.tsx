@@ -18,7 +18,7 @@ type BaseProps = {
 
 type CreateModeProps = BaseProps & {
   mode: 'create'
-  defaultData?: never
+  defaultData?: Partial<TTodoFormData>
 }
 
 type EditModeProps = BaseProps & {

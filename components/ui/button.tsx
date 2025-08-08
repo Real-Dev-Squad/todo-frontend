@@ -32,6 +32,9 @@ const buttonVariants = cva(
   },
 )
 
+export type TButtonSize = VariantProps<typeof buttonVariants>
+export type TButtonVariants = VariantProps<typeof buttonVariants>['variant']
+
 function Button({
   className,
   variant,
