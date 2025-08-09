@@ -1,8 +1,7 @@
-import { GetTeamsDto } from '@/api/teams/teams.type'
+import { TeamsFetchApi } from '@/api/teams/teams-fetch.api'
 import { AppSidebar } from '@/components/app-sidebar'
 import { PageHeader } from '@/components/page-header'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { FetchClient } from '@/lib/fetch-client'
 import { Toaster } from 'sonner'
 
 type LayoutProps = {
@@ -10,7 +9,7 @@ type LayoutProps = {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const teams = FetchClient.get<GetTeamsDto>('/v1/teams', ['TeamsApi.getTeams'])
+  const teams = TeamsFetchApi.getTeams.fn()
 
   return (
     <div className="relative">
