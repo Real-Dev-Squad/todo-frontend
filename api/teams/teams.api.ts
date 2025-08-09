@@ -9,6 +9,8 @@ import {
   TTeam,
 } from './teams.type'
 
+// export const getTeams = () =>
+
 export const TeamsApi = {
   getTeams: {
     key: ['TeamsApi.getTeams'],

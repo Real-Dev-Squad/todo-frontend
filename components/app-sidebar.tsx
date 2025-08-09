@@ -1,6 +1,5 @@
 'use client'
 
-import { TeamsApi } from '@/api/teams/teams.api'
 import { GetTeamsDto } from '@/api/teams/teams.type'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Separator } from '@/components/ui/separator'
@@ -19,13 +18,12 @@ import {
 import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
 import { cn } from '@/lib/utils'
-import { useQuery } from '@tanstack/react-query'
 import { ChevronDown, ChevronRight, PlusIcon, UserPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import { StrideAppLogo } from './stride-app-logo'
+import { Suspense, use, useState } from 'react'
 import { Shimmer } from './Shimmer'
+import { StrideAppLogo } from './stride-app-logo'
 
 const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
   if (!teams || teams.teams.length === 0) {
@@ -199,13 +197,27 @@ const SidebarLink = ({ link }: SidebarLinkProps) => {
   )
 }
 
-export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
-  const { data, isLoading } = useQuery({
-    queryKey: TeamsApi.getTeams.key,
-    queryFn: TeamsApi.getTeams.fn,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  })
+type MenuItemsProps = {
+  teams: Promise<GetTeamsDto>
+}
 
+const MenuItems = ({ teams }: MenuItemsProps) => {
+  const data = use(teams)
+
+  return (
+    <>
+      {getSidebarLinks(data).map((item) => (
+        <SidebarLink link={item} key={item.id} />
+      ))}
+    </>
+  )
+}
+
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  teams: Promise<GetTeamsDto>
+}
+
+export const AppSidebar = ({ teams, ...props }: AppSidebarProps) => {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -226,11 +238,9 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {isLoading && !data ? (
-                <SidebarShimmer />
-              ) : (
-                getSidebarLinks(data).map((item) => <SidebarLink link={item} key={item.id} />)
-              )}
+              <Suspense fallback={<SidebarShimmer />}>
+                <MenuItems teams={teams} />
+              </Suspense>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
