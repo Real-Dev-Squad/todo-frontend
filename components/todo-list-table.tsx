@@ -50,11 +50,16 @@ type TodoListTableRowProps = {
   todo: TTask
   showActions?: boolean
   showDeferredColumn?: boolean
+  userId?: string
 }
 
-const TodoListTableRow = ({ todo, showActions, showDeferredColumn }: TodoListTableRowProps) => {
-  const { user } = useAuth()
-  const isEditTodoVisible = todo.assignee?.assignee_id === user.id
+const TodoListTableRow = ({
+  todo,
+  showActions,
+  showDeferredColumn,
+  userId,
+}: TodoListTableRowProps) => {
+  const isEditTodoVisible = todo.assignee?.assignee_id === userId
 
   return (
     <TableRow>
@@ -115,6 +120,8 @@ const TodoListTableBody = ({
   showActions,
   showDeferredColumn,
 }: TodoListTableBodyProps) => {
+  const { user } = useAuth()
+
   if (isLoading || isPlaceholderData) {
     return (
       <TableBody>
@@ -145,6 +152,7 @@ const TodoListTableBody = ({
           todo={task}
           showActions={showActions && task.assignee?.user_type !== USER_TYPE_ENUM.TEAM}
           showDeferredColumn={showDeferredColumn}
+          userId={user.id}
         />
       ))}
     </TableBody>
