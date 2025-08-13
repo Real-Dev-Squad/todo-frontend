@@ -52,6 +52,8 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
 
       <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
 
+      <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
+
       <TableCell className="whitespace-nowrap">
         {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
       </TableCell>
