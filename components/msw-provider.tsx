@@ -1,13 +1,20 @@
-'use client'
+import { enableMocking } from '@/__mocks__/init'
+import { PropsWithChildren, useEffect, useState } from 'react'
 
-import { useEffect } from 'react'
+export function MockServiceWorkerProvider({ children }: PropsWithChildren) {
+  const [isMswReady, setIsMswReady] = useState(false)
 
-export function MockServiceWorkerProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    import('@/__mocks__/init').then(({ enableMocking }) => {
-      enableMocking()
+    enableMocking().then(() => {
+      setIsMswReady(true)
     })
   }, [])
+
+  if (process.env.NODE_ENV !== 'development') return children
+
+  if (!isMswReady) {
+    return 'loading msw worker...'
+  }
 
   return <>{children}</>
 }
