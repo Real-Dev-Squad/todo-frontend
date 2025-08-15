@@ -1,6 +1,7 @@
 import { USER_TYPE_ENUM } from '../../api/common/common-enum'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '../../api/tasks/tasks.enum'
 import { TTask } from '../../api/tasks/tasks.types'
+import { sleep } from '../utils/common'
 
 export type TMockTasksResponse = {
   links: {
@@ -505,3 +506,148 @@ const mockTeamTasks: TTask[] = [
     in_watchlist: false,
   },
 ]
+
+export const MockTasksAPI = {
+  getAllTasks: async (params?: {
+    status?: string
+    teamId?: string
+    page?: number
+    limit?: number
+  }): Promise<TMockTasksResponse> => {
+    await sleep()
+
+    let filteredTasks = [...mockTasks]
+
+    if (params?.teamId) {
+      filteredTasks = mockTeamTasks.filter((task) => {
+        const teamIds = [
+          '687b4aa1aaffdd8afd042c61',
+          '687a1d551103a3d1573071d7',
+          '687aafead8c31c0fc8ffe2db',
+          '687ab02fd8c31c0fc8ffe2e1',
+          '687ab1bbd8c31c0fc8ffe301',
+        ]
+        const taskIndex = mockTeamTasks.indexOf(task)
+        const teamIndex = taskIndex % teamIds.length
+        return teamIds[teamIndex] === params.teamId
+      })
+    } else {
+      filteredTasks = [...mockTasks]
+    }
+
+    if (params?.status) {
+      if (params.status !== 'DONE') {
+        filteredTasks = filteredTasks.filter((task) => task.status === params.status)
+      }
+    } else {
+      filteredTasks = filteredTasks.filter((task) => task.status !== TASK_STATUS_ENUM.DONE)
+    }
+
+    const page = params?.page || 1
+    const limit = params?.limit || 20
+    const startIndex = (page - 1) * limit
+    const endIndex = startIndex + limit
+    const paginatedTasks = filteredTasks.slice(startIndex, endIndex)
+
+    const hasNext = endIndex < filteredTasks.length
+    const hasPrev = page > 1
+
+    return {
+      links: {
+        next: hasNext
+          ? `/v1/tasks?page=${page + 1}&limit=${limit}&sort_by=createdAt&order=desc`
+          : null,
+        prev: hasPrev
+          ? `/v1/tasks?page=${page - 1}&limit=${limit}&sort_by=createdAt&order=desc`
+          : null,
+      },
+      error: null,
+      tasks: paginatedTasks,
+    }
+  },
+
+  createTask: async (taskData: {
+    title: string
+    description?: string
+    priority?: string
+    status?: string
+    labels?: string[]
+    dueAt?: string
+    assignee_id: string
+    timezone: string
+    user_type: string
+  }): Promise<TTask> => {
+    await sleep()
+
+    const newTask: TTask = {
+      id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      title: taskData.title,
+      description: taskData.description || '',
+      priority: (taskData.priority as TASK_PRIORITY_ENUM) || TASK_PRIORITY_ENUM.MEDIUM,
+      status: (taskData.status as TASK_STATUS_ENUM) || TASK_STATUS_ENUM.TODO,
+      assignee: {
+        id: `assignee_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        task_id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        assignee_id: taskData.assignee_id,
+        assignee_name: 'New Assignee',
+        user_type: USER_TYPE_ENUM.USER,
+        is_active: true,
+        created_by: '68702ff8e331b8aa7a58fff3',
+        updated_by: null,
+        created_at: new Date().toISOString(),
+        updated_at: null,
+      },
+      labels:
+        taskData.labels?.map((labelId) => ({
+          id: labelId,
+          name: 'Mock Label',
+          color: '#3b82f6',
+        })) || [],
+      dueAt: taskData.dueAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      in_watchlist: false,
+    }
+
+    mockTasks.push(newTask)
+    return newTask
+  },
+
+  updateTask: async (taskId: string, updates: Partial<TTask>): Promise<TTask> => {
+    await sleep()
+
+    const taskIndex = mockTasks.findIndex((task) => task.id === taskId)
+    if (taskIndex === -1) {
+      throw new Error('Task not found')
+    }
+
+    mockTasks[taskIndex] = {
+      ...mockTasks[taskIndex],
+      ...updates,
+    }
+
+    return mockTasks[taskIndex]
+  },
+
+  deferTask: async (taskId: string, deferredTill: string): Promise<TTask> => {
+    await sleep()
+
+    const taskIndex = mockTasks.findIndex((task) => task.id === taskId)
+    if (taskIndex === -1) {
+      throw new Error('Task not found')
+    }
+
+    mockTasks[taskIndex] = {
+      ...mockTasks[taskIndex],
+      status: TASK_STATUS_ENUM.DEFERRED,
+      deferredDetails: {
+        deferredTill,
+        deferredBy: {
+          id: '68702ff8e331b8aa7a58fff3',
+          name: 'Anuj Chhikara',
+        },
+        deferredAt: new Date().toISOString(),
+      },
+    }
+
+    return mockTasks[taskIndex]
+  },
+}

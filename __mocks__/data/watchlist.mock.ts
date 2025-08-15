@@ -1,5 +1,6 @@
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '../../api/tasks/tasks.enum'
 import { TWatchListTask } from '../../api/tasks/tasks.types'
+import { sleep } from '../utils/common'
 
 export type TMockWatchlistResponse = {
   links: {
@@ -185,3 +186,29 @@ const mockWatchlistTasks: TWatchListTask[] = [
     userId: '6875653d814217e020e3d069',
   },
 ]
+
+export const MockWatchlistAPI = {
+  getWatchlistTasks: async (): Promise<TMockWatchlistResponse> => {
+    await sleep()
+    return {
+      links: {
+        next: null,
+        prev: null,
+      },
+      error: null,
+      tasks: mockWatchlistTasks,
+    }
+  },
+
+  addTaskToWatchlist: async (taskId: string): Promise<void> => {
+    await sleep()
+  },
+
+  toggleWatchlistStatus: async (taskId: string, isActive: boolean): Promise<void> => {
+    await sleep()
+    const taskIndex = mockWatchlistTasks.findIndex((task) => task.taskId === taskId)
+    if (taskIndex !== -1) {
+      mockWatchlistTasks[taskIndex].isAcknowledged = isActive
+    }
+  },
+}
