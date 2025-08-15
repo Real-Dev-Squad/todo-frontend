@@ -3,9 +3,6 @@ import { appConfig, validateAppConfig } from '@/config/app-config'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { enableMocking } from '@/__mocks__/init'
-
-enableMocking()
 
 const inter = Inter({
   subsets: ['latin'],
