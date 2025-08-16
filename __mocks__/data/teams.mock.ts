@@ -2,7 +2,7 @@ import { GetTeamsDto, TTeam } from '../../api/teams/teams.type'
 
 export type TMockTeamsResponse = GetTeamsDto
 
-const mockTeams: TTeam[] = [
+export const mockTeams: TTeam[] = [
   {
     id: '687b4aa1aaffdd8afd042c61',
     name: 'Real Dev Squad Team',
@@ -60,7 +60,7 @@ const mockTeams: TTeam[] = [
   },
 ]
 
-const mockTeamMembers = {
+export const mockTeamMembers = {
   '687b4aa1aaffdd8afd042c61': [
     {
       id: '68704332e331b8aa7a58ffff',

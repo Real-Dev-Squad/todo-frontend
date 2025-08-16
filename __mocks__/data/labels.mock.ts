@@ -12,7 +12,7 @@ export type TMockLabelsResponse = {
   limit: number
 }
 
-const mockLabels: TLabel[] = [
+export const mockLabels: TLabel[] = [
   {
     id: '68717da2c91cc1af5ebd588a',
     name: 'API',
