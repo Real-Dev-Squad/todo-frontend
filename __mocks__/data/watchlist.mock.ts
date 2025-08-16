@@ -11,7 +11,7 @@ export type TMockWatchlistResponse = {
   tasks: TWatchListTask[]
 }
 
-const mockWatchlistTasks: TWatchListTask[] = [
+export const mockWatchlistTasks: TWatchListTask[] = [
   {
     taskId: '687a055e5d69510ea7c97f1d',
     displayId: '#136',
@@ -34,8 +34,8 @@ const mockWatchlistTasks: TWatchListTask[] = [
         color: '#3b82f6',
       },
       {
-        id: '68717da2c91cc1af5ebd588c',
-        name: 'Security',
+        id: '68717da2c91cc1af5ebd5888',
+        name: 'Bug',
         color: '#ef4444',
       },
     ],
@@ -63,7 +63,7 @@ const mockWatchlistTasks: TWatchListTask[] = [
       },
       {
         id: '68717da2c91cc1af5ebd588a',
-        name: 'Backend',
+        name: 'API',
         color: '#3b82f6',
       },
     ],
@@ -86,12 +86,12 @@ const mockWatchlistTasks: TWatchListTask[] = [
     labels: [
       {
         id: '68717da2c91cc1af5ebd5889',
-        name: 'Performance',
+        name: 'Refactoring/Optimization',
         color: '#f59e0b',
       },
       {
         id: '68717da2c91cc1af5ebd588a',
-        name: 'Backend',
+        name: 'API',
         color: '#3b82f6',
       },
     ],
@@ -119,7 +119,7 @@ const mockWatchlistTasks: TWatchListTask[] = [
       },
       {
         id: '68717da2c91cc1af5ebd588a',
-        name: 'Backend',
+        name: 'API',
         color: '#3b82f6',
       },
     ],
@@ -142,13 +142,13 @@ const mockWatchlistTasks: TWatchListTask[] = [
     labels: [
       {
         id: '68717da2c91cc1af5ebd5889',
-        name: 'Performance',
+        name: 'Refactoring/Optimization',
         color: '#f59e0b',
       },
       {
-        id: '68717da2c91cc1af5ebd588a',
-        name: 'Frontend',
-        color: '#3b82f6',
+        id: '68717da2c91cc1af5ebd588b',
+        name: 'UI/UX',
+        color: '#8b5cf6',
       },
     ],
     dueAt: '2025-07-31T18:30:00Z',

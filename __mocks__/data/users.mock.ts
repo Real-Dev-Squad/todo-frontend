@@ -6,7 +6,7 @@ export type TMockUserProfileResponse = {
   data: TUser
 }
 
-const mockUsers: TUser[] = [
+export const mockUsers: TUser[] = [
   {
     id: '687544d3814217e020e3d03a',
     email: 'ankush.dharkar@gmail.com',
