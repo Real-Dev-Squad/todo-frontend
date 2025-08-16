@@ -3,6 +3,7 @@ import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '../../api/tasks/tasks.enum
 import { TTask } from '../../api/tasks/tasks.types'
 import { sleep } from '../utils/common'
 import { mockLabels } from './labels.mock'
+import { mockUsers } from './users.mock'
 
 export type TMockTasksResponse = {
   links: {
@@ -450,18 +451,24 @@ export const MockTasksAPI = {
   }): Promise<TTask> => {
     await sleep()
 
+    const taskId = `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const assigneeId = `assignee_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+    const assignee = mockUsers.find((user) => user.id === taskData.assignee_id)
+    const assigneeName = assignee?.name || 'Unknown User'
+
     const newTask: TTask = {
-      id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: taskId,
       title: taskData.title,
       description: taskData.description || '',
       priority: (taskData.priority as TASK_PRIORITY_ENUM) || TASK_PRIORITY_ENUM.MEDIUM,
       status: (taskData.status as TASK_STATUS_ENUM) || TASK_STATUS_ENUM.TODO,
       assignee: {
-        id: `assignee_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        task_id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: assigneeId,
+        task_id: taskId,
         assignee_id: taskData.assignee_id,
-        assignee_name: 'New Assignee',
-        user_type: USER_TYPE_ENUM.USER,
+        assignee_name: assigneeName,
+        user_type: (taskData.user_type as USER_TYPE_ENUM) || USER_TYPE_ENUM.USER,
         is_active: true,
         created_by: '68702ff8e331b8aa7a58fff3',
         updated_by: null,
@@ -472,8 +479,8 @@ export const MockTasksAPI = {
       dueAt: taskData.dueAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       in_watchlist: false,
     }
+    mockTasks.unshift(newTask)
 
-    mockTasks.push(newTask)
     return newTask
   },
 
