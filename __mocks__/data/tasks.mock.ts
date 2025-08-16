@@ -2,6 +2,7 @@ import { USER_TYPE_ENUM } from '../../api/common/common-enum'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '../../api/tasks/tasks.enum'
 import { TTask } from '../../api/tasks/tasks.types'
 import { sleep } from '../utils/common'
+import { mockLabels } from './labels.mock'
 
 export type TMockTasksResponse = {
   links: {
@@ -366,6 +367,17 @@ const mockTeamTasks: TTask[] = [
   },
 ]
 
+const getLabelById = (labelId: string) => {
+  const label = mockLabels.find((l) => l.id === labelId)
+  return (
+    label || {
+      id: labelId,
+      name: 'Unknown Label',
+      color: '#64748b',
+    }
+  )
+}
+
 export const MockTasksAPI = {
   getAllTasks: async (params?: {
     status?: string
@@ -456,12 +468,7 @@ export const MockTasksAPI = {
         created_at: new Date().toISOString(),
         updated_at: null,
       },
-      labels:
-        taskData.labels?.map((labelId) => ({
-          id: labelId,
-          name: 'Mock Label',
-          color: '#3b82f6',
-        })) || [],
+      labels: taskData.labels?.map((labelId) => getLabelById(labelId)) || [],
       dueAt: taskData.dueAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       in_watchlist: false,
     }
@@ -478,9 +485,19 @@ export const MockTasksAPI = {
       throw new Error('Task not found')
     }
 
+    let processedUpdates = { ...updates }
+    if (updates.labels && Array.isArray(updates.labels)) {
+      processedUpdates.labels = updates.labels.map((label) => {
+        if (typeof label === 'string') {
+          return getLabelById(label)
+        }
+        return label
+      })
+    }
+
     mockTasks[taskIndex] = {
       ...mockTasks[taskIndex],
-      ...updates,
+      ...processedUpdates,
     }
 
     return mockTasks[taskIndex]
