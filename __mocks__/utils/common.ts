@@ -3,5 +3,6 @@ export const sleep = (ms: number = 100): Promise<void> => {
 }
 
 export const getApiUrl = (path: string): string => {
-  return `*/v1${path}`
+  const sanitizedPath = path.replace(/\.\./g, '').replace(/^\/+/, '')
+  return `*/v1/${sanitizedPath}`
 }

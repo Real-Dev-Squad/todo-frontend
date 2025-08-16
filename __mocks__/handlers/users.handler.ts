@@ -9,18 +9,24 @@ export const usersHandlers = [
       const profile = url.searchParams.get('profile')
 
       if (profile === 'true') {
-        const userProfile = await MockUsersAPI.getUserProfile()
-        return HttpResponse.json(userProfile)
+        try {
+          const userProfile = await MockUsersAPI.getUserProfile()
+          return HttpResponse.json(userProfile)
+        } catch (error) {
+          return HttpResponse.json(
+            { message: 'Failed to fetch user profile', error: error },
+            { status: 500 },
+          )
+        }
       }
       const search = url.searchParams.get('search') || undefined
-      const page = parseInt(url.searchParams.get('page') || '1')
-      const limit = parseInt(url.searchParams.get('limit') || '10')
+      const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'))
+      const limit = Math.min(100, Math.max(1, parseInt(url.searchParams.get('limit') || '10')))
 
       const users = await MockUsersAPI.searchUsers({ search, page, limit })
       return HttpResponse.json(users)
     } catch (error) {
-      console.error('Error fetching users:', error)
-      return new HttpResponse(null, { status: 500 })
+      return HttpResponse.json({ message: 'Failed to fetch users', error: error }, { status: 500 })
     }
   }),
 ]

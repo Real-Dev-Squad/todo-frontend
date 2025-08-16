@@ -8,8 +8,7 @@ export const labelsHandlers = [
       const labels = await MockLabelsAPI.getAllLabels()
       return HttpResponse.json(labels)
     } catch (error) {
-      console.error('Error fetching labels:', error)
-      return new HttpResponse(null, { status: 500 })
+      return HttpResponse.json({ message: 'Failed to fetch labels', error: error }, { status: 500 })
     }
   }),
 ]
