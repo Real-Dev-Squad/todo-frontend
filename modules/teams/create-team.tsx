@@ -51,7 +51,7 @@ export const CreateTeam = () => {
   const [inviteCode, setInviteCode] = useState<string>('')
 
   const handleCodeVerified = (code: string) => {
-    setTeamCreationCode(code)
+    setTeamCreationCode(code.trim())
     setShowCodeVerification(false)
   }
 

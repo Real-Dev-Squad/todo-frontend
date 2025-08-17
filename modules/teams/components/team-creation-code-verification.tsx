@@ -3,35 +3,18 @@
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Shield } from 'lucide-react'
-import { Controller, useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import { z } from 'zod'
-
-const codeVerificationSchema = z.object({
-  teamCreationCode: z.string().min(1, 'Team creation code is required'),
-})
-
-type TCodeVerificationData = z.infer<typeof codeVerificationSchema>
 
 type Props = {
   onCodeVerified: (code: string) => void
 }
 
 export const TeamCreationCodeVerification = ({ onCodeVerified }: Props) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<TCodeVerificationData>({
-    resolver: zodResolver(codeVerificationSchema),
-    defaultValues: {
-      teamCreationCode: '',
-    },
-  })
+  const [teamCreationCode, setTeamCreationCode] = useState('')
+  const [error, setError] = useState('')
 
   const verifyCodeMutation = useMutation({
     mutationFn: TeamsApi.verifyTeamCreationCode.fn,
@@ -40,12 +23,20 @@ export const TeamCreationCodeVerification = ({ onCodeVerified }: Props) => {
       onCodeVerified(variables.code)
     },
     onError: () => {
-      toast.error('Invalid code. Please enter a valid code to create a team.')
+      toast.error('The code appears to be invalid. Please enter a valid code to create a team.')
     },
   })
 
-  const handleFormSubmission = (data: TCodeVerificationData) => {
-    verifyCodeMutation.mutate({ code: data.teamCreationCode.trim() })
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+
+    if (!teamCreationCode.trim()) {
+      setError('Team creation code is required')
+      return
+    }
+
+    verifyCodeMutation.mutate({ code: teamCreationCode.trim() })
   }
 
   return (
@@ -59,35 +50,28 @@ export const TeamCreationCodeVerification = ({ onCodeVerified }: Props) => {
             <h1 className="text-xl font-semibold text-gray-900">Enter Team Creation Invite Code</h1>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmission)}>
-            <Controller
-              control={control}
-              name="teamCreationCode"
-              render={({ field }) => (
-                <div className="space-y-2">
-                  <Input
-                    id="teamCreationCode"
-                    name="teamCreationCode"
-                    type="text"
-                    value={field.value}
-                    placeholder="Enter your team creation invite code"
-                    className="text-center text-base"
-                    onChange={field.onChange}
-                    disabled={verifyCodeMutation.isPending}
-                    autoComplete="off"
-                    autoFocus
-                  />
-                  {errors.teamCreationCode && (
-                    <p className="text-sm text-red-500">{errors.teamCreationCode.message}</p>
-                  )}
-                </div>
-              )}
-            />
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="space-y-2">
+              <Input
+                id="teamCreationCode"
+                name="teamCreationCode"
+                type="text"
+                value={teamCreationCode}
+                placeholder="Enter your team creation invite code"
+                className="text-center text-base"
+                onChange={(e) => setTeamCreationCode(e.target.value)}
+                aria-label="Team creation invite code"
+                disabled={verifyCodeMutation.isPending}
+                autoComplete="off"
+                autoFocus
+              />
+              {error && <p className="text-sm text-red-500">{error}</p>}
+            </div>
 
             <Button
               type="submit"
               className="w-full"
-              disabled={verifyCodeMutation.isPending || !watch('teamCreationCode')}
+              disabled={verifyCodeMutation.isPending || !teamCreationCode.trim()}
             >
               {verifyCodeMutation.isPending ? 'Verifying...' : 'Verify Code'}
             </Button>
@@ -95,8 +79,8 @@ export const TeamCreationCodeVerification = ({ onCodeVerified }: Props) => {
 
           <div className="text-center">
             <p className="text-xs text-neutral-500">
-              Each invite code allows you to create one team. Please get your code from an
-              administrator.
+              Each invite code allows you to create one team. Please get your code from an admin
+              such as Ankush.
             </p>
           </div>
         </div>
