@@ -5,6 +5,7 @@ import {
   GetTeamByIdReqDto,
   GetTeamsDto,
   TeamActivityTimeline,
+  TeamCreationCodeVerificationResponse,
   TeamDto,
   TTeam,
 } from './teams.type'
@@ -65,6 +66,16 @@ export const TeamsApi = {
         `/v1/teams/${teamId}/activity-timeline`,
       )
 
+      return data
+    },
+  },
+  verifyTeamCreationCode: {
+    key: ['TeamsApi.verifyTeamCreationCode'],
+    fn: async ({ code }: { code: string }): Promise<TeamCreationCodeVerificationResponse> => {
+      const { data } = await apiClient.post<TeamCreationCodeVerificationResponse>(
+        '/v1/team-invite-codes/verify',
+        { code },
+      )
       return data
     },
   },
