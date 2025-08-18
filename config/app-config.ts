@@ -18,6 +18,8 @@ export const appConfig: TAppConfig = {
   isMockingEnabled: process.env.NEXT_PUBLIC_API_MOCKING === 'true',
 }
 
+export const ADMIN_USER_IDS = ['68964bc12f800de2f533f8f1']
+
 export const validateAppConfig = (config: TAppConfig) => {
   const result = appConfigSchema.safeParse(config)
 
