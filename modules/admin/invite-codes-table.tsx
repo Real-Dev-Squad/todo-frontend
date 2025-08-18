@@ -18,7 +18,6 @@ import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ChevronLeft, ChevronRight, Copy } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
 
 const InviteCodesTableRow = ({ inviteCode }: { inviteCode: TInviteCode }) => {
   return (
@@ -37,7 +36,7 @@ const InviteCodesTableRow = ({ inviteCode }: { inviteCode: TInviteCode }) => {
         </div>
       </TableCell>
       <TableCell>
-        {inviteCode.description || <span className="text-gray-400 italic">No description</span>}
+        {inviteCode.description || <span className="text-gray-400">No description</span>}
       </TableCell>
       <TableCell>
         <Badge variant={inviteCode.is_used ? 'secondary' : 'default'}>
@@ -69,22 +68,19 @@ export const InviteCodesTable = () => {
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
   const pageSize = parseInt(searchParams.get('limit') || '8', 10)
 
-  const updateSearchParams = useCallback(
-    (updates: Record<string, string>) => {
-      const params = new URLSearchParams(searchParams.toString())
+  const updateSearchParams = (updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString())
 
-      Object.entries(updates).forEach(([key, value]) => {
-        if (value) {
-          params.set(key, value)
-        } else {
-          params.delete(key)
-        }
-      })
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value)
+      } else {
+        params.delete(key)
+      }
+    })
 
-      router.push(`?${params.toString()}`)
-    },
-    [router, searchParams],
-  )
+    router.push(`?${params.toString()}`)
+  }
 
   const { data, error, isLoading } = useQuery({
     queryKey: InviteCodesApi.getInviteCodes.key({ page: currentPage, limit: pageSize }),
