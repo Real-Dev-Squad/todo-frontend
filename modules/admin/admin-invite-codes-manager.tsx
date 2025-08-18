@@ -1,11 +1,11 @@
 'use client'
 
-import { GenerateInviteCodeModal } from '@/components/admin/generate-invite-code-modal'
-import { InviteCodesTable } from '@/components/admin/invite-codes-table'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
+import { GenerateInviteCodeModal } from './generate-invite-code-modal'
+import { InviteCodesTable } from './invite-codes-table'
 
 export const AdminInviteCodesManager = () => {
   const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false)

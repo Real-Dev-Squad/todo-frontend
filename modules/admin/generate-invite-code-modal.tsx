@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { copyToClipboard } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Copy, Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -55,12 +56,9 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
     onClose()
   }
 
-  const copyToClipboard = async (code: string) => {
-    try {
-      await navigator.clipboard.writeText(code)
-      toast.success('Invite code copied to clipboard!')
-    } catch {
-      toast.error('Failed to copy invite code')
+  const handleCopy = () => {
+    if (generatedCode) {
+      copyToClipboard(generatedCode)
     }
   }
 
@@ -111,11 +109,7 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
                   <code className="flex-1 rounded border bg-white p-2 font-mono text-sm">
                     {generatedCode}
                   </code>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => copyToClipboard(generatedCode)}
-                  >
+                  <Button variant="outline" size="sm" onClick={handleCopy}>
                     <Copy className="h-4 w-4" />
                   </Button>
                 </div>
@@ -130,7 +124,7 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
             </div>
 
             <DialogFooter>
-              <Button onClick={handleClose}>Done</Button>
+              <Button onClick={handleClose}>Close</Button>
             </DialogFooter>
           </>
         )}

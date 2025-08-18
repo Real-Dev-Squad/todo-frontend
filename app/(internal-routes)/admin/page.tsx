@@ -1,8 +1,8 @@
 'use client'
 
-import { AdminInviteCodesManager } from '@/components/admin/admin-invite-codes-manager'
 import { ADMIN_USER_IDS } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
+import { AdminInviteCodesManager } from '@/modules/admin/admin-invite-codes-manager'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -32,7 +32,7 @@ export default function AdminPage() {
     <div className="container mx-auto p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="mt-2 text-gray-600">Manage creation team invite codes</p>
+        <p className="mt-2 text-gray-600">Manage team creation invite codes</p>
       </div>
 
       <AdminInviteCodesManager />

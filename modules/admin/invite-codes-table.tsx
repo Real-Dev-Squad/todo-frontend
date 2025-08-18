@@ -2,9 +2,9 @@
 
 import { InviteCodesApi } from '@/api/invite-codes/invite-codes.api'
 import { TInviteCode } from '@/api/invite-codes/invite-codes.types'
+import { TableShimmer } from '@/components/Shimmer/TableShimmer'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -13,22 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { copyToClipboard } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ChevronLeft, ChevronRight, Copy } from 'lucide-react'
-import { useState } from 'react'
-import { toast } from 'sonner'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback } from 'react'
 
 const InviteCodesTableRow = ({ inviteCode }: { inviteCode: TInviteCode }) => {
-  const copyToClipboard = async (code: string) => {
-    try {
-      await navigator.clipboard.writeText(code)
-      toast.success('Invite code copied to clipboard!')
-    } catch {
-      toast.error('Failed to copy invite code')
-    }
-  }
-
   return (
     <TableRow>
       <TableCell className="font-mono text-sm">
@@ -70,47 +62,41 @@ const InviteCodesTableRow = ({ inviteCode }: { inviteCode: TInviteCode }) => {
   )
 }
 
-const InviteCodesTableShimmer = () => (
-  <TableBody>
-    {new Array(5).fill(0).map((_, index) => (
-      <TableRow key={index}>
-        <TableCell>
-          <Skeleton className="h-4 w-32" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-24" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-6 w-16" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-20" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-20" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-24" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-24" />
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-)
-
 export const InviteCodesTable = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize] = useState(8)
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const { data, isLoading, error } = useQuery({
+  const currentPage = parseInt(searchParams.get('page') || '1', 10)
+  const pageSize = parseInt(searchParams.get('limit') || '8', 10)
+
+  const updateSearchParams = useCallback(
+    (updates: Record<string, string>) => {
+      const params = new URLSearchParams(searchParams.toString())
+
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value)
+        } else {
+          params.delete(key)
+        }
+      })
+
+      router.push(`?${params.toString()}`)
+    },
+    [router, searchParams],
+  )
+
+  const { data, error, isLoading } = useQuery({
     queryKey: InviteCodesApi.getInviteCodes.key({ page: currentPage, limit: pageSize }),
     queryFn: () => InviteCodesApi.getInviteCodes.fn({ page: currentPage, limit: pageSize }),
     staleTime: 5 * 60 * 1000,
   })
 
   const codes = data?.codes || []
+
+  const handlePageChange = (newPage: number) => {
+    updateSearchParams({ page: newPage.toString() })
+  }
 
   if (error) {
     return (
@@ -135,23 +121,22 @@ export const InviteCodesTable = () => {
               <TableHead>Used At</TableHead>
             </TableRow>
           </TableHeader>
-          {isLoading ? (
-            <InviteCodesTableShimmer />
-          ) : (
-            <TableBody>
-              {codes.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={7} className="py-8 text-center text-gray-500">
-                    No invite codes found
-                  </TableCell>
-                </TableRow>
-              ) : (
-                codes.map((inviteCode) => (
-                  <InviteCodesTableRow key={inviteCode.id} inviteCode={inviteCode} />
-                ))
-              )}
-            </TableBody>
-          )}
+
+          <TableBody>
+            {isLoading ? (
+              <TableShimmer count={5} columns={7} />
+            ) : codes.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="py-8 text-center text-gray-500">
+                  No invite codes found
+                </TableCell>
+              </TableRow>
+            ) : (
+              codes.map((inviteCode) => (
+                <InviteCodesTableRow key={inviteCode.id} inviteCode={inviteCode} />
+              ))
+            )}
+          </TableBody>
         </Table>
       </div>
 
@@ -163,7 +148,7 @@ export const InviteCodesTable = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setCurrentPage(currentPage - 1)}
+              onClick={() => handlePageChange(currentPage - 1)}
               disabled={!data.previous_url || currentPage === 1}
             >
               <ChevronLeft className="h-4 w-4" />
@@ -175,7 +160,7 @@ export const InviteCodesTable = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setCurrentPage(currentPage + 1)}
+              onClick={() => handlePageChange(currentPage + 1)}
               disabled={!data.next_url}
             >
               Next
