@@ -1,7 +1,7 @@
 'use client'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ADMIN_USER_IDS } from '@/config/app-config'
+import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
 import { AdminInviteCodesManager } from '@/modules/admin/admin-invite-codes-manager'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -42,7 +42,7 @@ export default function AdminPage() {
     )
   }
 
-  const isAdmin = user ? ADMIN_USER_IDS.includes(user.id) : false
+  const isAdmin = user?.email ? appConfig.adminEmails.includes(user.email) : false
 
   if (!isLoading && !isAdmin) {
     router.push('/dashboard')

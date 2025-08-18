@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar'
-import { ADMIN_USER_IDS, appConfig } from '@/config/app-config'
+import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
@@ -214,7 +214,7 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
   })
 
   const { user } = useAuth()
-  const isAdmin = user ? ADMIN_USER_IDS.includes(user.id) : false
+  const isAdmin = user?.email ? appConfig.adminEmails.includes(user.email) : false
 
   return (
     <Sidebar {...props}>
