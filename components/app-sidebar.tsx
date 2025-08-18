@@ -213,7 +213,7 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
 
-  const { user, isLoading: isAuthLoading } = useAuth()
+  const { user } = useAuth()
   const isAdmin = user ? ADMIN_USER_IDS.includes(user.id) : false
 
   return (

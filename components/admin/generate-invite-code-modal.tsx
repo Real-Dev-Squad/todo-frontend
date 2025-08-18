@@ -59,7 +59,7 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
     try {
       await navigator.clipboard.writeText(code)
       toast.success('Invite code copied to clipboard!')
-    } catch (error) {
+    } catch {
       toast.error('Failed to copy invite code')
     }
   }

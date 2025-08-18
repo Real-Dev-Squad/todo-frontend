@@ -3,10 +3,20 @@
 import { AdminInviteCodesManager } from '@/components/admin/admin-invite-codes-manager'
 import { ADMIN_USER_IDS } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
-import { notFound } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function AdminPage() {
   const { user, isLoading } = useAuth()
+  const router = useRouter()
+
+  const isAdmin = user ? ADMIN_USER_IDS.includes(user.id) : false
+
+  useEffect(() => {
+    if (!isLoading && !isAdmin) {
+      router.push('/dashboard')
+    }
+  }, [isLoading, isAdmin, router])
 
   if (isLoading) {
     return (
@@ -16,12 +26,6 @@ export default function AdminPage() {
         </div>
       </div>
     )
-  }
-
-  const isAdmin = user ? ADMIN_USER_IDS.includes(user.id) : false
-
-  if (!isLoading && !isAdmin) {
-    notFound()
   }
 
   return (
