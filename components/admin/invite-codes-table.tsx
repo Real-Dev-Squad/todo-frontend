@@ -107,7 +107,7 @@ export const InviteCodesTable = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: InviteCodesApi.getInviteCodes.key({ page: currentPage, limit: pageSize }),
     queryFn: () => InviteCodesApi.getInviteCodes.fn({ page: currentPage, limit: pageSize }),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   })
 
   const codes = data?.codes || []

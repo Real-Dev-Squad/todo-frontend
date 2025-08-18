@@ -30,11 +30,9 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
   const generateMutation = useMutation({
     mutationFn: (data: TGenerateInviteCodeRequest) => InviteCodesApi.generateInviteCode.fn(data),
     onSuccess: (data) => {
-      console.log('Generate invite code success:', data)
       if (data.code) {
         setGeneratedCode(data.code)
         toast.success('Invite code generated successfully!')
-        // Refresh the invite codes list
         queryClient.invalidateQueries({
           queryKey: ['InviteCodesApi.getInviteCodes'],
         })
@@ -42,14 +40,12 @@ export const GenerateInviteCodeModal = ({ isOpen, onClose }: GenerateInviteCodeM
         toast.error('Invalid response from server')
       }
     },
-    onError: (error) => {
-      console.error('Generate invite code error:', error)
+    onError: () => {
       toast.error('Failed to generate invite code')
     },
   })
 
   const handleGenerate = () => {
-    console.log('Generating invite code with description:', description)
     generateMutation.mutate({ description: description || undefined })
   }
 
