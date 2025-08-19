@@ -1,4 +1,5 @@
-import { TUser } from '../../api/users/users.types'
+import { TUser, TUsersSearchResponse } from '../../api/users/users.types'
+import { sleep } from '../utils/common'
 
 export type TMockUserProfileResponse = {
   message: string
@@ -37,3 +38,47 @@ export const mockUsers: TUser[] = [
     picture: '/img/user-5.jpg',
   },
 ]
+
+export const MockUsersAPI = {
+  getUserProfile: async (): Promise<TMockUserProfileResponse> => {
+    await sleep()
+    const currentUser = mockUsers[0] // Anuj Chhikara
+    return {
+      message: 'Current user details fetched successfully',
+      data: currentUser,
+    }
+  },
+
+  searchUsers: async (params?: {
+    search?: string
+    page?: number
+    limit?: number
+  }): Promise<{ data: TUsersSearchResponse }> => {
+    await sleep()
+
+    let filteredUsers = [...mockUsers]
+
+    if (params?.search) {
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.name.toLowerCase().includes(params.search!.toLowerCase()) ||
+          user.email?.toLowerCase().includes(params.search!.toLowerCase()),
+      )
+    }
+
+    const page = params?.page || 1
+    const limit = params?.limit || 10
+    const startIndex = (page - 1) * limit
+    const endIndex = startIndex + limit
+    const paginatedUsers = filteredUsers.slice(startIndex, endIndex)
+
+    return {
+      data: {
+        users: paginatedUsers,
+        limit,
+        page,
+        total_count: filteredUsers.length,
+      },
+    }
+  },
+}

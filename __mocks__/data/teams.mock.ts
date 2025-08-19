@@ -1,4 +1,5 @@
-import { GetTeamsDto, TTeam } from '../../api/teams/teams.type'
+import { GetTeamsDto, TeamDto, TTeam } from '../../api/teams/teams.type'
+import { sleep } from '../utils/common'
 
 export type TMockTeamsResponse = GetTeamsDto
 
@@ -221,4 +222,57 @@ export const mockTeamMembers = {
       addedOn: '2025-07-18T20:42:35.591620Z',
     },
   ],
+}
+
+export const MockTeamsAPI = {
+  getAllTeams: async (): Promise<TMockTeamsResponse> => {
+    await sleep()
+    return {
+      teams: mockTeams,
+      total: mockTeams.length,
+    }
+  },
+
+  getTeamById: async (teamId: string, includeMembers: boolean = false): Promise<TeamDto | null> => {
+    await sleep()
+    const team = mockTeams.find((t) => t.id === teamId)
+
+    if (!team) {
+      return null
+    }
+    if (!includeMembers) {
+      return {
+        ...team,
+        users: null,
+      }
+    }
+
+    return {
+      ...team,
+      poc_id: team.poc_id === null ? undefined : team.poc_id,
+      users: mockTeamMembers[teamId as keyof typeof mockTeamMembers] || null,
+    }
+  },
+
+  createTeam: async (teamData: {
+    name: string
+    description?: string
+    member_ids: string[]
+    poc_id: string | null
+  }): Promise<TTeam> => {
+    await sleep()
+    const newTeam: TTeam = {
+      id: `team_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      name: teamData.name,
+      description: teamData.description || null,
+      poc_id: teamData.poc_id ?? undefined,
+      invite_code: `${teamData.name.toUpperCase().replace(/\s+/g, '_')}_${Date.now()}`,
+      created_by: '68702ff8e331b8aa7a58fff3', // Current user
+      updated_by: '68702ff8e331b8aa7a58fff3',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+    mockTeams.push(newTeam)
+    return newTeam
+  },
 }

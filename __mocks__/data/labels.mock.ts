@@ -1,4 +1,5 @@
 import { TLabel } from '../../api/tasks/tasks.types'
+import { sleep } from '../utils/common'
 
 export type TMockLabelsResponse = {
   links: {
@@ -54,3 +55,20 @@ export const mockLabels: TLabel[] = [
     color: '#8b5cf6',
   },
 ]
+
+export const MockLabelsAPI = {
+  getAllLabels: async (): Promise<TMockLabelsResponse> => {
+    await sleep()
+    return {
+      links: {
+        next: null,
+        prev: null,
+      },
+      error: null,
+      labels: mockLabels,
+      total: mockLabels.length,
+      page: 1,
+      limit: 10,
+    }
+  },
+}
