@@ -5,32 +5,35 @@ import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'
 import { AdminInviteCodesManager } from '@/modules/admin/admin-invite-codes-manager'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { Suspense, useCallback, useEffect } from 'react'
 
-export default function AdminPage() {
+function AdminContent() {
   const { user, isLoading } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const activeTab = searchParams.get('tab') || 'invite-codes'
 
-  const updateSearchParams = (updates: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams.toString())
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, value)
-      } else {
-        params.delete(key)
-      }
-    })
-    router.push(`?${params.toString()}`)
-  }
+  const updateSearchParams = useCallback(
+    (updates: Record<string, string>) => {
+      const params = new URLSearchParams(searchParams.toString())
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value)
+        } else {
+          params.delete(key)
+        }
+      })
+      router.push(`?${params.toString()}`)
+    },
+    [searchParams, router],
+  )
 
   useEffect(() => {
     if (!searchParams.has('tab')) {
       updateSearchParams({ tab: 'invite-codes' })
     }
-  }, [])
+  }, [searchParams, updateSearchParams])
 
   if (isLoading) {
     return (
@@ -46,6 +49,7 @@ export default function AdminPage() {
 
   if (!isLoading && !isAdmin) {
     router.push('/dashboard')
+    return null
   }
 
   const tabs = [
@@ -105,5 +109,21 @@ export default function AdminPage() {
         ))}
       </Tabs>
     </div>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto p-6">
+          <div className="flex h-64 items-center justify-center">
+            <div className="text-gray-500">Loading...</div>
+          </div>
+        </div>
+      }
+    >
+      <AdminContent />
+    </Suspense>
   )
 }
