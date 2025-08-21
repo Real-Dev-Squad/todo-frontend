@@ -1,6 +1,8 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
+import { TeamRoles } from '@/api/teams/teams.type'
+import { AddMembersButton } from '@/components/add-members-button'
 import { Searchbar } from '@/components/searchbar'
 import { Shimmer } from '@/components/Shimmer'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -18,13 +20,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MoreVertical } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '../../components/ui/button'
-import { AddMembersButton } from '@/components/add-members-button'
+import { LeaveTeamDialog } from './components/leave-team-dialog'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -54,13 +58,23 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-
+  const queryClient = useQueryClient()
+  const [showLeaveTeamDialog, setShowLeaveTeamDialog] = useState(false)
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
     queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
   })
-
-  const isAdmin = true
+  const { user } = useAuth()
+  const userId = user?.id
+  const { data: userRole, isLoading: isUserRoleLoading } = useQuery({
+    queryKey: TeamsApi.getUserRoles.key({ teamId, userId: userId ?? '' }),
+    queryFn: () => {
+      if (!userId) return Promise.resolve(undefined)
+      return TeamsApi.getUserRoles.fn({ teamId, userId })
+    },
+    enabled: !!userId,
+  })
+  const isAdmin = userRole?.roles.find((role) => role.role_name == TeamRoles.ADMIN)
   const search = searchParams.get(QUERY_PARAMS_KEYS.search) ?? ''
   const filteredMembers = useMemo(() => {
     if (!search) {
@@ -87,6 +101,22 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
     router.push(`${pathname}?${params.toString()}`)
   }
 
+  const removeMemberMutation = useMutation({
+    mutationFn: TeamsApi.removeFromTeam.fn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeamById.key({ teamId }) })
+      queryClient.invalidateQueries({
+        queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
+      })
+      queryClient.invalidateQueries({
+        queryKey: TeamsApi.getTeams.key,
+      })
+      toast.success('User removed Successfully')
+    },
+    onError: () => {
+      toast.error('Failed to remove member')
+    },
+  })
   return (
     <div>
       <div className="flex items-center justify-between pb-4">
@@ -113,7 +143,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
           </TableHeader>
 
           <TableBody>
-            {isLoading
+            {isLoading || isUserRoleLoading
               ? new Array(5).fill(0).map((_, index) => (
                   <TableRow key={index}>
                     <TableCell colSpan={5}>
@@ -154,7 +184,30 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            <DropdownMenuItem>Remove from team</DropdownMenuItem>
+                            {member.id !== user?.id && member.id !== data?.created_by ? (
+                              <LeaveTeamDialog
+                                mode="remove"
+                                open={showLeaveTeamDialog}
+                                onOpenChange={setShowLeaveTeamDialog}
+                                onSubmit={() => {
+                                  removeMemberMutation.mutate({
+                                    teamId,
+                                    memberId: member.id || ' ',
+                                  })
+                                }}
+                              >
+                                <DropdownMenuItem
+                                  onSelect={(e) => {
+                                    e.preventDefault()
+                                    setShowLeaveTeamDialog(true)
+                                  }}
+                                >
+                                  Remove from team
+                                </DropdownMenuItem>
+                              </LeaveTeamDialog>
+                            ) : (
+                              <></>
+                            )}
                             <DropdownMenuItem>View Assigned tasks</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

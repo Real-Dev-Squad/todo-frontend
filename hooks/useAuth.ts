@@ -1,14 +1,6 @@
 import { AuthApi } from '@/api/auth/auth.api'
 import { UsersApi } from '@/api/users/users.api'
-import { TUser } from '@/api/users/users.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
-const DEFAULT_USER: TUser = {
-  id: '',
-  email: '',
-  name: '',
-  picture: '',
-}
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
@@ -32,5 +24,5 @@ export const useAuth = () => {
     },
   })
 
-  return { user: user || DEFAULT_USER, isLoading, isError, isLoggedIn: !!user, logoutMutation }
+  return { user: user, isLoading, isError, isLoggedIn: !!user, logoutMutation }
 }
