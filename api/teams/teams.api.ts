@@ -7,6 +7,7 @@ import {
   TeamActivityTimeline,
   TeamDto,
   TTeam,
+  UserRole,
 } from './teams.type'
 
 export const TeamsApi = {
@@ -65,6 +66,24 @@ export const TeamsApi = {
         `/v1/teams/${teamId}/activity-timeline`,
       )
 
+      return data
+    },
+  },
+  removeFromTeam: {
+    key: ({ teamId }: { teamId: string }) => ['TeamsApi.removeFromTeam', teamId],
+    fn: async ({ teamId, memberId }: { teamId: string; memberId: string }) => {
+      const { data } = await apiClient.delete(`/v1/teams/${teamId}/members/${memberId}`)
+      return data
+    },
+  },
+  getUserRoles: {
+    key: ({ teamId, userId }: { teamId: string; userId: string }) => [
+      'TeamsApi.getUserRoles',
+      teamId,
+      userId,
+    ],
+    fn: async ({ teamId, userId }: { teamId: string; userId: string }): Promise<UserRole> => {
+      const { data } = await apiClient.get(`/v1/teams/${teamId}/users/${userId}/roles`)
       return data
     },
   },

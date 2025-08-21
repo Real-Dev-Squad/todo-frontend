@@ -112,3 +112,23 @@ export type TeamActivity =
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]
 }
+
+export enum TeamRoles {
+  OWNER = 'owner',
+  ADMIN = 'admin',
+  MEMBER = 'member',
+}
+
+export type Roles = {
+  role_id: string
+  role_name: TeamRoles
+  scope: 'TEAM'
+  team_id: string
+  assigned_at: string
+}
+
+export type UserRole = {
+  team_id: string
+  user_id: string
+  roles: Roles[]
+}
