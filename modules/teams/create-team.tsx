@@ -6,10 +6,11 @@ import { PageContainerWithLogo } from '@/components/page-container-with-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { UserSelection } from '@/components/user-selection'
 import { useAuth } from '@/hooks/useAuth'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { SelectPoc } from '@/modules/teams/components/select-poc'
-import { UserSelection } from '@/components/user-selection'
+import { TeamCreationCodeVerification } from '@/modules/teams/components/team-creation-code-verification'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -38,14 +39,21 @@ export const CreateTeam = () => {
     },
   })
 
+  const [showCodeVerification, setShowCodeVerification] = useState(true)
   const [showInviteForm, setShowInviteForm] = useState(false)
   const [teamInfo, setTeamInfo] = useState<TTeamInfo>(DEFAULT_TEAM_INFO)
   const [teamId, setTeamId] = useState<string | null>(null)
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([])
   const [pocId, setPocId] = useState<string | null>(user?.id || null)
+  const [teamCreationCode, setTeamCreationCode] = useState<string>('')
 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [inviteCode, setInviteCode] = useState<string>('')
+
+  const handleCodeVerified = (code: string) => {
+    setTeamCreationCode(code.trim())
+    setShowCodeVerification(false)
+  }
 
   const handleCreateTeam = async () => {
     if (!teamInfo?.name.trim()) {
@@ -61,6 +69,7 @@ export const CreateTeam = () => {
         description: teamInfo?.description,
         member_ids: memberIds,
         poc_id: pocId,
+        team_invite_code: teamCreationCode,
       },
       {
         onSuccess: (response) => {
@@ -108,6 +117,10 @@ export const CreateTeam = () => {
         onClose={handleSuccessModalClose}
       />
     )
+  }
+
+  if (showCodeVerification) {
+    return <TeamCreationCodeVerification onCodeVerified={handleCodeVerified} />
   }
 
   if (showInviteForm) {

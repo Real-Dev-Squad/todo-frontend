@@ -5,6 +5,7 @@ import {
   GetTeamByIdReqDto,
   GetTeamsDto,
   TeamActivityTimeline,
+  TeamCreationCodeVerificationResponse,
   TeamDto,
   TTeam,
   UserRole,
@@ -84,6 +85,17 @@ export const TeamsApi = {
     ],
     fn: async ({ teamId, userId }: { teamId: string; userId: string }): Promise<UserRole> => {
       const { data } = await apiClient.get(`/v1/teams/${teamId}/users/${userId}/roles`)
+      return data
+    },
+  },
+
+  verifyTeamCreationCode: {
+    key: ['TeamsApi.verifyTeamCreationCode'],
+    fn: async ({ code }: { code: string }): Promise<TeamCreationCodeVerificationResponse> => {
+      const { data } = await apiClient.post<TeamCreationCodeVerificationResponse>(
+        '/v1/team-invite-codes/verify',
+        { code },
+      )
       return data
     },
   },

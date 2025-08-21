@@ -18,21 +18,28 @@ import {
 } from '@/components/ui/sidebar'
 import { appConfig } from '@/config/app-config'
 import { SIDEBAR_LINKS, TSidebarLink } from '@/config/sidebar'
+import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { ChevronDown, ChevronRight, PlusIcon, UserPlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { StrideAppLogo } from './stride-app-logo'
 import { Shimmer } from './Shimmer'
+import { StrideAppLogo } from './stride-app-logo'
 
-const getSidebarLinks = (teams?: GetTeamsDto): TSidebarLink[] => {
-  if (!teams || teams.teams.length === 0) {
-    return SIDEBAR_LINKS
+const getSidebarLinks = (teams?: GetTeamsDto, isAdmin: boolean = false): TSidebarLink[] => {
+  let baseLinks = SIDEBAR_LINKS
+
+  if (!isAdmin) {
+    baseLinks = SIDEBAR_LINKS.filter((link) => link.id !== 'admin')
   }
 
-  const sidebarLinks = SIDEBAR_LINKS.filter((link) => link.id !== 'teams')
+  if (!teams || teams.teams.length === 0) {
+    return baseLinks
+  }
+
+  const sidebarLinks = baseLinks.filter((link) => link.id !== 'teams')
 
   const teamsLinks: TSidebarLink[] = teams.teams.map((team) => ({
     id: team.id,
@@ -206,6 +213,9 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
 
+  const { user } = useAuth()
+  const isAdmin = user?.email ? appConfig.adminEmails.includes(user.email) : false
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -229,7 +239,9 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
               {isLoading && !data ? (
                 <SidebarShimmer />
               ) : (
-                getSidebarLinks(data).map((item) => <SidebarLink link={item} key={item.id} />)
+                getSidebarLinks(data, isAdmin).map((item) => (
+                  <SidebarLink link={item} key={item.id} />
+                ))
               )}
             </SidebarMenu>
           </SidebarGroupContent>

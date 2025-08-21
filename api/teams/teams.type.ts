@@ -40,6 +40,7 @@ export type CreateTeamPayload = {
   description?: string
   member_ids: string[]
   poc_id: string | null
+  team_invite_code: string
 }
 
 export enum TeamActivityActions {
@@ -131,4 +132,8 @@ export type UserRole = {
   team_id: string
   user_id: string
   roles: Roles[]
+}
+
+export type TeamCreationCodeVerificationResponse = {
+  message: string
 }

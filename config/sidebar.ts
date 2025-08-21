@@ -1,4 +1,4 @@
-import { HomeIcon, LucideIcon, UsersRoundIcon } from 'lucide-react'
+import { HomeIcon, LucideIcon, UsersRoundIcon, ShieldIcon } from 'lucide-react'
 
 export type TSidebarLink = {
   id: string
@@ -30,5 +30,12 @@ export const SIDEBAR_LINKS: TSidebarLink[] = [
     url: '/teams',
     baseUrl: '/teams',
     icon: UsersRoundIcon,
+  },
+  {
+    id: 'admin',
+    title: 'Admin',
+    url: '/admin',
+    baseUrl: '/admin',
+    icon: ShieldIcon,
   },
 ]
