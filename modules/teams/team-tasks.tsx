@@ -2,7 +2,7 @@
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { TTask } from '@/api/tasks/tasks.types'
+import { GetTaskReqDto, TTask } from '@/api/tasks/tasks.types'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
 import { EditTodoButton } from '@/components/edit-task-button'
@@ -12,12 +12,15 @@ import { TaskPriorityLabel } from '@/components/task-priority-label'
 import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todo-list-table'
 import { TodoStatusTable } from '@/components/todo-status-table'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { WatchListButton } from '@/components/watchlist-button'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -116,6 +119,9 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const status = searchParams.get('status')
+  const [includeDoneTasks, setIncludeDoneTasks] = useState(status === 'Done')
+  const queryParams: GetTaskReqDto = { teamId, ...(includeDoneTasks && { status: 'DONE' }) }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
     queryKey: TeamsApi.getTeamById.key({ teamId }),
@@ -123,8 +129,8 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   })
 
   const { data: tasks, isLoading: isLoadingTasks } = useQuery({
-    queryKey: TasksApi.getTasks.key({ teamId }),
-    queryFn: () => TasksApi.getTasks.fn({ teamId }),
+    queryKey: TasksApi.getTasks.key(queryParams),
+    queryFn: () => TasksApi.getTasks.fn(queryParams),
     select: (data) => data.tasks,
   })
 
@@ -142,15 +148,37 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
     router.push(`${pathname}?${params.toString()}`)
   }
 
+  const handleIncludeDoneChange = (checked: boolean) => {
+    setIncludeDoneTasks(checked)
+
+    const params = new URLSearchParams(searchParams)
+    if (checked) {
+      params.set('status', 'Done')
+    } else {
+      params.delete('status')
+    }
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <div>
-      <div className="pb-4">
+      <div className="flex items-center pb-4">
         <Searchbar
           defaultValue={search}
           placeholder="Search tasks"
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
+        <div className="flex px-4">
+          <Switch
+            id="includeDoneTasks"
+            checked={!!includeDoneTasks}
+            onCheckedChange={(checked) => handleIncludeDoneChange(checked)}
+          />
+          <Label htmlFor="includeDoneTasks" className="px-2">
+            Include Done
+          </Label>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-md border">
