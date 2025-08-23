@@ -119,8 +119,8 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const status = searchParams.get('status')
-  const [includeDoneTasks, setIncludeDoneTasks] = useState(status === 'Done')
+  const status = searchParams.get('status')?.toUpperCase()
+  const [includeDoneTasks, setIncludeDoneTasks] = useState(status === 'DONE')
   const queryParams: GetTaskReqDto = { teamId, ...(includeDoneTasks && { status: 'DONE' }) }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
@@ -153,11 +153,11 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
 
     const params = new URLSearchParams(searchParams)
     if (checked) {
-      params.set('status', 'Done')
+      params.set('status', 'DONE')
     } else {
       params.delete('status')
     }
-    router.push(`${pathname}?${params.toString()}`)
+    router.replace(`${pathname}?${params.toString()}`)
   }
 
   return (
@@ -172,8 +172,8 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
         <div className="flex px-4">
           <Switch
             id="includeDoneTasks"
-            checked={!!includeDoneTasks}
-            onCheckedChange={(checked) => handleIncludeDoneChange(checked)}
+            checked={includeDoneTasks}
+            onCheckedChange={handleIncludeDoneChange}
           />
           <Label htmlFor="includeDoneTasks" className="px-2">
             Include Done
