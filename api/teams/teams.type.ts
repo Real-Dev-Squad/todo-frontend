@@ -51,6 +51,9 @@ export enum TeamActivityActions {
   TEAM_CREATED = 'team_created',
   MEMBER_JOINED_TEAM = 'member_joined_team',
   MEMBER_ADDED_TO_TEAM = 'member_added_to_team',
+  MEMBER_REMOVED_FROM_TEAM = 'member_removed_from_team',
+  MEMBER_LEFT_TEAM = 'member_left_team',
+  TASKS_ASSIGNED_TO_TEAM = 'tasks_reassigned_to_team',
 }
 
 export type BaseActivity = {
@@ -101,6 +104,22 @@ export type MemberJoinActivity = BaseActivity & {
   performed_by_name: string
 }
 
+export type RemoveTeamMemberActivity = BaseActivity & {
+  action: TeamActivityActions.MEMBER_REMOVED_FROM_TEAM
+  performed_by_name: string
+}
+
+export type MemberLeftTeamActivity = BaseActivity & {
+  action: TeamActivityActions.MEMBER_LEFT_TEAM
+  performed_by_name: string
+}
+
+export type TaskReassignActivity = BaseActivity & {
+  action: TeamActivityActions.TASKS_ASSIGNED_TO_TEAM
+  performed_by_name: string
+  task_count: string
+}
+
 export type TeamActivity =
   | TeamCreationActivity
   | TaskAssignActivity
@@ -109,6 +128,9 @@ export type TeamActivity =
   | ReassignExecutorActivity
   | AddMemberActivity
   | MemberJoinActivity
+  | RemoveTeamMemberActivity
+  | MemberLeftTeamActivity
+  | TaskReassignActivity
 
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]

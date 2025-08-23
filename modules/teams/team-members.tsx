@@ -1,5 +1,6 @@
 'use client'
 
+import { TasksApi } from '@/api/tasks/tasks.api'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TeamRoles } from '@/api/teams/teams.type'
 import { AddMembersButton } from '@/components/add-members-button'
@@ -111,6 +112,9 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
       queryClient.invalidateQueries({
         queryKey: TeamsApi.getTeams.key,
       })
+      queryClient.invalidateQueries({
+        queryKey: TasksApi.getTasks.key({ teamId }),
+      })
       toast.success('User removed Successfully')
     },
     onError: () => {
@@ -184,7 +188,9 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            {member.id !== user?.id && member.id !== data?.created_by ? (
+                            {member.id !== user?.id &&
+                            member.id !== data?.created_by &&
+                            member.id !== data?.poc_id ? (
                               <LeaveTeamDialog
                                 mode="remove"
                                 open={showLeaveTeamDialog}

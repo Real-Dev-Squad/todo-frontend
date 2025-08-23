@@ -1,4 +1,5 @@
 'use client'
+import { TasksApi } from '@/api/tasks/tasks.api'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { useAuth } from '@/hooks/useAuth'
 import { LeaveTeamDialog } from '@/modules/teams/components/leave-team-dialog'
@@ -24,6 +25,9 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
       })
       queryClient.invalidateQueries({
         queryKey: TeamsApi.getTeams.key,
+      })
+      queryClient.invalidateQueries({
+        queryKey: TasksApi.getTasks.key({ teamId }),
       })
       toast.success('Leave Team Successfully')
       router.push('/dashboard')

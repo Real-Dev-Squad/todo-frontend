@@ -52,7 +52,7 @@ export const LeaveTeamDialog = ({
               onOpenChange(false)
             }}
           >
-            Leave Team
+            {mode === 'leave' ? 'Leave Team' : 'Remove Member'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
