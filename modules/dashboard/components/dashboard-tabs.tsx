@@ -8,6 +8,7 @@ import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from '../../../components/create-todo-button'
 import { DashboardDeferredTable } from './dashboard-deferred-table'
 import { DashboardWatchlistTable } from './dashboard-watchlist-table'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 type DashboardTabsProps = {
   tasks: TTask[]
@@ -20,20 +21,16 @@ export const DashboardTabs = ({ tasks, className, isPlaceholderData }: Dashboard
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentTab = searchParams.get('tab') || TabsConstants.All
-  const includeDoneTasks = searchParams.get('status') === 'DONE'
+  const includeDoneTasks = searchParams.get('status') === TASK_STATUS_ENUM.DONE
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('tab', value)
 
-    if (value === TabsConstants.WatchList || value === TabsConstants.Deferred) {
-      params.delete('status')
+    if (includeDoneTasks && value !== TabsConstants.WatchList && value !== TabsConstants.Deferred) {
+      params.set('status', TASK_STATUS_ENUM.DONE)
     } else {
-      if (includeDoneTasks) {
-        params.set('status', 'Done')
-      } else {
-        params.delete('status')
-      }
+      params.delete('status')
     }
     router.push(`${pathname}?${params.toString()}`)
   }

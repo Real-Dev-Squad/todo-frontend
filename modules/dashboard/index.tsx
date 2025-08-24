@@ -11,13 +11,16 @@ import { DashboardHeader } from './components/dashboard-header'
 import { DashboardShimmer } from './components/dashboard-shimmer'
 import { DashboardTabs } from './components/dashboard-tabs'
 import { DashboardWelcomeScreen } from './components/dashboard-welcome-screen'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 export const Dashboard = () => {
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
   const isFirstLoad = useRef(true)
-  const includeDoneTasks = status === 'DONE'
-  const queryParams: GetTaskReqDto | undefined = includeDoneTasks ? { status: 'DONE' } : undefined
+  const includeDoneTasks = status === TASK_STATUS_ENUM.DONE
+  const queryParams: GetTaskReqDto | undefined = includeDoneTasks
+    ? { status: TASK_STATUS_ENUM.DONE }
+    : undefined
   const { data, isLoading, isError, isPlaceholderData } = useQuery({
     queryKey: TasksApi.getTasks.key(queryParams),
     queryFn: () => TasksApi.getTasks.fn(queryParams),

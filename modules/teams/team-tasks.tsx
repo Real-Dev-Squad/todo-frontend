@@ -19,6 +19,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -118,8 +119,11 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const status = searchParams.get('status')?.toUpperCase()
-  const includeDoneTasks = status === 'DONE'
-  const queryParams: GetTaskReqDto = { teamId, ...(includeDoneTasks && { status: 'DONE' }) }
+  const includeDoneTasks = status === TASK_STATUS_ENUM.DONE
+  const queryParams: GetTaskReqDto = {
+    teamId,
+    ...(includeDoneTasks && { status: TASK_STATUS_ENUM.DONE }),
+  }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
     queryKey: TeamsApi.getTeamById.key({ teamId }),

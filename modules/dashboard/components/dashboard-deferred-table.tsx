@@ -7,12 +7,13 @@ import { TodoListTable } from '@/components/todo-list-table'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 export const DashboardDeferredTable = () => {
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab')
   const status = searchParams.get('status')
-  const isInvalidCombination = tab === TabsConstants.Deferred && status === 'Done'
+  const isInvalidCombination = tab === TabsConstants.Deferred && status === TASK_STATUS_ENUM.DONE
 
   const queryParams: GetTaskReqDto = { status: 'DEFERRED' }
 

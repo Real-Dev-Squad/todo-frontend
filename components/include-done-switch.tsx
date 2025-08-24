@@ -1,5 +1,6 @@
 'use client'
 
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -9,14 +10,16 @@ export function IncludeDoneSwitch() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [includeDoneTasks, setIncludeDoneTasks] = useState(searchParams.get('status') === 'DONE')
+  const [includeDoneTasks, setIncludeDoneTasks] = useState(
+    searchParams.get('status') === TASK_STATUS_ENUM.DONE,
+  )
 
   const handleIncludeDoneChange = (checked: boolean) => {
     setIncludeDoneTasks(checked)
 
     const params = new URLSearchParams(searchParams)
     if (checked) {
-      params.set('status', 'DONE')
+      params.set('status', TASK_STATUS_ENUM.DONE)
     } else {
       params.delete('status')
     }
