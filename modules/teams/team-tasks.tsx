@@ -12,15 +12,13 @@ import { TaskPriorityLabel } from '@/components/task-priority-label'
 import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todo-list-table'
 import { TodoStatusTable } from '@/components/todo-status-table'
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
+import { IncludeDoneSwitch } from '@/components/include-done-switch'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { WatchListButton } from '@/components/watchlist-button'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -120,7 +118,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const status = searchParams.get('status')?.toUpperCase()
-  const [includeDoneTasks, setIncludeDoneTasks] = useState(status === 'DONE')
+  const includeDoneTasks = status === 'DONE'
   const queryParams: GetTaskReqDto = { teamId, ...(includeDoneTasks && { status: 'DONE' }) }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
@@ -148,18 +146,6 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
     router.push(`${pathname}?${params.toString()}`)
   }
 
-  const handleIncludeDoneChange = (checked: boolean) => {
-    setIncludeDoneTasks(checked)
-
-    const params = new URLSearchParams(searchParams)
-    if (checked) {
-      params.set('status', 'DONE')
-    } else {
-      params.delete('status')
-    }
-    router.replace(`${pathname}?${params.toString()}`)
-  }
-
   return (
     <div>
       <div className="flex items-center pb-4">
@@ -169,16 +155,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <div className="flex px-4">
-          <Switch
-            id="includeDoneTasks"
-            checked={includeDoneTasks}
-            onCheckedChange={handleIncludeDoneChange}
-          />
-          <Label htmlFor="includeDoneTasks" className="px-2">
-            Include Done
-          </Label>
-        </div>
+        <IncludeDoneSwitch />
       </div>
 
       <div className="overflow-hidden rounded-md border">
