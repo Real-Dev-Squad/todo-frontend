@@ -89,7 +89,7 @@ export function getActivityUIData(activity: TeamActivity): ActivityUIData | unde
         description: `${activity.performed_by_name} left the team ${activity.team_name}`,
         date,
       }
-    case TeamActivityActions.TASKS_ASSIGNED_TO_TEAM:
+    case TeamActivityActions.TASKS_REASSIGNED_TO_TEAM:
       return {
         icon: Plus,
         title: 'Tasks reassigned to team',

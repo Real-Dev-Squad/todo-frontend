@@ -1,6 +1,7 @@
 'use client'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TeamsApi } from '@/api/teams/teams.api'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/useAuth'
 import { LeaveTeamDialog } from '@/modules/teams/components/leave-team-dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -8,7 +9,6 @@ import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from './ui/button'
 
 export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
   const router = useRouter()

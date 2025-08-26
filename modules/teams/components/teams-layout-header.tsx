@@ -22,14 +22,14 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
     queryKey: TeamsApi.getTeamById.key({ teamId }),
     queryFn: () => TeamsApi.getTeamById.fn({ teamId }),
   })
-  const { user } = useAuth()
+  const { user, isLoading: isAuthLoading } = useAuth()
   const userId = user?.id
   const { data: userRole, isLoading: isUserRoleLoading } = useQuery({
     queryKey: TeamsApi.getUserRoles.key({ teamId, userId: userId ?? ' ' }),
     queryFn: () => TeamsApi.getUserRoles.fn({ teamId, userId: userId ?? ' ' }),
   })
-  const isOwner = userRole?.roles.find((role) => role.role_name == TeamRoles.OWNER)
-  if (isLoading || isUserRoleLoading) {
+  const isOwner = !!userRole?.roles.find((role) => role.role_name == TeamRoles.OWNER)
+  if (isLoading || isUserRoleLoading || isAuthLoading) {
     return (
       <Container>
         <Shimmer className="h-8 w-56" />

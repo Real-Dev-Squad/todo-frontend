@@ -53,7 +53,7 @@ export enum TeamActivityActions {
   MEMBER_ADDED_TO_TEAM = 'member_added_to_team',
   MEMBER_REMOVED_FROM_TEAM = 'member_removed_from_team',
   MEMBER_LEFT_TEAM = 'member_left_team',
-  TASKS_ASSIGNED_TO_TEAM = 'tasks_reassigned_to_team',
+  TASKS_REASSIGNED_TO_TEAM = 'tasks_reassigned_to_team',
 }
 
 export type BaseActivity = {
@@ -115,7 +115,7 @@ export type MemberLeftTeamActivity = BaseActivity & {
 }
 
 export type TaskReassignActivity = BaseActivity & {
-  action: TeamActivityActions.TASKS_ASSIGNED_TO_TEAM
+  action: TeamActivityActions.TASKS_REASSIGNED_TO_TEAM
   performed_by_name: string
   task_count: string
 }
@@ -142,7 +142,7 @@ export enum TeamRoles {
   MEMBER = 'member',
 }
 
-export type Roles = {
+export type UserTeamRole = {
   role_id: string
   role_name: TeamRoles
   scope: 'TEAM'
@@ -153,7 +153,7 @@ export type Roles = {
 export type UserRole = {
   team_id: string
   user_id: string
-  roles: Roles[]
+  roles: UserTeamRole[]
 }
 
 export type TeamCreationCodeVerificationResponse = {

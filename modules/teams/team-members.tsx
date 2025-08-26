@@ -7,6 +7,7 @@ import { AddMembersButton } from '@/components/add-members-button'
 import { Searchbar } from '@/components/searchbar'
 import { Shimmer } from '@/components/Shimmer'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,7 +29,6 @@ import { MoreVertical } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from '../../components/ui/button'
 import { LeaveTeamDialog } from './components/leave-team-dialog'
 
 const QUERY_PARAMS_KEYS = {
@@ -113,7 +113,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
         queryKey: TeamsApi.getTeams.key,
       })
       queryClient.invalidateQueries({
-        queryKey: TasksApi.getTasks.key({ teamId }),
+        queryKey: TasksApi.getTasks.key(),
       })
       toast.success('User removed Successfully')
     },
