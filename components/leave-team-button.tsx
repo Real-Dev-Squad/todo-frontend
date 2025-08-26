@@ -27,7 +27,7 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
         queryKey: TeamsApi.getTeams.key,
       })
       queryClient.invalidateQueries({
-        queryKey: TasksApi.getTasks.key({ teamId }),
+        queryKey: TasksApi.getTasks.key(),
       })
       toast.success('Leave Team Successfully')
       router.push('/dashboard')
@@ -46,7 +46,11 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
       open={showLeaveTeamDialog}
       onOpenChange={setShowLeaveTeamDialog}
       onSubmit={() => {
-        leaveTeamMutation.mutate({ teamId, memberId: user?.id || ' ' })
+        if (user?.id) {
+          leaveTeamMutation.mutate({ teamId, memberId: user.id })
+        } else {
+          toast.error('User ID not found')
+        }
       }}
     >
       <Button variant="destructive" size="sm" className="mx-1">

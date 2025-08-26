@@ -60,7 +60,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const queryClient = useQueryClient()
-  const [showLeaveTeamDialog, setShowLeaveTeamDialog] = useState(false)
+  const [activeDialogMemberId, setActiveDialogMemberId] = useState<string | null>(null)
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
     queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
@@ -193,8 +193,14 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                             member.id !== data?.poc_id ? (
                               <LeaveTeamDialog
                                 mode="remove"
-                                open={showLeaveTeamDialog}
-                                onOpenChange={setShowLeaveTeamDialog}
+                                open={activeDialogMemberId === member.id}
+                                onOpenChange={(open) => {
+                                  if (open) {
+                                    setActiveDialogMemberId(member.id)
+                                  } else {
+                                    setActiveDialogMemberId(null)
+                                  }
+                                }}
                                 onSubmit={() => {
                                   removeMemberMutation.mutate({
                                     teamId,
@@ -205,7 +211,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                                 <DropdownMenuItem
                                   onSelect={(e) => {
                                     e.preventDefault()
-                                    setShowLeaveTeamDialog(true)
+                                    setActiveDialogMemberId(member.id)
                                   }}
                                 >
                                   Remove from team

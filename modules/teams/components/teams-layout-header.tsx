@@ -2,7 +2,6 @@
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TeamsApi } from '@/api/teams/teams.api'
-import { TeamRoles } from '@/api/teams/teams.type'
 import { Shimmer } from '@/components/Shimmer'
 import { CreateTodoButton } from '@/components/create-todo-button'
 import { LeaveTeamButton } from '@/components/leave-team-button'
@@ -24,12 +23,10 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   })
   const { user, isLoading: isAuthLoading } = useAuth()
   const userId = user?.id
-  const { data: userRole, isLoading: isUserRoleLoading } = useQuery({
-    queryKey: TeamsApi.getUserRoles.key({ teamId, userId: userId ?? ' ' }),
-    queryFn: () => TeamsApi.getUserRoles.fn({ teamId, userId: userId ?? ' ' }),
-  })
-  const isOwner = !!userRole?.roles.find((role) => role.role_name == TeamRoles.OWNER)
-  if (isLoading || isUserRoleLoading || isAuthLoading) {
+  const isOwnerOrPOC = userId === team?.created_by || userId === team?.poc_id
+  console.log('Team: ', team)
+  console.log('user: ', user)
+  if (isLoading || isAuthLoading) {
     return (
       <Container>
         <Shimmer className="h-8 w-56" />
@@ -47,7 +44,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
             assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
           }}
         />
-        {!isOwner ? <LeaveTeamButton teamId={teamId} /> : null}
+        {!isOwnerOrPOC ? <LeaveTeamButton teamId={teamId} /> : null}
       </div>
     </div>
   )
