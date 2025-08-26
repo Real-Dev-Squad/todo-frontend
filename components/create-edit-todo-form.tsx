@@ -23,6 +23,7 @@ import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DatePickerSelect } from './date-picker-select'
 import { DeferredTaskButton } from './deferred-task-button'
+import { Textarea } from './ui/textarea'
 import { UserAndTeamSearch } from './user-and-team-search'
 
 const todoFormSchema = z.object({
@@ -177,9 +178,8 @@ export const CreateEditTodoForm = ({
         direction="column"
         errorMessage={errors.description?.message}
       >
-        <Input
+        <Textarea
           id="description"
-          type="text"
           placeholder="e.g Nothing is cool in here"
           {...register('description')}
         />
