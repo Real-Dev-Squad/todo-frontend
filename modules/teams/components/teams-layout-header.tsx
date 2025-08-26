@@ -24,8 +24,6 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   const { user, isLoading: isAuthLoading } = useAuth()
   const userId = user?.id
   const isOwnerOrPOC = userId === team?.created_by || userId === team?.poc_id
-  console.log('Team: ', team)
-  console.log('user: ', user)
   if (isLoading || isAuthLoading) {
     return (
       <Container>

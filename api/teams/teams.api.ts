@@ -84,7 +84,6 @@ export const TeamsApi = {
     ],
     fn: async ({ teamId, userId }: { teamId: string; userId: string }): Promise<UserRole> => {
       const { data } = await apiClient.get<UserRole>(`/v1/teams/${teamId}/users/${userId}/roles`)
-      console.log(data)
       return data
     },
   },
