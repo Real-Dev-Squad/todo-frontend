@@ -1,3 +1,5 @@
+import { TeamRoles } from './teams.enum'
+
 export type TTeam = {
   id: string
   name: string
@@ -127,12 +129,6 @@ export type TeamActivity =
 
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]
-}
-
-export enum TeamRoles {
-  OWNER = 'owner',
-  ADMIN = 'admin',
-  MEMBER = 'member',
 }
 
 export type UserTeamRole = {
