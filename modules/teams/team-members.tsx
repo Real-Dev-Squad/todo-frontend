@@ -200,7 +200,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                                 onSubmit={() => {
                                   removeMemberMutation.mutate({
                                     teamId,
-                                    memberId: member.id || ' ',
+                                    memberId: member.id,
                                   })
                                 }}
                               >
