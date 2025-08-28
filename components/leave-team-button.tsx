@@ -15,7 +15,7 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
   const queryClient = useQueryClient()
   const [showLeaveTeamDialog, setShowLeaveTeamDialog] = useState(false)
 
-  const { isLoading, user } = useAuth()
+  const { isLoading: isAuthLoading, user } = useAuth()
   const leaveTeamMutation = useMutation({
     mutationFn: TeamsApi.removeFromTeam.fn,
     onSuccess: () => {
@@ -36,7 +36,7 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
       toast.error('Failed to leave team')
     },
   })
-  if (isLoading) {
+  if (isAuthLoading) {
     return null
   }
 

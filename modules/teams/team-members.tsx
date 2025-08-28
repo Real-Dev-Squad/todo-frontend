@@ -60,17 +60,16 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const queryClient = useQueryClient()
+  const { user } = useAuth()
   const [activeDialogMemberId, setActiveDialogMemberId] = useState<string | null>(null)
   const { data, isLoading } = useQuery({
     queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
     queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
   })
-  const { user } = useAuth()
   const userId = user?.id
   const { data: userRole, isLoading: isUserRoleLoading } = useQuery({
-    queryKey: TeamsApi.getUserRoles.key({ teamId, userId: userId ?? '' }),
+    queryKey: TeamsApi.getUserRoles.key({ teamId, userId: userId }),
     queryFn: () => {
-      if (!userId) return Promise.resolve(undefined)
       return TeamsApi.getUserRoles.fn({ teamId, userId })
     },
     enabled: !!userId,
@@ -105,7 +104,6 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   const removeMemberMutation = useMutation({
     mutationFn: TeamsApi.removeFromTeam.fn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeamById.key({ teamId }) })
       queryClient.invalidateQueries({
         queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
       })
@@ -188,9 +186,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            {member.id !== user?.id &&
-                            member.id !== data?.created_by &&
-                            member.id !== data?.poc_id ? (
+                            {member.id !== data?.created_by && member.id !== data?.poc_id ? (
                               <LeaveTeamDialog
                                 mode="remove"
                                 open={activeDialogMemberId === member.id}
