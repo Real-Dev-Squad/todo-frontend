@@ -8,6 +8,7 @@ import {
   TeamCreationCodeVerificationResponse,
   TeamDto,
   TTeam,
+  UserRole,
 } from './teams.type'
 
 export const TeamsApi = {
@@ -69,6 +70,24 @@ export const TeamsApi = {
       return data
     },
   },
+  removeFromTeam: {
+    key: ({ teamId }: { teamId: string }) => ['TeamsApi.removeFromTeam', teamId],
+    fn: async ({ teamId, memberId }: { teamId: string; memberId: string }): Promise<void> => {
+      await apiClient.delete(`/v1/teams/${teamId}/members/${memberId}`)
+    },
+  },
+  getUserRoles: {
+    key: ({ teamId, userId }: { teamId: string; userId: string }) => [
+      'TeamsApi.getUserRoles',
+      teamId,
+      userId,
+    ],
+    fn: async ({ teamId, userId }: { teamId: string; userId: string }): Promise<UserRole> => {
+      const { data } = await apiClient.get<UserRole>(`/v1/teams/${teamId}/users/${userId}/roles`)
+      return data
+    },
+  },
+
   verifyTeamCreationCode: {
     key: ['TeamsApi.verifyTeamCreationCode'],
     fn: async ({ code }: { code: string }): Promise<TeamCreationCodeVerificationResponse> => {

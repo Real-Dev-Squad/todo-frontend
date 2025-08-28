@@ -4,6 +4,8 @@ import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/Shimmer'
 import { CreateTodoButton } from '@/components/create-todo-button'
+import { LeaveTeamButton } from '@/components/leave-team-button'
+import { useAuth } from '@/hooks/useAuth'
 import { useQuery } from '@tanstack/react-query'
 
 const Container = ({ children }: { children: React.ReactNode }) => {
@@ -19,8 +21,10 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
     queryKey: TeamsApi.getTeamById.key({ teamId }),
     queryFn: () => TeamsApi.getTeamById.fn({ teamId }),
   })
-
-  if (isLoading) {
+  const { user, isLoading: isAuthLoading } = useAuth()
+  const userId = user?.id
+  const isOwnerOrPOC = userId === team?.created_by || userId === team?.poc_id
+  if (isLoading || isAuthLoading) {
     return (
       <Container>
         <Shimmer className="h-8 w-56" />
@@ -32,11 +36,14 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
   return (
     <div className="flex items-center justify-between pt-6 pb-8">
       <h2 className="text-2xl font-bold">{team?.name}</h2>
-      <CreateTodoButton
-        defaultData={{
-          assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
-        }}
-      />
+      <div>
+        <CreateTodoButton
+          defaultData={{
+            assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
+          }}
+        />
+        {!isOwnerOrPOC ? <LeaveTeamButton teamId={teamId} /> : null}
+      </div>
     </div>
   )
 }
