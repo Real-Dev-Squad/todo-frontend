@@ -8,39 +8,29 @@ import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { CreateTodoButton } from '../../../components/create-todo-button'
 import { DashboardDeferredTable } from './dashboard-deferred-table'
 import { DashboardWatchlistTable } from './dashboard-watchlist-table'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 type DashboardTabsProps = {
   tasks: TTask[]
   className?: string
-  includeDone: boolean
   isPlaceholderData: boolean
-  onIncludeDoneChange: (checked: boolean) => void
 }
 
-export const DashboardTabs = ({
-  tasks,
-  className,
-  includeDone,
-  isPlaceholderData,
-  onIncludeDoneChange,
-}: DashboardTabsProps) => {
+export const DashboardTabs = ({ tasks, className, isPlaceholderData }: DashboardTabsProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentTab = searchParams.get('tab') || TabsConstants.All
+  const includeDoneTasks = searchParams.get('status') === TASK_STATUS_ENUM.DONE
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('tab', value)
 
-    if (value === TabsConstants.WatchList || value === TabsConstants.Deferred) {
-      params.delete('status')
+    if (includeDoneTasks && value !== TabsConstants.WatchList && value !== TabsConstants.Deferred) {
+      params.set('status', TASK_STATUS_ENUM.DONE)
     } else {
-      if (includeDone) {
-        params.set('status', 'Done')
-      } else {
-        params.delete('status')
-      }
+      params.delete('status')
     }
     router.push(`${pathname}?${params.toString()}`)
   }
@@ -66,13 +56,7 @@ export const DashboardTabs = ({
         </div>
 
         <TabsContent value={TabsConstants.All}>
-          <TodoListTable
-            showActions
-            tasks={tasks}
-            isPlaceholderData={isPlaceholderData}
-            includeDone={includeDone}
-            onIncludeDoneChange={onIncludeDoneChange}
-          />
+          <TodoListTable showActions tasks={tasks} isPlaceholderData={isPlaceholderData} />
         </TabsContent>
 
         <TabsContent value={TabsConstants.WatchList}>

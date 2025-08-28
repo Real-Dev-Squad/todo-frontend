@@ -7,13 +7,12 @@ import { DateFormats, DateUtil } from '@/lib/date-util'
 import { DashboardTasksTableTabs } from '@/modules/dashboard/constants'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EditTodoButton } from './edit-task-button'
+import { IncludeDoneSwitch } from './include-done-switch'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
 import { TaskPriorityLabel } from './task-priority-label'
 import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
-import { Label } from './ui/label'
-import { Switch } from './ui/switch'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { WatchListButton } from './watchlist-button'
 
@@ -177,8 +176,6 @@ type TodoListTableProps = {
   isLoading?: boolean
   isPlaceholderData?: boolean
   showActions?: boolean
-  includeDone?: boolean
-  onIncludeDoneChange?: (checked: boolean) => void
 }
 
 export const TodoListTable = ({
@@ -186,8 +183,6 @@ export const TodoListTable = ({
   isLoading,
   isPlaceholderData,
   showActions,
-  includeDone,
-  onIncludeDoneChange,
 }: TodoListTableProps) => {
   const router = useRouter()
   const pathname = usePathname()
@@ -232,18 +227,7 @@ export const TodoListTable = ({
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        {showIncludeDoneTasksToggle && (
-          <div className="flex px-4">
-            <Switch
-              id="includeDoneTasks"
-              checked={!!includeDone}
-              onCheckedChange={(checked) => onIncludeDoneChange?.(!!checked)}
-            />
-            <Label htmlFor="includeDoneTasks" className="px-2">
-              Include Done
-            </Label>
-          </div>
-        )}
+        {showIncludeDoneTasksToggle && <IncludeDoneSwitch />}
       </div>
 
       <div className="overflow-hidden rounded-md border">
