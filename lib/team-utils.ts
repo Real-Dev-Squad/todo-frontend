@@ -75,6 +75,13 @@ export function getActivityUIData(activity: TeamActivity): ActivityUIData | unde
         description: `${activity.performed_by_name} joined team ${activity.team_name}`,
         date,
       }
+    case TeamActivityActions.MEMBER_REMOVED_FROM_TEAM:
+      return {
+        icon: UserMinus,
+        title: 'Member removed from team',
+        description: `${activity.performed_by_name} removed a member from team ${activity.team_name}`,
+        date,
+      }
     case TeamActivityActions.MEMBER_LEFT_TEAM:
       return {
         icon: UserMinus,
