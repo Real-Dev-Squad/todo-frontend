@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { cn, isPastDate } from '@/lib/utils'
 import { SelectLabels } from '@/modules/dashboard/components/select-labels'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,7 +24,6 @@ import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DatePickerSelect } from './date-picker-select'
 import { DeferredTaskButton } from './deferred-task-button'
-import { Textarea } from './ui/textarea'
 import { UserAndTeamSearch } from './user-and-team-search'
 
 const todoFormSchema = z.object({
