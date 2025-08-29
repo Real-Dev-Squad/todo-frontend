@@ -19,17 +19,13 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
   const leaveTeamMutation = useMutation({
     mutationFn: TeamsApi.removeFromTeam.fn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: TeamsApi.getTeamById.key({ teamId }) })
       queryClient.invalidateQueries({
         queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
       })
       queryClient.invalidateQueries({
-        queryKey: TeamsApi.getTeams.key,
+        queryKey: TasksApi.getTasks.key({ teamId }),
       })
-      queryClient.invalidateQueries({
-        queryKey: TasksApi.getTasks.key(),
-      })
-      toast.success('Leave Team Successfully')
+      toast.success('Successfully left team')
       router.push('/dashboard')
     },
     onError: () => {

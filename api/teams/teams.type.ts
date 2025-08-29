@@ -1,4 +1,4 @@
-import { TeamRoles } from './teams.enum'
+import type { TeamRoles } from './teams.enum'
 
 export type TTeam = {
   id: string
@@ -119,7 +119,7 @@ export type MemberLeftTeamActivity = BaseActivity & {
 export type TaskReassignActivity = BaseActivity & {
   action: TeamActivityActions.TASKS_REASSIGNED_TO_TEAM
   performed_by_name: string
-  task_count: string
+  task_count: number
 }
 
 export type TeamActivity =
@@ -149,7 +149,7 @@ export type UserTeamRole = {
 export type UserRole = {
   team_id: string
   user_id: string
-  roles: UserTeamRole[]
+  roles: readonly UserTeamRole[]
 }
 
 export type TeamCreationCodeVerificationResponse = {

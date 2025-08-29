@@ -42,7 +42,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
             assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
           }}
         />
-        {!isOwnerOrPOC ? <LeaveTeamButton teamId={teamId} /> : null}
+        {!isOwnerOrPOC && <LeaveTeamButton teamId={teamId} />}
       </div>
     </div>
   )
