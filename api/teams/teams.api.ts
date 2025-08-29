@@ -71,7 +71,11 @@ export const TeamsApi = {
     },
   },
   removeFromTeam: {
-    key: ({ teamId }: { teamId: string }) => ['TeamsApi.removeFromTeam', teamId],
+    key: ({ teamId, memberId }: { teamId: string; memberId: string }) => [
+      'TeamsApi.removeFromTeam',
+      teamId,
+      memberId,
+    ],
     fn: async ({ teamId, memberId }: { teamId: string; memberId: string }): Promise<void> => {
       await apiClient.delete(`/v1/teams/${teamId}/members/${memberId}`)
     },
