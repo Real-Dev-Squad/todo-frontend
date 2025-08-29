@@ -43,7 +43,7 @@ export const LeaveTeamDialog = ({
             Cancel
           </Button>
           <Button
-            variant="default"
+            variant="destructive"
             type="submit"
             onClick={() => {
               onSubmit()
