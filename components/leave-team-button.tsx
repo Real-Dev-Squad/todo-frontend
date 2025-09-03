@@ -26,6 +26,7 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
       queryClient.invalidateQueries({
         queryKey: TasksApi.getTasks.key({ teamId }),
       })
+      setShowLeaveTeamDialog(false)
       toast.success('Successfully left team')
       router.push('/dashboard')
     },

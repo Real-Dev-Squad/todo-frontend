@@ -49,7 +49,6 @@ export const LeaveTeamDialog = ({
             type="submit"
             onClick={() => {
               onSubmit()
-              onOpenChange(false)
             }}
             disabled={isSubmitting}
           >
