@@ -9,6 +9,7 @@ import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { Shimmer } from './Shimmer'
 
 export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
   const router = useRouter()
@@ -33,23 +34,26 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
     },
   })
   if (isAuthLoading) {
-    return null
+    return <Shimmer />
+  }
+
+  const handleLeaveTeam = () => {
+    if (user?.id) {
+      leaveTeamMutation.mutate({ teamId, memberId: user.id })
+    } else {
+      toast.error('User ID not found')
+    }
   }
 
   return (
     <LeaveTeamDialog
       title="Leave Team"
       description="Are you sure you want to leave this team? You will lose access to its tasks and members."
-      buttonText="Leave Team"
+      buttonText={leaveTeamMutation.isPending ? 'Leaving' : 'Leave Team'}
       open={showLeaveTeamDialog}
       onOpenChange={setShowLeaveTeamDialog}
-      onSubmit={() => {
-        if (user?.id) {
-          leaveTeamMutation.mutate({ teamId, memberId: user.id })
-        } else {
-          toast.error('User ID not found')
-        }
-      }}
+      onSubmit={handleLeaveTeam}
+      isSubmitting={leaveTeamMutation.isPending}
     >
       <Button variant="destructive" size="sm" className="mx-1">
         <LogOut />

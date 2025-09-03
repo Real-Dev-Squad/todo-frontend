@@ -18,6 +18,7 @@ type LeaveTeamDialogProps = {
   children: ReactNode
   onSubmit: () => void
   onOpenChange: (open: boolean) => void
+  isSubmitting: boolean
 }
 
 export const LeaveTeamDialog = ({
@@ -27,6 +28,7 @@ export const LeaveTeamDialog = ({
   open,
   onSubmit,
   onOpenChange,
+  isSubmitting,
   children,
 }: LeaveTeamDialogProps) => {
   return (
@@ -39,7 +41,7 @@ export const LeaveTeamDialog = ({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button
@@ -49,6 +51,7 @@ export const LeaveTeamDialog = ({
               onSubmit()
               onOpenChange(false)
             }}
+            disabled={isSubmitting}
           >
             {buttonText}
           </Button>
