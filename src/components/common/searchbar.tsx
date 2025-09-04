@@ -1,6 +1,6 @@
 import { cn, debounce } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
-import { Input } from './ui/input'
+import { Input } from '../ui/input'
 
 type SearchbarProps = React.ComponentProps<'input'> & {
   containerClassName?: string

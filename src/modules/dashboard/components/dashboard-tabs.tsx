@@ -2,10 +2,10 @@
 
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
-import { TodoListTable } from '@/components/todo-list-table'
+import { TodoListTable } from '@/components/todos/todo-list-table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useNavigate, useSearch } from '@tanstack/react-router'
-import { CreateTodoButton } from '../../../components/create-todo-button'
+import { CreateTodoButton } from '../../../components/todos/create-todo-button'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 import { DashboardDeferredTable } from './dashboard-deferred-table'
 import { DashboardWatchlistTable } from './dashboard-watchlist-table'

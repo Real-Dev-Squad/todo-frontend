@@ -1,5 +1,5 @@
 import { apiClient } from '../../lib/api-client'
-import { TApiMethodsRecord, TApiResponse } from '../common/common.types'
+import { TApiResponse } from '../common/common.types'
 import {
   AddTaskToWatchListDto,
   CrateTaskReqDto,
@@ -74,4 +74,4 @@ export const TasksApi = {
       await apiClient.patch(`/v1/task-assignments/${task_id}`, { executor_id })
     },
   },
-} satisfies TApiMethodsRecord
+}

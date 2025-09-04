@@ -1,4 +1,4 @@
-import { Shimmer } from '@/components/Shimmer'
+import { Shimmer } from '@/components/common/shimmer'
 
 export const DashboardShimmer = () => {
   return (

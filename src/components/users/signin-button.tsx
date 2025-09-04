@@ -13,8 +13,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog'
-import { Skeleton } from './ui/skeleton'
+} from '../ui/alert-dialog'
+import { Skeleton } from '../ui/skeleton'
 
 const GoogleIcon = () => {
   return (

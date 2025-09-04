@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserSearchIcon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 import { toast } from 'sonner'
-import { TeamUserSearchDropdown } from './team-user-search-dropdown'
+import { TeamUserSearchDropdown } from '../teams/team-user-search-dropdown'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,9 +14,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog'
-import { Button } from './ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+} from '../ui/alert-dialog'
+import { Button } from '../ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 type ReassignUserModalProps = {
   taskId: string

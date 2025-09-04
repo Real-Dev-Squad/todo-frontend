@@ -1,4 +1,4 @@
-import { TeamActivity } from '@/components/teams/TeamActivity'
+import { TeamActivity } from '@/components/teams/team-activity'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_internal/teams/$teamId/activities')({

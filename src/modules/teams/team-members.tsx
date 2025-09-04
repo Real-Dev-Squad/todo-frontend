@@ -1,9 +1,9 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
-import { AddMembersButton } from '@/components/add-members-button'
-import { Searchbar } from '@/components/searchbar'
-import { Shimmer } from '@/components/Shimmer'
+import { AddMembersButton } from '@/components/teams/add-members-button'
+import { Searchbar } from '@/components/common/searchbar'
+import { Shimmer } from '@/components/common/shimmer'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {

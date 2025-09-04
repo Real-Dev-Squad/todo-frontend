@@ -1,4 +1,4 @@
-import { CreateEditTodoForm, TTodoFormData } from '@/components/create-edit-todo-form'
+import { CreateEditTodoForm, TTodoFormData } from '@/components/todos/create-edit-todo-form'
 import {
   AlertDialog,
   AlertDialogContent,

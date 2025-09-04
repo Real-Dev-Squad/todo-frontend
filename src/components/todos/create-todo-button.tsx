@@ -1,6 +1,6 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { CreateEditTodoDialog } from '@/components/create-edit-todo-dialog'
+import { CreateEditTodoDialog } from '@/components/todos/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'

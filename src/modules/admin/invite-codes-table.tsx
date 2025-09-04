@@ -1,6 +1,6 @@
 import { InviteCodesApi } from '@/api/invite-codes/invite-codes.api'
 import { TInviteCode } from '@/api/invite-codes/invite-codes.types'
-import { TableShimmer } from '@/components/Shimmer/TableShimmer'
+import { TableShimmer } from '@/components/common/shimmer/TableShimmer'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {

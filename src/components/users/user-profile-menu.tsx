@@ -2,16 +2,16 @@
 
 import { useAuth } from '@/hooks/useAuth'
 import { Loader2, LogOutIcon } from 'lucide-react'
-import { Shimmer } from './Shimmer'
-import { SigninButton } from './signin-button'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
+import { Shimmer } from '../common/shimmer'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '../ui/dropdown-menu'
+import { SigninButton } from './signin-button'
 
 const LogoutButton = () => {
   const { logoutMutation } = useAuth()

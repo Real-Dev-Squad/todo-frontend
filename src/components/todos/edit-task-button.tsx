@@ -8,8 +8,8 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { CreateEditTodoDialog } from './create-edit-todo-dialog'
 import { TTodoFormData } from './create-edit-todo-form'
-import { Button } from './ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+import { Button } from '../ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 type EditTodoButtonProps = {
   todo: TTask

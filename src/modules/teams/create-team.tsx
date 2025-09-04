@@ -2,11 +2,11 @@
 
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TUser } from '@/api/users/users.types'
-import { PageContainerWithLogo } from '@/components/page-container-with-logo'
+import { PageContainerWithLogo } from '@/components/layout/page-container-with-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { UserSelection } from '@/components/user-selection'
+import { UserSelection } from '@/components/users/user-selection'
 import { useAuth } from '@/hooks/useAuth'
 import { TeamCreationSuccessModal } from '@/modules/dashboard/components/team-creation-success-modal'
 import { SelectPoc } from '@/modules/teams/components/select-poc'

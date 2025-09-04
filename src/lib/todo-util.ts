@@ -1,5 +1,5 @@
 import { TTask, UpdateTaskDto } from '@/api/tasks/tasks.types'
-import { TTodoFormData } from '@/components/create-edit-todo-form'
+import { TTodoFormData } from '@/components/todos/create-edit-todo-form'
 
 export class TodoUtil {
   static getUpdateTodoDetails = (

@@ -1,4 +1,4 @@
-import { StrideAppLogo } from '@/components/stride-app-logo'
+import { StrideAppLogo } from '@/components/common/stride-app-logo'
 import { appConfig } from '@/config/app-config'
 import { ArrowUpRight } from 'lucide-react'
 import { SocialLinks } from './landing-social-links'

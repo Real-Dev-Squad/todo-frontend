@@ -1,5 +1,4 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common.types'
 import {
   TGenerateInviteCodeRequest,
   TGenerateInviteCodeResponse,
@@ -31,4 +30,4 @@ export const InviteCodesApi = {
       return data
     },
   },
-} satisfies TApiMethodsRecord
+}

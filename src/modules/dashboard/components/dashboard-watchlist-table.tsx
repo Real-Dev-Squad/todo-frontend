@@ -1,8 +1,8 @@
 'use client'
 
 import { TasksApi } from '@/api/tasks/tasks.api'
-import { CommonPageError } from '@/components/common-page-error'
-import { TodoListTable } from '@/components/todo-list-table'
+import { CommonPageError } from '@/components/common/common-page-error'
+import { TodoListTable } from '@/components/todos/todo-list-table'
 import { useQuery } from '@tanstack/react-query'
 
 export const DashboardWatchlistTable = () => {

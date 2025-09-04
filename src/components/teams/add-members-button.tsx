@@ -2,7 +2,7 @@
 
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TUser } from '@/api/users/users.types'
-import { UserSelection } from '@/components/user-selection'
+import { UserSelection } from '@/components/users/user-selection'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -11,8 +11,8 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
-} from './ui/alert-dialog'
-import { Button, type TButtonVariants } from './ui/button'
+} from '../ui/alert-dialog'
+import { Button, type TButtonVariants } from '../ui/button'
 
 type AddMemberButtonProps = {
   teamId: string

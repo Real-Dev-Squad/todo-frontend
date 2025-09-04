@@ -1,4 +1,4 @@
-import { TeamMembers } from '@/components/TeamMembers'
+import { TeamMembers } from '@/components/teams/team-members'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_internal/teams/$teamId/members')({

@@ -2,8 +2,8 @@
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TeamsApi } from '@/api/teams/teams.api'
-import { Shimmer } from '@/components/Shimmer'
-import { CreateTodoButton } from '@/components/create-todo-button'
+import { Shimmer } from '@/components/common/shimmer'
+import { CreateTodoButton } from '@/components/todos/create-todo-button'
 import { useQuery } from '@tanstack/react-query'
 
 const Container = ({ children }: { children: React.ReactNode }) => {

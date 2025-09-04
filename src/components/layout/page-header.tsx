@@ -2,10 +2,10 @@
 
 import { SIDEBAR_LINKS } from '@/config/sidebar'
 import { useLocation } from '@tanstack/react-router'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from './ui/breadcrumb'
-import { Separator } from './ui/separator'
-import { SidebarTrigger } from './ui/sidebar'
-import { UserProfileMenu } from './user-profile-menu'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '../ui/breadcrumb'
+import { Separator } from '../ui/separator'
+import { SidebarTrigger } from '../ui/sidebar'
+import { UserProfileMenu } from '../users/user-profile-menu'
 
 export function PageHeader() {
   const pathname = useLocation().pathname

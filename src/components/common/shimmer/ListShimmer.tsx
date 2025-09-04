@@ -1,4 +1,4 @@
-import { Shimmer } from '@/components/Shimmer'
+import { Shimmer } from '@/components/common/shimmer'
 import { cn } from '@/lib/utils'
 
 type ListShimmerProps = {

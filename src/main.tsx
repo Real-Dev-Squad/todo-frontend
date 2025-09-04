@@ -2,7 +2,7 @@ import { router } from '@/router'
 import { RouterProvider } from '@tanstack/react-router'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import Providers from './components/providers'
+import Providers from './components/layout/providers'
 import './index.css'
 import { enableMocking } from './mocks/setup'
 

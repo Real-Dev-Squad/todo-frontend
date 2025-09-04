@@ -22,9 +22,9 @@ import { CalendarIcon, CircleDotIcon, LucideIcon, PlayIcon, TagIcon } from 'luci
 import { useState } from 'react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
-import { DatePickerSelect } from './date-picker-select'
+import { DatePickerSelect } from '../forms/date-picker-select'
+import { UserAndTeamSearch } from '../users/user-and-team-search'
 import { DeferredTaskButton } from './deferred-task-button'
-import { UserAndTeamSearch } from './user-and-team-search'
 
 const todoFormSchema = z.object({
   taskId: z.string().optional(),

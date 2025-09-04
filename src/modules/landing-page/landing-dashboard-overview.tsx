@@ -1,4 +1,4 @@
-import { StrideAppLogo } from '@/components/stride-app-logo'
+import { StrideAppLogo } from '@/components/common/stride-app-logo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'

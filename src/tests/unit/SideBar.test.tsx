@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, beforeAll } from 'vitest'
-import { AppSidebar } from '../../components/app-sidebar'
-import React from 'react'
+import { beforeAll, describe, expect, it } from 'vitest'
+import { AppSidebar } from '../../components/layout/app-sidebar'
 
 describe.skip('SideBar', () => {
   beforeAll(() => {

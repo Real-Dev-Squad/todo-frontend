@@ -5,9 +5,9 @@ import { TeamsApi } from '@/api/teams/teams.api'
 import { getActivityUIData } from '@/lib/team-utils'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
-import { CommonPageError } from '../common-page-error'
-import { Shimmer } from '../Shimmer'
-import { TeamActivityCard } from './TeamActivityCard'
+import { CommonPageError } from '../common/common-page-error'
+import { Shimmer } from '../common/shimmer'
+import { TeamActivityCard } from './team-activity-card'
 
 function Activity() {
   const { teamId } = useParams({ from: '/_internal/teams/$teamId' })

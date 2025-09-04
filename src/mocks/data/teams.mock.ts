@@ -14,6 +14,7 @@ export const mockTeams: TTeam[] = [
     updated_by: '687544d3814217e020e3d03a',
     created_at: '2025-07-19T07:34:57.898349Z',
     updated_at: '2025-07-19T07:34:57.898374Z',
+    users: null,
   },
   {
     id: '687a1d551103a3d1573071d7',
@@ -25,6 +26,7 @@ export const mockTeams: TTeam[] = [
     updated_by: '68702893e331b8aa7a58ffe7',
     created_at: '2025-07-18T10:09:25.578030Z',
     updated_at: '2025-07-18T10:09:25.578057Z',
+    users: null,
   },
   {
     id: '687aafead8c31c0fc8ffe2db',
@@ -36,6 +38,7 @@ export const mockTeams: TTeam[] = [
     updated_by: '68702ff8e331b8aa7a58fff3',
     created_at: '2025-07-18T20:34:50.267377Z',
     updated_at: '2025-07-18T20:34:50.267401Z',
+    users: null,
   },
   {
     id: '687ab02fd8c31c0fc8ffe2e1',
@@ -47,6 +50,7 @@ export const mockTeams: TTeam[] = [
     updated_by: '687035f3e331b8aa7a58fff8',
     created_at: '2025-07-18T20:35:59.194828Z',
     updated_at: '2025-07-18T20:35:59.194855Z',
+    users: null,
   },
   {
     id: '687ab1bbd8c31c0fc8ffe301',
@@ -58,6 +62,7 @@ export const mockTeams: TTeam[] = [
     updated_by: '68702ff8e331b8aa7a58fff3',
     created_at: '2025-07-18T20:42:35.591620Z',
     updated_at: '2025-07-18T20:42:35.591644Z',
+    users: null,
   },
 ]
 
@@ -271,6 +276,7 @@ export const MockTeamsAPI = {
       updated_by: '68702ff8e331b8aa7a58fff3',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      users: null,
     }
     mockTeams.push(newTeam)
     return newTeam

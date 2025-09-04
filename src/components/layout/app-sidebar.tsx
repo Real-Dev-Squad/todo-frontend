@@ -24,8 +24,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Link, useLocation } from '@tanstack/react-router'
 import { ChevronDown, ChevronRight, PlusIcon, UserPlusIcon } from 'lucide-react'
 import { useState } from 'react'
-import { Shimmer } from './Shimmer'
-import { StrideAppLogo } from './stride-app-logo'
+import { Shimmer } from '../common/shimmer'
+import { StrideAppLogo } from '../common/stride-app-logo'
 
 const getSidebarLinks = (teams?: GetTeamsDto, isAdmin: boolean = false): TSidebarLink[] => {
   let baseLinks = SIDEBAR_LINKS

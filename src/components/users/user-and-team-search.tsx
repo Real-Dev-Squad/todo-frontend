@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Check, ChevronDown, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import {
   Command,
   CommandEmpty,
@@ -12,8 +12,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from './ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+} from '../ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 type TUserOrTeamOption = {
   label: string

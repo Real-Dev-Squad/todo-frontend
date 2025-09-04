@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord, TApiResponse } from '../common/common.types'
+import { TApiResponse } from '../common/common.types'
 import { TUser, TUsersSearchParams, TUsersSearchResponse } from './users.types'
 
 export const UsersApi = {
@@ -22,4 +22,4 @@ export const UsersApi = {
       return data
     },
   },
-} satisfies TApiMethodsRecord
+}

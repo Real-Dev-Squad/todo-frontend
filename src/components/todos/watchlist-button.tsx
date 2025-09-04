@@ -2,8 +2,8 @@ import { TasksApi } from '@/api/tasks/tasks.api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
-import { Button } from './ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+import { Button } from '../ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 type WatchListButtonProps = {
   taskId: string

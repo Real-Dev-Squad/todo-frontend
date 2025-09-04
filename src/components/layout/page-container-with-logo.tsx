@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { StrideAppLogo } from './stride-app-logo'
+import { StrideAppLogo } from '../common/stride-app-logo'
 import { PageContainer } from './page-container'
 
 type Props = {

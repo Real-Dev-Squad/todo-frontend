@@ -1,7 +1,7 @@
 import { TApiResponse } from '@/api/common/common.types'
 import { UsersApi } from '@/api/users/users.api'
 import { TUser, TUsersSearchResponse } from '@/api/users/users.types'
-import { PageContainer } from '@/components/page-container'
+import { PageContainer } from '@/components/layout/page-container'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Combobox, type ComboboxOption } from '@/components/ui/combobox'

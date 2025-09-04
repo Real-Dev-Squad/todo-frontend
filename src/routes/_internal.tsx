@@ -1,5 +1,5 @@
-import { AppSidebar } from '@/components/app-sidebar'
-import { PageHeader } from '@/components/page-header'
+import { AppSidebar } from '@/components/layout/app-sidebar'
+import { PageHeader } from '@/components/layout/page-header'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/hooks/useAuth'

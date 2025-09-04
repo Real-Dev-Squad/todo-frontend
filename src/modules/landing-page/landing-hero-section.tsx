@@ -1,4 +1,4 @@
-import { SigninButton } from '@/components/signin-button'
+import { SigninButton } from '@/components/users/signin-button'
 import { Star, Target } from 'lucide-react'
 
 export function HeroSection() {
