@@ -4,7 +4,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 export const Route = createRootRoute({
   component: () => (
     <>
-      <main className="container mx-auto p-4">
+      <main>
         <Outlet />
       </main>
       <TanStackRouterDevtools />

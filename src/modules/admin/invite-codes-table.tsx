@@ -1,5 +1,3 @@
-'use client'
-
 import { InviteCodesApi } from '@/api/invite-codes/invite-codes.api'
 import { TInviteCode } from '@/api/invite-codes/invite-codes.types'
 import { TableShimmer } from '@/components/Shimmer/TableShimmer'
@@ -79,9 +77,9 @@ export const InviteCodesTable = () => {
     router({
       to: '/admin',
       search: (prev) => ({
-        ...prev,
-        page: updates.page || undefined,
-        limit: updates.limit || undefined,
+        page: updates.page || prev.page,
+        limit: updates.limit || prev.limit,
+        tab: prev.tab,
       }),
     })
   }
