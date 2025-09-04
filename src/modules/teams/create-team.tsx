@@ -73,9 +73,9 @@ export const CreateTeam = () => {
       },
       {
         onSuccess: (response) => {
-          const team = (response as any).team || response
-          const inviteCode = team.invite_code || (response as any).invite_code
-          const teamId = team.id || (response as any).id
+          const team = response.team
+          const inviteCode = team.invite_code
+          const teamId = team.id
 
           if (inviteCode) {
             setInviteCode(inviteCode)

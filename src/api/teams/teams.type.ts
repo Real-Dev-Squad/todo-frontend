@@ -8,6 +8,19 @@ export type TTeam = {
   updated_by: string
   created_at: string
   updated_at: string
+  users: TTeamUser[] | null
+}
+
+export type TTeamUser = {
+  id: string
+  name: string
+  tasksAssignedCount?: number
+  addedOn?: string
+}
+
+export type TTeamDto = {
+  team: TTeam
+  message: string
 }
 
 export type GetTeamsDto = {
@@ -20,20 +33,7 @@ export type GetTeamByIdReqDto = {
   member?: boolean
 }
 
-export type TeamDto = Pick<
-  TTeam,
-  | 'id'
-  | 'name'
-  | 'description'
-  | 'poc_id'
-  | 'invite_code'
-  | 'created_by'
-  | 'updated_by'
-  | 'created_at'
-  | 'updated_at'
-> & {
-  users: { id: string; name: string; tasksAssignedCount?: number; addedOn?: string }[] | null
-}
+export type TeamDto = TTeam
 
 export type CreateTeamPayload = {
   name: string

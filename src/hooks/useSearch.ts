@@ -9,10 +9,9 @@ export interface SearchResult {
   id: string
   title: string
   subtitle: string
-  data: any
+  data: TUser
 }
 
-// Debounce hook
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value)
   useEffect(() => {
@@ -51,15 +50,14 @@ export const useSearch = () => {
         data: user,
       }))
       setSearchResults(userResults)
-    } catch (err: any) {
-      setError(err?.message || 'Failed to fetch users')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch users')
       setSearchResults([])
     } finally {
       setIsSearching(false)
     }
   }, [])
 
-  // Trigger search when debouncedQuery changes
   useEffect(() => {
     performSearch(debouncedQuery)
   }, [debouncedQuery, performSearch])

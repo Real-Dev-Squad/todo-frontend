@@ -88,7 +88,7 @@ export const tasksHandlers = [
     }
   }),
 
-  http.post(getApiUrl('/watchlist/tasks'), async ({ request }) => {
+  http.post(getApiUrl('/watchlist/tasks'), async () => {
     try {
       await MockWatchlistAPI.addTaskToWatchlist()
       return new HttpResponse(null, { status: 201 })

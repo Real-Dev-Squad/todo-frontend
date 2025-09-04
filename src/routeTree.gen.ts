@@ -66,24 +66,21 @@ const InternalTeamsTeamIdRoute = InternalTeamsTeamIdRouteImport.update({
   path: '/$teamId',
   getParentRoute: () => InternalTeamsRoute,
 } as any)
-const InternalTeamsTeamIdTodosRoute =
-  InternalTeamsTeamIdTodosRouteImport.update({
-    id: '/todos',
-    path: '/todos',
-    getParentRoute: () => InternalTeamsTeamIdRoute,
-  } as any)
-const InternalTeamsTeamIdMembersRoute =
-  InternalTeamsTeamIdMembersRouteImport.update({
-    id: '/members',
-    path: '/members',
-    getParentRoute: () => InternalTeamsTeamIdRoute,
-  } as any)
-const InternalTeamsTeamIdActivitiesRoute =
-  InternalTeamsTeamIdActivitiesRouteImport.update({
-    id: '/activities',
-    path: '/activities',
-    getParentRoute: () => InternalTeamsTeamIdRoute,
-  } as any)
+const InternalTeamsTeamIdTodosRoute = InternalTeamsTeamIdTodosRouteImport.update({
+  id: '/todos',
+  path: '/todos',
+  getParentRoute: () => InternalTeamsTeamIdRoute,
+} as any)
+const InternalTeamsTeamIdMembersRoute = InternalTeamsTeamIdMembersRouteImport.update({
+  id: '/members',
+  path: '/members',
+  getParentRoute: () => InternalTeamsTeamIdRoute,
+} as any)
+const InternalTeamsTeamIdActivitiesRoute = InternalTeamsTeamIdActivitiesRouteImport.update({
+  id: '/activities',
+  path: '/activities',
+  getParentRoute: () => InternalTeamsTeamIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -273,8 +270,9 @@ const InternalTeamsTeamIdRouteChildren: InternalTeamsTeamIdRouteChildren = {
   InternalTeamsTeamIdTodosRoute: InternalTeamsTeamIdTodosRoute,
 }
 
-const InternalTeamsTeamIdRouteWithChildren =
-  InternalTeamsTeamIdRoute._addFileChildren(InternalTeamsTeamIdRouteChildren)
+const InternalTeamsTeamIdRouteWithChildren = InternalTeamsTeamIdRoute._addFileChildren(
+  InternalTeamsTeamIdRouteChildren,
+)
 
 interface InternalTeamsRouteChildren {
   InternalTeamsTeamIdRoute: typeof InternalTeamsTeamIdRouteWithChildren
@@ -306,9 +304,7 @@ const InternalRouteChildren: InternalRouteChildren = {
   InternalTeamsRoute: InternalTeamsRouteWithChildren,
 }
 
-const InternalRouteWithChildren = InternalRoute._addFileChildren(
-  InternalRouteChildren,
-)
+const InternalRouteWithChildren = InternalRoute._addFileChildren(InternalRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,

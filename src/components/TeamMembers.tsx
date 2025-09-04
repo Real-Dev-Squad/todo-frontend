@@ -1,6 +1,7 @@
 'use client'
 
 import { TeamsApi } from '@/api/teams/teams.api'
+import { TTeamUser } from '@/api/teams/teams.type'
 import { AddMembersButton } from '@/components/add-members-button'
 import { Searchbar } from '@/components/searchbar'
 import { Shimmer } from '@/components/Shimmer'
@@ -24,8 +25,6 @@ import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
 import { MoreVertical } from 'lucide-react'
 import { useMemo, useState } from 'react'
-
-
 
 const PocLabel = () => {
   return (
@@ -61,7 +60,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
       return data?.users
     }
 
-    return data?.users?.filter((member: any) => {
+    return data?.users?.filter((member: TTeamUser) => {
       return (
         member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         member.tasksAssignedCount?.toString().includes(searchQuery)

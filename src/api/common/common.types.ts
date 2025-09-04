@@ -1,11 +1,11 @@
 import { USER_TYPE_ENUM } from './common-enum'
 
 type TApiFunction<T> = {
-  key: string[] | ((...args: any[]) => Array<string | number | boolean | undefined>)
-  fn: (...args: any[]) => Promise<T>
+  key: string[] | ((...args: unknown[]) => Array<string | number | boolean | undefined>)
+  fn: (...args: unknown[]) => Promise<T>
 }
 
-export type TApiMethodsRecord = Record<string, TApiFunction<any>>
+export type TApiMethodsRecord = Record<string, TApiFunction<unknown>>
 
 export type TApiResponse<T> = {
   data: T

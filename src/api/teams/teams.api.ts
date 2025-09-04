@@ -1,5 +1,4 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common.types'
 import {
   CreateTeamPayload,
   GetTeamByIdReqDto,
@@ -7,7 +6,7 @@ import {
   TeamActivityTimeline,
   TeamCreationCodeVerificationResponse,
   TeamDto,
-  TTeam,
+  TTeamDto,
 } from './teams.type'
 
 export const TeamsApi = {
@@ -29,8 +28,8 @@ export const TeamsApi = {
   },
   createTeam: {
     key: ['TeamsApi.createTeam'],
-    fn: async (teamData: CreateTeamPayload): Promise<TTeam> => {
-      const { data } = await apiClient.post<TTeam>(`/v1/teams`, teamData)
+    fn: async (teamData: CreateTeamPayload): Promise<TTeamDto> => {
+      const { data } = await apiClient.post<TTeamDto>(`/v1/teams`, teamData)
       return data
     },
   },
@@ -79,4 +78,4 @@ export const TeamsApi = {
       return data
     },
   },
-} satisfies TApiMethodsRecord
+}
