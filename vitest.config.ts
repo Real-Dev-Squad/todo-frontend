@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './'), // Maps `@` to the root directory
+      '@': path.resolve(__dirname, './src'),
     },
   },
   test: {
