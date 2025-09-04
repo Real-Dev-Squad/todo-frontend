@@ -1,6 +1,7 @@
 import { Features } from './landing-featuers'
 import { Footer } from './landing-footer'
 import { HeroSection } from './landing-hero-section'
+import { Navbar } from './landing-navbar'
 import AppOverview from './landing-overview'
 import { Pricing } from './landing-pricing'
 import Testimonials from './landing-testimonials'
@@ -20,6 +21,7 @@ export function LandingPage() {
           }}
         />
       </div>
+      <Navbar />
       <HeroSection />
       <AppOverview />
       <Features />
