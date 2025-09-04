@@ -3,27 +3,42 @@
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
-export function IncludeDoneSwitch() {
+type IncludeDoneSwitchProps = {
+  onStatusChange?: (includeDone: boolean) => void
+  initialChecked?: boolean
+}
+
+export function IncludeDoneSwitch({
+  onStatusChange,
+  initialChecked = false,
+}: IncludeDoneSwitchProps) {
   const router = useNavigate()
-  const searchParams = useSearch({ from: '/_internal/dashboard' })
-  const [includeDoneTasks, setIncludeDoneTasks] = useState(
-    searchParams.status === TASK_STATUS_ENUM.DONE,
-  )
+  const location = useLocation()
+  const [includeDoneTasks, setIncludeDoneTasks] = useState(initialChecked)
 
   const handleIncludeDoneChange = (checked: boolean) => {
     setIncludeDoneTasks(checked)
 
-    router({
-      to: '/dashboard',
-      search: (prev) => ({
-        status: checked ? TASK_STATUS_ENUM.DONE : undefined,
-        tab: prev.tab || 'all',
-        search: prev.search || undefined,
-      }),
-    })
+    if (onStatusChange) {
+      onStatusChange(checked)
+      return
+    }
+
+    if (location.pathname.includes('/teams/')) {
+      return
+    } else {
+      router({
+        to: '/dashboard',
+        search: (prev) => ({
+          status: checked ? TASK_STATUS_ENUM.DONE : undefined,
+          tab: prev.tab || 'all',
+          search: prev.search || undefined,
+        }),
+      })
+    }
   }
 
   return (

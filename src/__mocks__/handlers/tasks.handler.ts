@@ -1,5 +1,4 @@
 import {
-  AddTaskToWatchListDto,
   CrateTaskReqDto,
   DeferTaskReqDto,
   ToggleWatchListStatusDto,
@@ -68,7 +67,6 @@ export const tasksHandlers = [
 
   http.patch(getApiUrl('/task-assignments/:task_id'), async () => {
     try {
-
       return new HttpResponse(null, { status: 200 })
     } catch (error) {
       return HttpResponse.json(
@@ -92,8 +90,7 @@ export const tasksHandlers = [
 
   http.post(getApiUrl('/watchlist/tasks'), async ({ request }) => {
     try {
-      const body = (await request.json()) as AddTaskToWatchListDto
-      await MockWatchlistAPI.addTaskToWatchlist(body.taskId)
+      await MockWatchlistAPI.addTaskToWatchlist()
       return new HttpResponse(null, { status: 201 })
     } catch (error) {
       return HttpResponse.json(

@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as InternalTeamsRouteImport } from './routes/_internal.teams'
 import { Route as InternalDashboardRouteImport } from './routes/_internal.dashboard'
 import { Route as InternalAdminRouteImport } from './routes/_internal.admin'
+import { Route as InternalTeamsIndexRouteImport } from './routes/_internal.teams.index'
 import { Route as InternalTeamsJoinRouteImport } from './routes/_internal.teams.join'
 import { Route as InternalTeamsCreateRouteImport } from './routes/_internal.teams.create'
 import { Route as InternalTeamsTeamIdRouteImport } from './routes/_internal.teams.$teamId'
@@ -45,6 +46,11 @@ const InternalAdminRoute = InternalAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => InternalRoute,
 } as any)
+const InternalTeamsIndexRoute = InternalTeamsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InternalTeamsRoute,
+} as any)
 const InternalTeamsJoinRoute = InternalTeamsJoinRouteImport.update({
   id: '/join',
   path: '/join',
@@ -60,21 +66,24 @@ const InternalTeamsTeamIdRoute = InternalTeamsTeamIdRouteImport.update({
   path: '/$teamId',
   getParentRoute: () => InternalTeamsRoute,
 } as any)
-const InternalTeamsTeamIdTodosRoute = InternalTeamsTeamIdTodosRouteImport.update({
-  id: '/todos',
-  path: '/todos',
-  getParentRoute: () => InternalTeamsTeamIdRoute,
-} as any)
-const InternalTeamsTeamIdMembersRoute = InternalTeamsTeamIdMembersRouteImport.update({
-  id: '/members',
-  path: '/members',
-  getParentRoute: () => InternalTeamsTeamIdRoute,
-} as any)
-const InternalTeamsTeamIdActivitiesRoute = InternalTeamsTeamIdActivitiesRouteImport.update({
-  id: '/activities',
-  path: '/activities',
-  getParentRoute: () => InternalTeamsTeamIdRoute,
-} as any)
+const InternalTeamsTeamIdTodosRoute =
+  InternalTeamsTeamIdTodosRouteImport.update({
+    id: '/todos',
+    path: '/todos',
+    getParentRoute: () => InternalTeamsTeamIdRoute,
+  } as any)
+const InternalTeamsTeamIdMembersRoute =
+  InternalTeamsTeamIdMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => InternalTeamsTeamIdRoute,
+  } as any)
+const InternalTeamsTeamIdActivitiesRoute =
+  InternalTeamsTeamIdActivitiesRouteImport.update({
+    id: '/activities',
+    path: '/activities',
+    getParentRoute: () => InternalTeamsTeamIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -84,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/teams/$teamId': typeof InternalTeamsTeamIdRouteWithChildren
   '/teams/create': typeof InternalTeamsCreateRoute
   '/teams/join': typeof InternalTeamsJoinRoute
+  '/teams/': typeof InternalTeamsIndexRoute
   '/teams/$teamId/activities': typeof InternalTeamsTeamIdActivitiesRoute
   '/teams/$teamId/members': typeof InternalTeamsTeamIdMembersRoute
   '/teams/$teamId/todos': typeof InternalTeamsTeamIdTodosRoute
@@ -92,10 +102,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof InternalAdminRoute
   '/dashboard': typeof InternalDashboardRoute
-  '/teams': typeof InternalTeamsRouteWithChildren
   '/teams/$teamId': typeof InternalTeamsTeamIdRouteWithChildren
   '/teams/create': typeof InternalTeamsCreateRoute
   '/teams/join': typeof InternalTeamsJoinRoute
+  '/teams': typeof InternalTeamsIndexRoute
   '/teams/$teamId/activities': typeof InternalTeamsTeamIdActivitiesRoute
   '/teams/$teamId/members': typeof InternalTeamsTeamIdMembersRoute
   '/teams/$teamId/todos': typeof InternalTeamsTeamIdTodosRoute
@@ -110,6 +120,7 @@ export interface FileRoutesById {
   '/_internal/teams/$teamId': typeof InternalTeamsTeamIdRouteWithChildren
   '/_internal/teams/create': typeof InternalTeamsCreateRoute
   '/_internal/teams/join': typeof InternalTeamsJoinRoute
+  '/_internal/teams/': typeof InternalTeamsIndexRoute
   '/_internal/teams/$teamId/activities': typeof InternalTeamsTeamIdActivitiesRoute
   '/_internal/teams/$teamId/members': typeof InternalTeamsTeamIdMembersRoute
   '/_internal/teams/$teamId/todos': typeof InternalTeamsTeamIdTodosRoute
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/teams/$teamId'
     | '/teams/create'
     | '/teams/join'
+    | '/teams/'
     | '/teams/$teamId/activities'
     | '/teams/$teamId/members'
     | '/teams/$teamId/todos'
@@ -132,10 +144,10 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/dashboard'
-    | '/teams'
     | '/teams/$teamId'
     | '/teams/create'
     | '/teams/join'
+    | '/teams'
     | '/teams/$teamId/activities'
     | '/teams/$teamId/members'
     | '/teams/$teamId/todos'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
     | '/_internal/teams/$teamId'
     | '/_internal/teams/create'
     | '/_internal/teams/join'
+    | '/_internal/teams/'
     | '/_internal/teams/$teamId/activities'
     | '/_internal/teams/$teamId/members'
     | '/_internal/teams/$teamId/todos'
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof InternalAdminRouteImport
       parentRoute: typeof InternalRoute
+    }
+    '/_internal/teams/': {
+      id: '/_internal/teams/'
+      path: '/'
+      fullPath: '/teams/'
+      preLoaderRoute: typeof InternalTeamsIndexRouteImport
+      parentRoute: typeof InternalTeamsRoute
     }
     '/_internal/teams/join': {
       id: '/_internal/teams/join'
@@ -253,20 +273,21 @@ const InternalTeamsTeamIdRouteChildren: InternalTeamsTeamIdRouteChildren = {
   InternalTeamsTeamIdTodosRoute: InternalTeamsTeamIdTodosRoute,
 }
 
-const InternalTeamsTeamIdRouteWithChildren = InternalTeamsTeamIdRoute._addFileChildren(
-  InternalTeamsTeamIdRouteChildren,
-)
+const InternalTeamsTeamIdRouteWithChildren =
+  InternalTeamsTeamIdRoute._addFileChildren(InternalTeamsTeamIdRouteChildren)
 
 interface InternalTeamsRouteChildren {
   InternalTeamsTeamIdRoute: typeof InternalTeamsTeamIdRouteWithChildren
   InternalTeamsCreateRoute: typeof InternalTeamsCreateRoute
   InternalTeamsJoinRoute: typeof InternalTeamsJoinRoute
+  InternalTeamsIndexRoute: typeof InternalTeamsIndexRoute
 }
 
 const InternalTeamsRouteChildren: InternalTeamsRouteChildren = {
   InternalTeamsTeamIdRoute: InternalTeamsTeamIdRouteWithChildren,
   InternalTeamsCreateRoute: InternalTeamsCreateRoute,
   InternalTeamsJoinRoute: InternalTeamsJoinRoute,
+  InternalTeamsIndexRoute: InternalTeamsIndexRoute,
 }
 
 const InternalTeamsRouteWithChildren = InternalTeamsRoute._addFileChildren(
@@ -285,7 +306,9 @@ const InternalRouteChildren: InternalRouteChildren = {
   InternalTeamsRoute: InternalTeamsRouteWithChildren,
 }
 
-const InternalRouteWithChildren = InternalRoute._addFileChildren(InternalRouteChildren)
+const InternalRouteWithChildren = InternalRoute._addFileChildren(
+  InternalRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,

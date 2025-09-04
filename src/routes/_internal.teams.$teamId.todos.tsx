@@ -1,3 +1,4 @@
+import { TeamTasks } from '@/modules/teams/team-tasks'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_internal/teams/$teamId/todos')({
@@ -16,7 +17,7 @@ function TeamTodosPage() {
   return (
     <div>
       <h2 className="mb-4 text-2xl font-bold">Team Todos</h2>
-      <p>Team {teamId} todos will be displayed here.</p>
+      <TeamTasks teamId={teamId} />
     </div>
   )
 }

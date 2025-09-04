@@ -144,6 +144,17 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
     })
   }
 
+  const handleIncludeDoneChange = (includeDone: boolean) => {
+    router({
+      to: '/teams/$teamId/todos',
+      params: { teamId },
+      search: (prev) => ({
+        status: includeDone ? TASK_STATUS_ENUM.DONE : undefined,
+        search: prev.search || undefined,
+      }),
+    })
+  }
+
   return (
     <div>
       <div className="flex items-center pb-4">
@@ -153,7 +164,10 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
           containerClassName="w-full lg:max-w-xs"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <IncludeDoneSwitch />
+        <IncludeDoneSwitch
+          onStatusChange={handleIncludeDoneChange}
+          initialChecked={includeDoneTasks}
+        />
       </div>
 
       <div className="overflow-hidden rounded-md border">

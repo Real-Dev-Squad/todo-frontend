@@ -1,10 +1,13 @@
-import { TeamsPage } from '@/modules/teams'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_internal/teams')({
   component: Teams,
 })
 
 function Teams() {
-  return <TeamsPage />
+  return (
+    <div>
+      <Outlet />
+    </div>
+  )
 }
