@@ -1,6 +1,6 @@
-import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react()],
@@ -21,17 +21,11 @@ export default defineConfig({
         '**/config.ts',
         '**.eslintrc.js',
         '**/tailwind.config.ts',
-        '**/.next/**',
-        '**/app/layout.tsx',
-        '**/app/data/**',
-        '**/app/providers.tsx',
         '**/__tests__/**',
         '**/__mocks__/**',
         '**/icons/**',
         '**/interface/**',
-        '**/app/queryClient.tsx',
         'vitest.config.ts',
-        'next.config.ts',
       ],
       include: ['**/*.{ts,tsx,jsx}'],
     },
