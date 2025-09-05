@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:vite": "vite",
+    "dev:vite": "vite --port 3000 --host dev.realdevsquad.com",
     "dev:ssl": "local-ssl-proxy --source 443 --target 3000 -n dev.realdevsquad.com",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -16,7 +16,7 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "check": "prettier --check .",
-    "routes:generate": "npx @tanstack/router-cli generate"
+    "routes:generate": "tsr generate"
   },
   "dependencies": {
     "@hookform/resolvers": "5.1.1",
@@ -58,6 +58,7 @@
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.31.0",
     "@tailwindcss/postcss": "4.1.11",
+    "@tanstack/router-cli": "1.131.35",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
