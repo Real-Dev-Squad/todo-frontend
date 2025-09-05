@@ -25,17 +25,16 @@ export const TeamTabNavigation = () => {
 
   const tabsList = teamId ? getTabsList(teamId as string) : []
 
-  // Determine the current tab based on the pathname
   const getCurrentTab = () => {
     if (pathname.includes('/todos')) return 'Todos'
     if (pathname.includes('/activities')) return 'Activities'
     if (pathname.includes('/members')) return 'Members'
-    return 'Todos' // default
+    return 'Todos'
   }
 
   return (
-    <Tabs value={getCurrentTab()} className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
+    <Tabs value={getCurrentTab()}>
+      <TabsList>
         {tabsList.map((tab) => (
           <TabsTrigger key={tab.label} value={tab.label} asChild>
             <Link to={tab.href}>{tab.label}</Link>
