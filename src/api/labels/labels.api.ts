@@ -1,5 +1,4 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common.types'
 import { Label } from './labels.types'
 
 export const LablesApi = {
@@ -10,4 +9,4 @@ export const LablesApi = {
       return res?.data?.labels ?? []
     },
   },
-} satisfies TApiMethodsRecord
+}

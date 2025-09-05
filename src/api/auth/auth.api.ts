@@ -1,5 +1,4 @@
 import { apiClient } from '@/lib/api-client'
-import { TApiMethodsRecord } from '../common/common.types'
 
 export const AuthApi = {
   logout: {
@@ -8,4 +7,4 @@ export const AuthApi = {
       await apiClient.post('/v1/auth/logout')
     },
   },
-} satisfies TApiMethodsRecord
+}
