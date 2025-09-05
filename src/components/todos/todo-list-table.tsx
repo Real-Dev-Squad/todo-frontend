@@ -2,9 +2,13 @@ import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
-import { DashboardTasksTableTabs } from '@/modules/dashboard/constants'
+import {
+  DashboardTasksTableTabs,
+  DashboardTasksTableTabs as TabsConstants,
+} from '@/modules/dashboard/constants'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { Searchbar } from '../common/searchbar'
+
 import { Shimmer } from '../common/shimmer'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { EditTodoButton } from './edit-task-button'
@@ -205,7 +209,7 @@ export const TodoListTable = ({
       to: '/dashboard',
       search: (prev) => ({
         status: prev.status || undefined,
-        tab: prev.tab || 'all',
+        tab: prev.tab || TabsConstants.All,
         search: searchValue || undefined,
       }),
     })

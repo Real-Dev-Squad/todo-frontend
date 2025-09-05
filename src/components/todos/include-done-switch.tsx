@@ -1,6 +1,7 @@
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
+import { DashboardTasksTableTabs as TabsConstants } from '@/modules/dashboard/constants'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -32,7 +33,7 @@ export function IncludeDoneSwitch({
         to: '/dashboard',
         search: (prev) => ({
           status: checked ? TASK_STATUS_ENUM.DONE : undefined,
-          tab: prev.tab || 'all',
+          tab: prev.tab || TabsConstants.All,
           search: prev.search || undefined,
         }),
       })

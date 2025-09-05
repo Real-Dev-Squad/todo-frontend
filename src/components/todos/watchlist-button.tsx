@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 type WatchListButtonProps = {
   taskId: string
   isInWatchlist?: boolean | null
-  teamId?: string // used to invalidate task list for a team
+  teamId?: string
 }
 
 export const WatchListButton = ({ taskId, teamId, isInWatchlist }: WatchListButtonProps) => {
@@ -17,10 +17,11 @@ export const WatchListButton = ({ taskId, teamId, isInWatchlist }: WatchListButt
   const addTaskToWatchlistMutation = useMutation({
     mutationFn: TasksApi.addTaskToWatchList.fn,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
 
       if (teamId) {
-        void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
+        queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
       }
 
       toast.success('Task added to watchlist!')
@@ -33,11 +34,11 @@ export const WatchListButton = ({ taskId, teamId, isInWatchlist }: WatchListButt
   const toggleWatchListStatusMutation = useMutation({
     mutationFn: TasksApi.toggleTaskWatchListStatus.fn,
     onSuccess: (_, variables) => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
+      queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
+      queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
 
       if (teamId) {
-        void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
+        queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
       }
 
       toast.success(
