@@ -1,5 +1,3 @@
-'use client'
-
 import { InviteCodesApi } from '@/api/invite-codes/invite-codes.api'
 import { TGenerateInviteCodeRequest } from '@/api/invite-codes/invite-codes.types'
 import { Button } from '@/components/ui/button'

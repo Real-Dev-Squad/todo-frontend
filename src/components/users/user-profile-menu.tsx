@@ -1,5 +1,3 @@
-'use client'
-
 import { useAuth } from '@/hooks/useAuth'
 import { Loader2, LogOutIcon } from 'lucide-react'
 import { Shimmer } from '../common/shimmer'

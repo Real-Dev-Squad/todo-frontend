@@ -1,5 +1,3 @@
-'use client'
-
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TodoListTable } from '@/components/todos/todo-list-table'

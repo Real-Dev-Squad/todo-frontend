@@ -1,5 +1,3 @@
-'use client'
-
 import { TeamsApi } from '@/api/teams/teams.api'
 import { GetTeamsDto } from '@/api/teams/teams.type'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'

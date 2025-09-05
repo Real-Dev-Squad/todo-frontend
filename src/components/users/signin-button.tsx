@@ -1,5 +1,3 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'

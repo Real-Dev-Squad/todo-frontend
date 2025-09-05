@@ -1,5 +1,3 @@
-'use client'
-
 import { Check, ChevronsUpDown, X } from 'lucide-react'
 import * as React from 'react'
 

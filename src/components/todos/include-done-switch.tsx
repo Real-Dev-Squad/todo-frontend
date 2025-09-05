@@ -1,5 +1,3 @@
-'use client'
-
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'

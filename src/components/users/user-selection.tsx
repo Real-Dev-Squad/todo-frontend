@@ -1,5 +1,3 @@
-'use client'
-
 import { TApiResponse } from '@/api/common/common.types'
 import { UsersApi } from '@/api/users/users.api'
 import { TUser, TUsersSearchResponse } from '@/api/users/users.types'

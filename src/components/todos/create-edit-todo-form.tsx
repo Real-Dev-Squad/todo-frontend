@@ -1,5 +1,3 @@
-'use client'
-
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { LablesApi } from '@/api/labels/labels.api'
 import { TASK_PRIORITY_ENUM, TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'

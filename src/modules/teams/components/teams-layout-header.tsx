@@ -1,5 +1,3 @@
-'use client'
-
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/common/shimmer'

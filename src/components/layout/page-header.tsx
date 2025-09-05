@@ -1,5 +1,3 @@
-'use client'
-
 import { SIDEBAR_LINKS } from '@/config/sidebar'
 import { useLocation } from '@tanstack/react-router'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '../ui/breadcrumb'

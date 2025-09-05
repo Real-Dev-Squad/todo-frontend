@@ -1,5 +1,3 @@
-'use client'
-
 import { TUser } from '@/api/users/users.types'
 import { Button } from '@/components/ui/button'
 import {

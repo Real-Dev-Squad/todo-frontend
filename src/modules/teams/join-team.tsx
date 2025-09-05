@@ -1,5 +1,3 @@
-'use client'
-
 import { TeamsApi } from '@/api/teams/teams.api'
 import { PageContainerWithLogo } from '@/components/layout/page-container-with-logo'
 import { Button } from '@/components/ui/button'

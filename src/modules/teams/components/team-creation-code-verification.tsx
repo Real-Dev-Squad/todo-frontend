@@ -1,5 +1,3 @@
-'use client'
-
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

@@ -1,5 +1,3 @@
-'use client'
-
 import { Label } from '@/api/labels/labels.types'
 import { LabelMultiSelect } from './multi-labels-select'
 

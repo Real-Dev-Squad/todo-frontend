@@ -1,5 +1,3 @@
-'use client'
-
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { GetTaskReqDto } from '@/api/tasks/tasks.types'

@@ -1,5 +1,3 @@
-'use client'
-
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { Button } from '@/components/ui/button'
 import {

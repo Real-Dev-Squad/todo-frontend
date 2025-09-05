@@ -1,5 +1,3 @@
-'use client'
-
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TUser } from '@/api/users/users.types'
 import { UserSelection } from '@/components/users/user-selection'

@@ -1,5 +1,3 @@
-'use client'
-
 // import { UnderConstruction } from '../UnderConstruction'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { getActivityUIData } from '@/lib/team-utils'

@@ -1,5 +1,3 @@
-'use client'
-
 import { TUser } from '@/api/users/users.types'
 import { apiClient } from '@/lib/api-client'
 import { useCallback, useEffect, useState } from 'react'

@@ -7,7 +7,7 @@ This step is required if you want to call the staging API.
 
 ## Local Development Setup
 
-This project uses [PNPM](<[https://yarnpkg.com/getting-started](https://pnpm.io/motivation)>) for package management.
+This project uses [PNPM](https://pnpm.io/motivation) for package management.
 So, make sure to install PNPM to use the project.
 
 From your terminal:
@@ -24,65 +24,60 @@ To build your app for production:
 pnpm build
 ```
 
-Then run the app in production mode:
+Then preview the production build:
 
 ```sh
-pnpm start
+pnpm preview
 ```
 
 ## Project Structure
 
-We are using Next.js with App Router for this project. Next.js has a well-defined directory structure that must be used to make sure the app runs properly. Read more about Next.js [here](https://nextjs.org/docs/app/getting-started)
+We are using **Vite + React + TanStack Router** for this project. The project follows a modular structure with clear separation of concerns.
 
-### 'App' directory
+### Routes
 
-In the `Next.js` App Router, a page is a React Component exported from a `page.js`, `page.jsx`, `page.ts`, or `page.tsx` file in the `app` directory. Each page is associated with a route based on its file/directory name. Read more about `App` [here](https://nextjs.org/docs/app). An example is given below -
+This project uses **TanStack Router** for routing. Routes are defined in the `/src/routes` directory and follow a file-based routing system. Read more about TanStack Router [here](https://tanstack.com/router/latest)
 
 #### Directory Structure
 
 ```
-app
-|__ members
-|   |__ [id]
-|   |   |__ page.js
-|   |
-|   |__ page.js
-|
-|__ blogs
-|   |__ page.js
-|
-|__ page.js
+src/routes
+||__ __root.tsx
+||__ _internal.tsx
+||__ _internal.admin.tsx
+||__ _internal.dashboard.tsx
+||__ _internal.teams.tsx
+||__ _internal.teams.$teamId.tsx
+||__ _internal.teams.$teamId.activities.tsx
+||__ _internal.teams.$teamId.members.tsx
+||__ _internal.teams.$teamId.todos.tsx
+||__ _internal.teams.create.tsx
+||__ _internal.teams.index.tsx
+||__ _internal.teams.join.tsx
+||__ index.tsx
 ```
 
-#### Routes Created by Next.js
+#### Routes Created by TanStack Router
 
 ```
 /
-/members
-/members/[id]
-/blogs
+/internal/admin
+/internal/dashboard
+/internal/teams
+/internal/teams/create
+/internal/teams/join
+/internal/teams/[teamId]
+/internal/teams/[teamId]/activities
+/internal/teams/[teamId]/members
+/internal/teams/[teamId]/todos
 ```
 
-> Note: In `/members/[id]` the `[id]` part is dynamic it can be `1`, `2`, `a`, etc.
+> Note: In `/internal/teams/[teamId]` the `[teamId]` part is dynamic and can be any team ID.
 
 ### Components
 
-All the reusable components are created inside `/components` directory.
+All the reusable components are created inside `/src/components` directory.
 
 ### Public
 
-All the public assets like `icons`, `images` are stored inside the `public` directory.
-
-## Storybook
-
-To run Storybook in development mode:
-
-```sh
-pnpm storybook
-```
-
-We can also build storybook in order to deploy it from `storybook-static` folder
-
-```sh
-pnpm build:storybook
-```
+All the public assets like `icons`, `images` are stored inside the `/public` directory.

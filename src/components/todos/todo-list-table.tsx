@@ -1,5 +1,3 @@
-'use client'
-
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'

@@ -1,5 +1,3 @@
-'use client'
-
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { appConfig } from '@/config/app-config'
 import { useAuth } from '@/hooks/useAuth'

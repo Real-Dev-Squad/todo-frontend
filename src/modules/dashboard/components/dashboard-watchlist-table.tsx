@@ -1,5 +1,3 @@
-'use client'
-
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { CommonPageError } from '@/components/common/common-page-error'
 import { TodoListTable } from '@/components/todos/todo-list-table'

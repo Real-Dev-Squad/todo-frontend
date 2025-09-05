@@ -1,5 +1,3 @@
-'use client'
-
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Link, useLocation, useParams } from '@tanstack/react-router'
 
