@@ -1,4 +1,3 @@
-import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
@@ -58,7 +57,6 @@ const TodoListTableRow = ({
   userId,
 }: TodoListTableRowProps) => {
   const isEditTodoVisible = todo.assignee?.assignee_id === userId
-
   return (
     <TableRow>
       <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
@@ -150,7 +148,7 @@ const TodoListTableBody = ({
         <TodoListTableRow
           key={task.id}
           todo={task}
-          showActions={showActions && task.assignee?.user_type !== USER_TYPE_ENUM.TEAM}
+          showActions={showActions}
           showDeferredColumn={showDeferredColumn}
           userId={user.id}
         />
