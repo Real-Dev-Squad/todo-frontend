@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:vite": "vite --port 3000 --host dev.realdevsquad.com",
+    "dev:vite": "vite",
     "dev:ssl": "local-ssl-proxy --source 443 --target 3000 -n dev.realdevsquad.com",
     "build": "tsc && vite build",
     "preview": "vite preview",
