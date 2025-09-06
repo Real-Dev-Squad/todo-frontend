@@ -18,7 +18,7 @@ export default defineConfig([
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
   {
-    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx,mts,cts}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
@@ -46,7 +46,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx,mts,cts}'],
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
