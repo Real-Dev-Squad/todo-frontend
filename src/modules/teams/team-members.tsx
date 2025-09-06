@@ -45,7 +45,7 @@ type TeamMembersProps = {
 }
 
 export const TeamMembers = ({ teamId }: TeamMembersProps) => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const searchParams = useSearch({ from: '/_internal/teams/$teamId/members' })
 
   const { data, isLoading } = useQuery({
@@ -69,7 +69,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   }, [data?.users, search])
 
   const handleSearch = (searchValue: string) => {
-    router({
+    navigate({
       to: '/teams/$teamId/members',
       params: { teamId },
       search: (prev) => ({

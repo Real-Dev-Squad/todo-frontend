@@ -23,6 +23,7 @@ export const DashboardTabs = ({ tasks, className, isPlaceholderData }: Dashboard
   const handleTabChange = (value: string) => {
     navigate({
       to: '/dashboard',
+      replace: true,
       search: (prev) => ({
         status:
           includeDoneTasks && value !== TabsConstants.WatchList && value !== TabsConstants.Deferred

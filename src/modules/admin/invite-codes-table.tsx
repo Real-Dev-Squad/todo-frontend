@@ -67,15 +67,16 @@ const InviteCodesTableRow = ({ inviteCode }: { inviteCode: TInviteCode }) => {
 }
 
 export const InviteCodesTable = () => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const searchParams = useSearch({ strict: false })
 
   const currentPage = parseInt(searchParams.page || '1', 10)
   const pageSize = parseInt(searchParams.limit || '8', 10)
 
   const updateSearchParams = (updates: Record<string, string>) => {
-    router({
+    navigate({
       to: '/admin',
+      replace: true,
       search: (prev) => ({
         page: updates.page || prev.page,
         limit: updates.limit || prev.limit,

@@ -109,7 +109,7 @@ type TeamTasksProps = {
 }
 
 export const TeamTasks = ({ teamId }: TeamTasksProps) => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const searchParams = useSearch({ from: '/_internal/teams/$teamId/todos' })
   const status = searchParams.status?.toUpperCase()
   const includeDoneTasks = status === TASK_STATUS_ENUM.DONE
@@ -132,7 +132,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const search = searchParams.search ?? ''
 
   const handleSearch = (searchValue: string) => {
-    router({
+    navigate({
       to: '/teams/$teamId/todos',
       params: { teamId },
       search: (prev) => ({
@@ -143,7 +143,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   }
 
   const handleIncludeDoneChange = (includeDone: boolean) => {
-    router({
+    navigate({
       to: '/teams/$teamId/todos',
       params: { teamId },
       search: (prev) => ({

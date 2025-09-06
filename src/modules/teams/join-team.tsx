@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 export const JoinTeam = () => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [inviteCode, setInviteCode] = useState('')
 
@@ -18,7 +18,7 @@ export const JoinTeam = () => {
     onSuccess: (data) => {
       toast.success(`Joined team ${data.name}`)
       queryClient.invalidateQueries({ queryKey: TeamsApi.getTeams.key })
-      router({ to: `/teams/${data.id}/todos` })
+      navigate({ to: `/teams/${data.id}/todos` })
     },
     onError: () => {
       toast.error('Failed to join team, please try again later')

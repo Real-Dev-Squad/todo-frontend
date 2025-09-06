@@ -27,7 +27,7 @@ const DEFAULT_TEAM_INFO: TTeamInfo = {
 
 export const CreateTeam = () => {
   const { user } = useAuth()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   const createTeamMutation = useMutation({
@@ -99,7 +99,7 @@ export const CreateTeam = () => {
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false)
-    router({ to: `/teams/${teamId}/todos` })
+    navigate({ to: `/teams/${teamId}/todos` })
   }
 
   const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {

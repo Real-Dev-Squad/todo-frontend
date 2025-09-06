@@ -14,7 +14,7 @@ export function IncludeDoneSwitch({
   onStatusChange,
   initialChecked = false,
 }: IncludeDoneSwitchProps) {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation()
   const [includeDoneTasks, setIncludeDoneTasks] = useState(initialChecked)
 
@@ -29,8 +29,9 @@ export function IncludeDoneSwitch({
     if (location.pathname.includes('/teams/')) {
       return
     } else {
-      router({
+      navigate({
         to: '/dashboard',
+        replace: true,
         search: (prev) => ({
           status: checked ? TASK_STATUS_ENUM.DONE : undefined,
           tab: prev.tab || TabsConstants.All,
