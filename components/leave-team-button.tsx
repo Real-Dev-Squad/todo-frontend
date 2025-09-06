@@ -24,9 +24,6 @@ export const LeaveTeamButton = ({ teamId }: { teamId: string }) => {
         queryKey: TeamsApi.getTeams.key,
       })
       queryClient.invalidateQueries({
-        queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
-      })
-      queryClient.invalidateQueries({
         queryKey: TasksApi.getTasks.key({ teamId }),
       })
       setShowLeaveTeamDialog(false)
