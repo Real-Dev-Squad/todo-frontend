@@ -180,7 +180,7 @@ export const TodoListTable = ({
   isPlaceholderData,
   showActions,
 }: TodoListTableProps) => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const search = useSearch({ from: '/_internal/dashboard' })
   const currentTab = search.tab
   const showIncludeDoneTasksToggle = currentTab === DashboardTasksTableTabs.All || !currentTab
@@ -203,8 +203,9 @@ export const TodoListTable = ({
       )
 
   const handleSearch = (searchValue: string) => {
-    router({
+    navigate({
       to: '/dashboard',
+      replace: true,
       search: (prev) => ({
         status: prev.status || undefined,
         tab: prev.tab || TabsConstants.All,

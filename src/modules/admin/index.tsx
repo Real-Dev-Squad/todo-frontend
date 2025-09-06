@@ -7,14 +7,14 @@ import { Suspense, useCallback, useEffect } from 'react'
 
 function AdminContent() {
   const { user, isLoading } = useAuth()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const searchParams = useSearch({ from: '/_internal/admin' })
 
   const activeTab = searchParams.tab || 'invite-codes'
 
   const updateSearchParams = useCallback(
     (updates: Record<string, string>) => {
-      router({
+      navigate({
         to: '/admin',
         search: (prev) => ({
           page: prev.page,
@@ -23,7 +23,7 @@ function AdminContent() {
         }),
       })
     },
-    [router],
+    [navigate],
   )
 
   useEffect(() => {
@@ -45,8 +45,9 @@ function AdminContent() {
   const isAdmin = user?.email ? appConfig.adminEmails.includes(user.email) : false
 
   if (!isLoading && !isAdmin) {
-    router({
+    navigate({
       to: '/dashboard',
+      replace: true,
       search: {
         status: undefined,
         tab: undefined,

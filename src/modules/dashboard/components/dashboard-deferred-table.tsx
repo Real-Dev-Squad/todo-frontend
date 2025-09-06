@@ -8,9 +8,7 @@ import { useSearch } from '@tanstack/react-router'
 import { DashboardTasksTableTabs as TabsConstants } from '../constants'
 
 export const DashboardDeferredTable = () => {
-  const searchParams = useSearch({ from: '/_internal/dashboard' })
-  const tab = searchParams.tab
-  const status = searchParams.status
+  const { tab, status } = useSearch({ from: '/_internal/dashboard' })
   const isInvalidCombination = tab === TabsConstants.Deferred && status === TASK_STATUS_ENUM.DONE
 
   const queryParams: GetTaskReqDto = { status: 'DEFERRED' }
