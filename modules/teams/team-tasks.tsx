@@ -2,24 +2,27 @@
 
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { GetTaskReqDto, TTask } from '@/api/tasks/tasks.types'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
 import { EditTodoButton } from '@/components/edit-task-button'
+import { IncludeDoneSwitch } from '@/components/include-done-switch'
 import { ReassignUser } from '@/components/reassign-user'
 import { Searchbar } from '@/components/searchbar'
+import { TaskDetailsModal } from '@/components/task-details-modal'
 import { TaskPriorityLabel } from '@/components/task-priority-label'
 import { TodoLabelsList } from '@/components/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todo-list-table'
 import { TodoStatusTable } from '@/components/todo-status-table'
-import { IncludeDoneSwitch } from '@/components/include-done-switch'
+import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { WatchListButton } from '@/components/watchlist-button'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { useQuery } from '@tanstack/react-query'
+import { EyeIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 
 const QUERY_PARAMS_KEYS = {
   search: 'search',
@@ -61,6 +64,12 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
       </TableCell>
 
       <TableCell className="flex items-center gap-0.5">
+        <TaskDetailsModal task={todo}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <EyeIcon className="h-4 w-4" />
+            <span className="sr-only">View details</span>
+          </Button>
+        </TaskDetailsModal>
         {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
         {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
         {!isRessignTodoCtaVisible && (
