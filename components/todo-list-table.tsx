@@ -5,14 +5,17 @@ import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import { DashboardTasksTableTabs } from '@/modules/dashboard/constants'
+import { EyeIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EditTodoButton } from './edit-task-button'
 import { IncludeDoneSwitch } from './include-done-switch'
 import { Searchbar } from './searchbar'
 import { Shimmer } from './Shimmer'
+import { TaskDetailsModal } from './task-details-modal'
 import { TaskPriorityLabel } from './task-priority-label'
 import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
+import { Button } from './ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { WatchListButton } from './watchlist-button'
 
@@ -96,6 +99,12 @@ const TodoListTableRow = ({
       <TableCell>
         {showActions ? (
           <div className="flex items-center gap-0.5">
+            <TaskDetailsModal task={todo}>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                <EyeIcon className="h-4 w-4" />
+                <span className="sr-only">View details</span>
+              </Button>
+            </TaskDetailsModal>
             {isEditTodoVisible && <EditTodoButton todo={todo} />}
             <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
           </div>
