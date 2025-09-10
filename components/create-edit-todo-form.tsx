@@ -140,7 +140,6 @@ export const CreateEditTodoForm = ({
       status: initialData?.status || TASK_STATUS_ENUM.TODO,
       labels: initialData?.labels || [],
       assignee: initialData?.assignee || undefined,
-      createdBy: initialData?.assignee || undefined,
     },
   })
 
