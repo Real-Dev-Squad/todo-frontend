@@ -62,6 +62,12 @@ export class TodoUtil {
             type: todo.assignee.user_type,
           }
         : undefined,
+      createdBy: todo.createdBy
+        ? {
+            label: todo.createdBy.name,
+            value: todo.createdBy.id,
+          }
+        : undefined,
     }
   }
 }
