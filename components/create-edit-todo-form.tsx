@@ -42,10 +42,12 @@ const todoFormSchema = z.object({
     },
     { error: 'Assignee is required' },
   ),
-  createdBy: z.object({
-    label: z.string(),
-    value: z.string(),
-  }),
+  createdBy: z
+    .object({
+      label: z.string(),
+      value: z.string(),
+    })
+    .optional(),
 })
 
 export type TTodoFormData = z.infer<typeof todoFormSchema>
