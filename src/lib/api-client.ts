@@ -1,7 +1,7 @@
+import { appConfig } from '@/config/app-config'
 import axios from 'axios'
 
-const backendUrl =
-  import.meta.env.VITE_BACKEND_API_URL || 'https://services.realdevsquad.com/staging-todo'
+const backendUrl = appConfig.backendBaseUrl
 
 export const apiClient = axios.create({
   baseURL: backendUrl,
