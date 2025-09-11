@@ -16,7 +16,7 @@ import { cn, isPastDate } from '@/lib/utils'
 import { SelectLabels } from '@/modules/dashboard/components/select-labels'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
-import { CalendarIcon, CircleDotIcon, LucideIcon, PlayIcon, TagIcon } from 'lucide-react'
+import { CalendarIcon, CircleDotIcon, LucideIcon, PlayIcon, TagIcon, UserIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
@@ -40,6 +40,12 @@ const todoFormSchema = z.object({
     },
     { error: 'Assignee is required' },
   ),
+  createdBy: z
+    .object({
+      label: z.string(),
+      value: z.string(),
+    })
+    .optional(),
 })
 
 export type TTodoFormData = z.infer<typeof todoFormSchema>
@@ -326,6 +332,13 @@ export const CreateEditTodoForm = ({
               </FormInput>
             )}
           />
+
+          {/* Created By (only in edit mode) */}
+          {mode === 'edit' && initialData?.createdBy && (
+            <FormInput label="Created By" htmlFor="createdBy" icon={UserIcon}>
+              <p className="pl-3 text-sm text-gray-700">{initialData.createdBy.label}</p>
+            </FormInput>
+          )}
         </div>
       </div>
 
