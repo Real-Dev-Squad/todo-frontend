@@ -102,7 +102,6 @@ export type TWatchListTask = {
   labels?: TLabel[]
   dueAt: string
   createdAt: string
-  createdBy?: TTaskCreatedBy | null
   watchlistId: string
 }
 
