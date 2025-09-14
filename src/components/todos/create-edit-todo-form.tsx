@@ -333,7 +333,6 @@ export const CreateEditTodoForm = ({
             )}
           />
 
-          {/* Created By (only in edit mode) */}
           {mode === 'edit' && initialData?.createdBy && (
             <FormInput label="Created By" icon={UserIcon}>
               <p className="pl-3 text-sm text-gray-700">{initialData.createdBy.label}</p>
