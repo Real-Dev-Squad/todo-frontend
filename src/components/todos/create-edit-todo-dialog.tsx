@@ -48,13 +48,15 @@ export const CreateEditTodoDialog = ({
           </AlertDialogTitle>
         </AlertDialogHeader>
 
-        <CreateEditTodoForm
-          mode={mode}
-          onSubmit={onSubmit}
-          initialData={defaultData}
-          isSubmitting={isMutationPending}
-          onCancel={() => onOpenChange(false)}
-        />
+        <div className="min-w-0">
+          <CreateEditTodoForm
+            mode={mode}
+            onSubmit={onSubmit}
+            initialData={defaultData}
+            isSubmitting={isMutationPending}
+            onCancel={() => onOpenChange(false)}
+          />
+        </div>
       </AlertDialogContent>
     </AlertDialog>
   )

@@ -179,7 +179,7 @@ export const CreateEditTodoForm = ({
         <Textarea
           id="description"
           placeholder="e.g Nothing is cool in here"
-          className="max-h-32 break-all"
+          className="max-h-32"
           {...register('description')}
         />
       </FormInput>
