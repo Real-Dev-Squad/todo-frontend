@@ -2,3 +2,5 @@ package-lock.json
 public/mockServiceWorker.js
 pnpm-lock.yaml
 yarn.lock
+src/routeTree.gen.ts
+**/routeTree.gen.ts

@@ -18,7 +18,7 @@ export default defineConfig([
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
   {
-    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx,mts,cts}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
@@ -32,9 +32,27 @@ export default defineConfig([
   },
   {
     extends: compat.extends(
-      'next/core-web-vitals',
-      'next/typescript',
-      'plugin:storybook/recommended',
+      'plugin:react/recommended',
+      'plugin:react-hooks/recommended',
+      'plugin:@typescript-eslint/recommended',
     ),
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      'import/resolver': {
+        typescript: { project: './tsconfig.json' },
+      },
+    },
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx,mts,cts}'],
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+    },
   },
 ])
