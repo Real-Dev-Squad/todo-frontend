@@ -140,6 +140,7 @@ export const CreateEditTodoForm = ({
       status: initialData?.status || TASK_STATUS_ENUM.TODO,
       labels: initialData?.labels || [],
       assignee: initialData?.assignee || undefined,
+      createdBy: initialData?.createdBy || undefined,
     },
   })
 
@@ -333,10 +334,26 @@ export const CreateEditTodoForm = ({
             )}
           />
 
-          {mode === 'edit' && initialData?.createdBy && (
-            <FormInput label="Created By" icon={UserIcon}>
-              <p className="pl-3 text-sm text-gray-700">{initialData.createdBy.label}</p>
-            </FormInput>
+          {mode === 'edit' && (
+            <Controller
+              control={control}
+              name="createdBy"
+              render={({ field }) => (
+                <FormInput
+                  label="Created By"
+                  htmlFor="createdBy"
+                  icon={UserIcon}
+                  errorMessage={errors.createdBy?.message}
+                >
+                  <Input
+                    {...field}
+                    value={field.value?.label ?? '--'}
+                    readOnly
+                    className="cursor-default border-0 text-gray-700 shadow-none focus:ring-0 focus:outline-none focus-visible:ring-0"
+                  />
+                </FormInput>
+              )}
+            />
           )}
         </div>
       </div>
