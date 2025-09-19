@@ -52,7 +52,7 @@ type TeamMembersProps = {
 export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   const [searchQuery, setSearchQuery] = useState('')
   const queryClient = useQueryClient()
-  const { user } = useAuth()
+  const { user, isLoading: isAuthLoading } = useAuth()
   const [activeDialogMemberId, setActiveDialogMemberId] = useState<string | null>(null)
 
   const { data, isLoading } = useQuery({
@@ -131,7 +131,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
           </TableHeader>
 
           <TableBody>
-            {isLoading || isUserRoleLoading
+            {isLoading || isUserRoleLoading || isAuthLoading
               ? new Array(5).fill(0).map((_, index) => (
                   <TableRow key={index}>
                     <TableCell colSpan={5}>
@@ -172,7 +172,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            {member.id !== user.id &&
+                            {member.id !== user?.id &&
                             member.id !== data?.created_by &&
                             member.id !== data?.poc_id ? (
                               <LeaveTeamDialog
