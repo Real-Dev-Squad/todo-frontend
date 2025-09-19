@@ -98,6 +98,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
       queryClient.invalidateQueries({
         queryKey: TasksApi.getTasks.key(),
       })
+      setActiveDialogMemberId(null)
       toast.success('User removed Successfully')
     },
     onError: () => {
