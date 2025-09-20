@@ -3,3 +3,7 @@ export enum TeamRoles {
   ADMIN = 'admin',
   MEMBER = 'member',
 }
+
+export enum RolesScope {
+  TEAM = 'TEAM',
+}

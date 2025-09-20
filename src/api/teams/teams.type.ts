@@ -1,4 +1,4 @@
-import type { TeamRoles } from './teams.enum'
+import type { RolesScope, TeamRoles } from './teams.enum'
 
 export type TTeam = {
   id: string
@@ -55,7 +55,6 @@ export enum TeamActivityActions {
   MEMBER_ADDED_TO_TEAM = 'member_added_to_team',
   MEMBER_REMOVED_FROM_TEAM = 'member_removed_from_team',
   MEMBER_LEFT_TEAM = 'member_left_team',
-  TASKS_REASSIGNED_TO_TEAM = 'tasks_reassigned_to_team',
 }
 
 export type BaseActivity = {
@@ -116,12 +115,6 @@ export type MemberLeftTeamActivity = BaseActivity & {
   performed_by_name: string
 }
 
-export type TaskReassignActivity = BaseActivity & {
-  action: TeamActivityActions.TASKS_REASSIGNED_TO_TEAM
-  performed_by_name: string
-  task_count: number
-}
-
 export type TeamActivity =
   | TeamCreationActivity
   | TaskAssignActivity
@@ -132,26 +125,35 @@ export type TeamActivity =
   | MemberJoinActivity
   | RemoveTeamMemberActivity
   | MemberLeftTeamActivity
-  | TaskReassignActivity
 
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]
 }
 
-export type UserTeamRole = {
+export type TeamRole = {
   role_id: string
   role_name: TeamRoles
-  scope: 'TEAM'
+  scope: RolesScope.TEAM
   team_id: string
   assigned_at: string
 }
 
-export type UserRole = {
+export type UserRolesDetails = {
   team_id: string
   user_id: string
-  roles: readonly UserTeamRole[]
+  roles: readonly TeamRole[]
 }
 
 export type TeamCreationCodeVerificationResponse = {
   message: string
+}
+
+export type RemoveFromTeamParams = {
+  teamId: string
+  memberId: string
+}
+
+export type GetUserRolesParams = {
+  teamId: string
+  userId: string
 }

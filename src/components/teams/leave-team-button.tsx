@@ -1,4 +1,3 @@
-'use client'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { Shimmer } from '@/components/common/shimmer'
