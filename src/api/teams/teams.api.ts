@@ -3,11 +3,13 @@ import {
   CreateTeamPayload,
   GetTeamByIdReqDto,
   GetTeamsDto,
+  GetUserRolesParams,
+  RemoveFromTeamParams,
   TeamActivityTimeline,
   TeamCreationCodeVerificationResponse,
   TeamDto,
   TTeamDto,
-  UserRole,
+  UserRolesDetails,
 } from './teams.type'
 
 export const TeamsApi = {
@@ -70,23 +72,21 @@ export const TeamsApi = {
     },
   },
   removeFromTeam: {
-    key: ({ teamId, memberId }: { teamId: string; memberId: string }) => [
+    key: ({ teamId, memberId }: RemoveFromTeamParams) => [
       'TeamsApi.removeFromTeam',
       teamId,
       memberId,
     ],
-    fn: async ({ teamId, memberId }: { teamId: string; memberId: string }): Promise<void> => {
+    fn: async ({ teamId, memberId }: RemoveFromTeamParams): Promise<void> => {
       await apiClient.delete(`/v1/teams/${teamId}/members/${memberId}`)
     },
   },
   getUserRoles: {
-    key: ({ teamId, userId }: { teamId: string; userId: string }) => [
-      'TeamsApi.getUserRoles',
-      teamId,
-      userId,
-    ],
-    fn: async ({ teamId, userId }: { teamId: string; userId: string }): Promise<UserRole> => {
-      const { data } = await apiClient.get<UserRole>(`/v1/teams/${teamId}/users/${userId}/roles`)
+    key: ({ teamId, userId }: GetUserRolesParams) => ['TeamsApi.getUserRoles', teamId, userId],
+    fn: async ({ teamId, userId }: GetUserRolesParams): Promise<UserRolesDetails> => {
+      const { data } = await apiClient.get<UserRolesDetails>(
+        `/v1/teams/${teamId}/users/${userId}/roles`,
+      )
       return data
     },
   },

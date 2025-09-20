@@ -1,4 +1,4 @@
-import type { TeamRoles } from './teams.enum'
+import type { RolesScope, TeamRoles } from './teams.enum'
 
 export type TTeam = {
   id: string
@@ -123,20 +123,30 @@ export type TeamActivityTimeline = {
   timeline: TeamActivity[]
 }
 
-export type UserTeamRole = {
+export type TeamRole = {
   role_id: string
   role_name: TeamRoles
-  scope: 'TEAM'
+  scope: RolesScope.TEAM
   team_id: string
   assigned_at: string
 }
 
-export type UserRole = {
+export type UserRolesDetails = {
   team_id: string
   user_id: string
-  roles: readonly UserTeamRole[]
+  roles: readonly TeamRole[]
 }
 
 export type TeamCreationCodeVerificationResponse = {
   message: string
+}
+
+export type RemoveFromTeamParams = {
+  teamId: string
+  memberId: string
+}
+
+export type GetUserRolesParams = {
+  teamId: string
+  userId: string
 }
