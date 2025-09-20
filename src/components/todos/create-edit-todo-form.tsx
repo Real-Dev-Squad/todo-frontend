@@ -179,6 +179,7 @@ export const CreateEditTodoForm = ({
         <Textarea
           id="description"
           placeholder="e.g Nothing is cool in here"
+          className="break-word max-h-32"
           {...register('description')}
         />
       </FormInput>
