@@ -196,7 +196,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            {isAdmin && (
+                            {member.id !== data?.poc_id && (
                               <DropdownMenuItem
                                 onSelect={() => handleAppointAsPoc(member.id)}
                                 disabled={updatePocMutation.isPending}

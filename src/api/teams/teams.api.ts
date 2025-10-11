@@ -106,7 +106,7 @@ export const TeamsApi = {
   updateTeamPoc: {
     key: ({ teamId, pocId }: UpdateTeamPocParams) => ['TeamsApi.updateTeamPoc', teamId, pocId],
     fn: async ({ teamId, pocId }: UpdateTeamPocParams): Promise<TeamDto> => {
-      const { data } = await apiClient.patch<TeamDto>(`/v1/teams/${teamId}`, {
+      const { data } = await apiClient.patch<TeamDto>(`/v1/teams/${teamId}?action=update_poc`, {
         poc_id: pocId,
       })
       return data
