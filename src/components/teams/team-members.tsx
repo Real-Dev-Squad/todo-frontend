@@ -107,7 +107,7 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
   })
 
   const updatePocMutation = useMutation({
-    mutationFn: TeamsApi.updateTeamPoc.fn,
+    mutationFn: TeamsApi.updateTeam.fn,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
