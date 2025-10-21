@@ -55,6 +55,7 @@ export enum TeamActivityActions {
   MEMBER_ADDED_TO_TEAM = 'member_added_to_team',
   MEMBER_REMOVED_FROM_TEAM = 'member_removed_from_team',
   MEMBER_LEFT_TEAM = 'member_left_team',
+  POC_CHANGED = 'poc_changed',
 }
 
 export type BaseActivity = {
@@ -115,6 +116,11 @@ export type MemberLeftTeamActivity = BaseActivity & {
   performed_by_name: string
 }
 
+export type PocChangedActivity = BaseActivity & {
+  action: TeamActivityActions.POC_CHANGED
+  performed_by_name: string
+}
+
 export type TeamActivity =
   | TeamCreationActivity
   | TaskAssignActivity
@@ -125,6 +131,7 @@ export type TeamActivity =
   | MemberJoinActivity
   | RemoveTeamMemberActivity
   | MemberLeftTeamActivity
+  | PocChangedActivity
 
 export type TeamActivityTimeline = {
   timeline: TeamActivity[]

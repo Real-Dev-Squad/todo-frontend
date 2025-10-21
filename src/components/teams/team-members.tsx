@@ -115,6 +115,9 @@ export const TeamMembers = ({ teamId }: TeamMembersProps) => {
       queryClient.invalidateQueries({
         queryKey: TasksApi.getTasks.key(),
       })
+      queryClient.invalidateQueries({
+        queryKey: TeamsApi.getTeamActivities.key({ teamId }),
+      })
       toast.success('POC updated successfully')
     },
     onError: () => {

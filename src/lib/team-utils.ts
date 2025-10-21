@@ -89,6 +89,14 @@ export function getActivityUIData(activity: TeamActivity): ActivityUIData | unde
         description: `${activity.performed_by_name} left the team ${activity.team_name}`,
         date,
       }
+
+    case TeamActivityActions.POC_CHANGED:
+      return {
+        icon: UsersRound,
+        title: 'POC changed',
+        description: `${activity.performed_by_name} changed the POC of the team ${activity.team_name}`,
+        date,
+      }
     default:
       return undefined
   }
