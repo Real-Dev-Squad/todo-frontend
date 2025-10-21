@@ -93,7 +93,7 @@ export function getActivityUIData(activity: TeamActivity): ActivityUIData | unde
     case TeamActivityActions.POC_CHANGED:
       return {
         icon: UsersRound,
-        title: 'POC changed',
+        title: 'Point of Contact changed',
         description: `${activity.performed_by_name} changed the POC of the team ${activity.team_name}`,
         date,
       }
