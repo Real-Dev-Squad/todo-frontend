@@ -1,5 +1,6 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TeamsApi } from '@/api/teams/teams.api'
 import { CreateEditTodoDialog } from '@/components/todos/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -31,6 +32,9 @@ export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
       if (teamId) {
         void queryClient.invalidateQueries({
           queryKey: TasksApi.getTasks.key({ teamId }),
+        })
+        void queryClient.invalidateQueries({
+          queryKey: TeamsApi.getTeamActivities.key({ teamId }),
         })
       }
 
