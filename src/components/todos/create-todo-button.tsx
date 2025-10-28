@@ -60,7 +60,7 @@ export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
           assignee_id: value.assignee.value,
           user_type: value.assignee.type,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          team_id: teamId,
+          ...(value.assignee.type !== USER_TYPE_ENUM.TEAM && teamId && { team_id: teamId }),
         })
       }
     >
