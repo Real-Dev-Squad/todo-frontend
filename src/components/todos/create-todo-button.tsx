@@ -10,9 +10,10 @@ import { TTodoFormData } from './create-edit-todo-form'
 
 type Props = {
   defaultData?: Partial<TTodoFormData>
+  teamId?: string
 }
 
-export const CreateTodoButton = ({ defaultData }: Props) => {
+export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
   const queryClient = useQueryClient()
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
 
@@ -24,6 +25,12 @@ export const CreateTodoButton = ({ defaultData }: Props) => {
       if (res.data.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
         void queryClient.invalidateQueries({
           queryKey: TasksApi.getTasks.key({ teamId: res.data.assignee.assignee_id }),
+        })
+      }
+
+      if (teamId) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key({ teamId }),
         })
       }
 
@@ -53,6 +60,7 @@ export const CreateTodoButton = ({ defaultData }: Props) => {
           assignee_id: value.assignee.value,
           user_type: value.assignee.type,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          team_id: teamId,
         })
       }
     >
