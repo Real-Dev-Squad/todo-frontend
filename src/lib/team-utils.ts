@@ -97,6 +97,13 @@ export function getActivityUIData(activity: TeamActivity): ActivityUIData | unde
         description: `${activity.performed_by_name} changed the POC of the team ${activity.team_name}`,
         date,
       }
+    case TeamActivityActions.ASSIGNED_TO_USER_FROM_TEAM:
+      return {
+        icon: Plus,
+        title: 'Task assigned to User',
+        description: `${activity.performed_by_name} assigned the task ${activity.task_title} to a member`,
+        date,
+      }
     default:
       return undefined
   }

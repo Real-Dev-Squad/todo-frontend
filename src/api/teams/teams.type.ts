@@ -47,6 +47,7 @@ export type CreateTeamPayload = {
 
 export enum TeamActivityActions {
   ASSIGNED_TO_TEAM = 'assigned_to_team',
+  ASSIGNED_TO_USER_FROM_TEAM = 'assigned_to_user_from_team',
   UNASSIGNED_FROM_TEAM = 'unassigned_from_team',
   STATUS_CHANGED = 'status_changed',
   REASSIGN_EXECUTOR = 'reassign_executor',
@@ -71,6 +72,13 @@ export type TeamCreationActivity = BaseActivity & {
 export type TaskAssignActivity = BaseActivity & {
   action: TeamActivityActions.ASSIGNED_TO_TEAM
   task_title: string
+  performed_by_name: string
+}
+
+export type TaskAssignToUserFromTeamActivity = BaseActivity & {
+  action: TeamActivityActions.ASSIGNED_TO_USER_FROM_TEAM
+  task_title: string
+  assigned_user_name: string
   performed_by_name: string
 }
 
@@ -124,6 +132,7 @@ export type PocChangedActivity = BaseActivity & {
 export type TeamActivity =
   | TeamCreationActivity
   | TaskAssignActivity
+  | TaskAssignToUserFromTeamActivity
   | TaskUnassignActivity
   | TaskStatusChangeActivity
   | ReassignExecutorActivity
