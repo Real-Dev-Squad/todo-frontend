@@ -66,13 +66,13 @@ export const UserAndTeamSearch = ({
   const { user: currentUser } = useAuth()
   const teamMatch = useMatch({ from: '/_internal/teams/$teamId', shouldThrow: false })
   const isTeamScope = !!teamMatch?.params?.teamId
-  const teamId = (teamMatch?.params?.teamId as string) || undefined
+  const teamId = teamMatch?.params?.teamId
 
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [selectedOption, setSelectedOption] = useState<TUserOrTeamOption | null>(null)
 
-  const { data: userTeams } = useQuery({
+  const { data: userTeams, isLoading: isUserTeamsLoading } = useQuery({
     enabled: !isTeamScope,
     queryKey: TeamsApi.getTeams.key,
     queryFn: TeamsApi.getTeams.fn,
@@ -85,7 +85,7 @@ export const UserAndTeamSearch = ({
     queryFn: async () => TeamsApi.getTeamById.fn({ teamId: teamId!, member: true }),
   })
 
-  const isDataLoading = isTeamScope ? isTeamLoading : false
+  const isDataLoading = isTeamScope ? isTeamLoading : isUserTeamsLoading
 
   const options = useMemo<TUserOrTeamOption[]>(() => {
     const term = search.trim().toLowerCase()
