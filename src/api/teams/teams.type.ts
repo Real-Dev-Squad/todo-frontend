@@ -75,7 +75,7 @@ export type TaskAssignActivity = BaseActivity & {
   performed_by_name: string
 }
 
-export type TaskAssignToUserFromTeamActivity = BaseActivity & {
+export type TaskAssignedToMemberActivity = BaseActivity & {
   action: TeamActivityActions.ASSIGNED_TO_MEMBER
   task_title: string
   assigned_user_name: string
@@ -132,7 +132,7 @@ export type PocChangedActivity = BaseActivity & {
 export type TeamActivity =
   | TeamCreationActivity
   | TaskAssignActivity
-  | TaskAssignToUserFromTeamActivity
+  | TaskAssignedToMemberActivity
   | TaskUnassignActivity
   | TaskStatusChangeActivity
   | ReassignExecutorActivity
