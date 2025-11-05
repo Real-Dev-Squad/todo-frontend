@@ -98,7 +98,9 @@ export const UserAndTeamSearch = ({
       ]
     }
   } else {
-    if (currentUser?.id) allOptions.push(mapUserToOption(currentUser))
+    if (currentUser?.id) {
+      allOptions.push(mapUserToOption(currentUser))
+    }
     allOptions.push(...(userTeams?.map(mapTeamToOption) ?? []))
   }
 
