@@ -36,6 +36,7 @@ export const TeamsLayoutHeader = ({ teamId }: TeamsLayoutHeaderProps) => {
       <h2 className="text-2xl font-bold">{team?.name}</h2>
       <div>
         <CreateTodoButton
+          teamId={teamId}
           defaultData={{
             assignee: { label: team?.name ?? '', value: teamId, type: USER_TYPE_ENUM.TEAM },
           }}

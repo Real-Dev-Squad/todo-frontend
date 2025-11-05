@@ -58,6 +58,7 @@ export type CrateTaskReqDto = {
   assignee_id: string
   timezone: string
   user_type: USER_TYPE_ENUM
+  team_id?: string
 }
 
 export type UpdateTaskDto = {

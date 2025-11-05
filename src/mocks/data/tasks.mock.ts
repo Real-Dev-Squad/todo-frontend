@@ -448,6 +448,7 @@ export const MockTasksAPI = {
     assignee_id: string
     timezone: string
     user_type: string
+    team_id?: string
   }): Promise<TTask> => {
     await sleep()
 

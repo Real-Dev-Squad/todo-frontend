@@ -1,5 +1,6 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TeamsApi } from '@/api/teams/teams.api'
 import { CreateEditTodoDialog } from '@/components/todos/create-edit-todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -10,9 +11,10 @@ import { TTodoFormData } from './create-edit-todo-form'
 
 type Props = {
   defaultData?: Partial<TTodoFormData>
+  teamId?: string
 }
 
-export const CreateTodoButton = ({ defaultData }: Props) => {
+export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
   const queryClient = useQueryClient()
   const [showCreateTaskForm, setShowCreateTaskForm] = useState(false)
 
@@ -24,6 +26,15 @@ export const CreateTodoButton = ({ defaultData }: Props) => {
       if (res.data.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
         void queryClient.invalidateQueries({
           queryKey: TasksApi.getTasks.key({ teamId: res.data.assignee.assignee_id }),
+        })
+      }
+
+      if (teamId) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key({ teamId }),
+        })
+        void queryClient.invalidateQueries({
+          queryKey: TeamsApi.getTeamActivities.key({ teamId }),
         })
       }
 
@@ -53,6 +64,7 @@ export const CreateTodoButton = ({ defaultData }: Props) => {
           assignee_id: value.assignee.value,
           user_type: value.assignee.type,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          ...(value.assignee.type !== USER_TYPE_ENUM.TEAM && teamId && { team_id: teamId }),
         })
       }
     >
