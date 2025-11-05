@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { useMatch } from '@tanstack/react-router'
 import { Check, ChevronDown, XIcon } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import {
   Command,
@@ -87,29 +87,32 @@ export const UserAndTeamSearch = ({
 
   const isDataLoading = isTeamScope ? isTeamLoading : isUserTeamsLoading
 
-  const options = useMemo<TUserOrTeamOption[]>(() => {
-    const term = search.trim().toLowerCase()
+  const term = search.trim().toLowerCase()
+  let allOptions: TUserOrTeamOption[] = []
 
-    if (isTeamScope) {
-      const teamOption = teamWithMembers ? [mapTeamToOption(teamWithMembers)] : []
-      const memberOptions = teamWithMembers?.users?.map(mapUserToOption) ?? []
-      return filterByTerm([...teamOption, ...memberOptions], term)
+  if (isTeamScope) {
+    if (teamWithMembers) {
+      allOptions = [
+        mapTeamToOption(teamWithMembers),
+        ...(teamWithMembers.users?.map(mapUserToOption) ?? []),
+      ]
     }
+  } else {
+    if (currentUser?.id) allOptions.push(mapUserToOption(currentUser))
+    allOptions.push(...(userTeams?.map(mapTeamToOption) ?? []))
+  }
 
-    const selfOption = currentUser?.id ? [mapUserToOption(currentUser)] : []
-    const teamOptions = userTeams?.map(mapTeamToOption) ?? []
-    return filterByTerm([...selfOption, ...teamOptions], term)
-  }, [isTeamScope, currentUser, userTeams, teamWithMembers, search])
+  const options = filterByTerm(allOptions, term)
 
-  const finalOptions = useMemo(() => {
-    const hasSelected = selectedOption && !options.some((opt) => opt.value === selectedOption.value)
-    const merged = hasSelected ? [selectedOption, ...options] : options
-    return merged.sort((a, b) => {
-      if (a.value === selectedOption?.value) return -1
-      if (b.value === selectedOption?.value) return 1
-      return a.label.localeCompare(b.label)
-    })
-  }, [options, selectedOption])
+  const result = [...options]
+  if (selectedOption && !result.some((opt) => opt.value === selectedOption.value)) {
+    result.unshift(selectedOption)
+  }
+  const finalOptions = result.toSorted((a, b) => {
+    if (a.value === selectedOption?.value) return -1
+    if (b.value === selectedOption?.value) return 1
+    return a.label.localeCompare(b.label)
+  })
 
   const handleSelect = (option: TUserOrTeamOption) => {
     setSelectedOption(option)
