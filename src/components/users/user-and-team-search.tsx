@@ -1,4 +1,5 @@
 import { TeamsApi } from '@/api/teams/teams.api'
+import type { TTeam } from '@/api/teams/teams.type'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
@@ -58,6 +59,25 @@ const mapTeamToOption = (team: { id: string; name: string }): TUserOrTeamOption 
 const filterByTerm = (options: TUserOrTeamOption[], term: string) =>
   options.filter((o) => o.label.toLowerCase().includes(term))
 
+const buildTeamScopeOptions = (teamWithMembers: TTeam | undefined): TUserOrTeamOption[] => {
+  if (!teamWithMembers) return []
+  return [mapTeamToOption(teamWithMembers), ...(teamWithMembers.users?.map(mapUserToOption) ?? [])]
+}
+
+const buildPersonalScopeOptions = (
+  currentUser: { id: string; name: string },
+  userTeams: Array<{ id: string; name: string }> | undefined,
+): TUserOrTeamOption[] => {
+  const options: TUserOrTeamOption[] = []
+
+  options.push(mapUserToOption(currentUser))
+
+  if (userTeams) {
+    options.push(...userTeams.map(mapTeamToOption))
+  }
+  return options
+}
+
 export const UserAndTeamSearch = ({
   value,
   onChange,
@@ -88,21 +108,9 @@ export const UserAndTeamSearch = ({
   const isDataLoading = isTeamScope ? isTeamLoading : isUserTeamsLoading
 
   const term = search.trim().toLowerCase()
-  let allOptions: TUserOrTeamOption[] = []
-
-  if (isTeamScope) {
-    if (teamWithMembers) {
-      allOptions = [
-        mapTeamToOption(teamWithMembers),
-        ...(teamWithMembers.users?.map(mapUserToOption) ?? []),
-      ]
-    }
-  } else {
-    if (currentUser?.id) {
-      allOptions.push(mapUserToOption(currentUser))
-    }
-    allOptions.push(...(userTeams?.map(mapTeamToOption) ?? []))
-  }
+  const allOptions = isTeamScope
+    ? buildTeamScopeOptions(teamWithMembers)
+    : buildPersonalScopeOptions(currentUser, userTeams)
 
   const options = filterByTerm(allOptions, term)
 
