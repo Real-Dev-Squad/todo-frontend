@@ -56,8 +56,8 @@ const mapTeamToOption = (team: { id: string; name: string }): TUserOrTeamOption 
   type: 'team',
 })
 
-const filterByTerm = (options: TUserOrTeamOption[], term: string) =>
-  options.filter((o) => o.label.toLowerCase().includes(term))
+const filterOptionsByLabel = (options: TUserOrTeamOption[], term: string) =>
+  options.filter((option) => option.label.toLowerCase().includes(term))
 
 const buildTeamScopeOptions = (teamWithMembers: TTeam | undefined): TUserOrTeamOption[] => {
   if (!teamWithMembers) return []
@@ -112,7 +112,7 @@ export const UserAndTeamSearch = ({
     ? buildTeamScopeOptions(teamWithMembers)
     : buildPersonalScopeOptions(currentUser, userTeams)
 
-  const options = filterByTerm(allOptions, term)
+  const options = filterOptionsByLabel(allOptions, term)
 
   const result = [...options]
   if (selectedOption && !result.some((opt) => opt.value === selectedOption.value)) {
