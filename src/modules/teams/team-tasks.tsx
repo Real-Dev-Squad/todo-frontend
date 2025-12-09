@@ -4,6 +4,7 @@ import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { GetTaskReqDto, TTask } from '@/api/tasks/tasks.types'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
+import { TeamFilters } from './components/team-filters'
 import { Searchbar } from '@/components/common/searchbar'
 import { EditTodoButton } from '@/components/todos/edit-task-button'
 import { IncludeDoneSwitch } from '@/components/todos/include-done-switch'
@@ -116,6 +117,11 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const queryParams: GetTaskReqDto = {
     teamId,
     ...(includeDoneTasks && { status: TASK_STATUS_ENUM.DONE }),
+    assigneeId: (Array.isArray(searchParams.assigneeId)
+      ? searchParams.assigneeId
+      : searchParams.assigneeId
+        ? [searchParams.assigneeId]
+        : undefined) as string[] | undefined,
   }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
@@ -138,6 +144,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
       search: (prev) => ({
         status: prev.status || undefined,
         search: searchValue || undefined,
+        assigneeId: prev.assigneeId,
       }),
     })
   }
@@ -149,6 +156,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
       search: (prev) => ({
         status: includeDone ? TASK_STATUS_ENUM.DONE : undefined,
         search: prev.search || undefined,
+        assigneeId: prev.assigneeId,
       }),
     })
   }
@@ -166,6 +174,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
           onStatusChange={handleIncludeDoneChange}
           initialChecked={includeDoneTasks}
         />
+        <TeamFilters teamId={teamId} />
       </div>
 
       <div className="overflow-hidden rounded-md border">

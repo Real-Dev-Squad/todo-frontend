@@ -39,6 +39,7 @@ export type TEditTask = {
 export type GetTaskReqDto = {
   teamId?: string
   status?: string
+  assigneeId?: string[]
 }
 
 export type GetTasksDto = {
