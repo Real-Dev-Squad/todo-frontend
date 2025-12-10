@@ -1,4 +1,4 @@
-import { TeamsApi } from '@/api/teams/teams.api'
+import { TTeam } from '@/api/teams/teams.type'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -20,15 +20,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
-import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckIcon, UserIcon } from 'lucide-react'
 
 type TeamFiltersProps = {
   teamId: string
+  team?: TTeam
 }
 
-export const TeamFilters = ({ teamId }: TeamFiltersProps) => {
+export const TeamFilters = ({ teamId, team }: TeamFiltersProps) => {
   const navigate = useNavigate()
   const searchParams = useSearch({ from: '/_internal/teams/$teamId/todos' })
   const assigneeIds = (
@@ -38,11 +38,6 @@ export const TeamFilters = ({ teamId }: TeamFiltersProps) => {
         ? [searchParams.assigneeId]
         : []
   ) as string[]
-
-  const { data: team } = useQuery({
-    queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
-    queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
-  })
 
   const teamMembers = team?.users ?? []
 

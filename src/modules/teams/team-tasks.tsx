@@ -117,16 +117,12 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
   const queryParams: GetTaskReqDto = {
     teamId,
     ...(includeDoneTasks && { status: TASK_STATUS_ENUM.DONE }),
-    assigneeId: (Array.isArray(searchParams.assigneeId)
-      ? searchParams.assigneeId
-      : searchParams.assigneeId
-        ? [searchParams.assigneeId]
-        : undefined) as string[] | undefined,
+    assigneeId: searchParams.assigneeId,
   }
 
   const { data: team, isLoading: isLoadingTeam } = useQuery({
-    queryKey: TeamsApi.getTeamById.key({ teamId }),
-    queryFn: () => TeamsApi.getTeamById.fn({ teamId }),
+    queryKey: TeamsApi.getTeamById.key({ teamId, member: true }),
+    queryFn: () => TeamsApi.getTeamById.fn({ teamId, member: true }),
   })
 
   const { data: tasks, isLoading: isLoadingTasks } = useQuery({
@@ -174,7 +170,7 @@ export const TeamTasks = ({ teamId }: TeamTasksProps) => {
           onStatusChange={handleIncludeDoneChange}
           initialChecked={includeDoneTasks}
         />
-        <TeamFilters teamId={teamId} />
+        <TeamFilters teamId={teamId} team={team} />
       </div>
 
       <div className="overflow-hidden rounded-md border">
