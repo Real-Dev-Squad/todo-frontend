@@ -7,11 +7,11 @@ export const Route = createFileRoute('/_internal/teams/$teamId/todos')({
     return {
       status: search.status as string | undefined,
       search: search.search as string | undefined,
-      assigneeId: (Array.isArray(search.assigneeId)
+      assigneeId: Array.isArray(search.assigneeId)
         ? search.assigneeId
         : search.assigneeId
           ? [search.assigneeId]
-          : undefined) as string[] | undefined,
+          : undefined,
     }
   },
 })

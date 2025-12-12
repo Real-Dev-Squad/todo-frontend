@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { TTeam } from '@/api/teams/teams.type'
 import { Button } from '@/components/ui/button'
 import {
@@ -31,50 +32,57 @@ type TeamFiltersProps = {
 export const TeamFilters = ({ teamId, team }: TeamFiltersProps) => {
   const navigate = useNavigate()
   const searchParams = useSearch({ from: '/_internal/teams/$teamId/todos' })
-  const assigneeIds = (
-    Array.isArray(searchParams.assigneeId)
-      ? searchParams.assigneeId
-      : searchParams.assigneeId
-        ? [searchParams.assigneeId]
-        : []
-  ) as string[]
+  const assigneeIds = Array.isArray(searchParams.assigneeId)
+    ? searchParams.assigneeId
+    : searchParams.assigneeId
+      ? [searchParams.assigneeId]
+      : []
 
   const teamMembers = team?.users ?? []
 
-  const handleAssigneeToggle = (memberId: string) => {
-    const newAssigneeIds = assigneeIds.includes(memberId)
-      ? assigneeIds.filter((id) => id !== memberId)
-      : [...assigneeIds, memberId]
+  const [selectedIds, setSelectedIds] = useState<string[]>(assigneeIds)
+  const [isOpen, setIsOpen] = useState(false)
 
-    navigate({
-      to: '/teams/$teamId/todos',
-      params: { teamId },
-      search: (prev) => ({
-        status: prev.status,
-        search: prev.search,
-        assigneeId: newAssigneeIds.length ? newAssigneeIds : undefined,
-      }),
-    })
+  useState(() => {
+    setSelectedIds(assigneeIds)
+  })
+
+  const handleAssigneeToggle = (memberId: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(memberId) ? prev.filter((id) => id !== memberId) : [...prev, memberId],
+    )
   }
 
   const handleClearAssignees = () => {
+    setSelectedIds([])
+  }
+
+  const applyFilters = () => {
     navigate({
       to: '/teams/$teamId/todos',
       params: { teamId },
       search: (prev) => ({
         status: prev.status,
         search: prev.search,
-        assigneeId: undefined,
+        assigneeId: selectedIds.length ? selectedIds : undefined,
       }),
     })
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open)
+        if (!open) {
+          applyFilters()
+        }
+      }}
+    >
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="-ml-2 border-2 border-red-500 text-red-500 hover:border-red-600 hover:bg-red-50 hover:text-red-600"
+          className="-ml-3 border border-red-500 text-red-500 hover:border-red-600 hover:bg-red-50 hover:text-red-600"
         >
           Filter
         </Button>
@@ -88,7 +96,7 @@ export const TeamFilters = ({ teamId, team }: TeamFiltersProps) => {
             <UserIcon className="mr-2 size-4" />
             <span>Assignee</span>
             <span className="ml-auto flex size-4 items-center justify-center font-mono text-xs">
-              {assigneeIds.length > 0 ? assigneeIds.length : ''}
+              {selectedIds.length > 0 ? selectedIds.length : ''}
             </span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="p-0" sideOffset={8}>
@@ -107,7 +115,7 @@ export const TeamFilters = ({ teamId, team }: TeamFiltersProps) => {
                 <CommandSeparator />
                 <CommandGroup>
                   {teamMembers.map((member) => {
-                    const isSelected = assigneeIds.includes(member.id)
+                    const isSelected = selectedIds.includes(member.id)
                     return (
                       <CommandItem key={member.id} onSelect={() => handleAssigneeToggle(member.id)}>
                         <div
