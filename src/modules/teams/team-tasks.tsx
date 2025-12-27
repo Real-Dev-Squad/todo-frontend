@@ -5,9 +5,11 @@ import { GetTaskReqDto, TTask } from '@/api/tasks/tasks.types'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
 import { Searchbar } from '@/components/common/searchbar'
+import { TTodoFormData } from '@/components/todos/create-edit-todo-form'
 import { EditTodoButton } from '@/components/todos/edit-task-button'
 import { IncludeDoneSwitch } from '@/components/todos/include-done-switch'
 import { TaskPriorityLabel } from '@/components/todos/task-priority-label'
+import { TodoDialog } from '@/components/todos/todo-dialog'
 import { TodoLabelsList } from '@/components/todos/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todos/todo-list-table'
 import { TodoStatusTable } from '@/components/todos/todo-status-table'
@@ -15,9 +17,12 @@ import { WatchListButton } from '@/components/todos/watchlist-button'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { ReassignUser } from '@/components/users/reassign-user'
 import { useAuth } from '@/hooks/useAuth'
+import { useUpdateTask } from '@/hooks/useUpdateTask'
 import { DateFormats, DateUtil } from '@/lib/date-util'
+import { TodoUtil } from '@/lib/todo-util'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useState } from 'react'
 
 type TodoListTableRowProps = {
   todo: TTask
@@ -29,39 +34,63 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
   const isRessignTodoCtaVisible =
     todo.assignee?.user_type === USER_TYPE_ENUM.TEAM && team?.poc_id === user.id
   const isEditTodoVisible = todo.assignee?.assignee_id === user.id
+  const [showViewTodoModal, setShowViewTodoModal] = useState(false)
+  const [currentMode, setCurrentMode] = useState<'create' | 'edit' | 'view'>('view')
+
+  const { mutation, handleSubmission } = useUpdateTask({
+    todo,
+    teamId: team?.id,
+  })
+
+  const handleSubmit = (todoDetails: TTodoFormData) => {
+    handleSubmission(todoDetails, () => {
+      setCurrentMode('view')
+    })
+  }
 
   return (
-    <TableRow>
-      <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+    <TodoDialog
+      mode="view"
+      defaultData={TodoUtil.getDefaultTodoFormData(todo)}
+      onOpenChange={setShowViewTodoModal}
+      open={showViewTodoModal}
+      onSubmit={handleSubmit}
+      isMutationPending={mutation.isPending}
+      currentMode={currentMode}
+      onCurrentModeChange={setCurrentMode}
+    >
+      <TableRow>
+        <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
 
-      <TableCell className="whitespace-nowrap">
-        <TodoStatusTable status={todo.status} />
-      </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <TodoStatusTable status={todo.status} />
+        </TableCell>
 
-      <TableCell className="whitespace-nowrap">
-        <TodoLabelsList labels={todo.labels ?? []} />
-      </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <TodoLabelsList labels={todo.labels ?? []} />
+        </TableCell>
 
-      <TableCell className="whitespace-nowrap">
-        {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
-      </TableCell>
+        <TableCell className="whitespace-nowrap">
+          {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
+        </TableCell>
 
-      <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
+        <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
 
-      <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
+        <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
 
-      <TableCell className="whitespace-nowrap">
-        {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
-      </TableCell>
+        <TableCell className="whitespace-nowrap">
+          {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
+        </TableCell>
 
-      <TableCell className="flex items-center gap-0.5">
-        {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-        {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
-        {!isRessignTodoCtaVisible && (
-          <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
-        )}
-      </TableCell>
-    </TableRow>
+        <TableCell className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+          {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+          {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
+          {!isRessignTodoCtaVisible && (
+            <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+          )}
+        </TableCell>
+      </TableRow>
+    </TodoDialog>
   )
 }
 

@@ -1,7 +1,7 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
 import { TeamsApi } from '@/api/teams/teams.api'
-import { CreateEditTodoDialog } from '@/components/todos/create-edit-todo-dialog'
+import { TodoDialog } from '@/components/todos/todo-dialog'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
@@ -47,7 +47,7 @@ export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
   })
 
   return (
-    <CreateEditTodoDialog
+    <TodoDialog
       mode="create"
       defaultData={defaultData}
       open={showCreateTaskForm}
@@ -72,6 +72,6 @@ export const CreateTodoButton = ({ defaultData, teamId }: Props) => {
         <PlusIcon className="mr-1 h-4 w-4" />
         Create Todo
       </Button>
-    </CreateEditTodoDialog>
+    </TodoDialog>
   )
 }

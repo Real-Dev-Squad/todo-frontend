@@ -1,15 +1,12 @@
-import { USER_TYPE_ENUM } from '@/api/common/common-enum'
-import { TasksApi } from '@/api/tasks/tasks.api'
 import { TTask } from '@/api/tasks/tasks.types'
+import { useUpdateTask } from '@/hooks/useUpdateTask'
 import { TodoUtil } from '@/lib/todo-util'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
-import { toast } from 'sonner'
-import { CreateEditTodoDialog } from './create-edit-todo-dialog'
-import { TTodoFormData } from './create-edit-todo-form'
 import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { TTodoFormData } from './create-edit-todo-form'
+import { TodoDialog } from './todo-dialog'
 
 type EditTodoButtonProps = {
   todo: TTask
@@ -17,56 +14,26 @@ type EditTodoButtonProps = {
 }
 
 export const EditTodoButton = ({ todo, teamId }: EditTodoButtonProps) => {
-  const queryClient = useQueryClient()
-
   const [showEditTaskForm, setShowEditTaskForm] = useState(false)
 
-  const updateTaskMutation = useMutation({
-    mutationFn: TasksApi.updateTask.fn,
-    onSuccess: (res) => {
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
-      void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
-      void queryClient.invalidateQueries({
-        queryKey: TasksApi.getTasks.key({ status: 'DEFERRED' }),
-      })
-
-      if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
-        void queryClient.invalidateQueries({
-          queryKey: TasksApi.getTasks.key({ teamId: res.assignee.assignee_id }),
-        })
-      }
-
-      // invalidate a task on the teams page if the task edited
-      if (teamId) {
-        void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
-      }
-
-      toast.success('Todo updated successfully')
-      setShowEditTaskForm(false)
-    },
-    onError: () => {
-      toast.error('Failed to update todo, please try again')
-    },
+  const { mutation, handleSubmission } = useUpdateTask({
+    todo,
+    teamId,
   })
 
-  const handleSubmission = async (todoDetails: TTodoFormData) => {
-    const updateDetails = TodoUtil.getUpdateTodoDetails(todoDetails, todo)
-
-    if (Object.keys(updateDetails).length > 0) {
-      updateTaskMutation.mutate({
-        id: todo.id,
-        ...updateDetails,
-      })
-    }
+  const handleSubmit = (todoDetails: TTodoFormData) => {
+    handleSubmission(todoDetails, () => {
+      setShowEditTaskForm(false)
+    })
   }
 
   return (
-    <CreateEditTodoDialog
+    <TodoDialog
       mode="edit"
       open={showEditTaskForm}
-      onSubmit={handleSubmission}
+      onSubmit={handleSubmit}
       onOpenChange={setShowEditTaskForm}
-      isMutationPending={updateTaskMutation.isPending}
+      isMutationPending={mutation.isPending}
       defaultData={TodoUtil.getDefaultTodoFormData(todo)}
     >
       <Tooltip>
@@ -82,6 +49,6 @@ export const EditTodoButton = ({ todo, teamId }: EditTodoButtonProps) => {
         </TooltipTrigger>
         <TooltipContent>Edit Todo</TooltipContent>
       </Tooltip>
-    </CreateEditTodoDialog>
+    </TodoDialog>
   )
 }

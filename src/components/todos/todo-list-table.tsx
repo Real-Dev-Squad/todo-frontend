@@ -1,5 +1,6 @@
 import { TTask } from '@/api/tasks/tasks.types'
 import { useAuth } from '@/hooks/useAuth'
+import { useUpdateTask } from '@/hooks/useUpdateTask'
 import { DateFormats, DateUtil } from '@/lib/date-util'
 import {
   DashboardTasksTableTabs,
@@ -8,11 +9,15 @@ import {
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { Searchbar } from '../common/searchbar'
 
+import { TodoUtil } from '@/lib/todo-util'
+import { useState } from 'react'
 import { Shimmer } from '../common/shimmer'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { TTodoFormData } from './create-edit-todo-form'
 import { EditTodoButton } from './edit-task-button'
 import { IncludeDoneSwitch } from './include-done-switch'
 import { TaskPriorityLabel } from './task-priority-label'
+import { TodoDialog } from './todo-dialog'
 import { TodoLabelsList } from './todo-labels-list'
 import { TodoStatusTable } from './todo-status-table'
 import { WatchListButton } from './watchlist-button'
@@ -57,49 +62,73 @@ const TodoListTableRow = ({
   userId,
 }: TodoListTableRowProps) => {
   const isEditTodoVisible = todo.assignee?.assignee_id === userId
+  const [showViewTodoModal, setShowViewTodoModal] = useState(false)
+  const [currentMode, setCurrentMode] = useState<'create' | 'edit' | 'view'>('view')
+
+  const { mutation, handleSubmission } = useUpdateTask({
+    todo,
+  })
+
+  const handleSubmit = (todoDetails: TTodoFormData) => {
+    handleSubmission(todoDetails, () => {
+      setCurrentMode('view')
+    })
+  }
+
   return (
-    <TableRow>
-      <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+    <TodoDialog
+      mode="view"
+      defaultData={TodoUtil.getDefaultTodoFormData(todo)}
+      onOpenChange={setShowViewTodoModal}
+      open={showViewTodoModal}
+      onSubmit={handleSubmit}
+      isMutationPending={mutation.isPending}
+      currentMode={currentMode}
+      onCurrentModeChange={setCurrentMode}
+    >
+      <TableRow>
+        <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
 
-      <TableCell className="whitespace-nowrap">
-        <TodoStatusTable status={todo.status} />
-      </TableCell>
-
-      <TableCell className="whitespace-nowrap">
-        <TodoLabelsList labels={todo.labels ?? []} />
-      </TableCell>
-
-      <TableCell className="whitespace-nowrap">
-        {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
-      </TableCell>
-
-      <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
-
-      <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
-
-      <TableCell className="whitespace-nowrap">
-        {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
-      </TableCell>
-
-      {showDeferredColumn && (
         <TableCell className="whitespace-nowrap">
-          {todo.deferredDetails?.deferredTill
-            ? new DateUtil(todo.deferredDetails.deferredTill).format(DateFormats.D_MMM_YYYY)
-            : '--'}
+          <TodoStatusTable status={todo.status} />
         </TableCell>
-      )}
 
-      <TableCell>
-        {showActions ? (
-          <div className="flex items-center gap-0.5">
-            {isEditTodoVisible && <EditTodoButton todo={todo} />}
-            <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
-          </div>
-        ) : (
-          <div className="px-2">--</div>
+        <TableCell className="whitespace-nowrap">
+          <TodoLabelsList labels={todo.labels ?? []} />
+        </TableCell>
+
+        <TableCell className="whitespace-nowrap">
+          {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
+        </TableCell>
+
+        <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
+
+        <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
+
+        <TableCell className="whitespace-nowrap">
+          {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
+        </TableCell>
+
+        {showDeferredColumn && (
+          <TableCell className="whitespace-nowrap">
+            {todo.deferredDetails?.deferredTill
+              ? new DateUtil(todo.deferredDetails.deferredTill).format(DateFormats.D_MMM_YYYY)
+              : '--'}
+          </TableCell>
         )}
-      </TableCell>
-    </TableRow>
+
+        <TableCell>
+          {showActions ? (
+            <div className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+              {isEditTodoVisible && <EditTodoButton todo={todo} />}
+              <WatchListButton taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+            </div>
+          ) : (
+            <div className="px-2">--</div>
+          )}
+        </TableCell>
+      </TableRow>
+    </TodoDialog>
   )
 }
 
