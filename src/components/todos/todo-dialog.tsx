@@ -27,11 +27,13 @@ type EditModeProps = BaseProps & {
   defaultData: Partial<TTodoFormData>
 }
 
+type DialogMode = 'create' | 'edit' | 'view'
+
 type ViewModeProps = BaseProps & {
   mode: 'view'
   defaultData: Partial<TTodoFormData>
-  currentMode: 'create' | 'edit' | 'view'
-  onCurrentModeChange: (mode: 'create' | 'edit' | 'view') => void
+  currentMode: DialogMode
+  onCurrentModeChange: (mode: DialogMode) => void
 }
 
 type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
@@ -39,31 +41,29 @@ type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
 export const TodoDialog = (props: TodoDialogProps) => {
   const { mode, open, children, onSubmit, defaultData, onOpenChange, isMutationPending } = props
 
-  // For view mode, use currentMode; for create/edit, use mode directly
-  const currentMode: 'create' | 'edit' | 'view' = mode === 'view' ? props.currentMode : mode
-  const onCurrentModeChange = mode === 'view' ? props.onCurrentModeChange : undefined
+  const activeMode: DialogMode = mode === 'view' ? props.currentMode : mode
 
-  const TITLE_BY_MODE: Record<typeof currentMode, string> = {
+  const TITLE_BY_MODE: Record<typeof activeMode, string> = {
     create: 'Create Todo',
     edit: 'Edit Todo',
     view: 'View Todo',
   }
 
   useEffect(() => {
-    if (!open && mode === 'view' && onCurrentModeChange) {
-      onCurrentModeChange(mode)
+    if (!open && mode === 'view') {
+      props.onCurrentModeChange(mode)
     }
-  }, [open, mode, onCurrentModeChange])
+  }, [open, mode])
 
   const handleEdit = () => {
-    if (onCurrentModeChange) {
-      onCurrentModeChange('edit')
+    if (mode === 'view') {
+      props.onCurrentModeChange('edit')
     }
   }
 
   const handleCancel = () => {
-    if (mode === 'view' && currentMode === 'edit' && onCurrentModeChange) {
-      onCurrentModeChange('view')
+    if (mode === 'view' && activeMode === 'edit') {
+      props.onCurrentModeChange('view')
     } else {
       onOpenChange(false)
     }
@@ -74,12 +74,10 @@ export const TodoDialog = (props: TodoDialogProps) => {
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
 
       <AlertDialogContent>
-        <AlertDialogHeader className="">
-          <AlertDialogTitle className="h-max text-xl">
-            {TITLE_BY_MODE[currentMode]}
-          </AlertDialogTitle>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="h-max text-xl">{TITLE_BY_MODE[activeMode]}</AlertDialogTitle>
         </AlertDialogHeader>
-        {currentMode === 'view' ? (
+        {activeMode === 'view' ? (
           <ViewTodoModal
             data={defaultData ?? {}}
             onClose={() => onOpenChange(false)}
@@ -87,7 +85,7 @@ export const TodoDialog = (props: TodoDialogProps) => {
           />
         ) : (
           <CreateEditTodoForm
-            mode={currentMode}
+            mode={activeMode}
             onSubmit={onSubmit}
             initialData={defaultData}
             isSubmitting={isMutationPending}

@@ -92,16 +92,12 @@ export const ViewTodoModal = ({ data, onClose, onEdit }: ViewTodoModalProps) => 
       </div>
 
       <div className="flex items-center justify-end gap-2 pt-4">
-        {onClose && (
-          <Button variant="outline" type="button" onClick={onClose}>
-            Close
-          </Button>
-        )}
-        {onEdit && (
-          <Button variant="default" type="button" onClick={onEdit}>
-            Edit
-          </Button>
-        )}
+        <Button variant="outline" type="button" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="default" type="button" onClick={onEdit}>
+          Edit
+        </Button>
       </div>
     </>
   )

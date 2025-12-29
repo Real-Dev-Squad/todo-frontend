@@ -1,5 +1,6 @@
 import { USER_TYPE_ENUM } from '@/api/common/common-enum'
 import { TasksApi } from '@/api/tasks/tasks.api'
+import { TASK_STATUS_ENUM } from '@/api/tasks/tasks.enum'
 import { TTask } from '@/api/tasks/tasks.types'
 import { TTodoFormData } from '@/components/todos/create-edit-todo-form'
 import { TodoUtil } from '@/lib/todo-util'
@@ -17,11 +18,15 @@ export const useUpdateTask = ({ todo, teamId }: UseUpdateTaskOptions) => {
   const mutation = useMutation({
     mutationFn: TasksApi.updateTask.fn,
     onSuccess: (res) => {
+      const wasTaskDeferred = todo.status === TASK_STATUS_ENUM.DEFERRED
+      const isTaskDeferred = res.status === TASK_STATUS_ENUM.DEFERRED
       void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key() })
       void queryClient.invalidateQueries({ queryKey: TasksApi.getWatchListTasks.key })
-      void queryClient.invalidateQueries({
-        queryKey: TasksApi.getTasks.key({ status: 'DEFERRED' }),
-      })
+      if (wasTaskDeferred || isTaskDeferred) {
+        void queryClient.invalidateQueries({
+          queryKey: TasksApi.getTasks.key({ status: TASK_STATUS_ENUM.DEFERRED }),
+        })
+      }
 
       if (res.assignee?.user_type === USER_TYPE_ENUM.TEAM) {
         void queryClient.invalidateQueries({
@@ -29,7 +34,6 @@ export const useUpdateTask = ({ todo, teamId }: UseUpdateTaskOptions) => {
         })
       }
 
-      // invalidate a task on the teams page if the task edited
       if (teamId) {
         void queryClient.invalidateQueries({ queryKey: TasksApi.getTasks.key({ teamId }) })
       }
@@ -51,7 +55,6 @@ export const useUpdateTask = ({ todo, teamId }: UseUpdateTaskOptions) => {
           ...updateDetails,
         },
         {
-          // This onSuccess runs after the hook's onSuccess
           onSuccess: () => {
             customOnSuccess?.()
           },
