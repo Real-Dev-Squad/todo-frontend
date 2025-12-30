@@ -53,6 +53,7 @@ export const TodoDialog = (props: TodoDialogProps) => {
     if (!open && mode === 'view') {
       props.onCurrentModeChange(mode)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, mode])
 
   const handleEdit = () => {
