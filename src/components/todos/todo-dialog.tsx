@@ -6,25 +6,26 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { useEffect, type ReactNode } from 'react'
-import { ViewTodoModal } from './view-todo-modal'
+import { type ReactNode } from 'react'
 
 type BaseProps = {
   open: boolean
   children: ReactNode
-  isMutationPending?: boolean
-  onSubmit: (data: TTodoFormData) => void
   onOpenChange: (open: boolean) => void
 }
 
 type CreateModeProps = BaseProps & {
   mode: 'create'
   defaultData?: Partial<TTodoFormData>
+  onSubmit: (data: TTodoFormData) => void
+  isMutationPending?: boolean
 }
 
 type EditModeProps = BaseProps & {
   mode: 'edit'
   defaultData: Partial<TTodoFormData>
+  onSubmit: (data: TTodoFormData) => void
+  isMutationPending?: boolean
 }
 
 type DialogMode = 'create' | 'edit' | 'view'
@@ -32,42 +33,16 @@ type DialogMode = 'create' | 'edit' | 'view'
 type ViewModeProps = BaseProps & {
   mode: 'view'
   defaultData: Partial<TTodoFormData>
-  currentMode: DialogMode
-  onCurrentModeChange: (mode: DialogMode) => void
 }
 
 type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
 
 export const TodoDialog = (props: TodoDialogProps) => {
-  const { mode, open, children, onSubmit, defaultData, onOpenChange, isMutationPending } = props
-
-  const activeMode: DialogMode = mode === 'view' ? props.currentMode : mode
-
-  const TITLE_BY_MODE: Record<typeof activeMode, string> = {
+  const { mode, open, children, defaultData, onOpenChange } = props
+  const TITLE_BY_MODE: Record<DialogMode, string> = {
     create: 'Create Todo',
     edit: 'Edit Todo',
     view: 'View Todo',
-  }
-
-  useEffect(() => {
-    if (!open && mode === 'view') {
-      props.onCurrentModeChange(mode)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, mode])
-
-  const handleEdit = () => {
-    if (mode === 'view') {
-      props.onCurrentModeChange('edit')
-    }
-  }
-
-  const handleCancel = () => {
-    if (mode === 'view' && activeMode === 'edit') {
-      props.onCurrentModeChange('view')
-    } else {
-      onOpenChange(false)
-    }
   }
 
   return (
@@ -76,21 +51,24 @@ export const TodoDialog = (props: TodoDialogProps) => {
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="h-max text-xl">{TITLE_BY_MODE[activeMode]}</AlertDialogTitle>
+          <AlertDialogTitle className="h-max text-xl">{TITLE_BY_MODE[mode]}</AlertDialogTitle>
         </AlertDialogHeader>
-        {activeMode === 'view' ? (
-          <ViewTodoModal
-            data={defaultData ?? {}}
-            onClose={() => onOpenChange(false)}
-            onEdit={handleEdit}
+
+        {mode === 'view' ? (
+          <CreateEditTodoForm
+            mode={mode}
+            initialData={defaultData}
+            onCancel={() => onOpenChange(false)}
+            disabled={true}
           />
         ) : (
           <CreateEditTodoForm
-            mode={activeMode}
-            onSubmit={onSubmit}
+            mode={mode}
             initialData={defaultData}
-            isSubmitting={isMutationPending}
-            onCancel={handleCancel}
+            onCancel={() => onOpenChange(false)}
+            disabled={false}
+            onSubmit={props.onSubmit}
+            isSubmitting={props.isMutationPending}
           />
         )}
       </AlertDialogContent>

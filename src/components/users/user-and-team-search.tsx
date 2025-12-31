@@ -42,6 +42,7 @@ type UserAndTeamSearchProps = {
   placeholder?: string
   value: TUserOrTeamOption | null
   onChange: (value: TUserOrTeamOption | null) => void
+  disabled: boolean
 }
 
 const mapUserToOption = (user: { id: string; name: string }): TUserOrTeamOption => ({
@@ -82,6 +83,7 @@ export const UserAndTeamSearch = ({
   value,
   onChange,
   placeholder = 'Select assignee...',
+  disabled,
 }: UserAndTeamSearchProps) => {
   const { user: currentUser } = useAuth()
   const teamMatch = useMatch({ from: '/_internal/teams/$teamId', shouldThrow: false })
@@ -125,6 +127,7 @@ export const UserAndTeamSearch = ({
   })
 
   const handleSelect = (option: TUserOrTeamOption) => {
+    if (disabled) return
     setSelectedOption(option)
     onChange(option)
     setOpen(false)
@@ -132,6 +135,7 @@ export const UserAndTeamSearch = ({
   }
 
   const handleClear = () => {
+    if (disabled) return
     setSelectedOption(null)
     onChange(null)
     setOpen(false)
@@ -156,6 +160,7 @@ export const UserAndTeamSearch = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          disabled={disabled}
           className="w-full justify-between"
         >
           {selectedOption ? (

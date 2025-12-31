@@ -20,6 +20,7 @@ interface LabelMultiSelectProps {
   onSelectionChange: (labels: Label[]) => void
   placeholder?: string
   className?: string
+  disabled: boolean
 }
 
 export function LabelMultiSelect({
@@ -28,10 +29,12 @@ export function LabelMultiSelect({
   onSelectionChange,
   placeholder = 'Select labels...',
   className,
+  disabled,
 }: LabelMultiSelectProps) {
   const [open, setOpen] = React.useState(false)
 
   const handleSelect = (label: Label) => {
+    if (disabled) return
     const isSelected = selectedLabels.some((selected) => selected.id === label.id)
 
     if (isSelected) {
@@ -53,6 +56,7 @@ export function LabelMultiSelect({
             variant="outline"
             role="combobox"
             aria-expanded={open}
+            disabled={disabled}
             className="h-auto min-h-8 w-full justify-between bg-transparent"
           >
             <div className="flex flex-1 flex-wrap gap-1">

@@ -5,9 +5,10 @@ type SelectLabelsProps = {
   labelData: Label[]
   value: string[] // array of label IDs
   onChange: (ids: string[]) => void
+  disabled: boolean
 }
 
-export function SelectLabels({ labelData, value, onChange }: SelectLabelsProps) {
+export function SelectLabels({ labelData, value, onChange, disabled }: SelectLabelsProps) {
   const selectedLabels = labelData.filter((label) => value?.includes(label.id))
 
   const handleSelectionChange = (labels: Label[]) => {
@@ -20,6 +21,7 @@ export function SelectLabels({ labelData, value, onChange }: SelectLabelsProps) 
       selectedLabels={selectedLabels}
       onSelectionChange={handleSelectionChange}
       placeholder="Select labels for this task..."
+      disabled={disabled}
     />
   )
 }

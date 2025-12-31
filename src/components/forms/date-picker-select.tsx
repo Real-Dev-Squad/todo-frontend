@@ -10,6 +10,7 @@ type DatePickerSelectProps = {
   value: Date | undefined
   isDateDisabled?: (date: Date) => boolean
   onChange: (date: Date | undefined) => void
+  disabled: boolean
 }
 
 export const DatePickerSelect = ({
@@ -17,6 +18,7 @@ export const DatePickerSelect = ({
   value,
   onChange,
   isDateDisabled,
+  disabled,
 }: DatePickerSelectProps) => {
   const [open, setOpen] = React.useState(false)
 
@@ -28,6 +30,7 @@ export const DatePickerSelect = ({
           variant="outline"
           data-selected={value ? 'true' : 'false'}
           className="w-full justify-between font-normal data-[selected=false]:text-gray-500"
+          disabled={disabled}
         >
           {value ? value.toLocaleDateString() : 'Select date'}
           <ChevronDownIcon />
@@ -39,6 +42,7 @@ export const DatePickerSelect = ({
           selected={value}
           captionLayout="dropdown"
           isDateDisabled={isDateDisabled}
+          disabled={disabled}
           onSelect={(date) => {
             onChange(date)
             setOpen(false)

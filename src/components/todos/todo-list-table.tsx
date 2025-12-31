@@ -63,7 +63,6 @@ const TodoListTableRow = ({
 }: TodoListTableRowProps) => {
   const isEditTodoVisible = todo.assignee?.assignee_id === userId
   const [showViewTodoModal, setShowViewTodoModal] = useState(false)
-  const [currentMode, setCurrentMode] = useState<'create' | 'edit' | 'view'>('view')
 
   const { mutation, handleSubmission } = useUpdateTask({
     todo,
@@ -71,20 +70,18 @@ const TodoListTableRow = ({
 
   const handleSubmit = (todoDetails: TTodoFormData) => {
     handleSubmission(todoDetails, () => {
-      setCurrentMode('view')
+      setShowViewTodoModal(false)
     })
   }
 
   return (
     <TodoDialog
-      mode="view"
+      mode={isEditTodoVisible ? 'edit' : 'view'}
       defaultData={TodoUtil.getDefaultTodoFormData(todo)}
       onOpenChange={setShowViewTodoModal}
       open={showViewTodoModal}
       onSubmit={handleSubmit}
       isMutationPending={mutation.isPending}
-      currentMode={currentMode}
-      onCurrentModeChange={setCurrentMode}
     >
       <TableRow>
         <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
