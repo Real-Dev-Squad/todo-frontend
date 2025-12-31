@@ -7,7 +7,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { type ReactNode } from 'react'
-import { TITLE_BY_MODE } from './todo-dialog.constants'
+import { TITLE_BY_MODE } from './todo.constants'
 
 type BaseProps = {
   open: boolean
