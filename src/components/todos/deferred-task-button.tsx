@@ -20,9 +20,10 @@ type DeferredTaskButtonProps = {
   todo: Partial<TTodoFormData>
   open: boolean
   setOpen: (open: boolean) => void
+  disabled: boolean
 }
 
-export const DeferredTaskButton = ({ todo, open, setOpen }: DeferredTaskButtonProps) => {
+export const DeferredTaskButton = ({ todo, open, setOpen, disabled }: DeferredTaskButtonProps) => {
   const [deferredTill, setDeferredTill] = useState<Date>()
   const queryClient = useQueryClient()
 
@@ -80,6 +81,7 @@ export const DeferredTaskButton = ({ todo, open, setOpen }: DeferredTaskButtonPr
                   value={deferredTill}
                   onChange={setDeferredTill}
                   isDateDisabled={(date) => !isDateValidForDefer(date, todo.dueDate)}
+                  disabled={disabled}
                 />
               </div>
             </div>

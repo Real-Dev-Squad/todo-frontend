@@ -176,7 +176,6 @@ export const CreateEditTodoForm = (props: TodoFormProps) => {
           placeholder="e.g Cool new title for my todo"
           {...register('title')}
           disabled={disabled}
-          className="disabled:text-black disabled:opacity-100"
         />
       </FormInput>
 
@@ -190,7 +189,7 @@ export const CreateEditTodoForm = (props: TodoFormProps) => {
         <Textarea
           id="description"
           placeholder="e.g Nothing is cool in here"
-          className="break-word max-h-32 disabled:text-black disabled:opacity-100"
+          className="break-word max-h-32"
           {...register('description')}
           disabled={disabled}
         />
@@ -318,6 +317,7 @@ export const CreateEditTodoForm = (props: TodoFormProps) => {
                     todo={initialData}
                     open={deferModalOpen}
                     setOpen={setDeferModalOpen}
+                    disabled={disabled}
                   />
                 )}
               </FormInput>
