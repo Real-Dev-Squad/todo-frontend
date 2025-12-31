@@ -14,7 +14,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { DatePickerSelect } from '../forms/date-picker-select'
-import { TTodoFormData } from './create-edit-todo-form'
+import { TTodoFormData } from './todo-form'
 
 type DeferredTaskButtonProps = {
   todo: Partial<TTodoFormData>

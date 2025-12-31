@@ -124,8 +124,14 @@ type ViewTodoFormProps = BaseFormProps & {
 
 type TodoFormProps = CreateEditTodoFormProps | ViewTodoFormProps
 
-export const CreateEditTodoForm = (props: TodoFormProps) => {
-  const { onCancel, initialData, mode = 'create', disabled } = props
+export const TodoForm = ({
+  onCancel,
+  initialData,
+  mode = 'create',
+  disabled,
+  onSubmit,
+  isSubmitting,
+}: TodoFormProps) => {
   const {
     control,
     register,
@@ -151,7 +157,7 @@ export const CreateEditTodoForm = (props: TodoFormProps) => {
 
   const handleFormSubmit = (data: TTodoFormData) => {
     if (disabled) return
-    props.onSubmit(data)
+    onSubmit(data)
   }
 
   const { data: labels = [] } = useQuery({
@@ -357,9 +363,9 @@ export const CreateEditTodoForm = (props: TodoFormProps) => {
         {!disabled && (
           <SubmitButton
             watch={watch}
-            isLoading={props.isSubmitting}
+            isLoading={isSubmitting}
             isDisabled={mode === 'edit' ? !isDirty : false}
-            text={props.isSubmitting ? buttonLoadingText : buttonText}
+            text={isSubmitting ? buttonLoadingText : buttonText}
           />
         )}
       </div>

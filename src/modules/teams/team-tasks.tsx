@@ -5,11 +5,11 @@ import { GetTaskReqDto, TTask } from '@/api/tasks/tasks.types'
 import { TeamsApi } from '@/api/teams/teams.api'
 import { TTeam } from '@/api/teams/teams.type'
 import { Searchbar } from '@/components/common/searchbar'
-import { TTodoFormData } from '@/components/todos/create-edit-todo-form'
 import { EditTodoButton } from '@/components/todos/edit-task-button'
 import { IncludeDoneSwitch } from '@/components/todos/include-done-switch'
 import { TaskPriorityLabel } from '@/components/todos/task-priority-label'
 import { TodoDialog } from '@/components/todos/todo-dialog'
+import { TTodoFormData } from '@/components/todos/todo-form'
 import { TodoLabelsList } from '@/components/todos/todo-labels-list'
 import { TodoListTableHeader, TodoListTableRowShimmer } from '@/components/todos/todo-list-table'
 import { TodoStatusTable } from '@/components/todos/todo-status-table'
@@ -48,46 +48,56 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
   }
 
   return (
-    <TodoDialog
-      mode={isEditTodoVisible ? 'edit' : 'view'}
-      defaultData={TodoUtil.getDefaultTodoFormData(todo)}
-      onOpenChange={setShowViewTodoModal}
-      open={showViewTodoModal}
-      onSubmit={handleSubmit}
-      isMutationPending={mutation.isPending}
-    >
-      <TableRow>
-        <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+    <TableRow>
+      {isEditTodoVisible ? (
+        <TodoDialog
+          mode={'edit'}
+          defaultData={TodoUtil.getDefaultTodoFormData(todo)}
+          onOpenChange={setShowViewTodoModal}
+          open={showViewTodoModal}
+          onSubmit={handleSubmit}
+          isMutationPending={mutation.isPending}
+        >
+          <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+        </TodoDialog>
+      ) : (
+        <TodoDialog
+          mode={'view'}
+          defaultData={TodoUtil.getDefaultTodoFormData(todo)}
+          onOpenChange={setShowViewTodoModal}
+          open={showViewTodoModal}
+        >
+          <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+        </TodoDialog>
+      )}
+      <TableCell className="whitespace-nowrap">
+        <TodoStatusTable status={todo.status} />
+      </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <TodoStatusTable status={todo.status} />
-        </TableCell>
+      <TableCell className="whitespace-nowrap">
+        <TodoLabelsList labels={todo.labels ?? []} />
+      </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <TodoLabelsList labels={todo.labels ?? []} />
-        </TableCell>
+      <TableCell className="whitespace-nowrap">
+        {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
+      </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          {todo.priority ? <TaskPriorityLabel priority={todo.priority} /> : '--'}
-        </TableCell>
+      <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
 
-        <TableCell className="whitespace-nowrap">{todo.assignee?.assignee_name ?? '--'}</TableCell>
+      <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
 
-        <TableCell className="whitespace-nowrap">{todo.createdBy?.name ?? '--'}</TableCell>
+      <TableCell className="whitespace-nowrap">
+        {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
+      </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          {todo.dueAt ? new DateUtil(todo.dueAt).format(DateFormats.D_MMM_YYYY) : '--'}
-        </TableCell>
-
-        <TableCell className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
-          {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
-          {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
-          {!isRessignTodoCtaVisible && (
-            <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
-          )}
-        </TableCell>
-      </TableRow>
-    </TodoDialog>
+      <TableCell className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+        {isRessignTodoCtaVisible && <ReassignUser taskId={todo.id} teamId={team.id} />}
+        {isEditTodoVisible && <EditTodoButton todo={todo} teamId={team?.id} />}
+        {!isRessignTodoCtaVisible && (
+          <WatchListButton teamId={team?.id} taskId={todo.id} isInWatchlist={todo.in_watchlist} />
+        )}
+      </TableCell>
+    </TableRow>
   )
 }
 

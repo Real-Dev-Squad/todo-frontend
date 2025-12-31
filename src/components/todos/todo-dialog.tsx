@@ -1,4 +1,4 @@
-import { CreateEditTodoForm, TTodoFormData } from '@/components/todos/create-edit-todo-form'
+import { TodoForm, TTodoFormData } from '@/components/todos/todo-form'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -7,6 +7,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { type ReactNode } from 'react'
+import { TITLE_BY_MODE } from './todo-dialog.constants'
 
 type BaseProps = {
   open: boolean
@@ -28,23 +29,24 @@ type EditModeProps = BaseProps & {
   isMutationPending?: boolean
 }
 
-type DialogMode = 'create' | 'edit' | 'view'
-
 type ViewModeProps = BaseProps & {
   mode: 'view'
   defaultData: Partial<TTodoFormData>
+  onSubmit?: undefined
+  isMutationPending?: undefined
 }
 
-type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
+export type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
 
-export const TodoDialog = (props: TodoDialogProps) => {
-  const { mode, open, children, defaultData, onOpenChange } = props
-  const TITLE_BY_MODE: Record<DialogMode, string> = {
-    create: 'Create Todo',
-    edit: 'Edit Todo',
-    view: 'View Todo',
-  }
-
+export const TodoDialog = ({
+  mode,
+  open,
+  children,
+  defaultData,
+  onOpenChange,
+  onSubmit,
+  isMutationPending,
+}: TodoDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -55,20 +57,20 @@ export const TodoDialog = (props: TodoDialogProps) => {
         </AlertDialogHeader>
 
         {mode === 'view' ? (
-          <CreateEditTodoForm
+          <TodoForm
             mode={mode}
             initialData={defaultData}
             onCancel={() => onOpenChange(false)}
             disabled={true}
           />
         ) : (
-          <CreateEditTodoForm
+          <TodoForm
             mode={mode}
             initialData={defaultData}
             onCancel={() => onOpenChange(false)}
             disabled={false}
-            onSubmit={props.onSubmit}
-            isSubmitting={props.isMutationPending}
+            onSubmit={onSubmit}
+            isSubmitting={isMutationPending}
           />
         )}
       </AlertDialogContent>

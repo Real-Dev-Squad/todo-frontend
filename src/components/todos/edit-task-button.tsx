@@ -5,8 +5,8 @@ import { Edit2 } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { TTodoFormData } from './create-edit-todo-form'
 import { TodoDialog } from './todo-dialog'
+import { TTodoFormData } from './todo-form'
 
 type EditTodoButtonProps = {
   todo: TTask

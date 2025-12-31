@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { TTodoFormData } from './create-edit-todo-form'
+import { TTodoFormData } from './todo-form'
 
 type Props = {
   defaultData?: Partial<TTodoFormData>
