@@ -1,6 +1,4 @@
-import { TodoDialogProps } from './todo-dialog'
-
-type DialogMode = TodoDialogProps['mode']
+import { DialogMode } from './todo-dialog'
 
 export const TITLE_BY_MODE: Record<DialogMode, string> = {
   create: 'Create Todo',

@@ -38,6 +38,8 @@ type ViewModeProps = BaseProps & {
 
 export type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
 
+export type DialogMode = TodoDialogProps['mode']
+
 export const TodoDialog = ({
   mode,
   open,
