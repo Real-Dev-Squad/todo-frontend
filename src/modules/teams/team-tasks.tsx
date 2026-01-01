@@ -58,7 +58,9 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
           onSubmit={handleSubmit}
           isMutationPending={mutation.isPending}
         >
-          <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+          <TableCell className="whitespace-nowrap hover:cursor-pointer hover:underline">
+            {todo.title}
+          </TableCell>
         </TodoDialog>
       ) : (
         <TodoDialog
@@ -67,7 +69,9 @@ const TodoListTableRow = ({ todo, team }: TodoListTableRowProps) => {
           onOpenChange={setShowViewTodoModal}
           open={showViewTodoModal}
         >
-          <TableCell className="whitespace-nowrap">{todo.title}</TableCell>
+          <TableCell className="whitespace-nowrap hover:cursor-pointer hover:underline">
+            {todo.title}
+          </TableCell>
         </TodoDialog>
       )}
       <TableCell className="whitespace-nowrap">
