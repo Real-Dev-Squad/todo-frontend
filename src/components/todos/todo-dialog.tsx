@@ -7,7 +7,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { type ReactNode } from 'react'
-import { TITLE_BY_MODE } from './todo.constants'
 
 type BaseProps = {
   open: boolean
@@ -39,6 +38,12 @@ type ViewModeProps = BaseProps & {
 export type TodoDialogProps = CreateModeProps | EditModeProps | ViewModeProps
 
 export type DialogMode = TodoDialogProps['mode']
+
+const TITLE_BY_MODE: Record<DialogMode, string> = {
+  create: 'Create Todo',
+  edit: 'Edit Todo',
+  view: 'View Todo',
+}
 
 export const TodoDialog = ({
   mode,
