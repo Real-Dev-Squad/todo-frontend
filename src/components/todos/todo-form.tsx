@@ -167,7 +167,7 @@ export const TodoForm = ({
   })
 
   return (
-    <form onSubmit={disabled ? undefined : handleSubmit(handleFormSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       {/* Title */}
       <FormInput
         required
