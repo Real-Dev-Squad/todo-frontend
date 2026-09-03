@@ -1,9 +1,10 @@
 packages:
   - .
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - core-js
-  - core-js-pure
-  - esbuild
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  '@tailwindcss/oxide': true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  msw: true
+  sharp: true
+  unrs-resolver: true
