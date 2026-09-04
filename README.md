@@ -22,11 +22,16 @@ On Windows, download the installer from [volta.sh](https://volta.sh) (Volta supp
 Windows natively). Afterwards run `volta install node pnpm` once, and the pinned
 versions are picked up automatically per project.
 
-If you would rather not use Volta, install [Node 24](https://nodejs.org) yourself and
-then pnpm globally:
+If you would rather not use Volta, install [Node 24](https://nodejs.org) yourself, then
+install pnpm with its own standalone installer rather than `npm install -g` — a global
+npm install can clash with other pnpm versions already on your system:
 
 ```sh
-npm install -g pnpm@11.9.0
+# macOS / Linux
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+# Windows (PowerShell)
+iwr https://get.pnpm.io/install.ps1 -useb | iex
 ```
 
 ## Getting Started
@@ -47,16 +52,20 @@ The app is now running at **http://localhost:3000**.
 
 ### Environment variables
 
-`.env` is gitignored. Copy `.env.sample` and adjust as needed:
+`.env` is gitignored. Copy `.env.sample` — it's the source of truth for what's
+available, so check it directly rather than relying on this README to stay in sync with
+every variable:
 
-| Variable               | Purpose                                                                      |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| `VITE_BACKEND_API_URL` | Base URL for the API. Used as the axios `baseURL`.                           |
-| `VITE_API_MOCKING`     | `true` serves API responses from MSW mocks, so no backend is needed locally. |
-| `VITE_ADMIN_EMAILS`    | Comma-separated emails that get the admin UI.                                |
+```sh
+cp .env.sample .env
+```
 
-The defaults in `.env.sample` enable mocking, so **you do not need a running backend**
-to work on the frontend. To point at the staging API instead, set:
+One is worth calling out because its effect isn't obvious from the name:
+`VITE_ADMIN_EMAILS` is a comma-separated list of emails that get the admin UI — set it
+to your own email if you need to see admin-only pages locally.
+
+The shipped defaults enable API mocking, so **you do not need a running backend** to
+work on the frontend. To point at the staging API instead, set:
 
 ```sh
 VITE_BACKEND_API_URL="https://services.realdevsquad.com/staging-todo"
@@ -177,7 +186,8 @@ after adding or renaming a route file.
 ### Components
 
 Reusable components live in `/src/components`. `/src/components/ui` holds the
-[shadcn/ui](https://ui.shadcn.com) primitives — these are generated, so prefer
+[shadcn/ui](https://ui.shadcn.com) primitives, built on [Radix UI](https://www.radix-ui.com)
+(see the `@radix-ui/*` packages in `package.json`) — these are generated, so prefer
 regenerating over hand-editing.
 
 ### Mocks
