@@ -50,6 +50,12 @@ The app is now running at **http://localhost:3000**.
 > renders, but API mocking stays off and every request goes to a relative URL and 404s,
 > so the UI silently has no data. Copying `.env.sample` is what makes a fresh clone work.
 
+The shipped `.env.sample` has `VITE_API_MOCKING=true`, so the command above is enough on
+its own — no backend required, responses come from local mocks. To work against real
+data instead, run [todo-backend](https://github.com/RealDevSquad/todo-backend) locally
+too (see its README for setup) and set `VITE_API_MOCKING=false` with
+`VITE_BACKEND_API_URL` pointing at it.
+
 ### Environment variables
 
 `.env` is gitignored. Copy `.env.sample` — it's the source of truth for what's
@@ -88,32 +94,10 @@ the proxy later.
 
 ### Optional: HTTPS proxy for the staging API
 
-Only needed when authenticating against the staging API, which requires the
-`realdevsquad.com` domain for its cookies.
-
-1. Point the hostname at your machine by adding this line to your hosts file:
-
-   ```
-   127.0.0.1 dev.realdevsquad.com
-   ```
-
-   | OS            | Hosts file                              |
-   | ------------- | --------------------------------------- |
-   | macOS / Linux | `/etc/hosts`                            |
-   | Windows       | `C:\Windows\System32\drivers\etc\hosts` |
-
-   You need administrator rights to edit it — `sudo` on macOS/Linux, or open your
-   editor as Administrator on Windows.
-
-2. Run `pnpm dev` and visit **https://dev.realdevsquad.com**.
-
-   The proxy listens on port 443. On **Linux** ports below 1024 require elevated
-   privileges, so run `sudo -E pnpm dev` or grant the capability once with
-   `sudo setcap 'cap_net_bind_service=+ep' $(which node)`. macOS and Windows generally
-   allow this without elevation.
-
-   The proxy uses a self-signed certificate, so your browser will warn on first visit.
-   Accept the warning to continue.
+Only needed when authenticating against the staging API. Run `pnpm dev` to start it —
+see RDS's shared
+[HTTPS dev URL / CORS doc](https://github.com/RealDevSquad/docs/tree/main/docs/dev/https-dev-url-cors)
+for why this is needed and how to set it up.
 
 ## Available scripts
 
