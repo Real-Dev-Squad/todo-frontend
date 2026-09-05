@@ -126,9 +126,10 @@ The project follows a modular structure with clear separation of concerns.
 ### Routes
 
 This project uses **TanStack Router** with file-based routing. Routes live in
-`/src/routes`. Read more about TanStack Router [here](https://tanstack.com/router/latest).
+`/src/routes`. Read more in the
+[TanStack Router documentation](https://tanstack.com/router/latest).
 
-```
+```text
 src/routes
 ||__ __root.tsx
 ||__ _internal.tsx
@@ -150,7 +151,7 @@ after adding or renaming a route file.
 
 #### URLs these produce
 
-```
+```text
 /
 /admin
 /dashboard
