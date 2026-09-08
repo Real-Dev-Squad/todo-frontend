@@ -1,9 +1,7 @@
 packages:
   - .
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - core-js
-  - core-js-pure
-  - esbuild
-  - sharp
-  - unrs-resolver
+minimumReleaseAge: 4320
+allowBuilds:
+  esbuild: true
+  msw: true
+  unrs-resolver: true
