@@ -7,6 +7,19 @@ export const apiClient = axios.create({
   baseURL: backendUrl,
   timeout: 30000,
   withCredentials: true,
+  paramsSerializer: {
+    serialize: (params) => {
+      const searchParams = new URLSearchParams()
+      Object.entries(params).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => searchParams.append(key, v))
+        } else if (value !== undefined && value !== null) {
+          searchParams.append(key, String(value))
+        }
+      })
+      return searchParams.toString()
+    },
+  },
 })
 
 apiClient.interceptors.request.use(
